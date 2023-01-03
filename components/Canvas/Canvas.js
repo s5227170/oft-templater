@@ -11,6 +11,8 @@ const Canvas = () => {
     const [emailContent, setEmailContent] = useState([]);
     const [content, setContent] = useState()
 
+
+    //An example config of the row array
     const exampleConfig = {
         position: 0,
         parameters: {
@@ -19,7 +21,7 @@ const Canvas = () => {
             paddingTop: 0,
             paddingBottom: 0,
         },
-        contentComponent: {},
+        contentComponents: {},
     }
 
     useEffect(() => {
@@ -29,7 +31,7 @@ const Canvas = () => {
     return (
         <div className={classes.CanvasWrapper}>
             {content}
-            <CreateButton>+</CreateButton>
+            <CreateButton >+</CreateButton>
         </div>
     )
 }
