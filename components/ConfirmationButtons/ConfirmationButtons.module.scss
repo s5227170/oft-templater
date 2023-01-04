@@ -1,0 +1,41 @@
+.ConfirmationButtons {
+    display: flex;
+    flex-direction: row;
+    align-self: flex-end;
+    margin-top: auto;
+    width: 100%;
+    justify-content: flex-end;
+
+  .ConfirmButton {
+    padding: 6px 24px;
+    background-color: blue;
+    border-radius: 25px;
+    margin: 0px 10px;
+    background-color: #CE40A3;
+    color: #fff;
+    font-size: 16px;
+    border: 2px solid #fff;
+
+    &:hover {
+        
+        font-weight: bold;
+    }
+  }
+
+  .CancelButton {
+    padding: 6px 24px;
+    background-color: green;
+    border-radius: 24px;
+    border: 2px solid #CE40A3;
+    background-color: #fff;
+    color: #CE40A3;
+    font-size: 16px;
+
+    &:hover {
+        background-color: #CE40A3;
+        color: #fff;
+        font-weight: bold;
+        border: 0px;
+    }
+  }
+}

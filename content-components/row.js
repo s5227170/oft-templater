@@ -22,7 +22,7 @@ const oneColumn = (paddingLeft, paddingRight, paddingTop, paddingBottom, content
                     <td>
                         <table>
                             <tr>
-                                <td>${contentComponentOne}</td>
+                                <td width=600>${contentComponentOne}</td>
                             </tr>
                         </table>
                     </td>

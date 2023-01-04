@@ -1,10 +1,10 @@
 import { Fragment, useState } from "react";
-import CreateModal from "../CreateModal/CreateModal";
+import { VscSettings } from "react-icons/vsc";
+import EditModal from "../EditModal/EditModal";
 
-import classes from "./CreateButton.module.scss";
-import global from "../../styles/global.module.scss";
+import classes from "./SettingsButton.module.scss";
 
-const CreateButton = (props) => {
+const SettingsButton = () => {
   const [modalShow, setModalShow] = useState(false);
 
   const tackleModal = () => {
@@ -14,15 +14,12 @@ const CreateButton = (props) => {
   };
 
   return (
-    <div className={classes.CreateButtonWrapper}>
-      <button className={classes.CreateButton} onClick={tackleModal}>
-        {props.children}
+    <Fragment>
+      <button onClick={tackleModal} className={classes.SettingsButton}>
+        <VscSettings color="#CE4045" size="25px" />
       </button>
       {modalShow ? (
-        <CreateModal
-          modalTackle={tackleModal}
-          modalShow={modalShow}
-        ></CreateModal>
+        <EditModal modalTackle={tackleModal} modalShow={modalShow}></EditModal>
       ) : null}
       {modalShow ? (
         <div
@@ -33,8 +30,8 @@ const CreateButton = (props) => {
           onClick={tackleModal}
         />
       ) : null}
-    </div>
+    </Fragment>
   );
 };
 
-export default CreateButton;
+export default SettingsButton;

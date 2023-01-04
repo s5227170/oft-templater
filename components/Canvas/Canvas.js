@@ -1,39 +1,55 @@
-
-import { useEffect, useState } from "react";
-import parse from 'html-react-parser';
+import { useEffect, useState, useRef } from "react";
+import parse from "html-react-parser";
+import { render, createPortal } from "react-dom";
 
 import { oneColumn } from "../../content-components/row";
 
 import classes from "./Canvas.module.scss";
 import CreateButton from "../CreateButton/CreateButton";
+import SettingsButton from "../SettingsButton/SettingsButton";
+
+import { renderToString } from "react-dom/server";
+import SettingsManager from "../SettingsManager/SettingsManager";
 
 const Canvas = () => {
-    const [emailContent, setEmailContent] = useState([]);
-    const [content, setContent] = useState()
+  const [emailContent, setEmailContent] = useState([]);
+  const [content, setContent] = useState();
+  const targetRef = useRef(null);
 
+  //An example config of the row array
+  const exampleConfig = {
+    position: 0,
+    parameters: {
+      paddingLeft: 0,
+      paddingRight: 0,
+      paddingTop: 0,
+      paddingBottom: 0,
+    },
+    contentComponents: {},
+  };
 
-    //An example config of the row array
-    const exampleConfig = {
-        position: 0,
-        parameters: {
-            paddingLeft: 0,
-            paddingRight: 0,
-            paddingTop: 0,
-            paddingBottom: 0,
-        },
-        contentComponents: {},
+  //   const setting = renderToString(<SettingsManager />);
+
+  useEffect(() => {
+    const target = `<div id="targetDiv"></div>`;
+    setContent(parse(oneColumn(35, 35, 10, 10, target)));
+  }, []);
+
+  useEffect(() => {
+    const targetDiv = document.querySelector("#targetDiv");
+    if (targetDiv) {
+      console.log(targetDiv);
+      render(createPortal(<SettingsManager />, targetDiv), document.createElement("div"));
     }
+  }, [content]);
 
-    useEffect(() => {
-        setContent(parse(oneColumn(35, 35, 10, 10, "<h1>Hello Bitch!</h1>")))
-    }, [])
+  return (
+    <div className={classes.CanvasWrapper}>
+      {content}
+      <CreateButton>+</CreateButton>
+      <SettingsManager />
+    </div>
+  );
+};
 
-    return (
-        <div className={classes.CanvasWrapper}>
-            {content}
-            <CreateButton >+</CreateButton>
-        </div>
-    )
-}
-
-export default Canvas
+export default Canvas;

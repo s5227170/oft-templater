@@ -1,0 +1,67 @@
+.UnselectedRadioButton {
+  width: 30px;
+  height: 30px;
+  background-color: #ce40a3;
+  border-radius: 50px;
+  position: relative;
+
+  &:hover {
+    background-color: lighten(#ce40a3, 20);
+    cursor: pointer;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50px;
+    background-color: rgb(240, 240, 240);
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.SelectedRadioButton {
+  width: 30px;
+  height: 30px;
+  background-color: #ce40a3;
+  border-radius: 50px;
+  position: relative;
+
+  &:hover {
+    background-color: lighten(#ce40a3, 20);
+    cursor: pointer;
+
+    &::after {
+      background-color: lighten(#ce40a3, 20);
+    }
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50px;
+    background-color: rgb(240, 240, 240);
+    width: 20px;
+    height: 20px;
+    z-index: 10;
+  }
+
+  &::after {
+    z-index: 20;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50px;
+    background-color: #ce40a3;
+    width: 10px;
+    height: 10px;
+  }
+}

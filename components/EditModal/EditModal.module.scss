@@ -1,0 +1,42 @@
+.EditModal {
+    overflow: hidden;
+    width: 500px;
+    height: auto;
+    background-color: #ffffff;
+    border: 2px solid #5a5a5a;
+    position: absolute;
+    top: -2px;
+    left: 0px;
+    border-radius: 25px 12px 12px 12px;
+    z-index: 20;
+    padding: 10px;
+    animation: openAnimation 0.25s linear forwards;
+    display: flex;
+    flex-direction: column;
+  
+  }
+  
+  .closeModal {
+    animation: closingAnimation 0.25s linear forwards;
+  }
+  
+  @keyframes openAnimation {
+    from {
+      width: 0px;
+      height: 0px;
+    }
+    to {
+      width: 500px;
+      height: 300px;
+    }
+  }
+  
+  @keyframes closingAnimation {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  
