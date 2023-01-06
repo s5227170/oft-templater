@@ -16,7 +16,11 @@ const Canvas = () => {
   const [content, setContent] = useState();
   const targetRef = useRef(null);
 
-  //An example config of the row array
+  //An example config of a row that will go into an array of rows
+  //The config may be inserted into a state, that way, when making changes
+  //it will re-render and will swap between the settings button/modal, and
+  //the actual element. When a sub-component already exists, there should be 
+  //a way to edit it through a menu, potentially on a hover effect
   const exampleConfig = {
     position: 0,
     parameters: {
@@ -27,8 +31,6 @@ const Canvas = () => {
     },
     contentComponents: {},
   };
-
-  //   const setting = renderToString(<SettingsManager />);
 
   useEffect(() => {
     const target = `<div id="targetDiv"></div>`;
@@ -47,7 +49,6 @@ const Canvas = () => {
     <div className={classes.CanvasWrapper}>
       {content}
       <CreateButton>+</CreateButton>
-      <SettingsManager />
     </div>
   );
 };

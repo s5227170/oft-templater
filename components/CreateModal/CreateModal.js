@@ -5,7 +5,7 @@ import Image from "next/image";
 import classes from "./CreateModal.module.scss";
 import global from "../../styles/global.module.scss";
 
-import RadioButton from "../RadioButton/RadioButton";
+import RadioButton from "../UI/RadioButton/RadioButton";
 import ConfirmationButtons from "../ConfirmationButtons/ConfirmationButtons";
 import { oneColumn } from "../../content-components/row";
 

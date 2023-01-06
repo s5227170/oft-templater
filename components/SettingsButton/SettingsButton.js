@@ -14,7 +14,7 @@ const SettingsButton = () => {
   };
 
   return (
-    <Fragment>
+    <div className={classes.SettingsButtonWrapper}>
       <button onClick={tackleModal} className={classes.SettingsButton}>
         <VscSettings color="#CE4045" size="25px" />
       </button>
@@ -30,7 +30,7 @@ const SettingsButton = () => {
           onClick={tackleModal}
         />
       ) : null}
-    </Fragment>
+    </div>
   );
 };
 
