@@ -1,8 +1,8 @@
 .ComponentType {
-    width: 100px;
+    width: 120px;
     height: auto;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     border: 1px solid #000;
     border-radius: 4px;
     margin: auto;
@@ -11,4 +11,15 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
+
+    h2 {
+        margin-bottom: 20px;
+        font-weight: 500;
+        color: #2B2A2A;
+    }
+
+    svg {
+        margin-bottom: 10px;
+    }
+
 }

@@ -1,12 +1,11 @@
 .Modal {
     overflow: hidden;
-    width: 300px;
-    max-width: 300px;
     background-color: #ffffff;
-    border: 2px solid #5a5a5a;
-    position: absolute;
-    top: -2px;
-    left: 0px;
+    border: 1px solid #7c7c7c;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);
     border-radius: 25px 12px 12px 12px;
     z-index: 20;
     padding: 10px;
@@ -14,6 +13,8 @@
     display: flex;
     flex-direction: column;
     height: fit-content !important;
+    -webkit-box-shadow: 0px 3px 5px -1px #fff;
+    box-shadow: 0px 3px 5px -1px #fff;
 }
 
 .Backdrop {
@@ -22,8 +23,11 @@
     position: fixed;
     top: 0px;
     left: 0px;
-    background-color: rgba(124, 124, 124, 0.8);
+    background-color: rgb(124, 124, 124);
+    opacity: 0;
     z-index: 10;
+    animation: fadeInAnimation 0.25s linear forwards;
+    transition: .3s;
 }
 
 .closeModal {
@@ -49,5 +53,15 @@
 
     to {
         opacity: 0;
+    }
+}
+
+@keyframes fadeInAnimation {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 0.8;
     }
 }

@@ -5,8 +5,6 @@ import global from "../../styles/global.module.scss"
 import { Fragment } from "react";
 
 const Modal = (props) => {
-    console.log(props.modalShow)
-
     return (
         <Fragment>
             <div

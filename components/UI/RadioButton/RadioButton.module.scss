@@ -1,6 +1,6 @@
 .UnselectedRadioButton {
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
   background-color: #ce40a3;
   border-radius: 50px;
   position: relative;
@@ -8,6 +8,7 @@
   &:hover {
     background-color: lighten(#ce40a3, 20);
     cursor: pointer;
+    transition: .2s;
   }
 
   &::before {
@@ -24,8 +25,8 @@
 }
 
 .SelectedRadioButton {
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
   background-color: #ce40a3;
   border-radius: 50px;
   position: relative;
@@ -33,6 +34,7 @@
   &:hover {
     background-color: lighten(#ce40a3, 20);
     cursor: pointer;
+    transition: .2s;
 
     &::after {
       background-color: lighten(#ce40a3, 20);
