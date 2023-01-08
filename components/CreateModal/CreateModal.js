@@ -25,7 +25,7 @@ const CreateModal = (props) => {
     setSelectConfig(newConfig);
   };
 
-  const confirmHandler = () => {};
+  const confirmHandler = () => { };
 
   return (
     <div
@@ -79,3 +79,5 @@ const CreateModal = (props) => {
 };
 
 export default CreateModal;
+
+//Abstract the modal to a single element that accepts content according to its children

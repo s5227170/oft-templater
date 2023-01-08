@@ -1,4 +1,4 @@
-.EditModal {
+.Modal {
     overflow: hidden;
     width: 300px;
     max-width: 300px;
@@ -14,36 +14,40 @@
     display: flex;
     flex-direction: column;
     height: fit-content !important;
+}
 
-    h1 {
-        font-weight: bold;
-        font-size: 20px;
-        margin-bottom: 20px;
-    }
-  
-  }
-  
-  .closeModal {
+.Backdrop {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(124, 124, 124, 0.8);
+    z-index: 10;
+}
+
+.closeModal {
     animation: closingAnimation 0.25s linear forwards;
-  }
-  
-  @keyframes openAnimation {
+}
+
+@keyframes openAnimation {
     from {
-      width: 0px;
-      height: 0px;
+        width: 0px;
+        height: 0px;
     }
+
     to {
-      width: 500px;
-      height: 300px;
+        width: 500px;
+        height: 300px;
     }
-  }
-  
-  @keyframes closingAnimation {
+}
+
+@keyframes closingAnimation {
     from {
-      opacity: 1;
+        opacity: 1;
     }
+
     to {
-      opacity: 0;
+        opacity: 0;
     }
-  }
-  
+}

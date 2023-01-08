@@ -1,35 +1,16 @@
-import { Fragment, useState } from "react";
 import { VscSettings } from "react-icons/vsc";
-import EditModal from "../EditModal/EditModal";
 
 import classes from "./SettingsButton.module.scss";
 
-const SettingsButton = () => {
-  const [modalShow, setModalShow] = useState(false);
+const SettingsButton = (props) => {
 
-  const tackleModal = () => {
-    setTimeout(() => {
-      setModalShow(!modalShow);
-    }, 250);
-  };
 
   return (
     <div className={classes.SettingsButtonWrapper}>
-      <button onClick={tackleModal} className={classes.SettingsButton}>
+      <button onClick={props.clickHandler} className={classes.SettingsButton}>
         <VscSettings color="#CE4045" size="25px" />
       </button>
-      {modalShow ? (
-        <EditModal modalTackle={tackleModal} modalShow={modalShow}></EditModal>
-      ) : null}
-      {modalShow ? (
-        <div
-          className={[
-            classes.Backdrop,
-            modalShow ? global.openBlock : global.closed,
-          ].join(" ")}
-          onClick={tackleModal}
-        />
-      ) : null}
+      {props.children}
     </div>
   );
 };
