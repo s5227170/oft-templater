@@ -1,8 +1,12 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState, useRef } from "react";
 import parse from "html-react-parser";
 import { createRoot } from "react-dom/client";
 
-import { oneColumn, threeColumns, twoColumns } from "../../content-components/row";
+import {
+  oneColumn,
+  threeColumns,
+  twoColumns,
+} from "../../content-components/row";
 
 import classes from "./Canvas.module.scss";
 
@@ -12,10 +16,12 @@ import CreateRowManager from "../CreateRowManager/CreateRowManage";
 import text from "../../content-components/text";
 import list from "../../content-components/list";
 import image from "../../content-components/image";
+import readRowConfig from "../../util/readRowConfig";
 
 const Canvas = () => {
+  const rootRef = useRef(null);
   const [emailContent, setEmailContent] = useState([]);
-  const [contentArr, setContentArr] = useState([])
+  const [contentArr, setContentArr] = useState([]);
   const [content, setContent] = useState();
   const [elementToGenerate, setElementToGenerate] = useState();
   const [pageConfig, setPageConfig] = useState({
@@ -26,8 +32,9 @@ const Canvas = () => {
       paddingRight: 0,
       paddingTop: 0,
       paddingBottom: 0,
-    }
-  })
+    },
+  });
+  let root = null;
 
   const pageConfigExample = {
     content: [{}, {}, {}],
@@ -36,9 +43,9 @@ const Canvas = () => {
       paddingLeft: 0,
       paddingRight: 0,
       paddingTop: 0,
-      paddingBottom: 0
+      paddingBottom: 0,
     },
-  }
+  };
 
   const rowConfig = {
     type: "row",
@@ -63,8 +70,8 @@ const Canvas = () => {
     paddingRight: 0,
     paddingTop: 0,
     paddingBottom: 0,
-    content: ["", "", ""]
-  }
+    content: ["", "", ""],
+  };
 
   const listComponentConfig = {
     type: "text",
@@ -76,8 +83,8 @@ const Canvas = () => {
     paddingRight: 0,
     paddingTop: 0,
     paddingBottom: 0,
-    content: ["", "", ""]
-  }
+    content: ["", "", ""],
+  };
 
   const imageComponentConfig = {
     type: "Image",
@@ -85,11 +92,12 @@ const Canvas = () => {
     paddingRight: 0,
     paddingTop: 0,
     paddingBottom: 0,
-  }
+  };
 
   const generateComponent = (componentType) => {
-    setElementToGenerate(componentType)
-  }
+    console.log(componentType);
+    // setElementToGenerate(componentType);
+  };
 
   const generateRow = (cols) => {
     const newRowConfig = {
@@ -103,40 +111,35 @@ const Canvas = () => {
         paddingBottom: 0,
       },
       contentComponents: [],
-    }
-    setPageConfig(pageConfig => ({
+    };
+    setPageConfig((pageConfig) => ({
       ...pageConfig,
-      content: [...pageConfig.content, newRowConfig]
-    }))
-  }
+      content: [...pageConfig.content, newRowConfig],
+    }));
+  };
 
   useEffect(() => {
-    const targetDiv = document.querySelector("#targetDiv");
-    if (targetDiv) {
-      createRoot(targetDiv).render(<ComponentTypeManager componentGeneration={generateComponent} />)
+    console.log(rootRef)
+    console.log(root)
+    if (rootRef && root == null) {
+      root = createRoot(rootRef.current);
     }
-  }, [content]);
+    console.log(root)
+  }, [rootRef]);
 
   useEffect(() => {
-
-  }, [elementToGenerate])
-
-  useEffect(() => {
-    const target = `<div id="targetDiv"></div>`;
-    setContent(parse(oneColumn(35, 35, 10, 10, target)));
-  }, []);
-
-  useEffect(() => {
-    const target = `<div id="targetDiv"></div>`;
-    setContent(parse(oneColumn(35, 35, 10, 10, target)));
-
-    //generation of page content
-    
+    if (rootRef) {
+      if (root) {
+        root.render(readRowConfig(pageConfig));
+      }
+    }
   }, [pageConfig]);
 
   return (
     <div className={classes.CanvasWrapper}>
-      {content}
+      <div id="targetDiv" ref={rootRef}>
+        {content}
+      </div>
       <CreateRowManager rowGeneration={generateRow} />
     </div>
   );

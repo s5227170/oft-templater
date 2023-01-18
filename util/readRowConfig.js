@@ -1,6 +1,7 @@
 import parse from "html-react-parser";
 
 //Function is utilised to take a row config and compile it into react components using the parse function.
+//It takes the row and returns the ready components for RENDER(react components, not string!)
 
 const readRowConfig = (config) => config.content.map((element, index) => {
     const subComponents = [];
