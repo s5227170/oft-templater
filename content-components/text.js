@@ -1,5 +1,3 @@
-//textContent - the text that is
-
 const text = (background, color, fontFamily, fontSize, paddingLeft, paddingRight, paddingTop, paddingBottom, content) => {
     const contentDistribution = content.map(paragraph => {
         return `

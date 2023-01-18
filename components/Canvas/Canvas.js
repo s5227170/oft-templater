@@ -1,17 +1,21 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import parse from "html-react-parser";
 import { createRoot } from "react-dom/client";
 
-import { oneColumn } from "../../content-components/row";
+import { oneColumn, threeColumns, twoColumns } from "../../content-components/row";
 
 import classes from "./Canvas.module.scss";
 
 import { renderToString } from "react-dom/server";
 import ComponentTypeManager from "../ComponentTypeManager/ComponentTypeManager";
 import CreateRowManager from "../CreateRowManager/CreateRowManage";
+import text from "../../content-components/text";
+import list from "../../content-components/list";
+import image from "../../content-components/image";
 
 const Canvas = () => {
   const [emailContent, setEmailContent] = useState([]);
+  const [contentArr, setContentArr] = useState([])
   const [content, setContent] = useState();
   const [elementToGenerate, setElementToGenerate] = useState();
   const [pageConfig, setPageConfig] = useState({
@@ -51,9 +55,9 @@ const Canvas = () => {
 
   const textComponentConfig = {
     type: "text",
-    background: "",
-    color: "",
-    fontFamily: "",
+    background: "none",
+    color: "#fff",
+    fontFamily: "arial",
     fontSize: 0,
     paddingLeft: 0,
     paddingRight: 0,
@@ -63,11 +67,24 @@ const Canvas = () => {
   }
 
   const listComponentConfig = {
-
+    type: "text",
+    background: "none",
+    color: "#000",
+    fontFamily: "arial",
+    fontSize: 14,
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
+    content: ["", "", ""]
   }
 
   const imageComponentConfig = {
-
+    type: "Image",
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
   }
 
   const generateComponent = (componentType) => {
@@ -85,7 +102,7 @@ const Canvas = () => {
         paddingTop: 0,
         paddingBottom: 0,
       },
-      contentComponents: {},
+      contentComponents: [],
     }
     setPageConfig(pageConfig => ({
       ...pageConfig,
@@ -101,28 +118,6 @@ const Canvas = () => {
   }, [content]);
 
   useEffect(() => {
-    if (elementToGenerate === "Text") {
-      const newTextComponent = {
-        type: "text",
-        background: "",
-        color: "",
-        fontFamily: "",
-        fontSize: 0,
-        paddingLeft: 0,
-        paddingRight: 0,
-        paddingTop: 0,
-        paddingBottom: 0,
-        content: ["", "", ""]
-      }
-
-      setElementToGenerate(newTextComponent)
-    }
-    if (elementToGenerate === "List") {
-
-    }
-    if (elementToGenerate === "image") {
-
-    }
 
   }, [elementToGenerate])
 
@@ -130,6 +125,14 @@ const Canvas = () => {
     const target = `<div id="targetDiv"></div>`;
     setContent(parse(oneColumn(35, 35, 10, 10, target)));
   }, []);
+
+  useEffect(() => {
+    const target = `<div id="targetDiv"></div>`;
+    setContent(parse(oneColumn(35, 35, 10, 10, target)));
+
+    //generation of page content
+    
+  }, [pageConfig]);
 
   return (
     <div className={classes.CanvasWrapper}>
