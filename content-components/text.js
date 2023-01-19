@@ -1,6 +1,17 @@
-const text = (background, color, fontFamily, fontSize, paddingLeft, paddingRight, paddingTop, paddingBottom, content) => {
-    const contentDistribution = content.map(paragraph => {
-        return `
+const text = (
+  background,
+  color,
+  fontFamily,
+  fontSize,
+  paddingLeft,
+  paddingRight,
+  paddingTop,
+  paddingBottom,
+  content
+) => {
+  const contentDistribution = content.map((paragraph) => {
+    console.log(paragraph);
+    return `
             <tr>
                 <td></td>
                 <td>
@@ -8,9 +19,11 @@ const text = (background, color, fontFamily, fontSize, paddingLeft, paddingRight
                 </td>
                 <td></td>
             </tr >
-        `
-    })
-        `
+        `;
+  });
+  console.log(contentDistribution);
+
+  return `
     <table>
         <tbody>
             <tr>
@@ -34,8 +47,7 @@ const text = (background, color, fontFamily, fontSize, paddingLeft, paddingRight
             </tr>
         </tbody>
     </table>
-`
-}
-
+`;
+};
 
 export default text;

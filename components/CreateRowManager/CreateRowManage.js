@@ -20,7 +20,7 @@ const CreateRowManage = (props) => {
         <div className={classes.RowCreationManager}>
             <CreateRowButton clickHandler={tackleModal}>
                 <Modal modalTackle={tackleModal} modalShow={modalShow}>
-                    <CreateRowContent cancelHandler={tackleModal} confirmHandler={props.rowGeneration} />
+                    <CreateRowContent cancelHandler={tackleModal} confirmHandler={props.rowGeneration} successFunction={tackleModal}/>
                 </Modal>
             </CreateRowButton>
         </div>

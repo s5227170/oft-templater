@@ -2,21 +2,13 @@ import { Fragment, useEffect, useState, useRef } from "react";
 import parse from "html-react-parser";
 import { createRoot } from "react-dom/client";
 
-import {
-  oneColumn,
-  threeColumns,
-  twoColumns,
-} from "../../content-components/row";
-
 import classes from "./Canvas.module.scss";
 
 import { renderToString } from "react-dom/server";
 import ComponentTypeManager from "../ComponentTypeManager/ComponentTypeManager";
 import CreateRowManager from "../CreateRowManager/CreateRowManage";
-import text from "../../content-components/text";
-import list from "../../content-components/list";
-import image from "../../content-components/image";
-import readRowConfig from "../../util/readRowConfig";
+
+import convertPageConfig from "../../util/convert-page-config";
 
 const Canvas = () => {
   const rootRef = useRef(null);
@@ -36,74 +28,74 @@ const Canvas = () => {
   });
   let root = null;
 
-  const pageConfigExample = {
-    content: [{}, {}, {}],
-    title: "",
-    parameters: {
-      paddingLeft: 0,
-      paddingRight: 0,
-      paddingTop: 0,
-      paddingBottom: 0,
-    },
-  };
+  const generateComponent = (type, position) => {
+    const row = position
+      .split("#")[0]
+      .charAt(position.split("#")[0].length - 1);
+    const number = position.split("#")[1];
+    let component = {};
+    if (type == "Text") {
+      component = {
+        type: "Text",
+        background: "none",
+        color: "#000",
+        fontFamily: "arial",
+        fontSize: 0,
+        paddingLeft: 0,
+        paddingRight: 0,
+        paddingTop: 0,
+        paddingBottom: 0,
+        content: [],
+      };
+    }
+    if (type == "List") {
+      component = {
+        type: "List",
+        background: "none",
+        color: "#000",
+        fontFamily: "arial",
+        fontSize: 14,
+        paddingLeft: 0,
+        paddingRight: 0,
+        paddingTop: 0,
+        paddingBottom: 0,
+        content: ["", "", ""],
+      };
+    }
+    if (type == "Image") {
+      component = {
+        type: "Image",
+        url: "",
+        paddingLeft: 0,
+        paddingRight: 0,
+        paddingTop: 0,
+        paddingBottom: 0,
+      };
+    }
 
-  const rowConfig = {
-    type: "row",
-    columns: 1,
-    position: 0,
-    parameters: {
-      paddingLeft: 0,
-      paddingRight: 0,
-      paddingTop: 0,
-      paddingBottom: 0,
-    },
-    contentComponents: {},
-  };
+    const newPageContent = [];
+    pageConfig.content.map((rowConfig) => {
+      if (rowConfig.position != row) {
+        newPageContent.push(rowConfig);
+      } else {
+        newPageContent.push({
+          ...rowConfig,
+          contentComponents: [...rowConfig.contentComponents, component],
+        });
+      }
+    });
 
-  const textComponentConfig = {
-    type: "text",
-    background: "none",
-    color: "#fff",
-    fontFamily: "arial",
-    fontSize: 0,
-    paddingLeft: 0,
-    paddingRight: 0,
-    paddingTop: 0,
-    paddingBottom: 0,
-    content: ["", "", ""],
-  };
-
-  const listComponentConfig = {
-    type: "text",
-    background: "none",
-    color: "#000",
-    fontFamily: "arial",
-    fontSize: 14,
-    paddingLeft: 0,
-    paddingRight: 0,
-    paddingTop: 0,
-    paddingBottom: 0,
-    content: ["", "", ""],
-  };
-
-  const imageComponentConfig = {
-    type: "Image",
-    paddingLeft: 0,
-    paddingRight: 0,
-    paddingTop: 0,
-    paddingBottom: 0,
-  };
-
-  const generateComponent = (componentType) => {
-    console.log(componentType);
-    // setElementToGenerate(componentType);
+    setPageConfig((pageConfig) => ({
+      ...pageConfig,
+      content: [...newPageContent],
+    }));
   };
 
   const generateRow = (cols) => {
     const newRowConfig = {
       type: "row",
       columns: cols,
-      position: 1,
+      position: pageConfig.content.length + 1,
       parameters: {
         paddingLeft: 0,
         paddingRight: 0,
@@ -118,21 +110,67 @@ const Canvas = () => {
     }));
   };
 
-  useEffect(() => {
-    console.log(rootRef)
-    console.log(root)
-    if (rootRef && root == null) {
-      root = createRoot(rootRef.current);
-    }
-    console.log(root)
-  }, [rootRef]);
+  // useEffect(() => {
+  // }, [rootRef]);
 
   useEffect(() => {
-    if (rootRef) {
-      if (root) {
-        root.render(readRowConfig(pageConfig));
-      }
+    if (root == null) {
+      root = createRoot(rootRef.current);
+      const conversion = convertPageConfig(pageConfig);
+      let fullStringContent = "";
+      conversion.map((stringRow) => {
+        fullStringContent += stringRow + "\r\n";
+      });
+      const reactContent = parse(fullStringContent, {
+        replace: ({ attribs, children }) => {
+          if (!attribs) {
+            return;
+          }
+
+          if (attribs.id === "componentManager") {
+            return (
+              <ComponentTypeManager
+                componentGeneration={generateComponent}
+                elementPosition={attribs.name}
+              />
+            );
+          }
+        },
+      });
+      setContent(reactContent);
+      // const reactContent = parse(conversion);
+      // console.log(reactContent)
+      // root.render(reactContent)
+    } else {
+      const conversion = convertPageConfig(pageConfig);
+      let fullStringContent = "";
+      conversion.map((stringRow) => {
+        fullStringContent += stringRow + "\r\n";
+      });
+      const reactContent = parse(fullStringContent, {
+        replace: ({ attribs, children }) => {
+          if (!attribs) {
+            return;
+          }
+
+          if (attribs.id === "componentManager") {
+            return (
+              <ComponentTypeManager
+                componentGeneration={generateComponent}
+                elementPosition={attribs.name}
+              />
+            );
+          }
+        },
+      });
+      setContent(reactContent);
+      // const reactContent = parse(conversion);
+      // console.log(reactContent)
+      // root.render(reactContent)
     }
+    // console.log(pageConfig);
+    // console.log(root);
+    // convertPageConfig(pageConfig)
   }, [pageConfig]);
 
   return (
