@@ -40,11 +40,11 @@ const Canvas = () => {
         background: "none",
         color: "#000",
         fontFamily: "arial",
-        fontSize: 0,
+        fontSize: 14,
         paddingLeft: 0,
         paddingRight: 0,
-        paddingTop: 0,
-        paddingBottom: 0,
+        paddingTop: 20,
+        paddingBottom: 20,
         content: [],
       };
     }
@@ -59,7 +59,7 @@ const Canvas = () => {
         paddingRight: 0,
         paddingTop: 0,
         paddingBottom: 0,
-        content: ["", "", ""],
+        content: [],
       };
     }
     if (type == "Image") {
@@ -72,6 +72,7 @@ const Canvas = () => {
         paddingBottom: 0,
       };
     }
+    console.log(component);
 
     const newPageContent = [];
     pageConfig.content.map((rowConfig) => {
@@ -110,16 +111,13 @@ const Canvas = () => {
     }));
   };
 
-  // useEffect(() => {
-  // }, [rootRef]);
-
   useEffect(() => {
     if (root == null) {
       root = createRoot(rootRef.current);
       const conversion = convertPageConfig(pageConfig);
       let fullStringContent = "";
       conversion.map((stringRow) => {
-        fullStringContent += stringRow + "\r\n";
+        fullStringContent += stringRow;
       });
       const reactContent = parse(fullStringContent, {
         replace: ({ attribs, children }) => {
@@ -145,7 +143,7 @@ const Canvas = () => {
       const conversion = convertPageConfig(pageConfig);
       let fullStringContent = "";
       conversion.map((stringRow) => {
-        fullStringContent += stringRow + "\r\n";
+        fullStringContent += stringRow;
       });
       const reactContent = parse(fullStringContent, {
         replace: ({ attribs, children }) => {

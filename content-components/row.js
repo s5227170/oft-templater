@@ -121,4 +121,3 @@ export { oneColumn };
 export { twoColumns };
 export { threeColumns };
 
-// export default { oneColumn, twoColumns, threeColumns };

@@ -14,7 +14,6 @@ const convertPageConfig = (config) => {
     if (row.contentComponents.length) {
       //Check what type the component is
       for (let i = 0; i < row.contentComponents.length; i++) {
-        console.log(row.contentComponents[i]);
         if (row.contentComponents[i].type == "Text") {
           //Fill the component content and settings
           subComponents.push(
@@ -63,7 +62,6 @@ const convertPageConfig = (config) => {
         }
       }
     }
-    console.log(subComponents[0]);
 
     const position = row.position;
     if (row.columns == 1) {
@@ -142,8 +140,6 @@ const convertPageConfig = (config) => {
       }
     }
   });
-
-  console.log(htmlContent);
 
   return htmlContent;
 };
