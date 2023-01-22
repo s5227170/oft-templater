@@ -1,17 +1,20 @@
 const text = (
-  background,
-  color,
-  fontFamily,
-  fontSize,
-  paddingLeft,
-  paddingRight,
-  paddingTop,
-  paddingBottom,
-  content
+    background,
+    color,
+    fontFamily,
+    fontSize,
+    paddingLeft,
+    paddingRight,
+    paddingTop,
+    paddingBottom,
+    content,
+    position,
+    item,
+    rowType,
 ) => {
-  const contentDistribution = content.map((paragraph) => {
-    console.log(paragraph);
-    return `
+    const contentDistribution = content.map((paragraph) => {
+        console.log(paragraph);
+        return `
             <tr>
                 <td></td>
                 <td>
@@ -20,25 +23,45 @@ const text = (
                 <td></td>
             </tr >
         `;
-  });
+    });
 
-  let items = "";
-  for (let i = 0; i < contentDistribution.length; i++) {
-    items = items.concat(contentDistribution[i]);
-  }
+    let componentSize = 0;
 
-  return `
-    <table width="600">
+    if (rowType == 1) {
+        componentSize = "600"
+    }
+    if (rowType == 2) {
+        componentSize = "300"
+    }
+
+    if (rowType == 3) {
+        componentSize = "200"
+    }
+
+
+    let items = "";
+    if (contentDistribution.length) {
+        for (let i = 0; i < contentDistribution.length; i++) {
+            items = items.concat(contentDistribution[i]);
+        }
+    }
+
+    if (!contentDistribution.length) {
+        items = items.concat(`<span id="componentContentManager" name="row${position}#item${item}"></span>`)
+    }
+
+    return `
+    <table width=${componentSize}>
         <tbody>
             <tr>
                 <td width="${paddingLeft}"></td>
-                <td height="${paddingTop}"><img src="http://welcome.hp-ww.com/img/s.gif" width="600" height="${paddingTop}" alt="" style="display:block;"></td>
+                <td height="${paddingTop}"><img src="http://welcome.hp-ww.com/img/s.gif" width=${componentSize} height="${paddingTop}" alt="" style="display:block;"></td>
                 <td width="${paddingRight}"></td>
             </tr>
-            <tr width="600">
+            <tr width=${componentSize}>
                 <td width="${paddingLeft}"></td>
-                    <td width="600">
-                        <table width="600">
+                    <td width=${componentSize}>
+                        <table width=${componentSize}>
                             <tbody>
                                 ${items}
                             </tbody>
@@ -48,7 +71,7 @@ const text = (
             </tr>
             <tr>
                 <td width="${paddingLeft}"></td>
-                <td height="${paddingBottom}"><img src="http://welcome.hp-ww.com/img/s.gif" width="600" height="${paddingBottom}" alt="" style="display:block;"></td>
+                <td height="${paddingBottom}"><img src="http://welcome.hp-ww.com/img/s.gif" width=${componentSize} height="${paddingBottom}" alt="" style="display:block;"></td>
                 <td width="${paddingRight}"></td>
             </tr>
         </tbody>

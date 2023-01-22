@@ -12,7 +12,6 @@ const convertPageConfig = (config) => {
   config.content.map((row, index) => {
     const subComponents = [];
     if (row.contentComponents.length) {
-      //Check what type the component is
       for (let i = 0; i < row.contentComponents.length; i++) {
         if (row.contentComponents[i].type == "Text") {
           //Fill the component content and settings
@@ -26,8 +25,10 @@ const convertPageConfig = (config) => {
               row.contentComponents[i].paddingRight,
               row.contentComponents[i].paddingTop,
               row.contentComponents[i].paddingBottom,
-              ["Hello Bitch", "I am working", "How do you feel"]
-              // row.contentComponents[i].content
+              row.contentComponents[i].content,
+              row.position,
+              i,
+              row.columns
             )
           );
         }
@@ -100,16 +101,60 @@ const convertPageConfig = (config) => {
           )
         );
       } else {
-        htmlContent.push(
-          twoColumns(
-            row.parameters.paddingBottom,
-            row.parameters.paddingRight,
-            row.parameters.paddingTop,
-            row.parameters.paddingBottom,
-            subComponents[0],
-            subComponents[1]
-          )
-        );
+        if (subComponents.length == 1) {
+          if (row.contentComponents[0].position == 1) {
+            console.log(subComponents[0])
+            htmlContent.push(
+              twoColumns(
+                row.parameters.paddingBottom,
+                row.parameters.paddingRight,
+                row.parameters.paddingTop,
+                row.parameters.paddingBottom,
+                subComponents[0],
+                `<span id="componentManager" name="row${position}#item2"></span>`
+              )
+            );
+          }
+          if (row.contentComponents[0].position == 2) {
+            console.log(subComponents[0])
+            htmlContent.push(
+              twoColumns(
+                row.parameters.paddingBottom,
+                row.parameters.paddingRight,
+                row.parameters.paddingTop,
+                row.parameters.paddingBottom,
+                `<span id="componentManager" name="row${position}#item2"></span>`,
+                subComponents[0],
+              )
+            );
+          }
+        }
+        if (subComponents.length == 2) {
+          if (row.contentComponents[0].position == 1) {
+            htmlContent.push(
+              twoColumns(
+                row.parameters.paddingBottom,
+                row.parameters.paddingRight,
+                row.parameters.paddingTop,
+                row.parameters.paddingBottom,
+                subComponents[0],
+                subComponents[1]
+              )
+            );
+          }
+          if (row.contentComponents[0].position == 2) {
+            htmlContent.push(
+              twoColumns(
+                row.parameters.paddingBottom,
+                row.parameters.paddingRight,
+                row.parameters.paddingTop,
+                row.parameters.paddingBottom,
+                subComponents[1],
+                subComponents[0]
+              )
+            );
+          }
+        }
       }
     }
     if (row.columns == 3) {
@@ -126,17 +171,158 @@ const convertPageConfig = (config) => {
           )
         );
       } else {
-        htmlContent.push(
-          threeColumns(
-            row.parameters.paddingBottom,
-            row.parameters.paddingRight,
-            row.parameters.paddingTop,
-            row.parameters.paddingBottom,
-            subComponents[0],
-            subComponents[1],
-            subComponents[2]
-          )
-        );
+        //=============================
+        if (subComponents.length == 1) {
+          if (row.contentComponents[0].position == 1) {
+            htmlContent.push(
+              twoColumns(
+                row.parameters.paddingBottom,
+                row.parameters.paddingRight,
+                row.parameters.paddingTop,
+                row.parameters.paddingBottom,
+                subComponents[0],
+                `<span id="componentManager" name="row${position}#item2"></span>`,
+                `<span id="componentManager" name="row${position}#item3"></span>`
+              )
+            );
+          }
+          if (row.contentComponents[0].position == 2) {
+            htmlContent.push(
+              twoColumns(
+                row.parameters.paddingBottom,
+                row.parameters.paddingRight,
+                row.parameters.paddingTop,
+                row.parameters.paddingBottom,
+                `<span id="componentManager" name="row${position}#item1"></span>`,
+                subComponents[0],
+                `<span id="componentManager" name="row${position}#item3"></span>`,
+              )
+            );
+          }
+          if (row.contentComponents[0].position == 3) {
+            htmlContent.push(
+              twoColumns(
+                row.parameters.paddingBottom,
+                row.parameters.paddingRight,
+                row.parameters.paddingTop,
+                row.parameters.paddingBottom,
+                `<span id="componentManager" name="row${position}#item1"></span>`,
+                `<span id="componentManager" name="row${position}#item2"></span>`,
+                subComponents[0],
+              )
+            );
+          }
+        }
+        //=============================
+        if (subComponents.length == 2) {
+          if (row.contentComponents[0].position == 1 && row.contentComponents[1].position == 2) {
+            htmlContent.push(
+              twoColumns(
+                row.parameters.paddingBottom,
+                row.parameters.paddingRight,
+                row.parameters.paddingTop,
+                row.parameters.paddingBottom,
+                subComponents[0],
+                subComponents[1]
+                  `<span id="componentManager" name="row${position}#item3"></span>`,
+              )
+            );
+          }
+          if (row.contentComponents[0].position == 2 && row.contentComponents[1].position == 3) {
+            htmlContent.push(
+              twoColumns(
+                row.parameters.paddingBottom,
+                row.parameters.paddingRight,
+                row.parameters.paddingTop,
+                row.parameters.paddingBottom,
+                `<span id="componentManager" name="row${position}#item1"></span>`,
+                subComponents[0],
+                subComponents[1],
+              )
+            );
+          }
+          if (row.contentComponents[0].position == 3 && row.contentComponents[1].position == 2) {
+            htmlContent.push(
+              twoColumns(
+                row.parameters.paddingBottom,
+                row.parameters.paddingRight,
+                row.parameters.paddingTop,
+                row.parameters.paddingBottom,
+                `<span id="componentManager" name="row${position}#item1"></span>`,
+                subComponents[1],
+                subComponents[0]
+              )
+            );
+          }
+          if (row.contentComponents[0].position == 1 && row.contentComponents[1].position == 3) {
+            htmlContent.push(
+              twoColumns(
+                row.parameters.paddingBottom,
+                row.parameters.paddingRight,
+                row.parameters.paddingTop,
+                row.parameters.paddingBottom,
+                subComponents[0]
+                  `<span id="componentManager" name="row${position}#item2"></span>`,
+                subComponents[1],
+              )
+            );
+          }
+        }
+        //=============================
+        if (subComponents.length == 3) {
+          if (row.contentComponents[0].position == 1 && row.contentComponents[1].position == 2 && row.contentComponents[2].position == 3) {
+            htmlContent.push(
+              twoColumns(
+                row.parameters.paddingBottom,
+                row.parameters.paddingRight,
+                row.parameters.paddingTop,
+                row.parameters.paddingBottom,
+                subComponents[0],
+                subComponents[1],
+                subComponents[2]
+              )
+            );
+          }
+          if (row.contentComponents[0].position == 1 && row.contentComponents[1].position == 3 && row.contentComponents[3].position == 2) {
+            htmlContent.push(
+              twoColumns(
+                row.parameters.paddingBottom,
+                row.parameters.paddingRight,
+                row.parameters.paddingTop,
+                row.parameters.paddingBottom,
+                subComponents[0],
+                subComponents[2],
+                subComponents[1]
+              )
+            );
+          }
+          if (row.contentComponents[0].position == 2 && row.contentComponents[1].position == 1 && row.contentComponents[2].position == 3) {
+            htmlContent.push(
+              twoColumns(
+                row.parameters.paddingBottom,
+                row.parameters.paddingRight,
+                row.parameters.paddingTop,
+                row.parameters.paddingBottom,
+                subComponents[1],
+                subComponents[0],
+                subComponents[2],
+              )
+            );
+          }
+          if (row.contentComponents[0].position == 3 && row.contentComponents[1].position == 2 && row.contentComponents[2].position == 1) {
+            htmlContent.push(
+              twoColumns(
+                row.parameters.paddingBottom,
+                row.parameters.paddingRight,
+                row.parameters.paddingTop,
+                row.parameters.paddingBottom,
+                subComponents[2],
+                subComponents[1],
+                subComponents[0],
+              )
+            );
+          }
+        }
       }
     }
   });
@@ -146,4 +332,3 @@ const convertPageConfig = (config) => {
 
 export default convertPageConfig;
 
-//Check if the row has any components and if it doesn't keep the subComponent variable empty

@@ -1,12 +1,12 @@
 .Modal {
     overflow: hidden;
     background-color: #ffffff;
-    border: 1px solid #7c7c7c;
+    border: 2px solid #7c7c7c;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -70%);
-    border-radius: 25px 12px 12px 12px;
+    border-radius: 12px 12px 12px 12px;
     z-index: 20;
     padding: 10px;
     animation: openAnimation 0.25s linear forwards;

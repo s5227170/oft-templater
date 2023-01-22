@@ -9,6 +9,7 @@ import ComponentTypeManager from "../ComponentTypeManager/ComponentTypeManager";
 import CreateRowManager from "../CreateRowManager/CreateRowManage";
 
 import convertPageConfig from "../../util/convert-page-config";
+import ComponentContentManager from "../ComponentContentManager/ComponentContentManager";
 
 const Canvas = () => {
   const rootRef = useRef(null);
@@ -32,7 +33,9 @@ const Canvas = () => {
     const row = position
       .split("#")[0]
       .charAt(position.split("#")[0].length - 1);
-    const number = position.split("#")[1];
+    const number = position
+      .split("#")[1]
+      .charAt(position.split("#")[1].length - 1);
     let component = {};
     if (type == "Text") {
       component = {
@@ -46,6 +49,7 @@ const Canvas = () => {
         paddingTop: 20,
         paddingBottom: 20,
         content: [],
+        position: number,
       };
     }
     if (type == "List") {
@@ -60,6 +64,7 @@ const Canvas = () => {
         paddingTop: 0,
         paddingBottom: 0,
         content: [],
+        position: number,
       };
     }
     if (type == "Image") {
@@ -70,9 +75,9 @@ const Canvas = () => {
         paddingRight: 0,
         paddingTop: 0,
         paddingBottom: 0,
+        position: number,
       };
     }
-    console.log(component);
 
     const newPageContent = [];
     pageConfig.content.map((rowConfig) => {
@@ -111,7 +116,12 @@ const Canvas = () => {
     }));
   };
 
+  const confirmContent = () => {
+
+  }
+
   useEffect(() => {
+    console.log(pageConfig)
     if (root == null) {
       root = createRoot(rootRef.current);
       const conversion = convertPageConfig(pageConfig);
@@ -133,12 +143,15 @@ const Canvas = () => {
               />
             );
           }
+          if (attribs.id === "componentContentManager") {
+            return (
+              <ComponentContentManager confirmContent={confirmContent} elementPosition={attribs.name} />
+            )
+          }
         },
       });
+      // console.log(fullStringContent)
       setContent(reactContent);
-      // const reactContent = parse(conversion);
-      // console.log(reactContent)
-      // root.render(reactContent)
     } else {
       const conversion = convertPageConfig(pageConfig);
       let fullStringContent = "";
@@ -159,16 +172,16 @@ const Canvas = () => {
               />
             );
           }
+          if (attribs.id === "componentContentManager") {
+            return (
+              <ComponentContentManager confirmContent={confirmContent} elementPosition={attribs.name} />
+            )
+          }
         },
       });
+      // console.log(fullStringContent)
       setContent(reactContent);
-      // const reactContent = parse(conversion);
-      // console.log(reactContent)
-      // root.render(reactContent)
     }
-    // console.log(pageConfig);
-    // console.log(root);
-    // convertPageConfig(pageConfig)
   }, [pageConfig]);
 
   return (

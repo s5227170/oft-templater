@@ -1,4 +1,6 @@
 .SettingsContent {
+    display: flex;
+    flex-direction: column;
 
     .Choices {
         display: flex;
@@ -6,5 +8,9 @@
         justify-content: space-between;
     }
 
-    
+    h1 {
+        font-weight: bold;
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
 }
