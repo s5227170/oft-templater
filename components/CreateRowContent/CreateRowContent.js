@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 
 import RadioButton from "../UI/RadioButton/RadioButton";
@@ -13,6 +13,9 @@ const CreateRowContent = (props) => {
     double: false,
     triple: false,
   });
+  const btnOneRef = useRef(null);
+  const btnTwoRef = useRef(null);
+  const btnThreeRef = useRef(null);
 
   const buttonChoiceTrigger = (name) => {
     const newRowConfig = Object.assign({}, rowConfig);
@@ -39,10 +42,28 @@ const CreateRowContent = (props) => {
     }
   };
 
+  const rowClickHandler = (row) => {
+    if (row == 1) {
+      if (btnOneRef) {
+        btnOneRef.current.click();
+      }
+    }
+    if (row == 2) {
+      if (btnTwoRef) {
+        btnTwoRef.current.click();
+      }
+    }
+    if (row == 3) {
+      if (btnThreeRef) {
+        btnThreeRef.current.click();
+      }
+    }
+  };
+
   return (
     <div className={classes.CreateRowContent}>
       <h1 className={classes.Title}>Choose a component type</h1>
-      <div className={classes.RowType}>
+      <div className={classes.RowType} onClick={() => rowClickHandler(1)}>
         <div className={classes.Generalinfo}>
           <label>Single-column</label>
           {/* <img src={Single} /> */}
@@ -51,9 +72,10 @@ const CreateRowContent = (props) => {
         <RadioButton
           click={() => buttonChoiceTrigger("single")}
           active={rowConfig.single}
+          elementRef={btnOneRef}
         ></RadioButton>
       </div>
-      <div className={classes.RowType}>
+      <div className={classes.RowType} onClick={() => rowClickHandler(2)}>
         <div className={classes.Generalinfo}>
           <label>Double-column</label>
           {/* <img src={Double} /> */}
@@ -62,9 +84,10 @@ const CreateRowContent = (props) => {
         <RadioButton
           click={() => buttonChoiceTrigger("double")}
           active={rowConfig.double}
+          elementRef={btnTwoRef}
         ></RadioButton>
       </div>
-      <div className={classes.RowType}>
+      <div className={classes.RowType} onClick={() => rowClickHandler(3)}>
         <div className={classes.Generalinfo}>
           <label>Triple-column</label>
           {/* <img src={Triple} /> */}
@@ -73,6 +96,7 @@ const CreateRowContent = (props) => {
         <RadioButton
           click={() => buttonChoiceTrigger("triple")}
           active={rowConfig.triple}
+          elementRef={btnThreeRef}
         ></RadioButton>
       </div>
       <ConfirmationButtons

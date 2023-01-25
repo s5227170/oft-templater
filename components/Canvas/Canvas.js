@@ -36,6 +36,7 @@ const Canvas = () => {
     const number = position
       .split("#")[1]
       .charAt(position.split("#")[1].length - 1);
+    console.log(number);
     let component = {};
     if (type == "Text") {
       component = {
@@ -116,13 +117,11 @@ const Canvas = () => {
     }));
   };
 
-  const confirmContent = () => {
-
-  }
+  const confirmContent = () => {};
 
   useEffect(() => {
-    console.log(pageConfig)
     if (root == null) {
+      //If rows multiply, try moving the createRoot function out of the if
       root = createRoot(rootRef.current);
       const conversion = convertPageConfig(pageConfig);
       let fullStringContent = "";
@@ -145,8 +144,11 @@ const Canvas = () => {
           }
           if (attribs.id === "componentContentManager") {
             return (
-              <ComponentContentManager confirmContent={confirmContent} elementPosition={attribs.name} />
-            )
+              <ComponentContentManager
+                confirmContent={confirmContent}
+                elementPosition={attribs.name}
+              />
+            );
           }
         },
       });
@@ -174,8 +176,11 @@ const Canvas = () => {
           }
           if (attribs.id === "componentContentManager") {
             return (
-              <ComponentContentManager confirmContent={confirmContent} elementPosition={attribs.name} />
-            )
+              <ComponentContentManager
+                confirmContent={confirmContent}
+                elementPosition={attribs.name}
+              />
+            );
           }
         },
       });

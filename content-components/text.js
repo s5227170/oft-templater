@@ -1,20 +1,19 @@
 const text = (
-    background,
-    color,
-    fontFamily,
-    fontSize,
-    paddingLeft,
-    paddingRight,
-    paddingTop,
-    paddingBottom,
-    content,
-    position,
-    item,
-    rowType,
+  background,
+  color,
+  fontFamily,
+  fontSize,
+  paddingLeft,
+  paddingRight,
+  paddingTop,
+  paddingBottom,
+  content,
+  rowPosition,
+  item,
+  rowType
 ) => {
-    const contentDistribution = content.map((paragraph) => {
-        console.log(paragraph);
-        return `
+  const contentDistribution = content.map((paragraph) => {
+    return `
             <tr>
                 <td></td>
                 <td>
@@ -23,34 +22,37 @@ const text = (
                 <td></td>
             </tr >
         `;
-    });
+  });
 
-    let componentSize = 0;
+  let componentSize = 0;
 
-    if (rowType == 1) {
-        componentSize = "600"
+  console.log(rowType)
+
+  if (rowType == 1) {
+    componentSize = "600";
+  }
+  if (rowType == 2) {
+    componentSize = "300";
+  }
+
+  if (rowType == 3) {
+    componentSize = "200";
+  }
+
+  let items = "";
+  if (contentDistribution.length) {
+    for (let i = 0; i < contentDistribution.length; i++) {
+      items = items.concat(contentDistribution[i]);
     }
-    if (rowType == 2) {
-        componentSize = "300"
-    }
+  }
 
-    if (rowType == 3) {
-        componentSize = "200"
-    }
+  if (!contentDistribution.length) {
+    items = items.concat(
+      `<span id="componentContentManager" name="row${rowPosition}#item${item}"></span>`
+    );
+  }
 
-
-    let items = "";
-    if (contentDistribution.length) {
-        for (let i = 0; i < contentDistribution.length; i++) {
-            items = items.concat(contentDistribution[i]);
-        }
-    }
-
-    if (!contentDistribution.length) {
-        items = items.concat(`<span id="componentContentManager" name="row${position}#item${item}"></span>`)
-    }
-
-    return `
+  return `
     <table width=${componentSize}>
         <tbody>
             <tr>

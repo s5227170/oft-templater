@@ -1,6 +1,12 @@
 //Content components are either images, lists, or text
-const oneColumn = (paddingLeft, paddingRight, paddingTop, paddingBottom, contentComponentOne) => {
-    return `
+const oneColumn = (
+  paddingLeft,
+  paddingRight,
+  paddingTop,
+  paddingBottom,
+  contentComponentOne
+) => {
+  return `
         <table border="0" cellspacing="0" cellpadding="0" style="
             border-spacing: 0;
             mso-table-lspace: 0pt;
@@ -35,11 +41,18 @@ const oneColumn = (paddingLeft, paddingRight, paddingTop, paddingBottom, content
                 </tr>
             </tbody>
         </table>
-    `
-}
+    `;
+};
 
-const twoColumns = (paddingLeft, paddingRight, paddingTop, paddingBottom, contentComponentOne, contentComponentTwo) => {
-    return `
+const twoColumns = (
+  paddingLeft,
+  paddingRight,
+  paddingTop,
+  paddingBottom,
+  contentComponentOne,
+  contentComponentTwo
+) => {
+  return `
         <table border="0" cellspacing="0" cellpadding="0" style="
             border-spacing: 0;
             mso-table-lspace: 0pt;
@@ -48,6 +61,7 @@ const twoColumns = (paddingLeft, paddingRight, paddingTop, paddingBottom, conten
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+            background: #fff;
             " align="center">
             <tbody>
                 <tr>
@@ -74,11 +88,19 @@ const twoColumns = (paddingLeft, paddingRight, paddingTop, paddingBottom, conten
                 </tr>
             </tbody>
         </table>
-    `
-}
+    `;
+};
 
-const threeColumns = (paddingLeft, paddingRight, paddingTop, paddingBottom, contentComponentOne, contentComponentTwo, contentComponentThree) => {
-    return `
+const threeColumns = (
+  paddingLeft,
+  paddingRight,
+  paddingTop,
+  paddingBottom,
+  contentComponentOne,
+  contentComponentTwo,
+  contentComponentThree
+) => {
+  return `
         <table border="0" cellspacing="0" cellpadding="0" style="
             border-spacing: 0;
             mso-table-lspace: 0pt;
@@ -87,6 +109,7 @@ const threeColumns = (paddingLeft, paddingRight, paddingTop, paddingBottom, cont
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+            background: #fff;
             " align="center">
             <tbody>
                 <tr>
@@ -114,10 +137,9 @@ const threeColumns = (paddingLeft, paddingRight, paddingTop, paddingBottom, cont
                 </tr>
             </tbody>
         </table>
-    `
-}
+    `;
+};
 
 export { oneColumn };
 export { twoColumns };
 export { threeColumns };
-
