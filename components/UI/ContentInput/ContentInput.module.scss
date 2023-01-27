@@ -1,13 +1,42 @@
+.InputWrapper {
+  h1 {
+    color: #ce40a3;
+    font-weight: bold;
+  }
+
+  .Information {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+
+    .ControlIcons {
+      display: flex;
+      flex-direction: row;
+    }
+
+    svg {
+      outline: none;
+
+      :hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
 .Input {
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: max-content;
+  width: 100%;
 
   textarea {
     outline: none;
     font-size: 18px;
-    width: 430px;
+    width: 100%;
     background-color: #eeeeee;
     padding: 10px;
     height: 100px;
@@ -31,9 +60,13 @@
 
 .TextPreviewArea {
   margin-top: 10px;
-  width: 430px;
+  width: 100%;
 
-  .TextContent {
+  // h3 {
+  //   color: #ce40a3;
+  // }
+
+  .Formatter {
     background-color: #eeeeee;
     border-radius: 4px;
     padding: 10px;

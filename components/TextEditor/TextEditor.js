@@ -41,7 +41,6 @@ const TextEditor = (props) => {
   };
 
   const deleteText = (index) => {
-    console.log(index);
     const newContent = [...content];
     newContent.splice(index, 1);
     setContent(newContent);
@@ -86,21 +85,17 @@ const TextEditor = (props) => {
           </div>
           <div className={classes.Fields}>
             {/* implement input generation */}
-            {content.map(
-              (input, index) => (
-                console.log(input),
-                (
-                  <ContentInput
-                    key={"input" + index}
-                    inputChange={(e) => textHandler(e, index)}
-                    deleteBtn={() => deleteText(index)}
-                    textId={index}
-                    textValue={content[index]}
-                  />
-                )
-              )
-            )}
+            {content.map((input, index) => (
+              <ContentInput
+                key={"input" + index}
+                inputChange={(e) => textHandler(e, index)}
+                deleteBtn={() => deleteText(index)}
+                textId={index}
+                textValue={content[index]}
+              />
+            ))}
           </div>
+          
         </div>
       </div>
       <div className={classes.Options}></div>

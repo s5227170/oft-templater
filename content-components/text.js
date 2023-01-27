@@ -26,8 +26,6 @@ const text = (
 
   let componentSize = 0;
 
-  console.log(rowType)
-
   if (rowType == 1) {
     componentSize = "600";
   }
