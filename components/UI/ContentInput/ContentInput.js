@@ -7,53 +7,58 @@ import { FaInfoCircle } from "react-icons/fa";
 
 const ContentInput = (props) => {
   const [selected, setSelected] = useState();
+  const [toChange, setToChange] = useState()
 
   const handleSelect = (e) => {
-    function getSelectedText() {
-      const constraint = document.getElementById("experiment");
-      if (e.target == constraint) {
-        let t = document.all
-          ? document.selection.createRange().text
-          : document.getSelection();
-        console.log("test");
-        setSelected(t);
-      }
+    const constraint = document.getElementById("experiment");
+    const constraintTwo = document.querySelector("#experiment b");
+    const constraintThree = document.getElementById("experiment").innerText;
+    if (e.target == constraint || e.target == constraintTwo || e.target == constraintThree) {
+      let t = document.getSelection();
+      console.log(t)
+      console.log(t.getRangeAt(0))
+      setSelected(t);
+      console.log(t.anchorOffset)
+
     }
 
-    getSelectedText();
   };
 
   const handleSelectSubmit = () => {
+    const constraint = document.getElementById("experiment");
     if (!selected) {
       return;
     }
 
-    let selectionText = selected.toString();
+    if (selected.focusNode.parentNode == constraint || selected.focusNode.parentNode.parentNode == constraint) {
+      let selectionText = selected.toString();
+      console.log(selectionText)
+      selectionText.replace(" ", `&nbsp;`)
 
-    let bold = document.createElement("b");
-    bold.textContent = selectionText;
+      //Get the selected text offsets
+      //selected.focusNode.length
+      //selected.anchorOffset
+      //Get the overall text offsets
+      //
 
-    let range = selected.getRangeAt(0);
-    range.deleteContents();
-    range.insertNode(bold);
+      let bold = document.createElement("b");
+      let text = document.createTextNode(selectionText)
+      bold.textContent = selectionText;
+
+      let range = selected.getRangeAt(0);
+
+      if (selected.focusNode.parentNode.nodeName == "B") {
+        range.deleteContents();
+        range.endContainer.parentNode.after(text);
+      } else {
+        console.log("works")
+        range.deleteContents();
+        range.insertNode(bold);
+      }
+
+    }
   };
 
-  // const deletionHandler = (e) => {
-  //   console.log(e);
-  //   if (e.code === "Backspace") {
-  //     if (!selected) {
-  //       return;
-  //     }
-  //     let selectionText = selected.toString();
-
-  //     let bold = document.createElement("b");
-  //     bold.textContent = selectionText;
-
-  //     let range = selected.getRangeAt(0);
-  //     range.deleteContents();
-  //     range.insertNode(bold);
-  //   }
-  // };
 
   useEffect(() => {
     const target = document.getElementById("experiment");
@@ -103,7 +108,6 @@ const ContentInput = (props) => {
           value={props.textValue}
           placeholder="Enter a text paragraph"
           onChange={props.inputChange}
-          // onKeyDown={(e) => deletionHandler(e)}
         />
       </div>
       <div className={classes.TextPreviewArea}>
@@ -116,6 +120,7 @@ const ContentInput = (props) => {
             id="experiment"
             className={classes.Experiment}
             onMouseUp={(e) => handleSelect(e)}
+            onDoubleClick={(e) => handleSelect(e)}
           ></div>
         </div>
       </div>
