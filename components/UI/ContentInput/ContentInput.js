@@ -7,21 +7,20 @@ import { FaInfoCircle } from "react-icons/fa";
 
 const ContentInput = (props) => {
   const [selected, setSelected] = useState();
-  const [toChange, setToChange] = useState()
+  const [toChange, setToChange] = useState();
 
   const handleSelect = (e) => {
     const constraint = document.getElementById("experiment");
     const constraintTwo = document.querySelector("#experiment b");
     const constraintThree = document.getElementById("experiment").innerText;
-    if (e.target == constraint || e.target == constraintTwo || e.target == constraintThree) {
+    if (
+      e.target == constraint ||
+      e.target == constraintTwo ||
+      e.target == constraintThree
+    ) {
       let t = document.getSelection();
-      console.log(t)
-      console.log(t.getRangeAt(0))
       setSelected(t);
-      console.log(t.anchorOffset)
-
     }
-
   };
 
   const handleSelectSubmit = () => {
@@ -30,35 +29,29 @@ const ContentInput = (props) => {
       return;
     }
 
-    if (selected.focusNode.parentNode == constraint || selected.focusNode.parentNode.parentNode == constraint) {
+    if (
+      selected.focusNode.parentNode == constraint ||
+      selected.focusNode.parentNode.parentNode == constraint
+    ) {
       let selectionText = selected.toString();
-      console.log(selectionText)
-      selectionText.replace(" ", `&nbsp;`)
-
-      //Get the selected text offsets
-      //selected.focusNode.length
-      //selected.anchorOffset
-      //Get the overall text offsets
-      //
-
-      let bold = document.createElement("b");
-      let text = document.createTextNode(selectionText)
-      bold.textContent = selectionText;
+      selectionText.replace(" ", `&nbsp;`);
 
       let range = selected.getRangeAt(0);
+      console.log(range.startContainer.parentNode)
 
       if (selected.focusNode.parentNode.nodeName == "B") {
-        range.deleteContents();
-        range.endContainer.parentNode.after(text);
+        const clearText = range.startContainer.innerText;
+        let text = document.createTextNode(clearText);
+        // range.deleteContents();
+        constraint.parentNode.childNodes[0].replaceChild(text, range.startContainer.parentNode);
       } else {
-        console.log("works")
+        let bold = document.createElement("b");
+        bold.textContent = selectionText;
         range.deleteContents();
         range.insertNode(bold);
       }
-
     }
   };
-
 
   useEffect(() => {
     const target = document.getElementById("experiment");
