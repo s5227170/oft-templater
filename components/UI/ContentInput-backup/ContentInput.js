@@ -166,7 +166,47 @@ const ContentInput = (props) => {
             />
           </div>
         </div>
+        <div className={classes.Input}>
+          <textarea
+            value={props.textValue}
+            placeholder="Enter a text paragraph"
+            onChange={props.inputChange}
+          />
+        </div>
         <div className={classes.TextPreviewArea}>
+          {/* <div className={classes.Information}>
+            <h3>Preview and format area</h3>
+            <div className={classes.ControlIcons}>
+              <FaInfoCircle
+                id={"info-content" + props.textId}
+                color="#000"
+                size="30"
+                clickable
+              />
+              <Tooltip
+                anchorId={"info-content" + props.textId}
+                place="top"
+                events={["click"]}
+              >
+                <label>
+                  Paste all the text before formatting. If multiple words aren't
+                  <br></br>
+                  getting their format settings applied, either paste the text
+                  <br></br>
+                  again, or try to format each word separately.
+                </label>
+              </Tooltip>
+            </div>
+          </div>
+          <button onClick={handleSelectSubmit}>Make bold</button>
+          <div id="formatter" className={classes.Formatter}>
+            <div
+              id="experiment"
+              className={classes.Experiment}
+              onMouseUp={(e) => handleSelect(e)}
+              onDoubleClick={(e) => handleSelect(e)}
+            ></div>
+          </div> */}
           <RichTextExample />
 
         </div>
