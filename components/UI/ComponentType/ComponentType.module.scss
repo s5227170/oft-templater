@@ -12,6 +12,13 @@
     align-items: center;
     margin-bottom: 20px;
 
+    &:hover {
+        background-color: darken(#fff, 8);
+        transition: 0.1s;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+
     h2 {
         margin-bottom: 20px;
         font-weight: 500;

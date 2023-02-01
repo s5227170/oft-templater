@@ -1,5 +1,6 @@
 import { AiOutlineClose } from "react-icons/ai";
-import { MdOutlineDeleteForever } from "react-icons/md";
+import { MdOutlineDeleteForever, MdDoneOutline } from "react-icons/md";
+import { Tooltip } from "react-tooltip";
 
 import TextEditor from "../TextEditor/TextEditor";
 
@@ -19,8 +20,26 @@ const ComponentContent = (props) => {
             : ""}
         </h1>
         <div className={classes.EditorIcons}>
-          <MdOutlineDeleteForever color="#CE4045" size="30px" />
-          <AiOutlineClose color="#000" size="30px" />
+          <MdDoneOutline id="confirm-text" color="#40CD9A" size="30px" />
+          <Tooltip
+            anchorId="confirm-text"
+            place="top"
+          >Confirm text component</Tooltip>
+          <MdOutlineDeleteForever
+            id="delete-sub-component"
+            color="#CE4045"
+            size="30px"
+          />
+          <Tooltip
+            anchorId="delete-sub-component"
+            place="top"
+          >Delete component</Tooltip>
+
+          <AiOutlineClose id="close-modal-text" color="#000" size="30px" />
+          <Tooltip
+            anchorId="close-modal-text"
+            place="top"
+          >Close Modal</Tooltip>
         </div>
       </div>
       <TextEditor />

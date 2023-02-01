@@ -49,7 +49,7 @@ export const EditorValue = React.forwardRef(
             padding: 5px 20px;
             color: #404040;
             border-top: 2px solid #eeeeee;
-            background: #f8f8f8;
+            background-color: #fff;
           `}
         >
           Slate's value as text
@@ -136,10 +136,11 @@ export const Toolbar = React.forwardRef(({ className, ...props }, ref) => (
       className,
       css`
         position: relative;
-        padding: 1px 18px 17px;
-        margin: 0 -20px;
+        padding: 10px;
         border-bottom: 2px solid #eee;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
+        width: 100%;
+        background-color: #fafafa;
       `
     )}
   />

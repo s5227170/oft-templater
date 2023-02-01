@@ -61,6 +61,13 @@
 .TextPreviewArea {
   margin-top: 10px;
   width: 100%;
+  background-color: #fafafa;
+  border-radius: 6px;
+
+  div[role="textbox"] {
+    padding: 0px 10px;
+    padding-bottom: 10px;
+  }
 
   // h3 {
   //   color: #ce40a3;

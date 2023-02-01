@@ -415,48 +415,6 @@ const convertPageConfig = (config) => {
               )
             );
           }
-          
-          // if (row.contentComponents[2].position == 1 && row.contentComponents[0].position == 2 && row.contentComponents[1].position == 3) {
-          //   htmlContent.push(
-          //     threeColumns(
-          //       row.parameters.paddingBottom,
-          //       row.parameters.paddingRight,
-          //       row.parameters.paddingTop,
-          //       row.parameters.paddingBottom,
-          //       subComponents[2],
-          //       subComponents[0],
-          //       subComponents[1],
-          //     )
-          //   );
-          // }
-          // if (row.contentComponents[1].position == 1 && row.contentComponents[2].position == 2 && row.contentComponents[0].position == 3) {
-          //   htmlContent.push(
-          //     threeColumns(
-          //       row.parameters.paddingBottom,
-          //       row.parameters.paddingRight,
-          //       row.parameters.paddingTop,
-          //       row.parameters.paddingBottom,
-          //       subComponents[1],
-          //       subComponents[2],
-          //       subComponents[0],
-          //     )
-          //   );
-          // }
-          // if (row.contentComponents[0].position == 1 && row.contentComponents[1].position == 2 && row.contentComponents[2].position == 3) {
-          //   htmlContent.push(
-          //     threeColumns(
-          //       row.parameters.paddingBottom,
-          //       row.parameters.paddingRight,
-          //       row.parameters.paddingTop,
-          //       row.parameters.paddingBottom,
-          //       subComponents[0],
-          //       subComponents[1],
-          //       subComponents[2],
-          //     )
-          //   );
-          // }
-
-
         }
       }
     }

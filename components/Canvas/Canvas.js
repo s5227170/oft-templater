@@ -147,6 +147,7 @@ const Canvas = () => {
               <ComponentContentManager
                 confirmContent={confirmContent}
                 elementPosition={attribs.name}
+                componentType={attribs.role}
               />
             );
           }

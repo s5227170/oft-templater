@@ -10,7 +10,7 @@ const text = (
   content,
   rowPosition,
   item,
-  rowType
+  rowType,
 ) => {
   const contentDistribution = content.map((paragraph) => {
     return `
@@ -46,7 +46,7 @@ const text = (
 
   if (!contentDistribution.length) {
     items = items.concat(
-      `<span id="componentContentManager" name="row${rowPosition}#item${item}"></span>`
+      `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"Text"}"></span>`
     );
   }
 

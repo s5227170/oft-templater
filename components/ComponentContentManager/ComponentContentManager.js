@@ -19,7 +19,7 @@ const ComponentContentManager = (props) => {
         <div className={classes.ComponentContentManager}>
             <ComponentContentButton clickHandler={tackleModal}>
                 <Modal modalTackle={tackleModal} modalShow={modalShow}>
-                    <ComponentContent cancelHandler={tackleModal} confirmHandler={props.confirmContent} elementPosition={props.elementPosition} />
+                    <ComponentContent componentType={props.componentType} cancelHandler={tackleModal} confirmHandler={props.confirmContent} elementPosition={props.elementPosition} />
                 </Modal>
             </ComponentContentButton>
         </div>

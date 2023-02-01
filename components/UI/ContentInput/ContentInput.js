@@ -7,127 +7,6 @@ import { FaInfoCircle } from "react-icons/fa";
 import RichTextExample from "../TextFormatter/TextFormatter";
 
 const ContentInput = (props) => {
-  const [selected, setSelected] = useState();
-  const [toChange, setToChange] = useState();
-
-  const handleSelect = (e) => {
-    const constraint = document.getElementById("experiment");
-    const constraintTwo = document.querySelector("#experiment b");
-    const constraintThree = document.getElementById("experiment").innerText;
-    if (
-      e.target == constraint ||
-      e.target == constraintTwo ||
-      e.target == constraintThree
-    ) {
-      let t = document.getSelection();
-      setSelected(t);
-    }
-  };
-
-  // const handleSelectSubmit = () => {
-  //   const constraint = document.getElementById("experiment");
-  //   if (!selected) {
-  //     return;
-  //   }
-
-  //   if (
-  //     selected.focusNode.parentNode == constraint ||
-  //     selected.focusNode.parentNode.parentNode == constraint
-  //   ) {
-  //     let selectionText = selected.toString();
-  //     selectionText.replace(" ", `&nbsp;`);
-
-  //     let range = selected.getRangeAt(0);
-
-  //     console.log(selected);
-  //     console.log(range);
-
-  //     let bold = document.createElement("b");
-  //     bold.textContent = selectionText;
-
-  //     if (
-  //       selected.focusNode.parentNode.nodeName != "B" &&
-  //       selected.anchorNode.parentNode.nodeName == "B"
-  //     ) {
-  //       bold.textContent = selectionText;
-  //       range.deleteContents();
-  //       range.insertNode(bold);
-  //     } else if (
-  //       selected.focusNode.parentNode.nodeName == "B" &&
-  //       selected.anchorNode.parentNode.nodeName != "B"
-  //     ) {
-  //       range.deleteContents();
-  //       range.insertNode(bold);
-  //     } else if (
-  //       selected.focusNode.parentNode.nodeName == "B" ||
-  //       selected.anchorNode.parentNode.nodeName == "B"
-  //     ) {
-  //       for (let i = 0; i < constraint.childNodes.length; i++) {
-  //         if (
-  //           constraint.childNodes[0].parentNode.childNodes[i] ==
-  //             selected.anchorNode.parentNode ||
-  //           constraint.childNodes[0].parentNode.childNodes[i] ==
-  //             selected.focusNode.parentNode
-  //         ) {
-  //           let text = document.createTextNode(selectionText);
-  //           const fullLength = range.commonAncestorContainer.length;
-  //           let targetStart = 0;
-  //           let targetEnd = 0;
-  //           let targetLength = 0;
-
-  //           if (selected.focusOffset > selected.anchorOffset) {
-  //             targetStart = selected.anchorOffset;
-  //             targetEnd = selected.focusOffset;
-  //             targetLength = selected.focusOffset - selected.anchorOffset;
-  //           } else {
-  //             targetStart = selected.focusOffset;
-  //             targetEnd = selected.anchorOffset;
-  //             targetLength = selected.anchorOffset - selected.focusOffset;
-  //           }
-  //           const leftSide = range.commonAncestorContainer.data.substr(
-  //             0,
-  //             targetStart
-  //           );
-  //           const rightSide = range.commonAncestorContainer.data.substr(
-  //             targetEnd,
-  //             fullLength - targetEnd
-  //           );
-  //           const content = range.commonAncestorContainer.data.substr(
-  //             targetStart,
-  //             targetLength
-  //           );
-
-  //           const unboldedContent = document.createTextNode(content);
-  //           const leftBoldSide = document.createElement("b");
-  //           leftBoldSide.textContent = leftSide;
-  //           const rightBoldSide = document.createElement("b");
-  //           rightBoldSide.textContent = rightSide;
-
-  //           console.log(leftBoldSide);
-  //           console.log(unboldedContent);
-  //           console.log(rightBoldSide);
-
-  //           constraint.childNodes[0].parentNode.replaceChild(
-  //             leftBoldSide,
-  //             constraint.childNodes[0].parentNode.childNodes[i]
-  //           );
-
-  //           leftBoldSide.after(unboldedContent, rightBoldSide);
-
-  //           console.log(leftBoldSide);
-  //         }
-  //       }
-  //     } else {
-  //       range.deleteContents();
-  //       range.insertNode(bold);
-  //     }
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const target = document.getElementById("experiment");
-  //   target.innerText = props.textValue;
-  // }, [props.textValue]);
 
   return (
     <Fragment>
@@ -168,7 +47,6 @@ const ContentInput = (props) => {
         </div>
         <div className={classes.TextPreviewArea}>
           <RichTextExample />
-
         </div>
       </div>
     </Fragment>

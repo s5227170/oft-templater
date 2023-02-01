@@ -12,7 +12,9 @@ import {
 import { withHistory } from "slate-history";
 import { Button, Icon, Toolbar } from "./components/components";
 
-import { BiBold } from "react-icons/bi";
+import { BiCode } from "react-icons/bi";
+import { FaItalic, FaHeading } from "react-icons/fa";
+import { ImBold } from "react-icons/im";
 
 const HOTKEYS = {
   "mod+b": "bold",
@@ -30,35 +32,50 @@ const RichTextExample = () => {
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
 
   return (
-    <Slate editor={editor} value={initialValue} onChange={value => {const isAstChange = editor.operations.some(
-      op => 'set_selection' !== op.type
-    )
-    if (isAstChange) {
-      // Save the value to Local Storage.
-      const content = JSON.stringify(value)
-      console.log(content)
-    }}}>
+    <Slate
+      editor={editor}
+      value={initialValue}
+      //This line bellow could be used to generate text into oft format
+      // onChange={(value) => {
+      //   const isAstChange = editor.operations.some(
+      //     (op) => "set_selection" !== op.type
+      //   );
+      //   if (isAstChange) {
+      //     // Save the value to Local Storage.
+      //     const content = JSON.stringify(value);
+      //     console.log(content);
+      //   }
+      // }}
+    >
       <Toolbar>
         <MarkButton
           format="bold"
-          icon={
-            <BiBold
-              color="#000"
-              size="20"
-              clickable
-            />
-          }
+          icon={<ImBold color="#000" size="20" clickable />}
         />
-        <MarkButton format="italic" icon="format_italic" />
-        <MarkButton format="underline" icon="format_underlined" />
-        <MarkButton format="code" icon="code" />
-        <BlockButton format="heading-one" icon="looks_one" />
-        <BlockButton format="heading-two" icon="looks_two" />
+        <MarkButton
+          format="italic"
+          icon={<FaItalic color="#000" size="20" clickable />}
+        />
+
+        <BlockButton
+          format="heading-one"
+          icon={<FaHeading color="#000" size="20" clickable />}
+        />
+        <BlockButton
+          format="heading-two"
+          icon={<FaHeading color="#000" size="16" clickable />}
+        />
+        <MarkButton
+          format="code"
+          icon={<BiCode color="#000" size="20" clickable />}
+        />
+        <MarkButton format="list-item" icon={"list"} />
+        <MarkButton format="bulleted-list" icon={"List wrapper"} />
       </Toolbar>
       <Editable
         renderElement={renderElement}
         renderLeaf={renderLeaf}
-        placeholder="Enter some rich text…"
+        placeholder="Write or paste the desired text content in here..."
         spellCheck
         autoFocus
         onKeyDown={(event) => {
@@ -190,6 +207,7 @@ const Element = ({ attributes, children, element }) => {
 };
 
 const Leaf = ({ attributes, children, leaf }) => {
+  console.log(leaf)
   if (leaf.bold) {
     children = <strong>{children}</strong>;
   }
@@ -246,7 +264,7 @@ const MarkButton = ({ format, icon }) => {
 const initialValue = [
   {
     type: "paragraph",
-    children: [{ text: "A line of text in a paragraph." }],
+    children: [{ text: "" }],
   },
 ];
 
