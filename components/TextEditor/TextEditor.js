@@ -20,6 +20,7 @@ const TextEditor = (props) => {
     paddingBottom: 0,
   });
   const [content, setContent] = useState([]);
+  const [inputData, setInputData] = useState([]);
 
   const paddingHandler = (e, el) => {
     if (e.target.value.length > 3) {
@@ -46,15 +47,21 @@ const TextEditor = (props) => {
     setContent(newContent);
   };
 
-  //Use this code to return the selected text
-  //window.getSelection().toString(); OR document.selection.createRange().htmlText for Internet Explorer
-  //Use it to search through the string
+  const dataExtractionHandler = (content, index) => {
+    //Test to see if state updates properly
+    const newArr = inputData;
+
+    let newItem = content;
+    newArr[index] = newItem;
+
+    setInputData(newArr);
+  };
 
   return (
     <div className={classes.TextEditor}>
       <div className={classes.Editor}>
         <div className={classes.Padding}>
-          <h2>Component padding:</h2>
+          <h2 className={classes.Heading}>Component padding:</h2>
           <div className={classes.PaddingInputs}>
             <PaddingElement change={(e) => paddingHandler(e, "paddingLeft")}>
               <AiOutlineBorderLeft color="#000" size="40" />
@@ -72,7 +79,13 @@ const TextEditor = (props) => {
         </div>
         <div className={classes.Inputs}>
           <div className={classes.Header}>
-            <h2>Content Inputs:</h2>
+            <div>
+              <h2 className={classes.Heading}>Content Inputs:</h2>
+              <label>
+                Each input represents a paragraph on the email. In order to
+                avoid unwanted behaviours, follow the instructions.
+              </label>
+            </div>
             <button onClick={addInputHandler}>
               Add an input
               <CgAddR
@@ -92,13 +105,13 @@ const TextEditor = (props) => {
                 deleteBtn={() => deleteText(index)}
                 textId={index}
                 textValue={content[index]}
+                extractData={dataExtractionHandler}
+                componentType={props.componentType}
               />
             ))}
           </div>
-          
         </div>
       </div>
-      <div className={classes.Options}></div>
     </div>
   );
 };

@@ -140,7 +140,6 @@ const ContentInput = (props) => {
               id={"info" + props.textId}
               color="#000"
               size="30"
-              clickable
             />
             <Tooltip
               anchorId={"info" + props.textId}

@@ -30,13 +30,13 @@ const Canvas = () => {
   let root = null;
 
   const generateComponent = (type, position) => {
+    console.log(position);
     const row = position
       .split("#")[0]
       .charAt(position.split("#")[0].length - 1);
     const number = position
       .split("#")[1]
       .charAt(position.split("#")[1].length - 1);
-    console.log(number);
     let component = {};
     if (type == "Text") {
       component = {
@@ -47,8 +47,8 @@ const Canvas = () => {
         fontSize: 14,
         paddingLeft: 0,
         paddingRight: 0,
-        paddingTop: 20,
-        paddingBottom: 20,
+        paddingTop: 0,
+        paddingBottom: 0,
         content: [],
         position: number,
       };
@@ -71,11 +71,13 @@ const Canvas = () => {
     if (type == "Image") {
       component = {
         type: "Image",
-        url: "",
         paddingLeft: 0,
         paddingRight: 0,
         paddingTop: 0,
         paddingBottom: 0,
+        url: [],
+        imgWidth: 0,
+        imgHeight: 0,
         position: number,
       };
     }
@@ -119,6 +121,29 @@ const Canvas = () => {
 
   const confirmContent = () => {};
 
+  const deleteContent = (row, item) => {
+    console.log(pageConfig.content);
+    const newPageContent = [];
+    pageConfig.content.map((rowConfig) => {
+      if (rowConfig.position != row) {
+        newPageContent.push(rowConfig);
+      } else {
+        const newContentComponents = [];
+        for (let i = 0; i < rowConfig.contentComponents.length; i++) {
+          // console.log(rowConfig.contentComponents[i].position);
+          // console.log(item);
+          if (rowConfig.contentComponents[i].position != item) {
+            newContentComponents.push(rowConfig.contentComponents[i]);
+          }
+        }
+        rowConfig.contentComponents = newContentComponents
+        newPageContent.push(rowConfig);
+      }
+    });
+
+    setPageConfig(newPageContent);
+  };
+
   useEffect(() => {
     if (root == null) {
       //If rows multiply, try moving the createRoot function out of the if
@@ -148,6 +173,7 @@ const Canvas = () => {
                 confirmContent={confirmContent}
                 elementPosition={attribs.name}
                 componentType={attribs.role}
+                deleteFunction={deleteContent}
               />
             );
           }
@@ -180,6 +206,8 @@ const Canvas = () => {
               <ComponentContentManager
                 confirmContent={confirmContent}
                 elementPosition={attribs.name}
+                componentType={attribs.role}
+                deleteFunction={deleteContent}
               />
             );
           }

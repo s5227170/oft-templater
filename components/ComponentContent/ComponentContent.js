@@ -1,12 +1,29 @@
-import { AiOutlineClose } from "react-icons/ai";
-import { MdOutlineDeleteForever, MdDoneOutline } from "react-icons/md";
 import { Tooltip } from "react-tooltip";
 
 import TextEditor from "../TextEditor/TextEditor";
+import ImageEditor from "../ImageEditor/ImageEditor";
+
+import { MdOutlineDeleteOutline } from "react-icons/md";
+import { GiConfirmed } from "react-icons/gi";
+import { TiArrowMinimise } from "react-icons/ti";
 
 import classes from "./ComponentContent.module.scss";
+import { useState, useEffect } from "react";
 
 const ComponentContent = (props) => {
+  const [position, setPosition] = useState({ row: "", item: "" });
+
+  useEffect(() => {
+    const row = props.elementPosition
+      .split("#")[0]
+      .charAt(props.elementPosition.split("#")[0].length - 1);
+    const item = props.elementPosition
+      .split("#")[1]
+      .charAt(props.elementPosition.split("#")[1].length - 1);
+
+    setPosition({ row: row, item: item });
+  }, [props.elementPosition]);
+
   return (
     <div className={classes.ComponentContent}>
       <div className={classes.Header}>
@@ -20,29 +37,41 @@ const ComponentContent = (props) => {
             : ""}
         </h1>
         <div className={classes.EditorIcons}>
-          <MdDoneOutline id="confirm-text" color="#40CD9A" size="30px" />
-          <Tooltip
-            anchorId="confirm-text"
-            place="top"
-          >Confirm text component</Tooltip>
-          <MdOutlineDeleteForever
+          <GiConfirmed id="confirm-text" color="#40CD9A" size="30px" />
+          <Tooltip anchorId="confirm-text" place="top">
+            Confirm text component
+          </Tooltip>
+          <MdOutlineDeleteOutline
             id="delete-sub-component"
             color="#CE4045"
             size="30px"
+            onClick={() => {
+              props.deleteFunction(position.row, position.item);
+              props.cancelHandler();
+            }}
           />
-          <Tooltip
-            anchorId="delete-sub-component"
-            place="top"
-          >Delete component</Tooltip>
+          <Tooltip anchorId="delete-sub-component" place="top">
+            Delete component
+          </Tooltip>
 
-          <AiOutlineClose id="close-modal-text" color="#000" size="30px" />
-          <Tooltip
-            anchorId="close-modal-text"
-            place="top"
-          >Close Modal</Tooltip>
+          <TiArrowMinimise
+            id="close-modal-text"
+            color="#008DD7"
+            size="30px"
+            onClick={props.cancelHandler}
+          />
+          <Tooltip anchorId="close-modal-text" place="top">
+            Close Modal
+          </Tooltip>
         </div>
       </div>
-      <TextEditor />
+      {props.componentType == "Text" ? (
+        <TextEditor componentType={props.componentType} />
+      ) : props.componentType == "List" ? (
+        <TextEditor componentType={props.componentType} />
+      ) : (
+        <ImageEditor componentType={props.componentType} />
+      )}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 .InputWrapper {
-  h1 {
+  .Heading {
     color: #ce40a3;
     font-weight: bold;
   }
@@ -22,6 +22,8 @@
 
       :hover {
         cursor: pointer;
+        filter: brightness(135%);
+        transition: .2s;
       }
     }
   }
@@ -63,11 +65,25 @@
   width: 100%;
   background-color: #fafafa;
   border-radius: 6px;
+  padding: 30px 15px;
 
   div[role="textbox"] {
-    padding: 0px 10px;
     padding-bottom: 10px;
   }
+
+  ul {
+    list-style-type: disc !important;
+    list-style: disc !important;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
 
   // h3 {
   //   color: #ce40a3;

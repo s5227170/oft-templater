@@ -1,0 +1,28 @@
+.InputWrapper {
+  position: relative;
+  input {
+    height: 36px;
+    width: 400px;
+    margin: 10px auto;
+    padding: 5px;
+    outline: none;
+    border-radius: 6px 6px 0px 0px;
+
+    &:focus + span{
+      background-position: left;
+      transition: all 0.2s linear;
+    }
+  }
+
+  span {
+    position: absolute;
+    top: 44px;
+    left: 0px;
+    display: block;
+    height: 2px;
+    width: 400px;
+    border-radius: 6px;
+    background: linear-gradient(to left, #ffffff 50%, #008dd7 50%) right;
+    background-size: 200% 100%;
+  }
+}

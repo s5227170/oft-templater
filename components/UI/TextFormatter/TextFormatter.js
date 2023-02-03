@@ -13,7 +13,7 @@ import { withHistory } from "slate-history";
 import { Button, Icon, Toolbar } from "./components/components";
 
 import { BiCode } from "react-icons/bi";
-import { FaItalic, FaHeading } from "react-icons/fa";
+import { FaItalic, FaHeading, FaListUl } from "react-icons/fa";
 import { ImBold } from "react-icons/im";
 
 const HOTKEYS = {
@@ -26,7 +26,7 @@ const HOTKEYS = {
 const LIST_TYPES = ["numbered-list", "bulleted-list"];
 const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
 
-const RichTextExample = () => {
+const RichTextExample = (editorProps) => {
   const renderElement = useCallback((props) => <Element {...props} />, []);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
@@ -36,41 +36,61 @@ const RichTextExample = () => {
       editor={editor}
       value={initialValue}
       //This line bellow could be used to generate text into oft format
-      // onChange={(value) => {
-      //   const isAstChange = editor.operations.some(
-      //     (op) => "set_selection" !== op.type
-      //   );
-      //   if (isAstChange) {
-      //     // Save the value to Local Storage.
-      //     const content = JSON.stringify(value);
-      //     console.log(content);
-      //   }
-      // }}
+      onChange={(value) => {
+        const isAstChange = editor.operations.some(
+          (op) => "set_selection" !== op.type
+        );
+        if (isAstChange) {
+          // Save the value to Local Storage.
+          const content = JSON.stringify(value);
+          editorProps.extractData(content, editorProps.index);
+        }
+      }}
     >
       <Toolbar>
-        <MarkButton
-          format="bold"
-          icon={<ImBold color="#000" size="20" clickable />}
-        />
-        <MarkButton
-          format="italic"
-          icon={<FaItalic color="#000" size="20" clickable />}
-        />
-
-        <BlockButton
-          format="heading-one"
-          icon={<FaHeading color="#000" size="20" clickable />}
-        />
-        <BlockButton
-          format="heading-two"
-          icon={<FaHeading color="#000" size="16" clickable />}
-        />
-        <MarkButton
-          format="code"
-          icon={<BiCode color="#000" size="20" clickable />}
-        />
-        <MarkButton format="list-item" icon={"list"} />
-        <MarkButton format="bulleted-list" icon={"List wrapper"} />
+        {editorProps.componentType == "Text" ? (
+          <>
+            <MarkButton
+              format="italic"
+              icon={<FaItalic color="#008DD7" size="20" />}
+            />
+            <MarkButton
+              format="bold"
+              icon={<ImBold color="#008DD7" size="20" />}
+            />
+            <BlockButton
+              format="heading-one"
+              icon={<FaHeading color="#008DD7" size="20" />}
+            />
+            <BlockButton
+              format="heading-two"
+              icon={<FaHeading color="#008DD7" size="16" />}
+            />
+          </>
+        ) : (
+          <>
+            <BlockButton
+              format="bulleted-list"
+              icon={<FaListUl color="#000" size="22" />}
+            />
+            <MarkButton
+              format="italic"
+              icon={<FaItalic color="#000" size="20" />}
+            />
+            <MarkButton
+              format="bold"
+              icon={<ImBold color="#000" size="20" />}
+            />
+            <BlockButton
+              format="heading-one"
+              icon={<FaHeading color="#000" size="20" />}
+            />
+            <BlockButton
+              format="heading-two"
+              icon={<FaHeading color="#000" size="16" />}
+            />
+          </>
+        )}
       </Toolbar>
       <Editable
         renderElement={renderElement}
@@ -118,7 +138,7 @@ const toggleBlock = (editor, format) => {
       type: isActive ? "paragraph" : isList ? "list-item" : format,
     };
   }
-  Transforms.setNodes < SlateElement > (editor, newProperties);
+  Transforms.setNodes(editor, newProperties);
 
   if (!isActive && isList) {
     const block = { type: format, children: [] };
@@ -207,7 +227,6 @@ const Element = ({ attributes, children, element }) => {
 };
 
 const Leaf = ({ attributes, children, leaf }) => {
-  console.log(leaf)
   if (leaf.bold) {
     children = <strong>{children}</strong>;
   }

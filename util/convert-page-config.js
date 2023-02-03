@@ -27,7 +27,7 @@ const convertPageConfig = (config) => {
               row.contentComponents[i].paddingBottom,
               row.contentComponents[i].content,
               row.position,
-              i + 1,
+              row.contentComponents[i].position,
               row.columns
             )
           );
@@ -45,7 +45,10 @@ const convertPageConfig = (config) => {
               row.contentComponents[i].paddingRight,
               row.contentComponents[i].paddingTop,
               row.contentComponents[i].paddingBottom,
-              row.contentComponents[i].content
+              row.contentComponents[i].content,
+              row.position,
+              row.contentComponents[i].position,
+              row.columns
             )
           );
         }
@@ -57,7 +60,13 @@ const convertPageConfig = (config) => {
               row.contentComponents[i].paddingLeft,
               row.contentComponents[i].paddingRight,
               row.contentComponents[i].paddingTop,
-              row.contentComponents[i].paddingBottom
+              row.contentComponents[i].paddingBottom,
+              row.contentComponents[i].url,
+              row.contentComponents[i].imgWidth,
+              row.contentComponents[i].imgHeight,
+              row.position,
+              row.contentComponents[i].position,
+              row.columns
             )
           );
         }
@@ -69,7 +78,7 @@ const convertPageConfig = (config) => {
       if (!row.contentComponents.length) {
         htmlContent.push(
           oneColumn(
-            row.parameters.paddingBottom,
+            row.parameters.paddingLeft,
             row.parameters.paddingRight,
             row.parameters.paddingTop,
             row.parameters.paddingBottom,
@@ -79,7 +88,7 @@ const convertPageConfig = (config) => {
       } else {
         htmlContent.push(
           oneColumn(
-            row.parameters.paddingBottom,
+            row.parameters.paddingLeft,
             row.parameters.paddingRight,
             row.parameters.paddingTop,
             row.parameters.paddingBottom,
@@ -92,7 +101,7 @@ const convertPageConfig = (config) => {
       if (!row.contentComponents.length) {
         htmlContent.push(
           twoColumns(
-            row.parameters.paddingBottom,
+            row.parameters.paddingLeft,
             row.parameters.paddingRight,
             row.parameters.paddingTop,
             row.parameters.paddingBottom,
@@ -103,10 +112,9 @@ const convertPageConfig = (config) => {
       } else {
         if (subComponents.length == 1) {
           if (row.contentComponents[0].position == 1) {
-            console.log(subComponents[0]);
             htmlContent.push(
               twoColumns(
-                row.parameters.paddingBottom,
+                row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
@@ -116,14 +124,13 @@ const convertPageConfig = (config) => {
             );
           }
           if (row.contentComponents[0].position == 2) {
-            console.log(subComponents[0]);
             htmlContent.push(
               twoColumns(
-                row.parameters.paddingBottom,
+                row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
-                `<span id="componentManager" name="row${position}#item2"></span>`,
+                `<span id="componentManager" name="row${position}#item1"></span>`,
                 subComponents[0]
               )
             );
@@ -133,7 +140,7 @@ const convertPageConfig = (config) => {
           if (row.contentComponents[0].position == 1) {
             htmlContent.push(
               twoColumns(
-                row.parameters.paddingBottom,
+                row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
@@ -145,7 +152,7 @@ const convertPageConfig = (config) => {
           if (row.contentComponents[0].position == 2) {
             htmlContent.push(
               twoColumns(
-                row.parameters.paddingBottom,
+                row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
@@ -161,7 +168,7 @@ const convertPageConfig = (config) => {
       if (!row.contentComponents.length) {
         htmlContent.push(
           threeColumns(
-            row.parameters.paddingBottom,
+            row.parameters.paddingLeft,
             row.parameters.paddingRight,
             row.parameters.paddingTop,
             row.parameters.paddingBottom,
@@ -176,7 +183,7 @@ const convertPageConfig = (config) => {
           if (row.contentComponents[0].position == 1) {
             htmlContent.push(
               threeColumns(
-                row.parameters.paddingBottom,
+                row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
@@ -189,7 +196,7 @@ const convertPageConfig = (config) => {
           if (row.contentComponents[0].position == 2) {
             htmlContent.push(
               threeColumns(
-                row.parameters.paddingBottom,
+                row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
@@ -202,7 +209,7 @@ const convertPageConfig = (config) => {
           if (row.contentComponents[0].position == 3) {
             htmlContent.push(
               threeColumns(
-                row.parameters.paddingBottom,
+                row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
@@ -214,50 +221,58 @@ const convertPageConfig = (config) => {
           }
         }
         if (subComponents.length == 2) {
-          console.log(subComponents)
-          if (row.contentComponents[0].position == 1 && row.contentComponents[1].position == 2) {
+          if (
+            row.contentComponents[0].position == 1 &&
+            row.contentComponents[1].position == 2
+          ) {
             htmlContent.push(
               threeColumns(
-                row.parameters.paddingBottom,
+                row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
                 subComponents[0],
                 subComponents[1],
-                `<span id="componentManager" name="row${position}#item3"></span>`,
+                `<span id="componentManager" name="row${position}#item3"></span>`
               )
             );
-          } else
-          if (row.contentComponents[0].position == 2 && row.contentComponents[1].position == 1) {
+          } else if (
+            row.contentComponents[0].position == 2 &&
+            row.contentComponents[1].position == 1
+          ) {
             htmlContent.push(
               threeColumns(
-                row.parameters.paddingBottom,
+                row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
                 subComponents[1],
                 subComponents[0],
-                `<span id="componentManager" name="row${position}#item3"></span>`,
+                `<span id="componentManager" name="row${position}#item3"></span>`
               )
             );
-          } else
-          if (row.contentComponents[0].position == 1 && row.contentComponents[1].position == 3) {
+          } else if (
+            row.contentComponents[0].position == 1 &&
+            row.contentComponents[1].position == 3
+          ) {
             htmlContent.push(
               threeColumns(
-                row.parameters.paddingBottom,
+                row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
                 subComponents[0],
                 `<span id="componentManager" name="row${position}#item2"></span>`,
-                subComponents[1],
+                subComponents[1]
               )
             );
-          } else
-          if (row.contentComponents[0].position == 2  && row.contentComponents[1].position == 1) {
+          } else if (
+            row.contentComponents[0].position == 2 &&
+            row.contentComponents[1].position == 1
+          ) {
             htmlContent.push(
               threeColumns(
-                row.parameters.paddingBottom,
+                row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
@@ -266,24 +281,28 @@ const convertPageConfig = (config) => {
                 subComponents[0]
               )
             );
-          } else
-          if (row.contentComponents[0].position == 2 && row.contentComponents[1].position == 3) {
+          } else if (
+            row.contentComponents[0].position == 2 &&
+            row.contentComponents[1].position == 3
+          ) {
             htmlContent.push(
               threeColumns(
-                row.parameters.paddingBottom,
+                row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
                 `<span id="componentManager" name="row${position}#item1"></span>`,
                 subComponents[0],
-                subComponents[1],
+                subComponents[1]
               )
             );
-          } else
-          if (row.contentComponents[0].position == 3  && row.contentComponents[1].position == 2) {
+          } else if (
+            row.contentComponents[0].position == 3 &&
+            row.contentComponents[1].position == 2
+          ) {
             htmlContent.push(
               threeColumns(
-                row.parameters.paddingBottom,
+                row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
@@ -292,11 +311,13 @@ const convertPageConfig = (config) => {
                 subComponents[0]
               )
             );
-          } else
-          if (row.contentComponents[0].position == 3  && row.contentComponents[1].position == 1) {
+          } else if (
+            row.contentComponents[0].position == 3 &&
+            row.contentComponents[1].position == 1
+          ) {
             htmlContent.push(
               threeColumns(
-                row.parameters.paddingBottom,
+                row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
@@ -309,109 +330,141 @@ const convertPageConfig = (config) => {
         }
         if (subComponents.length == 3) {
           //========================================================
-          if (row.contentComponents[0].position == 1 && row.contentComponents[1].position == 2 && row.contentComponents[2].position == 3) {
+          if (
+            row.contentComponents[0].position == 1 &&
+            row.contentComponents[1].position == 2 &&
+            row.contentComponents[2].position == 3
+          ) {
             htmlContent.push(
               threeColumns(
-                row.parameters.paddingBottom,
+                row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
                 subComponents[0],
                 subComponents[1],
-                subComponents[2],
+                subComponents[2]
               )
             );
-          }
-          if (row.contentComponents[0].position == 2 && row.contentComponents[1].position == 3 && row.contentComponents[2].position == 1) {
+          } else 
+          if (
+            row.contentComponents[0].position == 2 &&
+            row.contentComponents[1].position == 3 &&
+            row.contentComponents[2].position == 1
+          ) {
             htmlContent.push(
               threeColumns(
-                row.parameters.paddingBottom,
+                row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
                 subComponents[2],
                 subComponents[0],
-                subComponents[1],
+                subComponents[1]
               )
             );
-          }
-          if (row.contentComponents[0].position == 3 && row.contentComponents[2].position == 2 && row.contentComponents[1].position == 1) {
+          } else
+          if (
+            row.contentComponents[0].position == 3 &&
+            row.contentComponents[2].position == 2 &&
+            row.contentComponents[1].position == 1
+          ) {
             htmlContent.push(
               threeColumns(
-                row.parameters.paddingBottom,
+                row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
                 subComponents[1],
                 subComponents[2],
-                subComponents[0],
+                subComponents[0]
               )
             );
-          }
+          } else
           //========================================================
-          if (row.contentComponents[1].position == 1 && row.contentComponents[0].position == 2 && row.contentComponents[2].position == 3) {
+          if (
+            row.contentComponents[1].position == 1 &&
+            row.contentComponents[0].position == 2 &&
+            row.contentComponents[2].position == 3
+          ) {
             htmlContent.push(
               threeColumns(
-                row.parameters.paddingBottom,
+                row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
                 subComponents[1],
                 subComponents[2],
-                subComponents[0],
+                subComponents[0]
               )
             );
-          }
-          if (row.contentComponents[0].position == 1 && row.contentComponents[2].position == 1 && row.contentComponents[1].position == 3) {
+          } else
+          if (
+            row.contentComponents[0].position == 1 &&
+            row.contentComponents[2].position == 1 &&
+            row.contentComponents[1].position == 3
+          ) {
             htmlContent.push(
               threeColumns(
-                row.parameters.paddingBottom,
+                row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
                 subComponents[0],
                 subComponents[1],
-                subComponents[2],
+                subComponents[2]
               )
             );
-          }
-          if (row.contentComponents[2].position == 1 && row.contentComponents[0].position == 2 && row.contentComponents[1].position == 3) {
+          } else
+          if (
+            row.contentComponents[2].position == 1 &&
+            row.contentComponents[0].position == 2 &&
+            row.contentComponents[1].position == 3
+          ) {
             htmlContent.push(
               threeColumns(
-                row.parameters.paddingBottom,
+                row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
                 subComponents[2],
                 subComponents[0],
-                subComponents[1],
+                subComponents[1]
               )
             );
-          }
+          } else
           //========================================================
-          if (row.contentComponents[0].position == 3 && row.contentComponents[1].position == 2 && row.contentComponents[2].position == 1) {
+          if (
+            row.contentComponents[0].position == 3 &&
+            row.contentComponents[1].position == 2 &&
+            row.contentComponents[2].position == 1
+          ) {
             htmlContent.push(
               threeColumns(
-                row.parameters.paddingBottom,
+                row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
                 subComponents[1],
                 subComponents[2],
-                subComponents[0],
+                subComponents[0]
               )
             );
-          }
-          if (row.contentComponents[0].position == 2 && row.contentComponents[1].position == 2 && row.contentComponents[2].position == 1) {
+          } else
+          if (
+            row.contentComponents[0].position == 2 &&
+            row.contentComponents[1].position == 2 &&
+            row.contentComponents[2].position == 1
+          ) {
             htmlContent.push(
               threeColumns(
-                row.parameters.paddingBottom,
+                row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
                 subComponents[1],
                 subComponents[2],
-                subComponents[0],
+                subComponents[0]
               )
             );
           }

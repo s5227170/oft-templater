@@ -11,15 +11,14 @@ const ContentInput = (props) => {
   return (
     <Fragment>
       <div className={classes.InputWrapper}>
-        <h1>Input {props.textId + 1}</h1>
+        <h1 className={classes.Heading}>Input {props.textId + 1}</h1>
         <div className={classes.Information}>
-          <h3>Content area</h3>
+          <h3 className={classes.Heading}>Content area</h3>
           <div className={classes.ControlIcons}>
             <FaInfoCircle
               id={"info" + props.textId}
-              color="#000"
+              color="#40CD9A"
               size="30"
-              clickable
             />
             <Tooltip
               anchorId={"info" + props.textId}
@@ -34,7 +33,7 @@ const ContentInput = (props) => {
             </Tooltip>
             <MdOutlineDelete
               id={"deleteBtnInput" + props.textId}
-              color="#000"
+              color="#40CD9A"
               size="30"
               onClick={props.deleteBtn}
             />
@@ -46,7 +45,7 @@ const ContentInput = (props) => {
           </div>
         </div>
         <div className={classes.TextPreviewArea}>
-          <RichTextExample />
+          <RichTextExample extractData={props.extractData} index={props.textId} componentType={props.componentType}/>
         </div>
       </div>
     </Fragment>

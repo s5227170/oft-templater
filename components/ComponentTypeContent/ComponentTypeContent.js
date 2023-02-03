@@ -16,9 +16,9 @@ const ComponentTypeContent = (props) => {
     Image: false,
   });
 
-  const textRef = useRef(null)
-  const listRef = useRef(null)
-  const imageRef = useRef(null)
+  const textRef = useRef(null);
+  const listRef = useRef(null);
+  const imageRef = useRef(null);
 
   const buttonChoiceTrigger = (name) => {
     const newComponentChoice = Object.assign({}, componentChoice);
@@ -40,7 +40,6 @@ const ComponentTypeContent = (props) => {
   const typeClickHandler = (type) => {
     if (type == 1) {
       if (textRef) {
-        console.log(textRef)
         textRef.current.click();
       }
     }
@@ -54,7 +53,7 @@ const ComponentTypeContent = (props) => {
         imageRef.current.click();
       }
     }
-  }
+  };
 
   return (
     <div className={classes.ComponentTypeContent}>
@@ -101,9 +100,9 @@ const ComponentTypeContent = (props) => {
       <ConfirmationButtons
         confirm={"Confirm"}
         cancel={"Cancel"}
-        confirmClick={() =>
-          props.confirmHandler(getChoice(), props.elementPosition)
-        }
+        confirmClick={() => {
+            props.confirmHandler(getChoice(), props.elementPosition);
+        }}
         cancelClick={props.cancelHandler}
       />
     </div>

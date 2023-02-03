@@ -115,7 +115,7 @@ export const Menu = React.forwardRef(({ className, ...props }, ref) => (
           display: inline-block;
         }
         & > * + * {
-          margin-left: 15px;
+          margin-left: 10px;
         }
       `
     )}
@@ -136,9 +136,9 @@ export const Toolbar = React.forwardRef(({ className, ...props }, ref) => (
       className,
       css`
         position: relative;
-        padding: 10px;
         border-bottom: 2px solid #eee;
-        margin-bottom: 10px;
+        margin: -30px -10px 10px -10px;
+        padding: 3px 5px 0px 5px;
         width: 100%;
         background-color: #fafafa;
       `
