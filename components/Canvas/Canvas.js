@@ -30,7 +30,6 @@ const Canvas = () => {
   let root = null;
 
   const generateComponent = (type, position) => {
-    console.log(position);
     const row = position
       .split("#")[0]
       .charAt(position.split("#")[0].length - 1);
@@ -122,7 +121,6 @@ const Canvas = () => {
   const confirmContent = () => {};
 
   const deleteContent = (row, item) => {
-    console.log(pageConfig.content);
     const newPageContent = [];
     pageConfig.content.map((rowConfig) => {
       if (rowConfig.position != row) {
@@ -136,12 +134,17 @@ const Canvas = () => {
             newContentComponents.push(rowConfig.contentComponents[i]);
           }
         }
-        rowConfig.contentComponents = newContentComponents
+        rowConfig.contentComponents = newContentComponents;
         newPageContent.push(rowConfig);
       }
     });
+    const newPageConfig = pageConfig;
+    newPageConfig.content = newPageContent;
 
-    setPageConfig(newPageContent);
+    setPageConfig((pageConfig) => ({
+      ...pageConfig,
+      content: newPageContent,
+    }));
   };
 
   useEffect(() => {
@@ -179,7 +182,6 @@ const Canvas = () => {
           }
         },
       });
-      // console.log(fullStringContent)
       setContent(reactContent);
     } else {
       const conversion = convertPageConfig(pageConfig);
@@ -192,6 +194,7 @@ const Canvas = () => {
           if (!attribs) {
             return;
           }
+          console.log(attribs);
 
           if (attribs.id === "componentManager") {
             return (
@@ -213,7 +216,6 @@ const Canvas = () => {
           }
         },
       });
-      // console.log(fullStringContent)
       setContent(reactContent);
     }
   }, [pageConfig]);

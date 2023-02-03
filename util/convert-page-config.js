@@ -71,6 +71,8 @@ const convertPageConfig = (config) => {
           );
         }
       }
+    } else {
+
     }
 
     const position = row.position;

@@ -10,6 +10,8 @@ const image = (
   item,
   rowType
 ) => {
+
+  console.log(item)
   const contentDistribution = url.map((url) => {
     return `<img width=${imgWIdth} height=${imgHeight} src="${url}" />`;
   });
