@@ -118,7 +118,75 @@ const Canvas = () => {
     }));
   };
 
-  const confirmContent = () => {};
+  const confirmContent = (row, item, content) => {
+    //Currently, setting the content will automatically update the contents, this means that
+    //to get the actual content, we just need to add the contents to the baseConfig.
+    //This means that the text should go as an array of string elements, and the different
+    //properties to the contentinside the baseConfig. The list element is very similar, if not the 
+    //same. The image will have the url string, and the different properties that go with it.
+
+    //New updated pageConfig content
+    const newPageContent = [];
+
+    pageConfig.content.map(rowConfig => {
+      if (rowConfig.position == row) {
+        rowConfig.contentComponents.map(component => {
+          const newRowComponentContent = [];
+          if (component.position == item) {
+            const updatedComponent = {}
+            //Check what type the component is and add the content depending on that
+            if (component.type == "Text") {
+              updatedComponent.type = component.type;
+              updatedComponent.background = content.background;
+              updatedComponent.color = content.color;
+              updatedComponent.fontFamily = content.fontFamily;
+              updatedComponent.fontSize = content.fontSize;
+              updatedComponent.paddingLeft = component.paddingLeft;
+              updatedComponent.paddingRight = component.paddingRight;
+              updatedComponent.paddingTop = component.paddingTop;
+              updatedComponent.paddingBottom = component.paddingBottom;
+              updatedComponent.content = component.content;
+              updatedComponent.position = component.position;
+
+              // type: "Text",
+              // background: "none",
+              // color: "#000",
+              // fontFamily: "arial",
+              // fontSize: 14,
+              // paddingLeft: 0,
+              // paddingRight: 0,
+              // paddingTop: 0,
+              // paddingBottom: 0,
+              // content: [],
+              // position: number,
+            }
+            if (component.type == "List") { }
+            if (component.type == "Image") { }
+
+            //The line underneath adds the modified component to the row
+            newRowComponentContent.push(updatedComponent)
+          } else {
+            //Push all components to the updated row that are not to be touched
+            newRowComponentContent.push(component)
+          }
+          //Create the new updated row and add the updated components
+          const newRowConfig = { ...rowConfig, contentComponents: newRowComponentContent }
+
+          //Push the new updated row object to the array of rowConfigs
+          newPageContent.push(newRowConfig)
+        })
+      } else {
+        //Push all rowConfigs that are not to be touched to the the pageConfig content
+        newPageContent.push(rowConfig)
+      }
+    })
+
+    //Push the new pageConfig content with the updated values
+    setPageConfig((pageConfig) => ({
+      ...pageConfig,
+      content: [...newPageContent],
+    }));
+  };
 
   const deleteContent = (row, item) => {
     const newPageContent = [];
@@ -143,8 +211,9 @@ const Canvas = () => {
 
     setPageConfig((pageConfig) => ({
       ...pageConfig,
-      content: newPageContent,
+      content: [...newPageContent],
     }));
+    // setPageConfig(newPageContent);
   };
 
   useEffect(() => {
