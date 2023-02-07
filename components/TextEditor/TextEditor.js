@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PaddingElement from "../UI/PaddingElement/PaddingElement";
 import classes from "./TextEditor.module.scss";
 
@@ -19,7 +19,9 @@ const TextEditor = (props) => {
     paddingTop: 0,
     paddingBottom: 0,
   });
+  //The content state is used to generate the amount of inputs
   const [content, setContent] = useState([]);
+  //The inputData is used to store the actual text data from the input fields
   const [inputData, setInputData] = useState([]);
 
   const paddingHandler = (e, el) => {
@@ -57,6 +59,24 @@ const TextEditor = (props) => {
     setInputData(newArr);
   };
 
+  useEffect(() => {
+    if (props.submit) {
+      const allData = {
+        type: props.componentType,
+        background: elementSettings.background,
+        color: elementSettings.color,
+        paddingLeft: paddings.paddingLeft,
+        paddingRight: paddings.paddingRight,
+        paddingTop: paddings.paddingTop,
+        paddingBottom: paddings.paddingBottom,
+        content: inputData,
+        position: props.positionData.item,
+      };
+
+      props.contentHandler(allData);
+    }
+  }, [props.submit]);
+
   return (
     <div className={classes.TextEditor}>
       <div className={classes.Editor}>
@@ -87,7 +107,7 @@ const TextEditor = (props) => {
               </label>
             </div>
             <button onClick={addInputHandler}>
-              Add an input
+              Add a paragraph
               <CgAddR
                 id="addBtnInput"
                 color="#fff"

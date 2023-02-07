@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import isHotkey from "is-hotkey";
 import { Editable, withReact, useSlate, Slate } from "slate-react";
 import {
@@ -12,9 +12,12 @@ import {
 import { withHistory } from "slate-history";
 import { Button, Icon, Toolbar } from "./components/components";
 
-import { BiCode } from "react-icons/bi";
 import { FaItalic, FaHeading, FaListUl } from "react-icons/fa";
 import { ImBold } from "react-icons/im";
+import { MdOutlineBorderColor, MdOutlineFormatColorFill } from "react-icons/md";
+import { SketchPicker, PhotoshopPicker } from "react-color";
+
+import classes from "./TextFormatter.module.scss";
 
 const HOTKEYS = {
   "mod+b": "bold",
@@ -27,9 +30,38 @@ const LIST_TYPES = ["numbered-list", "bulleted-list"];
 const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
 
 const RichTextExample = (editorProps) => {
-  const renderElement = useCallback((props) => <Element {...props} />, []);
+  const renderElement = useCallback((props, elementSettings) => {
+    const newProps = Object.assign(props, elementSettings);
+    return <Element {...newProps} />;
+  }, []);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
+  const [colorScheme, setColorScheme] = useState({
+    background: false,
+    color: false,
+  });
+  const [elementSettings, setElementSettings] = useState({
+    background: "#fff",
+    color: "#000",
+  });
+
+  const colorChoice = (e, colorType) => {
+    if (colorType == 1) {
+      setElementSettings({ ...elementSettings, background: e.hex });
+    }
+    if (colorType == 2) {
+      setElementSettings({ ...elementSettings, color: e.hex });
+    }
+  };
+
+  const colorHandler = (colorType) => {
+    if (colorType == 1) {
+      setColorScheme({ ...colorScheme, background: !colorScheme.background });
+    }
+    if (colorType == 2) {
+      setColorScheme({ ...colorScheme, color: !colorScheme.color });
+    }
+  };
 
   return (
     <Slate
@@ -45,11 +77,52 @@ const RichTextExample = (editorProps) => {
           const content = JSON.stringify(value);
           editorProps.extractData(content, editorProps.index);
         }
+        console.log(value);
       }}
     >
       <Toolbar>
         {editorProps.componentType == "Text" ? (
           <>
+            <MarkButton
+              format="font-color"
+              icon={
+                <MdOutlineBorderColor
+                  onClick={() => colorHandler(2)}
+                  color="#008DD7"
+                  size="22"
+                />
+              }
+            />
+            {colorScheme.color ? (
+              <PhotoshopPicker
+                className={classes.ColourPicker}
+                color={elementSettings.color}
+                onChangeComplete={(e) => colorChoice(e, 2)}
+                onAccept={() => colorHandler(2)}
+                onCancel={() => colorHandler(2)}
+                header="Font color"
+              />
+            ) : null}
+            <MarkButton
+              format="background-color"
+              icon={
+                <MdOutlineFormatColorFill
+                  onClick={() => colorHandler(1)}
+                  color="#008DD7"
+                  size="22"
+                />
+              }
+            />
+            {colorScheme.background ? (
+              <PhotoshopPicker
+                className={classes.ColourPicker}
+                color={elementSettings.background}
+                onChangeComplete={(e) => colorChoice(e, 1)}
+                onAccept={() => colorHandler(1)}
+                onCancel={() => colorHandler(1)}
+                header="Background color"
+              />
+            ) : null}
             <MarkButton
               format="italic"
               icon={<FaItalic color="#008DD7" size="20" />}
@@ -69,41 +142,80 @@ const RichTextExample = (editorProps) => {
           </>
         ) : (
           <>
+            <MarkButton
+              format="font-color"
+              icon={
+                <MdOutlineBorderColor
+                  onClick={() => colorHandler(2)}
+                  color="#008DD7"
+                  size="22"
+                />
+              }
+            />
+            {colorScheme.color ? (
+              <SketchPicker
+                className={classes.ColourPicker}
+                color={elementSettings.color}
+                onChangeComplete={(e) => colorChoice(e, 2)}
+              />
+            ) : null}
+            <MarkButton
+              format="background-color"
+              icon={
+                <MdOutlineFormatColorFill
+                  onClick={() => colorHandler(2)}
+                  color="#008DD7"
+                  size="22"
+                />
+              }
+            />
+            {colorScheme.background ? (
+              <SketchPicker
+                className={classes.ColourPicker}
+                color={elementSettings.background}
+                onChangeComplete={(e) => colorChoice(e, 1)}
+              />
+            ) : null}
             <BlockButton
               format="bulleted-list"
-              icon={<FaListUl color="#000" size="22" />}
+              icon={<FaListUl color="#008DD7" size="22" />}
             />
             <MarkButton
               format="italic"
-              icon={<FaItalic color="#000" size="20" />}
+              icon={<FaItalic color="#008DD7" size="20" />}
             />
             <MarkButton
               format="bold"
-              icon={<ImBold color="#000" size="20" />}
+              icon={<ImBold color="#008DD7" size="20" />}
             />
             <BlockButton
               format="heading-one"
-              icon={<FaHeading color="#000" size="20" />}
+              icon={<FaHeading color="#008DD7" size="20" />}
             />
             <BlockButton
               format="heading-two"
-              icon={<FaHeading color="#000" size="16" />}
+              icon={<FaHeading color="#008DD7" size="16" />}
             />
           </>
         )}
       </Toolbar>
       <Editable
-        renderElement={renderElement}
+        renderElement={(elProps) => renderElement(elProps, elementSettings)}
         renderLeaf={renderLeaf}
         placeholder="Write or paste the desired text content in here..."
         spellCheck
         autoFocus
         onKeyDown={(event) => {
+          const innerHTML = event.target.innerHTML
+          const matches = innerHTML.match(/(?:[0-9]{3})\b|(?:rgb)\([^\)]*\)/ig);
+          const color = matches[0]
+          const background = matches[1]
+
           for (const hotkey in HOTKEYS) {
-            if (isHotkey(hotkey, event)) {
+              if (isHotkey(hotkey, event)) {
               event.preventDefault();
               const mark = HOTKEYS[hotkey];
-              toggleMark(editor, mark);
+              toggleMark(editor, mark, color, background);
             }
           }
         }}
@@ -112,7 +224,7 @@ const RichTextExample = (editorProps) => {
   );
 };
 
-const toggleBlock = (editor, format) => {
+const toggleBlock = (editor, format, color, background) => {
   const isActive = isBlockActive(
     editor,
     format,
@@ -138,6 +250,8 @@ const toggleBlock = (editor, format) => {
       type: isActive ? "paragraph" : isList ? "list-item" : format,
     };
   }
+  newProperties.color = color;
+  newProperties.background = background
   Transforms.setNodes(editor, newProperties);
 
   if (!isActive && isList) {
@@ -148,6 +262,8 @@ const toggleBlock = (editor, format) => {
 
 const toggleMark = (editor, format) => {
   const isActive = isMarkActive(editor, format);
+  console.log(editor);
+  console.log(format);
 
   if (isActive) {
     Editor.removeMark(editor, format);
@@ -178,8 +294,12 @@ const isMarkActive = (editor, format) => {
   return marks ? marks[format] === true : false;
 };
 
-const Element = ({ attributes, children, element }) => {
-  const style = { textAlign: element.align };
+const Element = ({ attributes, children, element, color, background }) => {
+  const style = {
+    textAlign: element.align,
+    color: color,
+    background: background,
+  };
   switch (element.type) {
     case "block-quote":
       return (

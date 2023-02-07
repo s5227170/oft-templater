@@ -20,8 +20,6 @@ const convertPageConfig = (config) => {
             text(
               row.contentComponents[i].background,
               row.contentComponents[i].color,
-              row.contentComponents[i].fontFamily,
-              row.contentComponents[i].fontSize,
               row.contentComponents[i].paddingLeft,
               row.contentComponents[i].paddingRight,
               row.contentComponents[i].paddingTop,
@@ -40,8 +38,6 @@ const convertPageConfig = (config) => {
               //Add the attributes just like for the text type
               row.contentComponents[i].background,
               row.contentComponents[i].color,
-              row.contentComponents[i].fontFamily,
-              row.contentComponents[i].fontSize,
               row.contentComponents[i].paddingLeft,
               row.contentComponents[i].paddingRight,
               row.contentComponents[i].paddingTop,

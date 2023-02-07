@@ -1,8 +1,6 @@
 const list = (
   background,
   color,
-  fontFamily,
-  fontSize,
   paddingLeft,
   paddingRight,
   paddingTop,
@@ -13,8 +11,11 @@ const list = (
   rowType
 ) => {
   const contentDistribution = content.map((paragraph) => {
+    //Add functionality for recognition of content type. For example, the compiler should recognise if some text is an h1, h2, or a p. According
+    //to the type of element, set the size accordingly, and depending on properties, add bold, or similar
+    //Maybe check what the "paragraph" element is and then set it up depending on that
     return `
-                <li style="background: ${background}; color: ${color}; font-family: ${fontFamily}; font-size: ${fontSize};">${paragraph}</li>
+                <li style="background: ${background}; color: ${color}; font-family: arial; font-size: 16px;">${paragraph}</li>
                 
         `;
   });

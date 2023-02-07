@@ -91,6 +91,35 @@ const ImageEditor = (props) => {
     }
   };
 
+  useEffect(() => {
+    const actualImgSize = { width: "", height: "" };
+    if (sizesAllwoed.width && !sizesAllwoed.height) {
+      actualImgSize.width = imageSize.width;
+    }
+    if (!sizesAllwoed.width && sizesAllwoed.height) {
+      actualImgSize.height = imageSize.height;
+    }
+    if (sizesAllwoed.width && sizesAllwoed.height) {
+      actualImgSize.height = imageSize.height;
+      actualImgSize.width = imageSize.width;
+    }
+    if (props.submit) {
+      const allData = {
+        type: props.componentType,
+        paddingLeft: paddings.paddingLeft,
+        paddingRight: paddings.paddingRight,
+        paddingTop: paddings.paddingTop,
+        paddingBottom: paddings.paddingBottom,
+        url: url,
+        imgWidth: allDAta.width,
+        imgHeight: allDAta.height,
+        position: props.positionData.item
+      };
+
+      props.contentHandler(allData);
+    }
+  }, [props.submit]);
+
   return (
     <div className={classes.ImageEditor}>
       <div className={classes.Editor}>

@@ -11,6 +11,7 @@ import classes from "./ComponentContent.module.scss";
 import { useState, useEffect } from "react";
 
 const ComponentContent = (props) => {
+  const [submit, setSubmit] = useState(false);
   const [position, setPosition] = useState({ row: "", item: "" });
 
   useEffect(() => {
@@ -23,6 +24,10 @@ const ComponentContent = (props) => {
 
     setPosition({ row: row, item: item });
   }, [props.elementPosition]);
+
+  const preConfirmHandler = () => {
+    setSubmit(!submit);
+  };
 
   return (
     <div className={classes.ComponentContent}>
@@ -37,7 +42,12 @@ const ComponentContent = (props) => {
             : ""}
         </h1>
         <div className={classes.EditorIcons}>
-          <GiConfirmed id="confirm-text" color="#40CD9A" size="30px" />
+          <GiConfirmed
+            id="confirm-text"
+            color="#40CD9A"
+            size="30px"
+            onClick={preConfirmHandler}
+          />
           <Tooltip anchorId="confirm-text" place="top">
             Confirm text component
           </Tooltip>
@@ -66,11 +76,26 @@ const ComponentContent = (props) => {
         </div>
       </div>
       {props.componentType == "Text" ? (
-        <TextEditor componentType={props.componentType} />
+        <TextEditor
+          componentType={props.componentType}
+          contentHandler={props.confirmHandler}
+          submission={submit}
+          positionData={position}
+        />
       ) : props.componentType == "List" ? (
-        <TextEditor componentType={props.componentType} />
+        <TextEditor
+          componentType={props.componentType}
+          contentHandler={props.confirmHandler}
+          submission={submit}
+          positionData={position}
+        />
       ) : (
-        <ImageEditor componentType={props.componentType} />
+        <ImageEditor
+          componentType={props.componentType}
+          contentHandler={props.confirmHandler}
+          submission={submit}
+          positionData={position}
+        />
       )}
     </div>
   );
