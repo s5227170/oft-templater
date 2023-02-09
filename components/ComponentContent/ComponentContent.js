@@ -26,7 +26,7 @@ const ComponentContent = (props) => {
   }, [props.elementPosition]);
 
   const preConfirmHandler = () => {
-    setSubmit(!submit);
+    setSubmit(true);
   };
 
   return (

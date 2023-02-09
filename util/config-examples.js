@@ -24,8 +24,6 @@ const rowConfig = {
 
 const textComponentConfig = {
   type: "Text",
-  background: "none",
-  color: "#fff",
   paddingLeft: 0,
   paddingRight: 0,
   paddingTop: 0,
@@ -36,8 +34,6 @@ const textComponentConfig = {
 
 const listComponentConfig = {
   type: "List",
-  background: "none",
-  color: "#000",
   paddingLeft: 0,
   paddingRight: 0,
   paddingTop: 0,

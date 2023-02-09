@@ -40,8 +40,6 @@ const Canvas = () => {
     if (type == "Text") {
       component = {
         type: "Text",
-        background: "none",
-        color: "#000",
         paddingLeft: 0,
         paddingRight: 0,
         paddingTop: 0,
@@ -53,8 +51,6 @@ const Canvas = () => {
     if (type == "List") {
       component = {
         type: "List",
-        background: "none",
-        color: "#000",
         paddingLeft: 0,
         paddingRight: 0,
         paddingTop: 0,
@@ -115,13 +111,6 @@ const Canvas = () => {
   };
 
   const confirmContent = (row, item, content) => {
-    //Currently, setting the content will automatically update the contents, this means that
-    //to get the actual content, we just need to add the contents to the baseConfig.
-    //This means that the text should go as an array of string elements, and the different
-    //properties to the contentinside the baseConfig. The list element is very similar, if not the
-    //same. The image will have the url string, and the different properties that go with it.
-
-    //New updated pageConfig content
     const newPageContent = [];
 
     pageConfig.content.map((rowConfig) => {
@@ -133,8 +122,6 @@ const Canvas = () => {
             //Check what type the component is and add the content depending on that
             if (component.type == "Text") {
               updatedComponent.type = component.type;
-              updatedComponent.background = content.background;
-              updatedComponent.color = content.color;
               updatedComponent.paddingLeft = content.paddingLeft;
               updatedComponent.paddingRight = content.paddingRight;
               updatedComponent.paddingTop = content.paddingTop;
@@ -144,8 +131,6 @@ const Canvas = () => {
             }
             if (component.type == "List") {
               updatedComponent.type = component.type;
-              updatedComponent.background = content.background;
-              updatedComponent.color = content.color;
               updatedComponent.paddingLeft = content.paddingLeft;
               updatedComponent.paddingRight = content.paddingRight;
               updatedComponent.paddingTop = content.paddingTop;
@@ -186,7 +171,6 @@ const Canvas = () => {
       }
     });
 
-    //Push the new pageConfig content with the updated values
     setPageConfig((pageConfig) => ({
       ...pageConfig,
       content: [...newPageContent],

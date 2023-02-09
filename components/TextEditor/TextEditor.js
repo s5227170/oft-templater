@@ -20,7 +20,6 @@ const TextEditor = (props) => {
     paddingBottom: 0,
   });
   //The content state is used to generate the amount of inputs
-  const [content, setContent] = useState([]);
   //The inputData is used to store the actual text data from the input fields
   const [inputData, setInputData] = useState([]);
 
@@ -29,42 +28,20 @@ const TextEditor = (props) => {
       e.target.value = e.target.value.slice(0, 3);
     }
     const newPaddings = { ...paddings, [el]: e.target.value };
+
+    setPaddings(newPaddings)
   };
 
-  const addInputHandler = () => {
-    const newContent = [...content];
-    newContent.push("");
-    setContent(newContent);
+  const dataExtractionHandler = (content) => {
+    setInputData(content);
   };
 
-  const textHandler = (e, index) => {
-    const newContent = [...content];
-    newContent[index] = e.target.value;
-    setContent(newContent);
-  };
-
-  const deleteText = (index) => {
-    const newContent = [...content];
-    newContent.splice(index, 1);
-    setContent(newContent);
-  };
-
-  const dataExtractionHandler = (content, index) => {
-    //Test to see if state updates properly
-    const newArr = inputData;
-
-    let newItem = content;
-    newArr[index] = newItem;
-
-    setInputData(newArr);
-  };
+  console.log(paddings)
 
   useEffect(() => {
-    if (props.submit) {
+    if (props.submission) {
       const allData = {
         type: props.componentType,
-        background: elementSettings.background,
-        color: elementSettings.color,
         paddingLeft: paddings.paddingLeft,
         paddingRight: paddings.paddingRight,
         paddingTop: paddings.paddingTop,
@@ -73,9 +50,9 @@ const TextEditor = (props) => {
         position: props.positionData.item,
       };
 
-      props.contentHandler(allData);
+      props.contentHandler(props.positionData.row, props.positionData.item, allData);
     }
-  }, [props.submit]);
+  }, [props.submission]);
 
   return (
     <div className={classes.TextEditor}>
@@ -98,37 +75,11 @@ const TextEditor = (props) => {
           </div>
         </div>
         <div className={classes.Inputs}>
-          <div className={classes.Header}>
-            <div>
-              <h2 className={classes.Heading}>Content Inputs:</h2>
-              <label>
-                Each input represents a paragraph on the email. In order to
-                avoid unwanted behaviours, follow the instructions.
-              </label>
-            </div>
-            <button onClick={addInputHandler}>
-              Add a paragraph
-              <CgAddR
-                id="addBtnInput"
-                color="#fff"
-                size="20"
-                onClick={props.addBtn}
-              />
-            </button>
-          </div>
           <div className={classes.Fields}>
-            {/* implement input generation */}
-            {content.map((input, index) => (
-              <ContentInput
-                key={"input" + index}
-                inputChange={(e) => textHandler(e, index)}
-                deleteBtn={() => deleteText(index)}
-                textId={index}
-                textValue={content[index]}
-                extractData={dataExtractionHandler}
-                componentType={props.componentType}
-              />
-            ))}
+            <ContentInput
+              extractData={dataExtractionHandler}
+              componentType={props.componentType}
+            />
           </div>
         </div>
       </div>

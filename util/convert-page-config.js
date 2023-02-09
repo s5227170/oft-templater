@@ -8,7 +8,6 @@ import image from "../content-components/image";
 const convertPageConfig = (config) => {
   //array of all rows and their components, all in string format, they require a parse
   let htmlContent = [];
-  console.log(config)
 
   config.content.map((row, index) => {
     const subComponents = [];
@@ -18,8 +17,6 @@ const convertPageConfig = (config) => {
           //Fill the component content and settings
           subComponents.push(
             text(
-              row.contentComponents[i].background,
-              row.contentComponents[i].color,
               row.contentComponents[i].paddingLeft,
               row.contentComponents[i].paddingRight,
               row.contentComponents[i].paddingTop,
@@ -36,8 +33,6 @@ const convertPageConfig = (config) => {
           subComponents.push(
             list(
               //Add the attributes just like for the text type
-              row.contentComponents[i].background,
-              row.contentComponents[i].color,
               row.contentComponents[i].paddingLeft,
               row.contentComponents[i].paddingRight,
               row.contentComponents[i].paddingTop,

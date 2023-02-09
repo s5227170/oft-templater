@@ -18,6 +18,7 @@ import { MdOutlineBorderColor, MdOutlineFormatColorFill } from "react-icons/md";
 import { SketchPicker, PhotoshopPicker } from "react-color";
 
 import classes from "./TextFormatter.module.scss";
+import { innerText } from "domutils";
 
 const HOTKEYS = {
   "mod+b": "bold",
@@ -30,19 +31,22 @@ const LIST_TYPES = ["numbered-list", "bulleted-list"];
 const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
 
 const RichTextExample = (editorProps) => {
-  const renderElement = useCallback((props, elementSettings) => {
-    const newProps = Object.assign(props, elementSettings);
-    return <Element {...newProps} />;
-  }, []);
+  const [elementSettings, setElementSettings] = useState({
+    background: "rgb(255, 255, 255)",
+    color: "rgb(0, 0, 0)",
+  });
+  const renderElement = useCallback(
+    (props, elementSettings) => {
+      const newProps = Object.assign(props, elementSettings);
+      return <Element {...newProps} />;
+    },
+    [elementSettings]
+  );
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
   const [colorScheme, setColorScheme] = useState({
     background: false,
     color: false,
-  });
-  const [elementSettings, setElementSettings] = useState({
-    background: "#fff",
-    color: "#000",
   });
 
   const colorChoice = (e, colorType) => {
@@ -69,22 +73,22 @@ const RichTextExample = (editorProps) => {
       value={initialValue}
       //This line bellow could be used to generate text into oft format
       onChange={(value) => {
+        editorProps.extractData(value);
         const isAstChange = editor.operations.some(
           (op) => "set_selection" !== op.type
         );
         if (isAstChange) {
           // Save the value to Local Storage.
           const content = JSON.stringify(value);
-          editorProps.extractData(content, editorProps.index);
         }
-        console.log(value);
       }}
     >
       <Toolbar>
         {editorProps.componentType == "Text" ? (
           <>
             <MarkButton
-              format="font-color"
+              format="color"
+              value={elementSettings}
               icon={
                 <MdOutlineBorderColor
                   onClick={() => colorHandler(2)}
@@ -104,7 +108,8 @@ const RichTextExample = (editorProps) => {
               />
             ) : null}
             <MarkButton
-              format="background-color"
+              format="background"
+              value={elementSettings}
               icon={
                 <MdOutlineFormatColorFill
                   onClick={() => colorHandler(1)}
@@ -143,7 +148,8 @@ const RichTextExample = (editorProps) => {
         ) : (
           <>
             <MarkButton
-              format="font-color"
+              format="color"
+              value={elementSettings}
               icon={
                 <MdOutlineBorderColor
                   onClick={() => colorHandler(2)}
@@ -160,7 +166,8 @@ const RichTextExample = (editorProps) => {
               />
             ) : null}
             <MarkButton
-              format="background-color"
+              format="background"
+              value={elementSettings}
               icon={
                 <MdOutlineFormatColorFill
                   onClick={() => colorHandler(2)}
@@ -206,15 +213,18 @@ const RichTextExample = (editorProps) => {
         spellCheck
         autoFocus
         onKeyDown={(event) => {
-          const innerHTML = event.target.innerHTML
-          const matches = innerHTML.match(/(?:[0-9]{3})\b|(?:rgb)\([^\)]*\)/ig);
-          const color = matches[0]
-          const background = matches[1]
-
           for (const hotkey in HOTKEYS) {
-              if (isHotkey(hotkey, event)) {
+            if (isHotkey(hotkey, event)) {
               event.preventDefault();
               const mark = HOTKEYS[hotkey];
+
+              const innerHTML = event.target.innerHTML;
+              const matches = innerHTML.match(
+                /(?:[0-9]{3})\b|(?:rgb)\([^\)]*\)/gi
+              );
+              const color = matches[0].toString();
+              const background = matches[1].toString();
+
               toggleMark(editor, mark, color, background);
             }
           }
@@ -224,7 +234,7 @@ const RichTextExample = (editorProps) => {
   );
 };
 
-const toggleBlock = (editor, format, color, background) => {
+const toggleBlock = (editor, format) => {
   const isActive = isBlockActive(
     editor,
     format,
@@ -250,8 +260,7 @@ const toggleBlock = (editor, format, color, background) => {
       type: isActive ? "paragraph" : isList ? "list-item" : format,
     };
   }
-  newProperties.color = color;
-  newProperties.background = background
+
   Transforms.setNodes(editor, newProperties);
 
   if (!isActive && isList) {
@@ -260,15 +269,34 @@ const toggleBlock = (editor, format, color, background) => {
   }
 };
 
-const toggleMark = (editor, format) => {
-  const isActive = isMarkActive(editor, format);
-  console.log(editor);
+const toggleMark = (editor, format, color, background) => {
+  console.log(color);
+  console.log(background);
   console.log(format);
+  if (format == "background") {
+    const isActive = isMarkActive(editor, format);
 
-  if (isActive) {
-    Editor.removeMark(editor, format);
+    if (isActive) {
+      Editor.removeMark(editor, format);
+    } else {
+      Editor.addMark(editor, format, background);
+    }
+  } else if (format == "color") {
+    const isActive = isMarkActive(editor, format);
+
+    if (isActive) {
+      Editor.removeMark(editor, format);
+    } else {
+      Editor.addMark(editor, format, color);
+    }
   } else {
-    Editor.addMark(editor, format, true);
+    const isActive = isMarkActive(editor, format);
+
+    if (isActive) {
+      Editor.removeMark(editor, format);
+    } else {
+      Editor.addMark(editor, format, true);
+    }
   }
 };
 
@@ -297,10 +325,20 @@ const isMarkActive = (editor, format) => {
 const Element = ({ attributes, children, element, color, background }) => {
   const style = {
     textAlign: element.align,
-    color: color,
-    background: background,
   };
   switch (element.type) {
+    case "background":
+      return (
+        <span style={{ backgroundColor: background }} {...attributes}>
+          {children}
+        </span>
+      );
+    case "color":
+      return (
+        <span style={{ color: color }} {...attributes}>
+          {children}
+        </span>
+      );
     case "block-quote":
       return (
         <blockquote style={style} {...attributes}>
@@ -362,6 +400,14 @@ const Leaf = ({ attributes, children, leaf }) => {
   if (leaf.underline) {
     children = <u>{children}</u>;
   }
+  if (leaf.color) {
+    children = <span style={{ color: leaf.color }}>{children}</span>;
+  }
+  if (leaf.background) {
+    children = (
+      <span style={{ backgroundColor: leaf.background }}>{children}</span>
+    );
+  }
 
   return <span {...attributes}>{children}</span>;
 };
@@ -385,14 +431,14 @@ const BlockButton = ({ format, icon }) => {
   );
 };
 
-const MarkButton = ({ format, icon }) => {
+const MarkButton = ({ format, icon, value }) => {
   const editor = useSlate();
   return (
     <Button
       active={isMarkActive(editor, format)}
       onMouseDown={(event) => {
         event.preventDefault();
-        toggleMark(editor, format);
+        toggleMark(editor, format, value.color, value.background);
       }}
     >
       {icon}

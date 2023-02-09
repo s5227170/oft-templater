@@ -24,78 +24,11 @@
       }
     }
 
-    .ComponentSettings {
-      display: flex;
-      flex-direction: row;
-      width: 100%;
-      padding: 20px 0px;
-
-      .Background {
-        width: 50%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        z-index: 10;
-
-        .ColourPicker {
-          z-index: 10;
-          margin-left: 100px;
-          margin-right: 100px;
-        }
-
-        button {
-          display: block;
-          width: fit-content;
-          background-color: #fff;
-          border-radius: 6px;
-          padding: 5px 10px;
-
-          :hover {
-          background-color: #ececec;
-          }
-        }
-      }
-      .Color {
-        width: 50%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        button {
-          display: block;
-          width: fit-content;
-          background-color: #fff;
-          border-radius: 6px;
-          padding: 5px 10px;
-
-          :hover {
-          background-color: #ececec;
-          }
-        }
-      }
-
-      .ChosenColor {
-        border: 1px solid transparent;
-        border-radius: 25px;
-        width: 20px;
-        height: 20px;
-        margin: 20px;
-
-        div {
-          width: 100%;
-          height: 100%;
-          border: 1px solid transparent;
-          border-radius: 25px;
-        }
-      }
-
-    }
-
     .Inputs {
       display: flex;
       flex-direction: column;
       width: 600px;
-      padding: 10px 0px;
+      padding: 0px 0px 10px 0px;
       max-height: 500px;
 
       &::-webkit-scrollbar {
@@ -111,44 +44,6 @@
       &::-webkit-scrollbar-thumb {
         background-color: darkgrey;
         border-radius: 8px;
-      }
-
-      .Header {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 2px solid #c5c5c5;
-        padding-bottom: 10px;
-
-        label {
-          display: block;
-          width: 300px;
-          font-size: 13px;
-        }
-
-        button {
-          width: fit-content;
-          background-color: #40cd9a;
-          color: #fff;
-          border-radius: 4px;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-evenly;
-          align-items: center;
-          padding: 5px;
-          -webkit-box-shadow: 0px 1px 4px -1px #40cd9a;
-          box-shadow: 0px 1px 4px -1px #40cd9a;
-
-          &:hover {
-            background-color: #70e4b9;
-            transition: 0.2s;
-          }
-
-          svg {
-            margin: 0px 0px 0px 5px;
-          }
-        }
       }
 
       .Fields {
