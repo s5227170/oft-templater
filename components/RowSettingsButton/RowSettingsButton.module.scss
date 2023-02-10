@@ -1,0 +1,22 @@
+.EditSettings {
+  background: radial-gradient(#ffffff, #cccccc);
+  width: 60px;
+  height: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  margin: auto;
+  -webkit-box-shadow: 0px 0px 8px 0px rgba(255, 255, 255);
+  box-shadow: 0px 0px 3px 0px rgba(255, 255, 255);
+
+  &:hover {
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(255, 255, 255);
+    box-shadow: 0px 0px 8px 0px rgba(255, 255, 255);
+    transition: 0.3s;
+  }
+
+  :active {
+  }
+}

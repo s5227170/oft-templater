@@ -47,12 +47,10 @@ const text = (
       items += contentArray[i];
     }
   }
-  console.log(items);
 
   if (!contentArray.length) {
     items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"Text"}"></span>`;
   }
-
 
   return `<table width=${componentSize}>
             <tbody>

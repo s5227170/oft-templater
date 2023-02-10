@@ -1,5 +1,6 @@
 //Content components are either images, lists, or text
 const oneColumn = (
+  position,
   paddingLeft,
   paddingRight,
   paddingTop,
@@ -7,7 +8,7 @@ const oneColumn = (
   contentComponentOne
 ) => {
   return `
-        <table border="0" cellspacing="0" cellpadding="0" style="
+        <table id="position-${position}" border="0" cellspacing="0" cellpadding="0" style="
             border-spacing: 0;
             mso-table-lspace: 0pt;
             mso-table-rspace: 0pt;
@@ -45,6 +46,7 @@ const oneColumn = (
 };
 
 const twoColumns = (
+  position,
   paddingLeft,
   paddingRight,
   paddingTop,
@@ -53,7 +55,7 @@ const twoColumns = (
   contentComponentTwo
 ) => {
   return `
-        <table border="0" cellspacing="0" cellpadding="0" style="
+        <table id="position-${position}" border="0" cellspacing="0" cellpadding="0" style="
             border-spacing: 0;
             mso-table-lspace: 0pt;
             mso-table-rspace: 0pt;
@@ -92,6 +94,7 @@ const twoColumns = (
 };
 
 const threeColumns = (
+  position,
   paddingLeft,
   paddingRight,
   paddingTop,
@@ -101,7 +104,7 @@ const threeColumns = (
   contentComponentThree
 ) => {
   return `
-        <table border="0" cellspacing="0" cellpadding="0" style="
+        <table id="position-${position}" border="0" cellspacing="0" cellpadding="0" style="
             border-spacing: 0;
             mso-table-lspace: 0pt;
             mso-table-rspace: 0pt;

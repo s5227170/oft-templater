@@ -3,7 +3,6 @@ import Image from "next/image";
 
 import RadioButton from "../UI/RadioButton/RadioButton";
 import ConfirmationButtons from "../ConfirmationButtons/ConfirmationButtons";
-import { oneColumn } from "../../content-components/row";
 
 import classes from "./CreateRowContent.module.scss";
 

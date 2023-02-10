@@ -10,13 +10,14 @@ import CreateRowManager from "../CreateRowManager/CreateRowManage";
 
 import convertPageConfig from "../../util/convert-page-config";
 import ComponentContentManager from "../ComponentContentManager/ComponentContentManager";
+import RowSettingsButton from "../RowSettingsButton/RowSettingsButton";
+import RowSettingsManager from "../RowSettingsManager/RowSettingsManager";
 
 const Canvas = () => {
   const rootRef = useRef(null);
-  const [emailContent, setEmailContent] = useState([]);
-  const [contentArr, setContentArr] = useState([]);
+  //This variable rowSettings stores the coordinates of all rows and it is used to generate settings components to tackle rows
+  const [rowSettings, setRowSettings] = useState([]);
   const [content, setContent] = useState();
-  const [elementToGenerate, setElementToGenerate] = useState();
   const [pageConfig, setPageConfig] = useState({
     content: [],
     title: "",
@@ -115,8 +116,8 @@ const Canvas = () => {
 
     pageConfig.content.map((rowConfig) => {
       if (rowConfig.position == row) {
+        const newRowComponentContent = [];
         rowConfig.contentComponents.map((component) => {
-          const newRowComponentContent = [];
           if (component.position == item) {
             const updatedComponent = {};
             //Check what type the component is and add the content depending on that
@@ -157,23 +158,24 @@ const Canvas = () => {
             newRowComponentContent.push(component);
           }
           //Create the new updated row and add the updated components
-          const newRowConfig = {
-            ...rowConfig,
-            contentComponents: newRowComponentContent,
-          };
-
-          //Push the new updated row object to the array of rowConfigs
-          newPageContent.push(newRowConfig);
         });
+        const newRowConfig = {
+          ...rowConfig,
+          contentComponents: newRowComponentContent,
+        };
+
+        //Push the new updated row object to the array of rowConfigs
+        newPageContent.push(newRowConfig);
       } else {
         //Push all rowConfigs that are not to be touched to the the pageConfig content
         newPageContent.push(rowConfig);
       }
     });
+    console.log(newPageContent);
 
     setPageConfig((pageConfig) => ({
       ...pageConfig,
-      content: [...newPageContent],
+      content: newPageContent,
     }));
   };
 
@@ -208,7 +210,6 @@ const Canvas = () => {
   useEffect(() => {
     if (root == null) {
       //If rows multiply, try moving the createRoot function out of the if
-      root = createRoot(rootRef.current);
       const conversion = convertPageConfig(pageConfig);
       let fullStringContent = "";
       conversion.map((stringRow) => {
@@ -278,12 +279,42 @@ const Canvas = () => {
     }
   }, [pageConfig]);
 
+  useEffect(() => {
+    if (content) {
+      const newRowSettings = [];
+      for (let i = 0; i < pageConfig.content.length; i++) {
+        const row = document.getElementById("position-" + (i + 1));
+        if (row) {
+          const rowRightCoordinates = row.getBoundingClientRect().right;
+          const rowTopCoordinates = row.getBoundingClientRect().top;
+          const rowHeight = row.offsetHeight;
+          const settingsTriggerCoordinates = {
+            row: i,
+            coordinates: {
+              right: rowRightCoordinates,
+              top: rowTopCoordinates,
+            },
+            height: rowHeight,
+          };
+          newRowSettings.push(settingsTriggerCoordinates);
+        }
+      }
+      setRowSettings(newRowSettings);
+    }
+  }, [content]);
+
   return (
     <div className={classes.CanvasWrapper}>
       <div id="targetDiv" ref={rootRef}>
         {content}
       </div>
       <CreateRowManager rowGeneration={generateRow} />
+      {rowSettings.map((row) => {
+        console.log(row);
+        return (
+          <RowSettingsManager key={"settingsButton" + row.row} row={row} />
+        );
+      })}
     </div>
   );
 };
