@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import PaddingElement from "../UI/PaddingElement/PaddingElement";
 import classes from "./ImageEditor.module.scss";
 
@@ -8,9 +8,6 @@ import {
   AiOutlineBorderTop,
   AiOutlineBorderBottom,
 } from "react-icons/ai";
-import ContentInput from "../UI/ContentInput/ContentInput";
-import { CgAddR } from "react-icons/cg";
-import { Tooltip } from "react-tooltip";
 import ImageInput from "../UI/ImageInput/ImageInput";
 
 const ImageEditor = (props) => {
@@ -36,6 +33,8 @@ const ImageEditor = (props) => {
       e.target.value = e.target.value.slice(0, 3);
     }
     const newPaddings = { ...paddings, [el]: e.target.value };
+
+    setPaddings(newPaddings)
   };
 
   const preventMinus = (e) => {
@@ -103,22 +102,22 @@ const ImageEditor = (props) => {
       actualImgSize.height = imageSize.height;
       actualImgSize.width = imageSize.width;
     }
-    if (props.submit) {
+    if (props.submission) {
       const allData = {
         type: props.componentType,
         paddingLeft: paddings.paddingLeft,
         paddingRight: paddings.paddingRight,
         paddingTop: paddings.paddingTop,
         paddingBottom: paddings.paddingBottom,
-        url: url,
-        imgWidth: allDAta.width,
-        imgHeight: allDAta.height,
+        url: [url],
+        imgWidth: actualImgSize.width,
+        imgHeight: actualImgSize.height,
         position: props.positionData.item
       };
 
-      props.contentHandler(allData);
+      props.contentHandler(props.positionData.row, props.positionData.item, allData);
     }
-  }, [props.submit]);
+  }, [props.submission]);
 
   return (
     <div className={classes.ImageEditor}>

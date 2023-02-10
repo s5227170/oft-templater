@@ -8,32 +8,29 @@ const list = (
   item,
   rowType
 ) => {
-  const contentDistribution = content[0].children.map((paragraph) => {
+  console.log(content);
+  const contentArray = [];
+  const contentDistribution = content.map((list) => {
     //Add functionality for recognition of content type. For example, the compiler should recognise if some text is an h1, h2, or a p. According
     //to the type of element, set the size accordingly, and depending on properties, add bold, or similar
     //Maybe check what the "paragraph" element is and then set it up depending on that
-    const wholeParagraph = ``;
-    for (let i = 0; i < paragraph.length; i++) {
-      if (paragraph[i].color && paragraph[i].background) {
-        wholeParagraph.concat(
-          `<span style="color: ${paragraph[i].color}; background-color: ${paragraph[i].background}";>${paragraph[i].text}</span>`
-        );
-      } else if (paragraph[i].color) {
-        wholeParagraph.concat(
-          `<span style="color: ${paragraph[i].color}";>${paragraph[i].text}</span>`
-        );
-      } else if (paragraph[i].background) {
-        wholeParagraph.concat(
-          `<span style="background-color: ${paragraph[i].background}";>${paragraph[i].text}</span>`
-        );
-      } else {
-        wholeParagraph.concat(`${paragraph[i].text}`);
+    list.children.map((paragraph) => {
+      let wholeParagraph = "";
+      for (let i = 0; i < paragraph.children.length; i++) {
+        if (paragraph.children[i].color && paragraph.children[i].background) {
+          wholeParagraph += `<span style="color: ${paragraph.children[i].color}; background-color: ${paragraph.children[i].background}";>${paragraph.children[i].text}</span>`;
+        } else if (paragraph.children[i].color) {
+          wholeParagraph += `<span style="color: ${paragraph.children[i].color}";>${paragraph.children[i].text}</span>`;
+        } else if (paragraph.children[i].background) {
+          wholeParagraph += `<span style="background-color: ${paragraph.children[i].background}";>${paragraph.children[i].text}</span>`;
+        } else {
+          wholeParagraph += paragraph.children[i].text;
+        }
       }
-    }
-
-    return `
-          <li style="font-family: arial; font-size: 16px;">${wholeParagraph}</li>                
-        `;
+      contentArray.push(
+        `<li style="font-family: arial;">${wholeParagraph}</li>`
+      );
+    });
   });
 
   let componentSize = 0;
@@ -50,16 +47,14 @@ const list = (
   }
 
   let items = "";
-  if (contentDistribution.length) {
-    for (let i = 0; i < contentDistribution.length; i++) {
-      items = items.concat(contentDistribution[i]);
+  if (contentArray.length) {
+    for (let i = 0; i < contentArray.length; i++) {
+      items += contentArray[i];
     }
   }
 
   if (!contentDistribution.length) {
-    items = items.concat(
-      `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"List"}"></span>`
-    );
+    items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"List"}"></span>`;
   }
 
   return `
@@ -70,9 +65,9 @@ const list = (
                 <td height="${paddingTop}"><img src="http://welcome.hp-ww.com/img/s.gif" width=${componentSize} height="${paddingTop}" alt="" style="display:block;"></td>
                 <td width="${paddingRight}"></td>
             </tr>
-            <tr width=${componentSize}>
+            <tr >
                 <td width="${paddingLeft}"></td>
-                <td width=${componentSize}>
+                <td >
                   <ul>
                     ${items}
                   </ul>

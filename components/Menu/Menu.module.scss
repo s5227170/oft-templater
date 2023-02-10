@@ -1,46 +1,47 @@
 .MenuWrapper {
-    position: absolute;
-    top: 50px;
-    left: 50px;
+  position: absolute;
+  top: 50px;
+  left: 50px;
 
-    ul {
-        background-color: #40CD9A;
-        border-radius: 12px;
-        -webkit-box-shadow: 0px 1px 5px 1px rgba(255, 255, 255, 0.77);
-        box-shadow: 0px 1px 5px 1px rgba(255, 255, 255, 0.77);
+  ul {
+    background-color: #40cd9a;
+    border-radius: 12px;
+    -webkit-box-shadow: 0px 1px 5px 1px rgba(255, 255, 255, 0.77);
+    box-shadow: 0px 1px 5px 1px rgba(255, 255, 255, 0.77);
+    list-style-type: none;
 
-        li {
-            border-bottom: solid 1px #61EAB9;
-            border-top: solid 1px #61EAB9;
-            padding: 5px;
+    li {
+      border-bottom: solid 1px #61eab9;
+      border-top: solid 1px #61eab9;
+      padding: 5px;
 
-            &:hover {
-                cursor: pointer;
-                background-color: #61EAB9;
-                transition: .2s;
-            }
+      &:hover {
+        cursor: pointer;
+        background-color: #61eab9;
+        transition: 0.2s;
+      }
 
-            &:nth-child(1) {
-                border-top: none;
-                border-radius: 12px 12px 0px 0px;
+      &:nth-child(1) {
+        border-top: none;
+        border-radius: 12px 12px 0px 0px;
 
-                &:hover {
-                    cursor: pointer;
-                    background-color: #61EAB9;
-                    transition: .2s;
-                }
-            }
-
-            &:nth-last-child(1) {
-                border-bottom: none;
-                border-radius: 0px 0px 12px 12px;
-
-                &:hover {
-                    cursor: pointer;
-                    background-color: #61EAB9;
-                    transition: .2s;
-                }
-            }
+        &:hover {
+          cursor: pointer;
+          background-color: #61eab9;
+          transition: 0.2s;
         }
+      }
+
+      &:nth-last-child(1) {
+        border-bottom: none;
+        border-radius: 0px 0px 12px 12px;
+
+        &:hover {
+          cursor: pointer;
+          background-color: #61eab9;
+          transition: 0.2s;
+        }
+      }
     }
+  }
 }

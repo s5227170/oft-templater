@@ -10,10 +10,8 @@ const image = (
   item,
   rowType
 ) => {
-
-  console.log(item)
   const contentDistribution = url.map((url) => {
-    return `<img width=${imgWIdth} height=${imgHeight} src="${url}" />`;
+    return `<img width="${imgWIdth}" height="${imgHeight}" src="${url}" />`;
   });
 
   let componentSize = 0;
@@ -32,7 +30,7 @@ const image = (
   let items = "";
   if (contentDistribution.length) {
     for (let i = 0; i < contentDistribution.length; i++) {
-      items = items.concat(contentDistribution[i]);
+      items += contentDistribution[i];
     }
   }
 
@@ -50,7 +48,7 @@ const image = (
                         <td height="${paddingTop}"><img src="http://welcome.hp-ww.com/img/s.gif" width=${componentSize} height="${paddingTop}" alt="" style="display:block;"></td>
                         <td width="${paddingRight}"></td>
                     </tr>
-                    <tr width=${componentSize}>
+                    <tr>
                         <td width="${paddingLeft}"></td>
                         <td>
                             ${items}

@@ -41,7 +41,6 @@ const text = (
     componentSize = "200";
   }
 
-  console.log(contentArray);
   let items = "";
   if (contentArray.length) {
     for (let i = 0; i < contentArray.length; i++) {
@@ -54,7 +53,6 @@ const text = (
     items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"Text"}"></span>`;
   }
 
-  console.log(paddingLeft, paddingRight, paddingTop, paddingBottom);
 
   return `<table width=${componentSize}>
             <tbody>
