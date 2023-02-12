@@ -24,7 +24,7 @@ const convertPageConfig = (config) => {
               row.contentComponents[i].content,
               row.position,
               row.contentComponents[i].position,
-              row.columns
+              row.columns,
             )
           );
         }
@@ -40,7 +40,7 @@ const convertPageConfig = (config) => {
               row.contentComponents[i].content,
               row.position,
               row.contentComponents[i].position,
-              row.columns
+              row.columns,
             )
           );
         }
@@ -58,7 +58,7 @@ const convertPageConfig = (config) => {
               row.contentComponents[i].imgHeight,
               row.position,
               row.contentComponents[i].position,
-              row.columns
+              row.columns,
             )
           );
         }

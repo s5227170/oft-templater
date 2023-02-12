@@ -117,6 +117,12 @@ const Canvas = () => {
     pageConfig.content.map((rowConfig) => {
       if (rowConfig.position == row) {
         const newRowComponentContent = [];
+        let newPaddings = {
+          paddingLeft: 0,
+          paddingRight: 0,
+          paddingTop: 0,
+          paddingBottom: 0,
+        }
         rowConfig.contentComponents.map((component) => {
           if (component.position == item) {
             const updatedComponent = {};
@@ -151,6 +157,13 @@ const Canvas = () => {
               updatedComponent.position = content.position;
             }
 
+            if (rowConfig.cols == 1) {
+              newPaddings.paddingLeft = content.paddingLeft;
+              newPaddings.paddingRight = content.paddingRight;
+              newPaddings.paddingTop = content.paddingTop;
+              newPaddings.paddingBottom = content.paddingBottom;
+            }
+
             //The line underneath adds the modified component to the row
             newRowComponentContent.push(updatedComponent);
           } else {
@@ -161,6 +174,7 @@ const Canvas = () => {
         });
         const newRowConfig = {
           ...rowConfig,
+          parameters: newPaddings,
           contentComponents: newRowComponentContent,
         };
 
@@ -171,7 +185,6 @@ const Canvas = () => {
         newPageContent.push(rowConfig);
       }
     });
-    console.log(newPageContent);
 
     setPageConfig((pageConfig) => ({
       ...pageConfig,
@@ -187,8 +200,6 @@ const Canvas = () => {
       } else {
         const newContentComponents = [];
         for (let i = 0; i < rowConfig.contentComponents.length; i++) {
-          // console.log(rowConfig.contentComponents[i].position);
-          // console.log(item);
           if (rowConfig.contentComponents[i].position != item) {
             newContentComponents.push(rowConfig.contentComponents[i]);
           }
@@ -206,6 +217,23 @@ const Canvas = () => {
     }));
     // setPageConfig(newPageContent);
   };
+
+  const confirmRowChanges = (rowPosition) => {
+    console.log(rowPosition)
+  }
+
+  const deleteRowHandler = (rowPosition) => {
+    const newPageContent = [];
+    for (let i = 0; i < pageConfig.content.length; i++) {
+      if (pageConfig.content[i].position != rowPosition) {
+        newPageContent.push(pageConfig.content[i])
+      }
+    }
+    setPageConfig((pageConfig) => ({
+      ...pageConfig,
+      content: [...newPageContent],
+    }));
+  }
 
   useEffect(() => {
     if (root == null) {
@@ -253,8 +281,6 @@ const Canvas = () => {
           if (!attribs) {
             return;
           }
-          console.log(attribs);
-
           if (attribs.id === "componentManager") {
             return (
               <ComponentTypeManager
@@ -282,14 +308,14 @@ const Canvas = () => {
   useEffect(() => {
     if (content) {
       const newRowSettings = [];
-      for (let i = 0; i < pageConfig.content.length; i++) {
-        const row = document.getElementById("position-" + (i + 1));
+      for (let i = 1; i <= pageConfig.content.length; i++) {
+        const row = document.getElementById("position-" + (i));
         if (row) {
           const rowRightCoordinates = row.getBoundingClientRect().right;
           const rowTopCoordinates = row.getBoundingClientRect().top;
           const rowHeight = row.offsetHeight;
           const settingsTriggerCoordinates = {
-            row: i,
+            position: i,
             coordinates: {
               right: rowRightCoordinates,
               top: rowTopCoordinates,
@@ -310,9 +336,8 @@ const Canvas = () => {
       </div>
       <CreateRowManager rowGeneration={generateRow} />
       {rowSettings.map((row) => {
-        console.log(row);
         return (
-          <RowSettingsManager key={"settingsButton" + row.row} row={row} />
+          <RowSettingsManager key={"settingsButton" + row.position} rowSettings={row} row={pageConfig.content[row.position - 1]} confirmRowChanges={confirmRowChanges} deleteRowHandler={deleteRowHandler} />
         );
       })}
     </div>

@@ -16,13 +16,13 @@ const RowSettingsManager = (props) => {
   return (
     <div className={classes.RowSettingsManager}>
       <RowSettingsButton
-        elementId={props.row.row}
-        coordinates={props.row.coordinates}
-        rowHeight={props.row.height}
+        position={props.rowSettings.position}
+        coordinates={props.rowSettings.coordinates}
+        rowHeight={props.rowSettings.height}
         clickHandler={tackleModal}
       >
         <Modal modalTackle={tackleModal} modalShow={modalShow}>
-          <RowSettingsContent />
+          <RowSettingsContent cancelHandler={tackleModal} confirmRowChanges={props.confirmRowChanges} position={props.rowSettings.position} deleteRowHandler={props.deleteRowHandler} row={props.row} />
         </Modal>
       </RowSettingsButton>
     </div>

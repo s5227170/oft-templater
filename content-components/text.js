@@ -6,7 +6,7 @@ const text = (
   content,
   rowPosition,
   item,
-  rowType
+  rowType,
 ) => {
   const contentArray = [];
   const contentDistribution = content.map((paragraph) => {
@@ -56,19 +56,23 @@ const text = (
             <tbody>
                 <tr>
                     <td width="${paddingLeft}"></td>
-                    <td height="${paddingTop}"><img src="http://welcome.hp-ww.com/img/s.gif" width=${componentSize} height="${paddingTop}" alt="" style="display:block;"></td>
+                      <td>
+                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${componentSize - paddingLeft - paddingRight}" height="${paddingTop}" alt="" style="display:block; width: ${600 - paddingLeft - paddingRight}px; height:${paddingTop}px;">
+                      </td>
                     <td width="${paddingRight}"></td>
                 </tr>
                 <tr>
-                    <td width="${paddingLeft}"></td>
+                    <td></td>
                     <td>
                       ${items}
                     </td>
-                    <td width="${paddingRight}"></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td width="${paddingLeft}"></td>
-                    <td height="${paddingBottom}"><img src="http://welcome.hp-ww.com/img/s.gif" width=${componentSize} height="${paddingBottom}" alt="" style="display:block;"></td>
+                      <td>
+                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${componentSize - paddingLeft - paddingRight}" height="${paddingBottom}" alt="" style="display:block; width: ${600 - paddingLeft - paddingRight}px; height:${paddingTop}px;">
+                      </td>
                     <td width="${paddingRight}"></td>
                 </tr>
             </tbody>

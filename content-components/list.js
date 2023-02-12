@@ -6,7 +6,7 @@ const list = (
   content,
   rowPosition,
   item,
-  rowType
+  rowType,
 ) => {
   console.log(content);
   const contentArray = [];
@@ -57,30 +57,33 @@ const list = (
     items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"List"}"></span>`;
   }
 
-  return `
-    <table width=${componentSize}>
-        <tbody>
-            <tr>
-                <td width="${paddingLeft}"></td>
-                <td height="${paddingTop}"><img src="http://welcome.hp-ww.com/img/s.gif" width=${componentSize} height="${paddingTop}" alt="" style="display:block;"></td>
-                <td width="${paddingRight}"></td>
-            </tr>
-            <tr >
-                <td width="${paddingLeft}"></td>
-                <td >
-                  <ul>
-                    ${items}
-                  </ul>
-                </td>
-                <td width="${paddingRight}"></td>
-            </tr>
-            <tr>
-                <td width="${paddingLeft}"></td>
-                <td height="${paddingBottom}"><img src="http://welcome.hp-ww.com/img/s.gif" width=${componentSize} height="${paddingBottom}" alt="" style="display:block;"></td>
-                <td width="${paddingRight}"></td>
-            </tr>
-        </tbody>
-    </table>`;
+  return `<table width=${componentSize}>
+            <tbody>
+                <tr>
+                    <td width="${paddingLeft}"></td>
+                      <td>
+                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${componentSize - paddingLeft - paddingRight}" height="${paddingTop}" alt="" style="display:block; width: ${600 - paddingLeft - paddingRight}px; height:${paddingTop}px;">
+                      </td>
+                    <td width="${paddingRight}"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                      <ul>
+                      ${items}
+                      </ul>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td width="${paddingLeft}"></td>
+                      <td>
+                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${componentSize - paddingLeft - paddingRight}" height="${paddingBottom}" alt="" style="display:block; width: ${600 - paddingLeft - paddingRight}px; height:${paddingTop}px;">
+                      </td>
+                    <td width="${paddingRight}"></td>
+                </tr>
+            </tbody>
+          </table>`;
 };
 
 export default list;
