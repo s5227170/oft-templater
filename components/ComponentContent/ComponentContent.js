@@ -45,7 +45,7 @@ const ComponentContent = (props) => {
           <GiConfirmed
             id="confirm-text"
             color="#40CD9A"
-            size="30px"
+            size="25px"
             onClick={preConfirmHandler}
           />
           <Tooltip anchorId="confirm-text" place="top">
@@ -54,7 +54,7 @@ const ComponentContent = (props) => {
           <MdOutlineDeleteOutline
             id="delete-sub-component"
             color="#CE4045"
-            size="30px"
+            size="25px"
             onClick={() => {
               props.deleteFunction(position.row, position.item);
               props.cancelHandler();
@@ -67,7 +67,7 @@ const ComponentContent = (props) => {
           <TiArrowMinimise
             id="close-modal-text"
             color="#008DD7"
-            size="30px"
+            size="25px"
             onClick={props.cancelHandler}
           />
           <Tooltip anchorId="close-modal-text" place="top">

@@ -22,7 +22,14 @@ const RowSettingsManager = (props) => {
         clickHandler={tackleModal}
       >
         <Modal modalTackle={tackleModal} modalShow={modalShow}>
-          <RowSettingsContent cancelHandler={tackleModal} confirmRowChanges={props.confirmRowChanges} position={props.rowSettings.position} deleteRowHandler={props.deleteRowHandler} row={props.row} />
+          <RowSettingsContent
+            cancelHandler={tackleModal}
+            confirmRowChanges={props.confirmRowChanges}
+            position={props.rowSettings.position}
+            deleteRowHandler={props.deleteRowHandler}
+            row={props.row}
+            positionOptions={props.positionOptions}
+          />
         </Modal>
       </RowSettingsButton>
     </div>

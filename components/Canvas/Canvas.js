@@ -28,6 +28,7 @@ const Canvas = () => {
       paddingBottom: 0,
     },
   });
+  const [rowPositionConfig, setRowPositionConfig] = useState([]);
   let root = null;
 
   const generateComponent = (type, position) => {
@@ -47,6 +48,7 @@ const Canvas = () => {
         paddingBottom: 0,
         content: [],
         position: number,
+        verticalAlign: "",
       };
     }
     if (type == "List") {
@@ -58,6 +60,7 @@ const Canvas = () => {
         paddingBottom: 0,
         content: [],
         position: number,
+        verticalAlign: "",
       };
     }
     if (type == "Image") {
@@ -122,7 +125,7 @@ const Canvas = () => {
           paddingRight: 0,
           paddingTop: 0,
           paddingBottom: 0,
-        }
+        };
         rowConfig.contentComponents.map((component) => {
           if (component.position == item) {
             const updatedComponent = {};
@@ -135,6 +138,7 @@ const Canvas = () => {
               updatedComponent.paddingBottom = content.paddingBottom;
               updatedComponent.content = content.content;
               updatedComponent.position = content.position;
+              updatedComponent.verticalAlign = content.verticalAlign;
             }
             if (component.type == "List") {
               updatedComponent.type = component.type;
@@ -144,6 +148,7 @@ const Canvas = () => {
               updatedComponent.paddingBottom = content.paddingBottom;
               updatedComponent.content = content.content;
               updatedComponent.position = content.position;
+              updatedComponent.verticalAlign = content.verticalAlign;
             }
             if (component.type == "Image") {
               updatedComponent.type = component.type;
@@ -218,22 +223,44 @@ const Canvas = () => {
     // setPageConfig(newPageContent);
   };
 
-  const confirmRowChanges = (rowPosition) => {
-    console.log(rowPosition)
-  }
-
   const deleteRowHandler = (rowPosition) => {
     const newPageContent = [];
     for (let i = 0; i < pageConfig.content.length; i++) {
       if (pageConfig.content[i].position != rowPosition) {
-        newPageContent.push(pageConfig.content[i])
+        newPageContent.push(pageConfig.content[i]);
+      }
+    }
+    for (let i = 0; i < newPageContent.length; i++) {
+      if (
+        newPageContent[i].position > 1 &&
+        newPageContent[i].position > rowPosition
+      ) {
+        newPageContent[i].position = newPageContent[i].position - 1;
       }
     }
     setPageConfig((pageConfig) => ({
       ...pageConfig,
       content: [...newPageContent],
     }));
-  }
+  };
+
+  const confirmRowChanges = (row, newPosition) => {
+    const oldRowPosition = row.position;
+    const newPageContent = pageConfig.content;
+    for (let i = 0; i < pageConfig.content.length; i++) {
+      if (newPageContent[i].position == newPosition.value) {
+        newPageContent[i].position = oldRowPosition;
+      } else if (newPageContent[i].position == oldRowPosition) {
+        newPageContent[i].position = newPosition.value;
+      }
+    }
+    setPageConfig((pageConfig) => ({
+      ...pageConfig,
+      content: [...newPageContent],
+    }));
+  };
+
+  console.log(pageConfig.content)
 
   useEffect(() => {
     if (root == null) {
@@ -270,6 +297,14 @@ const Canvas = () => {
         },
       });
       setContent(reactContent);
+      const newRowPositionConfig = [];
+      for (let i = 0; i < pageConfig.content.length; i++) {
+        newRowPositionConfig.push({
+          title: "POSITION " + pageConfig.content[i].position,
+          value: pageConfig.content[i].position,
+        });
+      }
+      setRowPositionConfig(newRowPositionConfig);
     } else {
       const conversion = convertPageConfig(pageConfig);
       let fullStringContent = "";
@@ -302,6 +337,14 @@ const Canvas = () => {
         },
       });
       setContent(reactContent);
+      const newRowPositionConfig = [];
+      for (let i = 0; i < pageConfig.content.length; i++) {
+        newRowPositionConfig.push({
+          title: "POSITION " + pageConfig.content[i].position,
+          value: pageConfig.content[i].position,
+        });
+      }
+      setRowPositionConfig(newRowPositionConfig);
     }
   }, [pageConfig]);
 
@@ -309,7 +352,7 @@ const Canvas = () => {
     if (content) {
       const newRowSettings = [];
       for (let i = 1; i <= pageConfig.content.length; i++) {
-        const row = document.getElementById("position-" + (i));
+        const row = document.getElementById("position-" + i);
         if (row) {
           const rowRightCoordinates = row.getBoundingClientRect().right;
           const rowTopCoordinates = row.getBoundingClientRect().top;
@@ -337,7 +380,14 @@ const Canvas = () => {
       <CreateRowManager rowGeneration={generateRow} />
       {rowSettings.map((row) => {
         return (
-          <RowSettingsManager key={"settingsButton" + row.position} rowSettings={row} row={pageConfig.content[row.position - 1]} confirmRowChanges={confirmRowChanges} deleteRowHandler={deleteRowHandler} />
+          <RowSettingsManager
+            key={"settingsButton" + row.position}
+            rowSettings={row}
+            row={pageConfig.content[row.position - 1]}
+            confirmRowChanges={confirmRowChanges}
+            deleteRowHandler={deleteRowHandler}
+            positionOptions={rowPositionConfig}
+          />
         );
       })}
     </div>

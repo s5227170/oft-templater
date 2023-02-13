@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import PaddingElement from "../UI/PaddingElement/PaddingElement";
 import classes from "./TextEditor.module.scss";
 
@@ -9,8 +9,8 @@ import {
   AiOutlineBorderBottom,
 } from "react-icons/ai";
 import ContentInput from "../UI/ContentInput/ContentInput";
-import { CgAddR } from "react-icons/cg";
-import { Tooltip } from "react-tooltip";
+import AlignType from "../UI/AlignType/AlignType";
+import RadioButton from "../UI/RadioButton/RadioButton";
 
 const TextEditor = (props) => {
   const [paddings, setPaddings] = useState({
@@ -19,9 +19,43 @@ const TextEditor = (props) => {
     paddingTop: 0,
     paddingBottom: 0,
   });
-  //The content state is used to generate the amount of inputs
-  //The inputData is used to store the actual text data from the input fields
+  const [componentChoice, setComponentChoice] = useState({
+    topAlign: false,
+    middleAlign: false,
+    bottomAlign: false,
+  });
   const [inputData, setInputData] = useState([]);
+
+  const topAlignRef = useRef(null);
+  const middleAlignRef = useRef(null);
+  const bottomAlignRef = useRef(null);
+
+  const buttonChoiceTrigger = (name) => {
+    const newComponentChoice = Object.assign({}, componentChoice);
+    for (let el in newComponentChoice) {
+      newComponentChoice[el] = false;
+    }
+    newComponentChoice[name] = true;
+    setComponentChoice(newComponentChoice);
+  };
+
+  const typeClickHandler = (type) => {
+    if (type == 1) {
+      if (topAlignRef) {
+        topAlignRef.current.click();
+      }
+    }
+    if (type == 2) {
+      if (middleAlignRef) {
+        middleAlignRef.current.click();
+      }
+    }
+    if (type == 3) {
+      if (bottomAlignRef) {
+        bottomAlignRef.current.click();
+      }
+    }
+  };
 
   const paddingHandler = (e, el) => {
     if (e.target.value.length > 3) {
@@ -29,17 +63,27 @@ const TextEditor = (props) => {
     }
     const newPaddings = { ...paddings, [el]: e.target.value };
 
-    setPaddings(newPaddings)
+    setPaddings(newPaddings);
   };
 
   const dataExtractionHandler = (content) => {
     setInputData(content);
   };
 
-  console.log(paddings)
+  console.log(componentChoice);
 
   useEffect(() => {
     if (props.submission) {
+      let alignment = "";
+      if (componentChoice.topAlign) {
+        alignment = "top";
+      }
+      if (componentChoice.middleAlign) {
+        alignment = "middle";
+      }
+      if (componentChoice.bottomAlign) {
+        alignment = "bottom";
+      }
       const allData = {
         type: props.componentType,
         paddingLeft: paddings.paddingLeft,
@@ -48,9 +92,14 @@ const TextEditor = (props) => {
         paddingBottom: paddings.paddingBottom,
         content: inputData,
         position: props.positionData.item,
+        VerticalAlign: alignment,
       };
 
-      props.contentHandler(props.positionData.row, props.positionData.item, allData);
+      props.contentHandler(
+        props.positionData.row,
+        props.positionData.item,
+        allData
+      );
     }
   }, [props.submission]);
 
@@ -72,6 +121,44 @@ const TextEditor = (props) => {
             <PaddingElement change={(e) => paddingHandler(e, "paddingBottom")}>
               <AiOutlineBorderBottom color="#000" size="40" />
             </PaddingElement>
+          </div>
+        </div>
+        <div className={classes.VerticalAlign}>
+          <h2>Vertical text align</h2>
+          <div className={classes.AlignOptions}>
+            <AlignType
+              title="Top alignment"
+              onClick={() => typeClickHandler(1)}
+              confirm={
+                <RadioButton
+                  click={() => buttonChoiceTrigger("topAlign")}
+                  active={componentChoice.topAlign}
+                  elementRef={topAlignRef}
+                />
+              }
+            />
+            <AlignType
+              title="Middle alignment"
+              onClick={() => typeClickHandler(2)}
+              confirm={
+                <RadioButton
+                  click={() => buttonChoiceTrigger("middleAlign")}
+                  active={componentChoice.middleAlign}
+                  elementRef={middleAlignRef}
+                />
+              }
+            />
+            <AlignType
+              title="Bottom alignment"
+              onClick={() => typeClickHandler(3)}
+              confirm={
+                <RadioButton
+                  click={() => buttonChoiceTrigger("bottomAlign")}
+                  active={componentChoice.bottomAlign}
+                  elementRef={bottomAlignRef}
+                />
+              }
+            />
           </div>
         </div>
         <div className={classes.Inputs}>

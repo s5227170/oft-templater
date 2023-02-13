@@ -1,0 +1,63 @@
+.PositionDropdown {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+
+  .CurrentChoice {
+    width: fit-content;
+    height: 36px;
+    margin: 10px 0px;
+    padding: 0px 10px;
+    background-color: #40cd9a;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    &:hover {
+      cursor: pointer;
+    }
+
+    svg {
+      margin-left: 10px;
+    }
+  }
+
+  .OptionsHolder {
+    position: static;
+    height: fit-content;
+    background-color: #40cd9a;
+    border-radius: 6px;
+    top: 115px;
+    left: 20px;
+    border-radius: 6px;
+
+    .Option {
+      padding: 0px 10px;
+      color: #fff;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      background-color: #40cd9a;
+
+      &:first-child {
+        border-radius: 6px 6px 0px 0px;
+      }
+
+      &:last-child {
+        border-radius: 0px 0px 6px 6px;
+      }
+
+      &:hover {
+        cursor: pointer;
+        filter: brightness(135%);
+      }
+    }
+  }
+}

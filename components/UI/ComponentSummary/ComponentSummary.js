@@ -7,9 +7,9 @@ import { FaAngleDown } from "react-icons/fa";
 const ComponentSummary = (props) => {
     const [open, setOpen] = useState(false)
     return (
-        <div className={classes.ComponentSummary} style={open ? { minHeight: "160px", height: "fit-content", transition: "0.2s" } : { height: "55px", transition: "0.2s" }} onClick={() => setOpen(!open)}>
+        <div className={classes.ComponentSummary} style={open ? { minHeight: "160px", height: "fit-content", transition: "0.2s" } : { height: "50px", transition: "0.2s" }} onClick={() => setOpen(!open)}>
             <div className={classes.dropMode}>
-                <h2>Component {props.position}</h2>
+                <h3>Component {props.position}</h3>
                 <FaAngleDown
                     color="#000000"
                     size="30px"

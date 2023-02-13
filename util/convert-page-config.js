@@ -9,6 +9,17 @@ const convertPageConfig = (config) => {
   //array of all rows and their components, all in string format, they require a parse
   let htmlContent = [];
 
+  //Format the htmlContent array to have its contents aligned by vallue of position from smallest to biggest
+    function sortElementsByPosition(elements) {
+      elements.sort((a, b) => {
+        return a.position - b.position;
+      });
+
+      return elements;
+    }
+
+    sortElementsByPosition(config.content);
+
   config.content.map((row, index) => {
     const subComponents = [];
     if (row.contentComponents.length) {
@@ -25,6 +36,7 @@ const convertPageConfig = (config) => {
               row.position,
               row.contentComponents[i].position,
               row.columns,
+              row.contentComponents[i].verticalAlign
             )
           );
         }
@@ -41,6 +53,7 @@ const convertPageConfig = (config) => {
               row.position,
               row.contentComponents[i].position,
               row.columns,
+              row.contentComponents[i].verticalAlign
             )
           );
         }
@@ -58,7 +71,7 @@ const convertPageConfig = (config) => {
               row.contentComponents[i].imgHeight,
               row.position,
               row.contentComponents[i].position,
-              row.columns,
+              row.columns
             )
           );
         }
@@ -482,16 +495,6 @@ const convertPageConfig = (config) => {
       }
     }
   });
-  //Format the htmlContent array to have its contents aligned by vallue of position from smallest to biggest
-  function sortElementsByPosition(elements) {
-    elements.sort((a, b) => {
-      return a.position - b.position;
-    });
-
-    return elements;
-  }
-
-  const updatedHtmlContents = sortElementsByPosition(htmlContent);
 
   return htmlContent;
 };
