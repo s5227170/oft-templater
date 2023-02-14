@@ -6,7 +6,7 @@ import 'react-tooltip/dist/react-tooltip.css'
 
 import classes from "./Menu.module.scss";
 
-const Menu = () => {
+const Menu = (props) => {
 
     const iconConfig = {
         color: "#fff",
@@ -20,7 +20,7 @@ const Menu = () => {
                     <RxPadding id="RxPadding" {...iconConfig} />
                     <Tooltip anchorId="RxPadding" content="Add Page padding" place="right" />
                 </li>
-                <li>
+                <li onClick={props.titleHandler}>
                     <MdOutlineTitle id="MdOutlineTitle" {...iconConfig} />
                     <Tooltip anchorId="MdOutlineTitle" content="Add Page Title" place="right" />
                 </li>

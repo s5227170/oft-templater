@@ -28,6 +28,9 @@ const RowSettingsEditor = (props) => {
                   paddings={componentPaddings}
                   content={refinedContent}
                   position={component.position}
+                  deleteComponent={props.deleteComponent}
+                  tackleModal={props.tackleModal}
+                  row={props.row}
                 />
               );
             } else {
@@ -40,6 +43,9 @@ const RowSettingsEditor = (props) => {
                   width={component.imgWidth}
                   height={component.imgHeight}
                   position={component.position}
+                  deleteComponent={props.deleteComponent}
+                  tackleModal={props.tackleModal}
+                  row={props.row}
                 />
               );
             }

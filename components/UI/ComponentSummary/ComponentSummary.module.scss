@@ -73,8 +73,16 @@
 }
 
 .ComponentSummaryNoHover {
-
+  &:hover {
+    filter: none;
+    cursor: auto;
+  }
+  .dropMode {
     &:hover {
-        filter: none;
+      background-color: #f3f3f3;
+      cursor: pointer;
+      filter: brightness(80%);
+      transition: 0.2s;
     }
+  }
 }

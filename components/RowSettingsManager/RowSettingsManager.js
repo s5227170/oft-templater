@@ -23,12 +23,13 @@ const RowSettingsManager = (props) => {
       >
         <Modal modalTackle={tackleModal} modalShow={modalShow}>
           <RowSettingsContent
-            cancelHandler={tackleModal}
+            tackleModal={tackleModal}
             confirmRowChanges={props.confirmRowChanges}
             position={props.rowSettings.position}
             deleteRowHandler={props.deleteRowHandler}
             row={props.row}
             positionOptions={props.positionOptions}
+            deleteComponent={props.deleteComponent}
           />
         </Modal>
       </RowSettingsButton>

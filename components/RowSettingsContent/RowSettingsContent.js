@@ -71,7 +71,7 @@ const RowSettingsContent = (props) => {
       <div className={classes.Content}>
         <h2>Row Components</h2>
         {props.row ? (
-          <RowSettingsEditor row={props.row} />
+          <RowSettingsEditor row={props.row} deleteComponent={props.deleteComponent} tackleModal={props.tackleModal}/>
         ) : (
           <h3>Row has no components yet</h3>
         )}

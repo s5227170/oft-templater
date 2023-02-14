@@ -11,11 +11,24 @@ import { lazy, Suspense, useState } from "react";
 import PulseLoader from "react-spinners/PulseLoader";
 import HigherManagementButton from "../components/UI/HigherManagementButton/HigherManagementButton";
 import boilerplate from "../content-components/boilerplate";
+import Modal from "../components/Modal/Modal";
+import TitleContent from "../components/TitleContent/TitleContent";
+import TitleContentManager from "../components/TitleContentManager/TitleContentManager";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [htmlContentString, setHtmlContentString] = useState(``);
+  const [modalShow, setModalShow] = useState(false);
+  const [emailTitle, setEmailTitle] = useState("")
+
+  const tackleModal = () => {
+    console.log("test");
+    setTimeout(() => {
+      setModalShow(!modalShow);
+    }, 250);
+  };
+
   const exportHtmlHandler = () => {
     const submitContent = boilerplate(
       htmlContentString ? htmlContentString : "No data",
@@ -30,7 +43,9 @@ export default function Home() {
       .then((data) => console.log(data));
   };
 
-  // console.log(htmlContentString)
+  const confirmTitle = (title) => {
+    setEmailTitle(title)
+  };
 
   return (
     <>
@@ -41,7 +56,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Menu />
+        <Menu titleHandler={tackleModal} />
         <div className={classes.Guide}>
           <h1>Guide</h1>
           <br></br>
@@ -72,6 +87,11 @@ export default function Home() {
           </HigherManagementButton>
         </div>
         <Canvas setHTML={setHtmlContentString} />
+        <TitleContentManager
+          tackleModal={tackleModal}
+          modalShow={modalShow}
+          confirmTitle={confirmTitle}
+        />
       </main>
     </>
   );

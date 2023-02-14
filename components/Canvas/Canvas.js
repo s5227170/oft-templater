@@ -99,8 +99,6 @@ const Canvas = (props) => {
     }));
   };
 
-  console.log(pageConfig)
-
   const generateRow = (cols, colSizes) => {
     const newRowConfig = {
       type: "row",
@@ -400,6 +398,7 @@ const Canvas = (props) => {
             confirmRowChanges={confirmRowChanges}
             deleteRowHandler={deleteRowHandler}
             positionOptions={rowPositionConfig}
+            deleteComponent={deleteContent}
           />
         );
       })}
