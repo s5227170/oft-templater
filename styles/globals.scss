@@ -19,6 +19,7 @@ body {
   justify-content: flex-start;
   align-items: center;
   padding-top: 100px;
+  font-family: CustomFontThree;
 }
 
 ul {
@@ -37,4 +38,19 @@ ul {
   * {
     cursor: pointer;
   }
+}
+
+@font-face {
+  font-family: CustomFontOne;
+  src: url(../public/fonts/Oswald-Regular.ttf);
+}
+
+@font-face {
+  font-family: CustomFontTwo;
+  src: url(../public/fonts/JosefinSans-Light.ttf);
+}
+
+@font-face {
+  font-family: CustomFontThree;
+  src: url(../public/fonts/JosefinSans-Regular.ttf);
 }

@@ -10,15 +10,15 @@ const convertPageConfig = (config) => {
   let htmlContent = [];
 
   //Format the htmlContent array to have its contents aligned by vallue of position from smallest to biggest
-    function sortElementsByPosition(elements) {
-      elements.sort((a, b) => {
-        return a.position - b.position;
-      });
+  function sortElementsByPosition(elements) {
+    elements.sort((a, b) => {
+      return a.position - b.position;
+    });
 
-      return elements;
-    }
+    return elements;
+  }
 
-    sortElementsByPosition(config.content);
+  sortElementsByPosition(config.content);
 
   config.content.map((row, index) => {
     const subComponents = [];
@@ -36,7 +36,8 @@ const convertPageConfig = (config) => {
               row.position,
               row.contentComponents[i].position,
               row.columns,
-              row.contentComponents[i].verticalAlign
+              row.contentComponents[i].verticalAlign,
+              row.columnSizes
             )
           );
         }
@@ -53,7 +54,8 @@ const convertPageConfig = (config) => {
               row.position,
               row.contentComponents[i].position,
               row.columns,
-              row.contentComponents[i].verticalAlign
+              row.contentComponents[i].verticalAlign,
+              row.columnSizes
             )
           );
         }
@@ -71,7 +73,8 @@ const convertPageConfig = (config) => {
               row.contentComponents[i].imgHeight,
               row.position,
               row.contentComponents[i].position,
-              row.columns
+              row.columns,
+              row.columnSizes
             )
           );
         }
@@ -83,6 +86,7 @@ const convertPageConfig = (config) => {
       if (!row.contentComponents.length) {
         htmlContent.push(
           oneColumn(
+            row.columnSizes,
             row.position,
             row.parameters.paddingLeft,
             row.parameters.paddingRight,
@@ -94,6 +98,7 @@ const convertPageConfig = (config) => {
       } else {
         htmlContent.push(
           oneColumn(
+            row.columnSizes,
             row.position,
             row.parameters.paddingLeft,
             row.parameters.paddingRight,
@@ -108,6 +113,7 @@ const convertPageConfig = (config) => {
       if (!row.contentComponents.length) {
         htmlContent.push(
           twoColumns(
+            row.columnSizes,
             row.position,
             row.parameters.paddingLeft,
             row.parameters.paddingRight,
@@ -122,6 +128,7 @@ const convertPageConfig = (config) => {
           if (row.contentComponents[0].position == 1) {
             htmlContent.push(
               twoColumns(
+                row.columnSizes,
                 row.position,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
@@ -134,6 +141,7 @@ const convertPageConfig = (config) => {
           } else if (row.contentComponents[0].position == 2) {
             htmlContent.push(
               twoColumns(
+                row.columnSizes,
                 row.position,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
@@ -149,6 +157,7 @@ const convertPageConfig = (config) => {
             console.log("works 1");
             htmlContent.push(
               twoColumns(
+                row.columnSizes,
                 row.position,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
@@ -162,6 +171,7 @@ const convertPageConfig = (config) => {
             console.log("works 2");
             htmlContent.push(
               twoColumns(
+                row.columnSizes,
                 row.position,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
@@ -179,6 +189,7 @@ const convertPageConfig = (config) => {
       if (!row.contentComponents.length) {
         htmlContent.push(
           threeColumns(
+            row.columnSizes,
             row.position,
             row.parameters.paddingLeft,
             row.parameters.paddingRight,
@@ -195,6 +206,7 @@ const convertPageConfig = (config) => {
           if (row.contentComponents[0].position == 1) {
             htmlContent.push(
               threeColumns(
+                row.columnSizes,
                 row.position,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
@@ -209,6 +221,7 @@ const convertPageConfig = (config) => {
           if (row.contentComponents[0].position == 2) {
             htmlContent.push(
               threeColumns(
+                row.columnSizes,
                 row.position,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
@@ -223,6 +236,7 @@ const convertPageConfig = (config) => {
           if (row.contentComponents[0].position == 3) {
             htmlContent.push(
               threeColumns(
+                row.columnSizes,
                 row.position,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
@@ -241,6 +255,7 @@ const convertPageConfig = (config) => {
           ) {
             htmlContent.push(
               threeColumns(
+                row.columnSizes,
                 row.position,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
@@ -257,6 +272,7 @@ const convertPageConfig = (config) => {
           ) {
             htmlContent.push(
               threeColumns(
+                row.columnSizes,
                 row.position,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
@@ -273,6 +289,7 @@ const convertPageConfig = (config) => {
           ) {
             htmlContent.push(
               threeColumns(
+                row.columnSizes,
                 row.position,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
@@ -289,6 +306,7 @@ const convertPageConfig = (config) => {
           ) {
             htmlContent.push(
               threeColumns(
+                row.columnSizes,
                 row.position,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
@@ -305,6 +323,7 @@ const convertPageConfig = (config) => {
           ) {
             htmlContent.push(
               threeColumns(
+                row.columnSizes,
                 row.position,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
@@ -321,6 +340,7 @@ const convertPageConfig = (config) => {
           ) {
             htmlContent.push(
               threeColumns(
+                row.columnSizes,
                 row.position,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
@@ -337,6 +357,7 @@ const convertPageConfig = (config) => {
           ) {
             htmlContent.push(
               threeColumns(
+                row.columnSizes,
                 row.position,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
@@ -357,6 +378,7 @@ const convertPageConfig = (config) => {
           ) {
             htmlContent.push(
               threeColumns(
+                row.columnSizes,
                 row.position,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
@@ -374,6 +396,7 @@ const convertPageConfig = (config) => {
           ) {
             htmlContent.push(
               threeColumns(
+                row.columnSizes,
                 row.position,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
@@ -391,6 +414,7 @@ const convertPageConfig = (config) => {
           ) {
             htmlContent.push(
               threeColumns(
+                row.columnSizes,
                 row.position,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
@@ -410,6 +434,7 @@ const convertPageConfig = (config) => {
           ) {
             htmlContent.push(
               threeColumns(
+                row.columnSizes,
                 row.position,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
@@ -427,6 +452,7 @@ const convertPageConfig = (config) => {
           ) {
             htmlContent.push(
               threeColumns(
+                row.columnSizes,
                 row.position,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
@@ -444,6 +470,7 @@ const convertPageConfig = (config) => {
           ) {
             htmlContent.push(
               threeColumns(
+                row.columnSizes,
                 row.position,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
@@ -463,6 +490,7 @@ const convertPageConfig = (config) => {
           ) {
             htmlContent.push(
               threeColumns(
+                row.columnSizes,
                 row.position,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
@@ -480,6 +508,7 @@ const convertPageConfig = (config) => {
           ) {
             htmlContent.push(
               threeColumns(
+                row.columnSizes,
                 row.position,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,

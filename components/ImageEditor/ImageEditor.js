@@ -8,7 +8,7 @@ import {
   AiOutlineBorderTop,
   AiOutlineBorderBottom,
 } from "react-icons/ai";
-import ImageInput from "../UI/ImageInput/ImageInput";
+import SizeInput from "../UI/SizeInput/SizeInput";
 
 const ImageEditor = (props) => {
   const [url, setUrl] = useState("");
@@ -34,7 +34,7 @@ const ImageEditor = (props) => {
     }
     const newPaddings = { ...paddings, [el]: e.target.value };
 
-    setPaddings(newPaddings)
+    setPaddings(newPaddings);
   };
 
   const preventMinus = (e) => {
@@ -91,6 +91,7 @@ const ImageEditor = (props) => {
   };
 
   useEffect(() => {
+    //Use props.row to check how many columns there are and set size according to that
     const actualImgSize = { width: "", height: "" };
     if (sizesAllwoed.width && !sizesAllwoed.height) {
       actualImgSize.width = imageSize.width;
@@ -102,6 +103,23 @@ const ImageEditor = (props) => {
       actualImgSize.height = imageSize.height;
       actualImgSize.width = imageSize.width;
     }
+
+    if (props.row == 1) {
+      if (actualImgSize.width > 600 || actualImgSize.width == "") {
+        actualImgSize.width = 600;
+      }
+    }
+    if (props.row == 2) {
+      if (actualImgSize.width > 300 || actualImgSize.width == "") {
+        actualImgSize.width = 300;
+      }
+    }
+    if (props.row == 3) {
+      if (actualImgSize.width > 200 || actualImgSize.width == "") {
+        actualImgSize.width = 200;
+      }
+    }
+
     if (props.submission) {
       const allData = {
         type: props.componentType,
@@ -112,10 +130,14 @@ const ImageEditor = (props) => {
         url: [url],
         imgWidth: actualImgSize.width,
         imgHeight: actualImgSize.height,
-        position: props.positionData.item
+        position: props.positionData.item,
       };
 
-      props.contentHandler(props.positionData.row, props.positionData.item, allData);
+      props.contentHandler(
+        props.positionData.row,
+        props.positionData.item,
+        allData
+      );
     }
   }, [props.submission]);
 
@@ -140,7 +162,7 @@ const ImageEditor = (props) => {
           </div>
         </div>
         <div className={classes.ImageContent}>
-          <ImageInput
+          <SizeInput
             type="text"
             style={{ width: "400px" }}
             placeholder="Place your img url here"
@@ -148,7 +170,7 @@ const ImageEditor = (props) => {
           />
           <div className={classes.InputWithLabel}>
             <label>Image width:</label>
-            <ImageInput
+            <SizeInput
               onKeyDown={preventMinus}
               style={{ width: "50px" }}
               type="number"
@@ -163,7 +185,7 @@ const ImageEditor = (props) => {
           </div>
           <div className={classes.InputWithLabel}>
             <label>Image height: </label>
-            <ImageInput
+            <SizeInput
               onKeyDown={preventMinus}
               style={{ width: "50px" }}
               type="number"

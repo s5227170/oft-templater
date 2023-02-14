@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState, useRef } from "react";
+import { Fragment, useEffect, useState, useRef, Suspense, lazy } from "react";
 import parse from "html-react-parser";
 import { createRoot } from "react-dom/client";
 
@@ -7,13 +7,17 @@ import classes from "./Canvas.module.scss";
 import { renderToString } from "react-dom/server";
 import ComponentTypeManager from "../ComponentTypeManager/ComponentTypeManager";
 import CreateRowManager from "../CreateRowManager/CreateRowManage";
+// const CreateRowManager = lazy(() =>
+//   import("../CreateRowManager/CreateRowManage")
+// );
 
 import convertPageConfig from "../../util/convert-page-config";
 import ComponentContentManager from "../ComponentContentManager/ComponentContentManager";
 import RowSettingsButton from "../RowSettingsButton/RowSettingsButton";
 import RowSettingsManager from "../RowSettingsManager/RowSettingsManager";
+import PulseLoader from "react-spinners/PulseLoader";
 
-const Canvas = () => {
+const Canvas = (props) => {
   const rootRef = useRef(null);
   //This variable rowSettings stores the coordinates of all rows and it is used to generate settings components to tackle rows
   const [rowSettings, setRowSettings] = useState([]);
@@ -95,10 +99,13 @@ const Canvas = () => {
     }));
   };
 
-  const generateRow = (cols) => {
+  console.log(pageConfig)
+
+  const generateRow = (cols, colSizes) => {
     const newRowConfig = {
       type: "row",
       columns: cols,
+      columnSizes: colSizes,
       position: pageConfig.content.length + 1,
       parameters: {
         paddingLeft: 0,
@@ -260,8 +267,6 @@ const Canvas = () => {
     }));
   };
 
-  console.log(pageConfig.content)
-
   useEffect(() => {
     if (root == null) {
       //If rows multiply, try moving the createRoot function out of the if
@@ -270,6 +275,7 @@ const Canvas = () => {
       conversion.map((stringRow) => {
         fullStringContent += stringRow;
       });
+      props.setHTML(fullStringContent);
       const reactContent = parse(fullStringContent, {
         replace: ({ attribs, children }) => {
           if (!attribs) {
@@ -291,6 +297,7 @@ const Canvas = () => {
                 elementPosition={attribs.name}
                 componentType={attribs.role}
                 deleteFunction={deleteContent}
+                row={attribs["data-columns"]}
               />
             );
           }
@@ -311,6 +318,7 @@ const Canvas = () => {
       conversion.map((stringRow) => {
         fullStringContent += stringRow;
       });
+      props.setHTML(fullStringContent);
       const reactContent = parse(fullStringContent, {
         replace: ({ attribs, children }) => {
           if (!attribs) {
@@ -331,6 +339,7 @@ const Canvas = () => {
                 elementPosition={attribs.name}
                 componentType={attribs.role}
                 deleteFunction={deleteContent}
+                row={attribs["data-columns"]}
               />
             );
           }
@@ -377,7 +386,11 @@ const Canvas = () => {
       <div id="targetDiv" ref={rootRef}>
         {content}
       </div>
-      <CreateRowManager rowGeneration={generateRow} />
+      <Suspense
+        fallback={<PulseLoader color="#40cd9a" loading={true} size={30} />}
+      >
+        <CreateRowManager rowGeneration={generateRow} />
+      </Suspense>
       {rowSettings.map((row) => {
         return (
           <RowSettingsManager

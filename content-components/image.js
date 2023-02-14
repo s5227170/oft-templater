@@ -9,6 +9,7 @@ const image = (
   rowPosition,
   item,
   rowType,
+  columnSizes
 ) => {
   let height = "";
   let width = "";
@@ -22,18 +23,7 @@ const image = (
     return `<img style="height:${height}px; width:${width}px;"  width="${width}" height="${height}" src="${url}" />`;
   });
 
-  let componentSize = 0;
-
-  if (rowType == 1) {
-    componentSize = "600";
-  }
-  if (rowType == 2) {
-    componentSize = "300";
-  }
-
-  if (rowType == 3) {
-    componentSize = "200";
-  }
+  const componentSize = columnSizes["col" + item]
 
   let items = "";
   if (contentDistribution.length) {
@@ -44,16 +34,25 @@ const image = (
 
   if (!contentDistribution.length) {
     items = items.concat(
-      `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"Image"}"></span>`
+      `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"Image"}" data-columns="${rowType}"></span>`
     );
   }
 
-  return `<table width=${componentSize}>
+  if (rowType == 1) {
+    return `<table width=${componentSize}>
             <tbody>
                 <tr>
                     <td width="${paddingLeft}"></td>
-                      <td>
-                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${componentSize - paddingLeft - paddingRight}" height="${paddingTop}" alt="" style="display:block; width: ${600 - paddingLeft - paddingRight}px; height:${paddingTop}px;">
+                      <td width="${
+                        componentSize - paddingLeft - paddingRight
+                      }" height="${paddingTop ? paddingTop : 1}">
+                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${
+                          componentSize - paddingLeft - paddingRight
+                        }" height="${
+      paddingTop ? paddingTop : 1
+    }" alt="" style="display:block; width: ${
+      600 - paddingLeft - paddingRight
+    }px; height:${paddingTop}px;">
                       </td>
                     <td width="${paddingRight}"></td>
                 </tr>
@@ -66,13 +65,24 @@ const image = (
                 </tr>
                 <tr>
                     <td width="${paddingLeft}"></td>
-                      <td>
-                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${componentSize - paddingLeft - paddingRight}" height="${paddingBottom}" alt="" style="display:block; width: ${600 - paddingLeft - paddingRight}px; height:${paddingTop}px;">
+                      <td width="${
+                        componentSize - paddingLeft - paddingRight
+                      }" height="${paddingBottom ? paddingBottom : 1}">
+                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${
+                          componentSize - paddingLeft - paddingRight
+                        }" height="${
+      paddingBottom ? paddingBottom : 1
+    }" alt="" style="display:block; width: ${
+      600 - paddingLeft - paddingRight
+    }px; height:${paddingTop}px;">
                       </td>
                     <td width="${paddingRight}"></td>
                 </tr>
             </tbody>
           </table>`;
+  } else {
+    return items;
+  }
 };
 
 export default image;

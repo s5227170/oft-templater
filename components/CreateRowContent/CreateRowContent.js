@@ -1,10 +1,11 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 import RadioButton from "../UI/RadioButton/RadioButton";
 import ConfirmationButtons from "../ConfirmationButtons/ConfirmationButtons";
 
 import classes from "./CreateRowContent.module.scss";
+import SizeInput from "../UI/SizeInput/SizeInput";
 
 const CreateRowContent = (props) => {
   const [rowConfig, setRowConfig] = useState({
@@ -15,6 +16,7 @@ const CreateRowContent = (props) => {
   const btnOneRef = useRef(null);
   const btnTwoRef = useRef(null);
   const btnThreeRef = useRef(null);
+  const [customColumnsSize, setCustomColumnsSize] = useState(null);
 
   const buttonChoiceTrigger = (name) => {
     const newRowConfig = Object.assign({}, rowConfig);
@@ -24,8 +26,14 @@ const CreateRowContent = (props) => {
     newRowConfig[name] = true;
     setRowConfig(newRowConfig);
   };
+  const rowColors = {
+    1: "#40cd9a",
+    2: "#008dd7",
+    3: "#ce4045",
+  };
 
   const getChoice = () => {
+    for (let i = 1; i <= Object.keys(customColumnsSize).length; i++) {}
     for (let choice in rowConfig) {
       if (rowConfig[choice] === true) {
         if (choice == "single") {
@@ -45,17 +53,54 @@ const CreateRowContent = (props) => {
     if (row == 1) {
       if (btnOneRef) {
         btnOneRef.current.click();
+        setCustomColumnsSize(null);
+        setCustomColumnsSize({ col1: 600 });
       }
     }
     if (row == 2) {
       if (btnTwoRef) {
         btnTwoRef.current.click();
+        const colSizes = [];
+        setCustomColumnsSize(null);
+        setCustomColumnsSize({ col1: 300, col2: 300 });
       }
     }
     if (row == 3) {
       if (btnThreeRef) {
         btnThreeRef.current.click();
+        setCustomColumnsSize(null);
+        setCustomColumnsSize({ col1: 200, col2: 200, col3: 200 });
       }
+    }
+  };
+
+  const preventMinus = (e) => {
+    if (e.code === "Minus") {
+      e.preventDefault();
+    }
+  };
+
+  const sizeChangeHandler = (e, position) => {
+    if (e.target.value > 600) {
+      e.target.value = 600;
+    }
+    if (position == 1) {
+      setCustomColumnsSize({
+        ...customColumnsSize,
+        col1: Number(e.target.value),
+      });
+    }
+    if (position == 2) {
+      setCustomColumnsSize({
+        ...customColumnsSize,
+        col2: Number(e.target.value),
+      });
+    }
+    if (position == 3) {
+      setCustomColumnsSize({
+        ...customColumnsSize,
+        col3: Number(e.target.value),
+      });
     }
   };
 
@@ -98,11 +143,126 @@ const CreateRowContent = (props) => {
           elementRef={btnThreeRef}
         ></RadioButton>
       </div>
+      {rowConfig.double || rowConfig.triple ? (
+        <div className={classes.RowSizes}>
+          <h2>Custom columns sizes</h2>
+          <p>Note: Minimum column width is 100 pixels</p>
+          <p>Note: Overall value should be less than 600 pixels</p>
+          {rowConfig.double
+            ? [1, 2].map((row, index) => {
+                return (
+                  <div key={index} className={classes.SizeWrapper}>
+                    <label>Row {index + 1} width</label>
+                    <SizeInput
+                      onKeyDown={preventMinus}
+                      style={{ width: "50px" }}
+                      type="number"
+                      min={0}
+                      max={600}
+                      maxLength={3}
+                      onChange={(e) => sizeChangeHandler(e, index + 1)}
+                      value={customColumnsSize["col" + (index + 1)]}
+                      // disabled={}
+                    />
+                  </div>
+                );
+              })
+            : rowConfig.triple
+            ? [1, 2, 3].map((row, index) => {
+                return (
+                  <div key={index} className={classes.SizeWrapper}>
+                    <label>Row {index + 1} width</label>
+                    <SizeInput
+                      onKeyDown={preventMinus}
+                      style={{ width: "50px" }}
+                      type="number"
+                      min={0}
+                      max={600}
+                      maxLength={3}
+                      onChange={(e) => sizeChangeHandler(e, index + 1)}
+                      value={customColumnsSize["col" + (index + 1)]}
+                      // disabled={}
+                    />
+                  </div>
+                );
+              })
+            : null}
+        </div>
+      ) : null}
+      {rowConfig.single || rowConfig.double || rowConfig.triple ? (
+        <div className={classes.RowPreview}>
+          {rowConfig.single
+            ? [1].map((row, index) => {
+                return (
+                  <div
+                    key={index}
+                    style={{
+                      width: `${customColumnsSize["col" + (index + 1)]}px`,
+                      height: "100%",
+                      backgroundColor: rowColors[(index + 1).toString()],
+                    }}
+                  >
+                    {customColumnsSize["col" + (index + 1)] >= 100
+                      ? "Row " + (index + 1)
+                      : null}
+                  </div>
+                );
+              })
+            : rowConfig.double
+            ? [1, 2].map((row, index) => {
+                return (
+                  <div
+                    key={index}
+                    style={{
+                      width: `${customColumnsSize["col" + (index + 1)]}px`,
+                      height: "100%",
+                      backgroundColor: rowColors[(index + 1).toString()],
+                    }}
+                  >
+                    {customColumnsSize["col" + (index + 1)] >= 100
+                      ? "Row " + (index + 1)
+                      : null}
+                  </div>
+                );
+              })
+            : rowConfig.triple
+            ? [1, 2, 3].map((row, index) => {
+                return (
+                  <div
+                    key={index}
+                    style={{
+                      width: `${customColumnsSize["col" + (index + 1)]}px`,
+                      height: "100%",
+                      backgroundColor: rowColors[(index + 1).toString()],
+                    }}
+                  >
+                    {customColumnsSize["col" + (index + 1)] >= 100
+                      ? "Row " + (index + 1)
+                      : null}
+                  </div>
+                );
+              })
+            : null}
+        </div>
+      ) : null}
       <ConfirmationButtons
         confirm={"Confirm"}
         cancel={"Cancel"}
         confirmClick={() => {
-          props.confirmHandler(getChoice());
+          if (!rowConfig.single && !rowConfig.double && !rowConfig.triple) {
+            return alert("PLease choose a row type");
+          }
+          let overallValue = 0;
+          for (let i = 1; i <= Object.keys(customColumnsSize).length; i++) {
+            if (customColumnsSize["col" + i] < 100) {
+              return alert("Minimum column width is 100 pixels");
+            }
+            overallValue += customColumnsSize["col" + i];
+          }
+          if (overallValue > 600) {
+            return alert("Overall columns width cannot exceed 600 pixels");
+          }
+          props.confirmHandler(getChoice(), customColumnsSize);
           props.successFunction();
         }}
         cancelClick={props.cancelHandler}

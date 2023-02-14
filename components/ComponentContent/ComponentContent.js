@@ -95,6 +95,7 @@ const ComponentContent = (props) => {
           contentHandler={props.confirmHandler}
           submission={submit}
           positionData={position}
+          row={props.row}
         />
       )}
     </div>

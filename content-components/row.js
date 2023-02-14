@@ -1,5 +1,6 @@
 //Content components are either images, lists, or text
 const oneColumn = (
+  columnSizes,
   position,
   paddingLeft,
   paddingRight,
@@ -31,25 +32,33 @@ const oneColumn = (
             <tbody>
                 <tr>
                     <td width="${paddingLeft}"></td>
-                    <td height="${paddingTop}"><img src="http://welcome.hp-ww.com/img/s.gif" width="${
+                    <td height="${paddingTop}" height="${
+    paddingTop ? paddingTop : 1
+  }"><img src="http://welcome.hp-ww.com/img/s.gif" width="${
     600 - paddingLeft - paddingRight
-  }" height="${paddingTop}" alt="" style="display:block; width: ${
+  }" height="${
+    paddingTop ? paddingTop : 1
+  }" alt="" style="display:block; width: ${
     600 - paddingLeft - paddingRight
   }px; height:${paddingTop}px;"></td>
                     <td width="${paddingRight}"></td>
                 </tr>
                 <tr>
-                    <td width="${paddingLeft}"><img src="http://welcome.hp-ww.com/img/s.gif" width="${paddingLeft}" alt="" style="display:block; width: ${paddingLeft}px;"></td>
+                    <td width="${paddingLeft}"><img src="http://welcome.hp-ww.com/img/s.gif" width="${paddingLeft}" height="1" alt="" style="display:block; width: ${paddingLeft}px;"></td>
                     <td valign="${contentAlignment}">
                         ${contentComponentOne}
                     </td>
-                    <td width="${paddingRight}"><img src="http://welcome.hp-ww.com/img/s.gif" width="${paddingRight}" alt="" style="display:block; width: ${paddingRight}px;"></td>
+                    <td width="${paddingRight}"><img src="http://welcome.hp-ww.com/img/s.gif" width="${paddingRight}" height="1" alt="" style="display:block; width: ${paddingRight}px;"></td>
                 </tr>
                 <tr>
                     <td width="${paddingLeft}"></td>
-                    <td height="${paddingBottom}"><img src="http://welcome.hp-ww.com/img/s.gif" width="${
+                    <td height="${paddingBottom ? paddingBottom : 1}" height="${
+    paddingBottom ? paddingBottom : 1
+  }"><img src="http://welcome.hp-ww.com/img/s.gif" width="${
     600 - paddingLeft - paddingRight
-  }" height="${paddingBottom}" alt="" style="display:block; width: ${
+  }" height="${
+    paddingBottom ? paddingBottom : 1
+  }" alt="" style="display:block; width: ${
     600 - paddingLeft - paddingRight
   }px; height:${paddingTop}px;"></td>
                     <td width="${paddingRight}"></td>
@@ -60,6 +69,7 @@ const oneColumn = (
 };
 
 const twoColumns = (
+  columnSizes,
   position,
   paddingLeft,
   paddingRight,
@@ -109,8 +119,8 @@ const twoColumns = (
                     <td>
                         <table>
                             <tr>
-                                <td width="300" valign="${contentAlignment[0]}">${contentComponentOne}</td>
-                                <td width="300" valign="${contentAlignment[1]}">${contentComponentTwo}</td>
+                                <td width="${columnSizes.col1}" valign="${contentAlignment[0]}">${contentComponentOne}</td>
+                                <td width="${columnSizes.col2}" valign="${contentAlignment[1]}">${contentComponentTwo}</td>
                             </tr>
                         </table>
                     </td>
@@ -127,6 +137,7 @@ const twoColumns = (
 };
 
 const threeColumns = (
+  columnSizes,
   position,
   paddingLeft,
   paddingRight,
@@ -190,9 +201,15 @@ const threeColumns = (
             <td>
                 <table>
                     <tr>
-                        <td width="200" valign="${contentAlignment[0]}">${contentComponentOne}</td>
-                        <td width="200" valign="${contentAlignment[1]}">${contentComponentTwo}</td>
-                        <td width="200" valign="${contentAlignment[2]}">${contentComponentThree}</td>
+                        <td width="${columnSizes.col1}" valign="${
+    contentAlignment[0]
+  }">${contentComponentOne}</td>
+                        <td width="${columnSizes.col2}" valign="${
+    contentAlignment[1]
+  }">${contentComponentTwo}</td>
+                        <td width="${columnSizes.col3}" valign="${
+    contentAlignment[2]
+  }">${contentComponentThree}</td>
                     </tr>
                 </table>
             </td>

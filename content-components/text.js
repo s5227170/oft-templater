@@ -7,6 +7,7 @@ const text = (
   rowPosition,
   item,
   rowType,
+  columnSizes
 ) => {
   const contentArray = [];
   const contentDistribution = content.map((paragraph) => {
@@ -28,18 +29,7 @@ const text = (
     contentArray.push(`<p style="font-family: arial;">${wholeParagraph}</p>`);
   });
 
-  let componentSize = 0;
-
-  if (rowType == 1) {
-    componentSize = "600";
-  }
-  if (rowType == 2) {
-    componentSize = "300";
-  }
-
-  if (rowType == 3) {
-    componentSize = "200";
-  }
+  const componentSize = columnSizes["col" + item]
 
   let items = "";
   if (contentArray.length) {
@@ -49,7 +39,7 @@ const text = (
   }
 
   if (!contentArray.length) {
-    items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"Text"}"></span>`;
+    items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"Text"}"  data-columns="${rowType}"></span>`;
   }
 
   return `<table width=${componentSize}>
@@ -57,7 +47,11 @@ const text = (
                 <tr>
                     <td width="${paddingLeft}"></td>
                       <td>
-                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${componentSize - paddingLeft - paddingRight}" height="${paddingTop}" alt="" style="display:block; width: ${600 - paddingLeft - paddingRight}px; height:${paddingTop}px;">
+                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${
+                          componentSize - paddingLeft - paddingRight
+                        }" height="${paddingTop}" alt="" style="display:block; width: ${
+    600 - paddingLeft - paddingRight
+  }px; height:${paddingTop}px;">
                       </td>
                     <td width="${paddingRight}"></td>
                 </tr>
@@ -71,7 +65,11 @@ const text = (
                 <tr>
                     <td width="${paddingLeft}"></td>
                       <td>
-                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${componentSize - paddingLeft - paddingRight}" height="${paddingBottom}" alt="" style="display:block; width: ${600 - paddingLeft - paddingRight}px; height:${paddingTop}px;">
+                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${
+                          componentSize - paddingLeft - paddingRight
+                        }" height="${paddingBottom}" alt="" style="display:block; width: ${
+    600 - paddingLeft - paddingRight
+  }px; height:${paddingTop}px;">
                       </td>
                     <td width="${paddingRight}"></td>
                 </tr>

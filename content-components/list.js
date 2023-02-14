@@ -7,6 +7,7 @@ const list = (
   rowPosition,
   item,
   rowType,
+  columnSizes
 ) => {
   console.log(content);
   const contentArray = [];
@@ -33,18 +34,7 @@ const list = (
     });
   });
 
-  let componentSize = 0;
-
-  if (rowType == 1) {
-    componentSize = "600";
-  }
-  if (rowType == 2) {
-    componentSize = "300";
-  }
-
-  if (rowType == 3) {
-    componentSize = "200";
-  }
+  const componentSize = columnSizes["col" + item]
 
   let items = "";
   if (contentArray.length) {
@@ -54,7 +44,7 @@ const list = (
   }
 
   if (!contentDistribution.length) {
-    items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"List"}"></span>`;
+    items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"List"}"  data-columns="${rowType}"></span>`;
   }
 
   return `<table width=${componentSize}>
@@ -62,7 +52,11 @@ const list = (
                 <tr>
                     <td width="${paddingLeft}"></td>
                       <td>
-                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${componentSize - paddingLeft - paddingRight}" height="${paddingTop}" alt="" style="display:block; width: ${600 - paddingLeft - paddingRight}px; height:${paddingTop}px;">
+                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${
+                          componentSize - paddingLeft - paddingRight
+                        }" height="${paddingTop}" alt="" style="display:block; width: ${
+    600 - paddingLeft - paddingRight
+  }px; height:${paddingTop}px;">
                       </td>
                     <td width="${paddingRight}"></td>
                 </tr>
@@ -78,7 +72,11 @@ const list = (
                 <tr>
                     <td width="${paddingLeft}"></td>
                       <td>
-                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${componentSize - paddingLeft - paddingRight}" height="${paddingBottom}" alt="" style="display:block; width: ${600 - paddingLeft - paddingRight}px; height:${paddingTop}px;">
+                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${
+                          componentSize - paddingLeft - paddingRight
+                        }" height="${paddingBottom}" alt="" style="display:block; width: ${
+    600 - paddingLeft - paddingRight
+  }px; height:${paddingTop}px;">
                       </td>
                     <td width="${paddingRight}"></td>
                 </tr>

@@ -5,9 +5,9 @@ import { MdOutlineDelete } from "react-icons/md";
 import { Tooltip } from "react-tooltip";
 import { FaInfoCircle } from "react-icons/fa";
 
-import classes from "./ImageInput.module.scss";
+import classes from "./SizeInput.module.scss";
 
-const ImageInput = (props) => {
+const SizeInput = (props) => {
   return (
     <div className={classes.InputWrapper}>
       <input {...props} />
@@ -16,4 +16,4 @@ const ImageInput = (props) => {
   );
 };
 
-export default ImageInput;
+export default SizeInput;
