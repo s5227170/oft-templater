@@ -26,7 +26,7 @@ const RowSettingsContent = (props) => {
             size="25px"
             onClick={() => {
               props.confirmRowChanges(props.row, positionChoice);
-              props.cancelHandler();
+              props.tackleModal();
             }}
           />
           <Tooltip anchorId="confirm-text" place="top">
@@ -37,8 +37,8 @@ const RowSettingsContent = (props) => {
             color="#CE4045"
             size="25px"
             onClick={() => {
-              props.cancelHandler();
               props.deleteRowHandler(props.position);
+              props.tackleModal();
             }}
           />
           <Tooltip anchorId="delete-row" place="top">
@@ -49,7 +49,7 @@ const RowSettingsContent = (props) => {
             id="close-modal-text"
             color="#008DD7"
             size="25px"
-            onClick={props.cancelHandler}
+            onClick={props.tackleModal}
           />
           <Tooltip anchorId="close-modal-text" place="top">
             Close Modal
@@ -62,16 +62,20 @@ const RowSettingsContent = (props) => {
           options={props.positionOptions}
           row={props.row}
           onSelect={selectConfirmation}
-          currentPosition={{
+          currentPosition={props.row ?{
             title: "POSITION " + props.row.position,
             value: props.row.position,
-          }}
+          } : null}
         />
       </div>
       <div className={classes.Content}>
         <h2>Row Components</h2>
         {props.row ? (
-          <RowSettingsEditor row={props.row} deleteComponent={props.deleteComponent} tackleModal={props.tackleModal}/>
+          <RowSettingsEditor
+            row={props.row}
+            deleteComponent={props.deleteComponent}
+            tackleModal={props.tackleModal}
+          />
         ) : (
           <h3>Row has no components yet</h3>
         )}

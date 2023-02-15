@@ -130,18 +130,22 @@ const RichTextExample = (editorProps) => {
             ) : null}
             <MarkButton
               format="italic"
+              value={elementSettings}
               icon={<FaItalic color="#008DD7" size="20" />}
             />
             <MarkButton
               format="bold"
+              value={elementSettings}
               icon={<ImBold color="#008DD7" size="20" />}
             />
             <BlockButton
               format="heading-one"
+              value={elementSettings}
               icon={<FaHeading color="#008DD7" size="20" />}
             />
             <BlockButton
               format="heading-two"
+              value={elementSettings}
               icon={<FaHeading color="#008DD7" size="16" />}
             />
           </>
@@ -185,22 +189,27 @@ const RichTextExample = (editorProps) => {
             ) : null}
             <BlockButton
               format="bulleted-list"
+              value={elementSettings}
               icon={<FaListUl color="#008DD7" size="22" />}
             />
             <MarkButton
               format="italic"
+              value={elementSettings}
               icon={<FaItalic color="#008DD7" size="20" />}
             />
             <MarkButton
               format="bold"
+              value={elementSettings}
               icon={<ImBold color="#008DD7" size="20" />}
             />
             <BlockButton
               format="heading-one"
+              value={elementSettings}
               icon={<FaHeading color="#008DD7" size="20" />}
             />
             <BlockButton
               format="heading-two"
+              value={elementSettings}
               icon={<FaHeading color="#008DD7" size="16" />}
             />
           </>

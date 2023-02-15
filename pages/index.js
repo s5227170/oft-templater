@@ -14,13 +14,14 @@ import boilerplate from "../content-components/boilerplate";
 import Modal from "../components/Modal/Modal";
 import TitleContent from "../components/TitleContent/TitleContent";
 import TitleContentManager from "../components/TitleContentManager/TitleContentManager";
+import downloadFile from "../util/downloadFile";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [htmlContentString, setHtmlContentString] = useState(``);
   const [modalShow, setModalShow] = useState(false);
-  const [emailTitle, setEmailTitle] = useState("")
+  const [emailTitle, setEmailTitle] = useState("");
 
   const tackleModal = () => {
     console.log("test");
@@ -29,7 +30,7 @@ export default function Home() {
     }, 250);
   };
 
-  const exportHtmlHandler = () => {
+  const exportHtmlHandler = async () => {
     const submitContent = boilerplate(
       htmlContentString ? htmlContentString : "No data",
       "HTML title"
@@ -38,13 +39,19 @@ export default function Home() {
     fetch("http://localhost:3000/api/html", {
       method: "POST",
       body: JSON.stringify(submitContent),
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+    }).then(async (response) => {
+      if (response) {
+        fetch("http://localhost:3000/api/getHtml", {
+          method: "GET",
+        }).then(async (data) => {
+          downloadFile(data);
+        });
+      }
+    });
   };
 
   const confirmTitle = (title) => {
-    setEmailTitle(title)
+    setEmailTitle(title);
   };
 
   return (

@@ -23,7 +23,7 @@ const image = (
     return `<img style="height:${height}px; width:${width}px;"  width="${width}" height="${height}" src="${url}" />`;
   });
 
-  const componentSize = columnSizes["col" + item]
+  const componentSize = columnSizes["col" + item];
 
   let items = "";
   if (contentDistribution.length) {
@@ -39,7 +39,11 @@ const image = (
   }
 
   if (rowType == 1) {
-    return `<table width=${componentSize}>
+    return `<table width=${componentSize} border="0" cellspacing="0" cellpadding="0" style="
+    border-spacing: 0;
+    mso-table-lspace: 0pt;
+    mso-table-rspace: 0pt;
+  ">
             <tbody>
                 <tr>
                     <td width="${paddingLeft}"></td>
@@ -81,7 +85,43 @@ const image = (
             </tbody>
           </table>`;
   } else {
-    return items;
+    return `<table width=${componentSize} border="0" cellspacing="0" cellpadding="0" style="
+    border-spacing: 0;
+    width: ${componentSize}px;
+    max-width: ${componentSize}px;
+    mso-table-lspace: 0pt;
+    mso-table-rspace: 0pt;
+  "><tbody><tr>
+    <td width="${paddingLeft ? paddingLeft : 0}" height="${
+      paddingTop ? paddingTop : 1
+    }">
+              <img src="http://welcome.hp-ww.com/img/s.gif" width="${
+                paddingLeft ? paddingLeft : 0
+              }" height="${
+      paddingTop ? paddingTop : 1
+    }" alt="" style="display:block; width: ${
+      paddingLeft ? paddingLeft : 0
+    }px; height:${paddingTop}px;">
+            </td>
+            <td width="${
+              !paddingLeft && !paddingRight
+                ? componentSize
+                : componentSize - paddingLeft - paddingRight
+            }">
+              ${items}
+            </td>
+                      <td width="${paddingRight ? paddingRight : 0}" height="${
+      paddingBottom ? paddingBottom : 1
+    }">
+                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${
+                          paddingRight ? paddingRight : 0
+                        }" height="${
+      paddingBottom ? paddingBottom : 1
+    }" alt="" style="display:block; width: ${
+      paddingRight ? paddingRight : 0
+    }px; height:${paddingTop}px;">
+                      </td>
+                      </tr></tbody></table>`;
   }
 };
 

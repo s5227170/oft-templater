@@ -19,16 +19,15 @@ const oneColumn = (
     contentAlignment = "bottom";
   }
   return `
-        <table id="position-${position}" border="0" cellspacing="0" cellpadding="0" style="
+        <table id="position-${position}" width="600" border="0" cellspacing="0" cellpadding="0" style="
             border-spacing: 0;
             mso-table-lspace: 0pt;
             mso-table-rspace: 0pt;
-            width: 600px;
-            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-            background: #fff;
-            " align="center">
+            width: 600px;
+            max-width: 600px;
+            background: #fff;">
             <tbody>
                 <tr>
                     <td width="${paddingLeft}"></td>
@@ -98,16 +97,15 @@ const twoColumns = (
     contentAlignment[1] = "bottom";
   }
   return `
-            <table id="position-${position}" border="0" cellspacing="0" cellpadding="0" style="
+            <table id="position-${position}" width="600" border="0" cellspacing="0" cellpadding="0" style="
             border-spacing: 0;
             mso-table-lspace: 0pt;
             mso-table-rspace: 0pt;
-            width: 600px;
-            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-            background: #fff;
-            " align="center">
+            width: 600px;
+            max-width: 600px;
+            background: #fff;">
             <tbody>
                 <tr>
                     <td width="${paddingLeft}"></td>
@@ -117,7 +115,13 @@ const twoColumns = (
                 <tr>
                     <td width="${paddingLeft}"></td>
                     <td>
-                        <table>
+                        <table style="
+                        border-spacing: 0;
+                        mso-table-lspace: 0pt;
+                        mso-table-rspace: 0pt;
+                        width: 600px;
+                        max-width: 600px;
+                      " border="0" cellspacing="0" cellpadding="0" width="600">
                             <tr>
                                 <td width="${columnSizes.col1}" valign="${contentAlignment[0]}">${contentComponentOne}</td>
                                 <td width="${columnSizes.col2}" valign="${contentAlignment[1]}">${contentComponentTwo}</td>
@@ -176,16 +180,16 @@ const threeColumns = (
     contentAlignment[2] = "bottom";
   }
   return `
-    <table id="position-${position}" border="0" cellspacing="0" cellpadding="0" style="
+    <table id="position-${position}" width="600" border="0" cellspacing="0" cellpadding="0" style="
     border-spacing: 0;
     mso-table-lspace: 0pt;
     mso-table-rspace: 0pt;
-    width: 600px;
-    max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+    width: 600px;
+    max-width: 600px;
     background: #fff;
-    " align="center">
+    ">
     <tbody>
         <tr>
             <td width="${paddingLeft}"></td>
@@ -199,7 +203,15 @@ const threeColumns = (
         <tr>
             <td width="${paddingLeft}"><img src="http://welcome.hp-ww.com/img/s.gif" width="${paddingLeft}" alt="" style="display:block; width: ${paddingLeft}px;"></td>
             <td>
-                <table>
+                <table style="
+                border-spacing: 0;
+                mso-table-lspace: 0pt;
+                mso-table-rspace: 0pt;
+                margin-left: auto;
+                width: 600px;
+                max-width: 600px;
+                margin-right: auto;
+              " border="0" cellspacing="0" cellpadding="0" width="600">
                     <tr>
                         <td width="${columnSizes.col1}" valign="${
     contentAlignment[0]
