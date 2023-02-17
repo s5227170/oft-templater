@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 
-import RadioButton from "../UI/RadioButton/RadioButton";
-import ConfirmationButtons from "../ConfirmationButtons/ConfirmationButtons";
+import RadioButton from "../../UI/RadioButton/RadioButton";
+import ConfirmationButtons from "../../UI/ConfirmationButtons/ConfirmationButtons";
 
 import classes from "./CreateRowContent.module.scss";
-import SizeInput from "../UI/SizeInput/SizeInput";
+import CustomInput from "../../UI/CustomInput/CustomInput";
 
 const CreateRowContent = (props) => {
   const [rowConfig, setRowConfig] = useState({
@@ -153,7 +153,7 @@ const CreateRowContent = (props) => {
                 return (
                   <div key={index} className={classes.SizeWrapper}>
                     <label>Row {index + 1} width</label>
-                    <SizeInput
+                    <CustomInput
                       onKeyDown={preventMinus}
                       style={{ width: "50px" }}
                       type="number"
@@ -172,7 +172,7 @@ const CreateRowContent = (props) => {
                 return (
                   <div key={index} className={classes.SizeWrapper}>
                     <label>Row {index + 1} width</label>
-                    <SizeInput
+                    <CustomInput
                       onKeyDown={preventMinus}
                       style={{ width: "50px" }}
                       type="number"

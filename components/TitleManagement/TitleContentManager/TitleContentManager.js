@@ -1,8 +1,5 @@
-import { GiConfirmed } from "react-icons/gi";
-import { TiArrowMinimise } from "react-icons/ti";
-import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import Modal from "../Modal/Modal";
+import Modal from "../../Modal/Modal";
 import TitleContent from "../TitleContent/TitleContent";
 
 import classes from "./TitleContentManager.module.scss";

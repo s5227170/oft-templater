@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useState } from "react";
 import classes from "./ComponentSummary.module.scss";
-import { Tooltip } from "react-tooltip";
 import { FaAngleDown } from "react-icons/fa";
 
 const ComponentSummary = (props) => {

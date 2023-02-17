@@ -92,7 +92,7 @@ const convertPageConfig = (config) => {
             row.parameters.paddingRight,
             row.parameters.paddingTop,
             row.parameters.paddingBottom,
-            `<span id="componentManager" name="row${row.position}#item1"></span>`
+            `<span data-columns="${row.columns}"  id="componentManager" name="row${row.position}#item1"></span>`
           )
         );
       } else {
@@ -119,8 +119,8 @@ const convertPageConfig = (config) => {
             row.parameters.paddingRight,
             row.parameters.paddingTop,
             row.parameters.paddingBottom,
-            `<span id="componentManager" name="row${row.position}#item1"></span>`,
-            `<span id="componentManager" name="row${row.position}#item2"></span>`
+            `<span data-columns="${row.columns}"  id="componentManager" name="row${row.position}#item1"></span>`,
+            `<span data-columns="${row.columns}"  id="componentManager" name="row${row.position}#item2"></span>`
           )
         );
       } else {
@@ -135,7 +135,7 @@ const convertPageConfig = (config) => {
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
                 subComponents[0],
-                `<span id="componentManager" name="row${row.position}#item2"></span>`
+                `<span data-columns="${row.columns}"  id="componentManager" name="row${row.position}#item2"></span>`
               )
             );
           } else if (row.contentComponents[0].position == 2) {
@@ -147,7 +147,7 @@ const convertPageConfig = (config) => {
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
-                `<span id="componentManager" name="row${row.position}#item1"></span>`,
+                `<span data-columns="${row.columns}"  id="componentManager" name="row${row.position}#item1"></span>`,
                 subComponents[0]
               )
             );
@@ -195,9 +195,9 @@ const convertPageConfig = (config) => {
             row.parameters.paddingRight,
             row.parameters.paddingTop,
             row.parameters.paddingBottom,
-            `<span id="componentManager" name="row${row.position}#item1"></span>`,
-            `<span id="componentManager" name="row${row.position}#item2"></span>`,
-            `<span id="componentManager" name="row${row.position}#item3"></span>`
+            `<span data-columns="${row.columns}"  id="componentManager" name="row${row.position}#item1"></span>`,
+            `<span data-columns="${row.columns}"  id="componentManager" name="row${row.position}#item2"></span>`,
+            `<span data-columns="${row.columns}"  id="componentManager" name="row${row.position}#item3"></span>`
           )
         );
       } else {
@@ -213,8 +213,8 @@ const convertPageConfig = (config) => {
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
                 subComponents[0],
-                `<span id="componentManager" name="row${row.position}#item2"></span>`,
-                `<span id="componentManager" name="row${row.position}#item3"></span>`
+                `<span data-columns="${row.columns}"  id="componentManager" name="row${row.position}#item2"></span>`,
+                `<span data-columns="${row.columns}"  id="componentManager" name="row${row.position}#item3"></span>`
               )
             );
           }
@@ -227,9 +227,9 @@ const convertPageConfig = (config) => {
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
-                `<span id="componentManager" name="row${row.position}#item1"></span>`,
+                `<span data-columns="${row.columns}"  id="componentManager" name="row${row.position}#item1"></span>`,
                 subComponents[0],
-                `<span id="componentManager" name="row${row.position}#item3"></span>`
+                `<span data-columns="${row.columns}"  id="componentManager" name="row${row.position}#item3"></span>`
               )
             );
           }
@@ -242,8 +242,8 @@ const convertPageConfig = (config) => {
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
-                `<span id="componentManager" name="row${row.position}#item1"></span>`,
-                `<span id="componentManager" name="row${row.position}#item2"></span>`,
+                `<span data-columns="${row.columns}"  id="componentManager" name="row${row.position}#item1"></span>`,
+                `<span data-columns="${row.columns}"  id="componentManager" name="row${row.position}#item2"></span>`,
                 subComponents[0]
               )
             );
@@ -263,7 +263,7 @@ const convertPageConfig = (config) => {
                 row.parameters.paddingBottom,
                 subComponents[0],
                 subComponents[1],
-                `<span id="componentManager" name="row${row.position}#item3"></span>`
+                `<span data-columns="${row.columns}"  id="componentManager" name="row${row.position}#item3"></span>`
               )
             );
           } else if (
@@ -280,7 +280,7 @@ const convertPageConfig = (config) => {
                 row.parameters.paddingBottom,
                 subComponents[1],
                 subComponents[0],
-                `<span id="componentManager" name="row${row.position}#item3"></span>`
+                `<span data-columns="${row.columns}"  id="componentManager" name="row${row.position}#item3"></span>`
               )
             );
           } else if (
@@ -296,7 +296,7 @@ const convertPageConfig = (config) => {
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
                 subComponents[0],
-                `<span id="componentManager" name="row${row.position}#item2"></span>`,
+                `<span data-columns="${row.columns}"  id="componentManager" name="row${row.position}#item2"></span>`,
                 subComponents[1]
               )
             );
@@ -313,7 +313,7 @@ const convertPageConfig = (config) => {
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
                 subComponents[1],
-                `<span id="componentManager" name="row${row.position}#item2"></span>`,
+                `<span data-columns="${row.columns}"  id="componentManager" name="row${row.position}#item2"></span>`,
                 subComponents[0]
               )
             );
@@ -329,7 +329,7 @@ const convertPageConfig = (config) => {
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
-                `<span id="componentManager" name="row${row.position}#item1"></span>`,
+                `<span data-columns="${row.columns}"  id="componentManager" name="row${row.position}#item1"></span>`,
                 subComponents[0],
                 subComponents[1]
               )
@@ -346,7 +346,7 @@ const convertPageConfig = (config) => {
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
-                `<span id="componentManager" name="row${row.position}#item1"></span>`,
+                `<span data-columns="${row.columns}"  id="componentManager" name="row${row.position}#item1"></span>`,
                 subComponents[1],
                 subComponents[0]
               )
@@ -364,7 +364,7 @@ const convertPageConfig = (config) => {
                 row.parameters.paddingTop,
                 row.parameters.paddingBottom,
                 subComponents[1],
-                `<span id="componentManager" name="row${row.position}#item2"></span>`,
+                `<span data-columns="${row.columns}"  id="componentManager" name="row${row.position}#item2"></span>`,
                 subComponents[0]
               )
             );

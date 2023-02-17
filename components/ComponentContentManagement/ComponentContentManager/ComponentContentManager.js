@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Modal from "../Modal/Modal";
+import Modal from "../../Modal/Modal";
 
 import ComponentContentButton from "../ComponentContentButton/ComponentContentButton";
 import ComponentContent from "../ComponentContent/ComponentContent";
@@ -18,7 +18,7 @@ const ComponentContentManager = (props) => {
     return (
         <div className={classes.ComponentContentManager}>
             <ComponentContentButton clickHandler={tackleModal} type={props.componentType}>
-                <Modal modalTackle={tackleModal} modalShow={modalShow}>
+                <Modal tackleModal={tackleModal} modalShow={modalShow}>
                     <ComponentContent componentType={props.componentType} cancelHandler={tackleModal} confirmHandler={props.confirmContent} elementPosition={props.elementPosition} deleteFunction={props.deleteFunction} row={props.row}/>
                 </Modal>
             </ComponentContentButton>

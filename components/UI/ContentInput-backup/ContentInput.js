@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useState } from "react";
 import classes from "./ContentInput.module.scss";
 import { MdOutlineDelete } from "react-icons/md";
 import { Tooltip } from "react-tooltip";
@@ -8,7 +8,6 @@ import RichTextExample from "../TextFormatter/TextFormatter";
 
 const ContentInput = (props) => {
   const [selected, setSelected] = useState();
-  const [toChange, setToChange] = useState();
 
   const handleSelect = (e) => {
     const constraint = document.getElementById("experiment");

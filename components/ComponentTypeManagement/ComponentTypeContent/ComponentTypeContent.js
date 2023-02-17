@@ -3,9 +3,9 @@ import { MdTextFields } from "react-icons/md";
 import { BsListTask } from "react-icons/bs";
 import { BsImage } from "react-icons/bs";
 
-import ConfirmationButtons from "../ConfirmationButtons/ConfirmationButtons";
-import ComponentType from "../UI/ComponentType/ComponentType";
-import RadioButton from "../UI/RadioButton/RadioButton";
+import ConfirmationButtons from "../../UI/ConfirmationButtons/ConfirmationButtons";
+import ComponentType from "../../UI/ComponentType/ComponentType";
+import RadioButton from "../../UI/RadioButton/RadioButton";
 
 import classes from "./ComponentTypeContent.module.scss";
 
@@ -101,7 +101,7 @@ const ComponentTypeContent = (props) => {
         confirm={"Confirm"}
         cancel={"Cancel"}
         confirmClick={() => {
-            props.confirmHandler(getChoice(), props.elementPosition);
+            props.confirmHandler(getChoice(), props.elementPosition, props.rowColumns);
         }}
         cancelClick={props.cancelHandler}
       />

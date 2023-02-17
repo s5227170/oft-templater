@@ -2,11 +2,10 @@
 import classes from "./Modal.module.scss";
 
 import global from "../../styles/global.module.scss"
-import { Fragment } from "react";
 
 const Modal = (props) => {
     return (
-        <Fragment>
+        <>
             <div
                 className={[
                     props.modalShow ? global.openFlex : global.closed,
@@ -21,10 +20,10 @@ const Modal = (props) => {
                         classes.Backdrop,
                         props.modalShow ? global.openBlock : global.closed,
                     ].join(" ")}
-                    onClick={props.modalTackle}
+                    onClick={props.tackleModal}
                 />
             ) : null}
-        </Fragment>
+        </>
     );
 };
 

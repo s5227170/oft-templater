@@ -8,7 +8,7 @@ import {
   AiOutlineBorderTop,
   AiOutlineBorderBottom,
 } from "react-icons/ai";
-import SizeInput from "../UI/SizeInput/SizeInput";
+import CustomInput from "../UI/CustomInput/CustomInput";
 
 const ImageEditor = (props) => {
   const [url, setUrl] = useState("");
@@ -162,7 +162,7 @@ const ImageEditor = (props) => {
           </div>
         </div>
         <div className={classes.ImageContent}>
-          <SizeInput
+          <CustomInput
             type="text"
             style={{ width: "400px" }}
             placeholder="Place your img url here"
@@ -170,7 +170,7 @@ const ImageEditor = (props) => {
           />
           <div className={classes.InputWithLabel}>
             <label>Image width:</label>
-            <SizeInput
+            <CustomInput
               onKeyDown={preventMinus}
               style={{ width: "50px" }}
               type="number"
@@ -185,7 +185,7 @@ const ImageEditor = (props) => {
           </div>
           <div className={classes.InputWithLabel}>
             <label>Image height: </label>
-            <SizeInput
+            <CustomInput
               onKeyDown={preventMinus}
               style={{ width: "50px" }}
               type="number"

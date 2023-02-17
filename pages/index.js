@@ -1,33 +1,36 @@
 /* eslint-disable react/no-unescaped-entities */
+import { useState } from "react";
 import Head from "next/head";
-import { Inter } from "@next/font/google";
 
 import Canvas from "../components/Canvas/Canvas";
 import Menu from "../components/Menu/Menu";
-
-import classes from "../styles/global.module.scss";
-// const Canvas = lazy(() => import("../components/Canvas/Canvas"));
-import { lazy, Suspense, useState } from "react";
-import PulseLoader from "react-spinners/PulseLoader";
+import TitleContentManager from "../components/TitleManagement/TitleContentManager/TitleContentManager";
 import HigherManagementButton from "../components/UI/HigherManagementButton/HigherManagementButton";
+
 import boilerplate from "../content-components/boilerplate";
-import Modal from "../components/Modal/Modal";
-import TitleContent from "../components/TitleContent/TitleContent";
-import TitleContentManager from "../components/TitleContentManager/TitleContentManager";
 import downloadFile from "../util/downloadFile";
 
-const inter = Inter({ subsets: ["latin"] });
+import classes from "../styles/global.module.scss";
+import DefaultPaddingManager from "../components/DefaultPaddingManagement/DefaultPaddingManager/DefaultPaddingManager";
 
 export default function Home() {
   const [htmlContentString, setHtmlContentString] = useState(``);
-  const [modalShow, setModalShow] = useState(false);
+  const [titleModalShow, setTitleModalShow] = useState(false);
+  const [defaultPaddingModalShow, setDefaultPaddingModalShow] = useState(false);
   const [emailTitle, setEmailTitle] = useState("");
+  const [defaultPadding, setDefaultPadding] = useState()
 
-  const tackleModal = () => {
-    console.log("test");
-    setTimeout(() => {
-      setModalShow(!modalShow);
-    }, 250);
+  const tackleModal = (type) => {
+    if (type == "Title") {
+      setTimeout(() => {
+        setTitleModalShow(!titleModalShow);
+      }, 250);
+    }
+    if (type == "DefaultPadding") {
+      setTimeout(() => {
+        setDefaultPaddingModalShow(!defaultPaddingModalShow);
+      }, 250);
+    }
   };
 
   const exportHtmlHandler = async () => {
@@ -54,6 +57,10 @@ export default function Home() {
     setEmailTitle(title);
   };
 
+  const confirmDefaultPadding = () => {
+
+  }
+
   return (
     <>
       <Head>
@@ -63,7 +70,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Menu titleHandler={tackleModal} />
+        <Menu tackleModal={tackleModal} />
         <div className={classes.Guide}>
           <h1>Guide</h1>
           <br></br>
@@ -93,10 +100,16 @@ export default function Home() {
             Export HTML
           </HigherManagementButton>
         </div>
+
         <Canvas setHTML={setHtmlContentString} />
         <TitleContentManager
-          tackleModal={tackleModal}
-          modalShow={modalShow}
+          tackleModal={() => tackleModal("Title")}
+          modalShow={titleModalShow}
+          confirmTitle={confirmTitle}
+        />
+        <DefaultPaddingManager
+          tackleModal={() => tackleModal("DefaultPadding")}
+          modalShow={defaultPaddingModalShow}
           confirmTitle={confirmTitle}
         />
       </main>

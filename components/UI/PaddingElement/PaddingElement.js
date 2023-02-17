@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from "react";
 import classes from "./PaddingElement.module.scss";
 
 const PaddingElement = (props) => {

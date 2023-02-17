@@ -1,13 +1,12 @@
 import { useState } from "react";
-import Modal from "../Modal/Modal";
+import Modal from "../../Modal/Modal";
 
 import CreateRowButton from "../CreateRowButton/CreateRowButton";
-import ComponentTypeContent from "../ComponentTypeContent/ComponentTypeContent";
 
-import classes from "./CreateRowManage.module.scss";
+import classes from "./CreateRowManager.module.scss";
 import CreateRowContent from "../CreateRowContent/CreateRowContent";
 
-const CreateRowManage = (props) => {
+const CreateRowManager = (props) => {
     const [modalShow, setModalShow] = useState(false);
 
     const tackleModal = () => {
@@ -19,7 +18,7 @@ const CreateRowManage = (props) => {
     return (
         <div className={classes.RowCreationManager}>
             <CreateRowButton clickHandler={tackleModal}>
-                <Modal modalTackle={tackleModal} modalShow={modalShow}>
+                <Modal tackleModal={tackleModal} modalShow={modalShow}>
                     <CreateRowContent cancelHandler={tackleModal} confirmHandler={props.rowGeneration} successFunction={tackleModal}/>
                 </Modal>
             </CreateRowButton>
@@ -27,4 +26,4 @@ const CreateRowManage = (props) => {
     );
 };
 
-export default CreateRowManage;
+export default CreateRowManager;

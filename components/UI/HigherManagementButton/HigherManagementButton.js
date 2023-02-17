@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from "react";
 import classes from "./HigherManagementButton.module.scss";
 
 const HigherManagementButton = (props) => {

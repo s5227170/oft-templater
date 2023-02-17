@@ -1,9 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment } from "react";
 import classes from "./ContentInput.module.scss";
-import { MdOutlineDelete } from "react-icons/md";
-import { Tooltip } from "react-tooltip";
-import { FaInfoCircle } from "react-icons/fa";
 import RichTextExample from "../TextFormatter/TextFormatter";
 
 const ContentInput = (props) => {

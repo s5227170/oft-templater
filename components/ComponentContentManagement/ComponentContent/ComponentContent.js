@@ -1,7 +1,7 @@
 import { Tooltip } from "react-tooltip";
 
-import TextEditor from "../TextEditor/TextEditor";
-import ImageEditor from "../ImageEditor/ImageEditor";
+import TextEditor from "../../TextEditor/TextEditor";
+import ImageEditor from "../../ImageEditor/ImageEditor";
 
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { GiConfirmed } from "react-icons/gi";

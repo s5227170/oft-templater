@@ -5,8 +5,8 @@ import { Tooltip } from "react-tooltip";
 
 import classes from "./RowSettingsContent.module.scss";
 import RowSettingsEditor from "../RowSettingsEditor/RowSettingsEditor";
-import Dropdown from "../UI/PositionDropdown/Dropdown";
-import { useEffect, useState } from "react";
+import Dropdown from "../../UI/PositionDropdown/Dropdown";
+import { useState } from "react";
 
 const RowSettingsContent = (props) => {
   const [positionChoice, setPositionChoice] = useState(null);

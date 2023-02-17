@@ -1,5 +1,5 @@
 import classes from "./RowSettingsManager.module.scss";
-import Modal from "../Modal/Modal";
+import Modal from "../../Modal/Modal";
 import RowSettingsButton from "../RowSettingsButton/RowSettingsButton";
 import { useState } from "react";
 import RowSettingsContent from "../RowSettingsContent/RowSettingsContent";
@@ -21,7 +21,7 @@ const RowSettingsManager = (props) => {
         rowHeight={props.rowSettings.height}
         clickHandler={tackleModal}
       >
-        <Modal modalTackle={tackleModal} modalShow={modalShow}>
+        <Modal tackleModal={tackleModal} modalShow={modalShow}>
           <RowSettingsContent
             tackleModal={tackleModal}
             confirmRowChanges={props.confirmRowChanges}

@@ -1,27 +1,25 @@
-import { Fragment, useEffect, useState, useRef, Suspense, lazy } from "react";
+import { useEffect, useState, useRef} from "react";
 import parse from "html-react-parser";
-import { createRoot } from "react-dom/client";
 
 import classes from "./Canvas.module.scss";
 
-import { renderToString } from "react-dom/server";
-import ComponentTypeManager from "../ComponentTypeManager/ComponentTypeManager";
-import CreateRowManager from "../CreateRowManager/CreateRowManage";
-// const CreateRowManager = lazy(() =>
-//   import("../CreateRowManager/CreateRowManage")
-// );
+import ComponentTypeManager from "../ComponentTypeManagement/ComponentTypeManager/ComponentTypeManager";
+import CreateRowManager from "../CreateRowManagement/CreateRowManager/CreateRowManager";
 
 import convertPageConfig from "../../util/convert-page-config";
-import ComponentContentManager from "../ComponentContentManager/ComponentContentManager";
-import RowSettingsButton from "../RowSettingsButton/RowSettingsButton";
-import RowSettingsManager from "../RowSettingsManager/RowSettingsManager";
-import PulseLoader from "react-spinners/PulseLoader";
+import ComponentContentManager from "../ComponentContentManagement/ComponentContentManager/ComponentContentManager";
+import RowSettingsManager from "../RowSettingsManagement/RowSettingsManager/RowSettingsManager";
 
 const Canvas = (props) => {
   const rootRef = useRef(null);
-  //This variable rowSettings stores the coordinates of all rows and it is used to generate settings components to tackle rows
   const [rowSettings, setRowSettings] = useState([]);
   const [content, setContent] = useState();
+  const [defaultComponentPadding] = useState({
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 0,
+    paddingBottom: 0
+  })
   const [pageConfig, setPageConfig] = useState({
     content: [],
     title: "",
@@ -35,7 +33,7 @@ const Canvas = (props) => {
   const [rowPositionConfig, setRowPositionConfig] = useState([]);
   let root = null;
 
-  const generateComponent = (type, position) => {
+  const generateComponent = (type, position, columns) => {
     const row = position
       .split("#")[0]
       .charAt(position.split("#")[0].length - 1);
@@ -267,7 +265,6 @@ const Canvas = (props) => {
 
   useEffect(() => {
     if (root == null) {
-      //If rows multiply, try moving the createRoot function out of the if
       const conversion = convertPageConfig(pageConfig);
       let fullStringContent = "";
       conversion.map((stringRow) => {
@@ -281,52 +278,12 @@ const Canvas = (props) => {
           }
 
           if (attribs.id === "componentManager") {
+            console.log(attribs)
             return (
               <ComponentTypeManager
                 componentGeneration={generateComponent}
                 elementPosition={attribs.name}
-              />
-            );
-          }
-          if (attribs.id === "componentContentManager") {
-            return (
-              <ComponentContentManager
-                confirmContent={confirmContent}
-                elementPosition={attribs.name}
-                componentType={attribs.role}
-                deleteFunction={deleteContent}
-                row={attribs["data-columns"]}
-              />
-            );
-          }
-        },
-      });
-      setContent(reactContent);
-      const newRowPositionConfig = [];
-      for (let i = 0; i < pageConfig.content.length; i++) {
-        newRowPositionConfig.push({
-          title: "POSITION " + pageConfig.content[i].position,
-          value: pageConfig.content[i].position,
-        });
-      }
-      setRowPositionConfig(newRowPositionConfig);
-    } else {
-      const conversion = convertPageConfig(pageConfig);
-      let fullStringContent = "";
-      conversion.map((stringRow) => {
-        fullStringContent += stringRow;
-      });
-      props.setHTML(fullStringContent);
-      const reactContent = parse(fullStringContent, {
-        replace: ({ attribs, children }) => {
-          if (!attribs) {
-            return;
-          }
-          if (attribs.id === "componentManager") {
-            return (
-              <ComponentTypeManager
-                componentGeneration={generateComponent}
-                elementPosition={attribs.name}
+                rowColumns={attribs["data-columns"]}
               />
             );
           }
@@ -353,6 +310,49 @@ const Canvas = (props) => {
       }
       setRowPositionConfig(newRowPositionConfig);
     }
+    // else {
+    //   const conversion = convertPageConfig(pageConfig);
+    //   let fullStringContent = "";
+    //   conversion.map((stringRow) => {
+    //     fullStringContent += stringRow;
+    //   });
+    //   props.setHTML(fullStringContent);
+    //   const reactContent = parse(fullStringContent, {
+    //     replace: ({ attribs, children }) => {
+    //       if (!attribs) {
+    //         return;
+    //       }
+    //       if (attribs.id === "componentManager") {
+    //         return (
+    //           <ComponentTypeManager
+    //             componentGeneration={generateComponent}
+    //             elementPosition={attribs.name}
+    //           />
+    //         );
+    //       }
+    //       if (attribs.id === "componentContentManager") {
+    //         return (
+    //           <ComponentContentManager
+    //             confirmContent={confirmContent}
+    //             elementPosition={attribs.name}
+    //             componentType={attribs.role}
+    //             deleteFunction={deleteContent}
+    //             row={attribs["data-columns"]}
+    //           />
+    //         );
+    //       }
+    //     },
+    //   });
+    //   setContent(reactContent);
+    //   const newRowPositionConfig = [];
+    //   for (let i = 0; i < pageConfig.content.length; i++) {
+    //     newRowPositionConfig.push({
+    //       title: "POSITION " + pageConfig.content[i].position,
+    //       value: pageConfig.content[i].position,
+    //     });
+    //   }
+    //   setRowPositionConfig(newRowPositionConfig);
+    // }
   }, [pageConfig]);
 
   useEffect(() => {
@@ -384,11 +384,7 @@ const Canvas = (props) => {
       <div id="targetDiv" ref={rootRef}>
         {content}
       </div>
-      <Suspense
-        fallback={<PulseLoader color="#40cd9a" loading={true} size={30} />}
-      >
-        <CreateRowManager rowGeneration={generateRow} />
-      </Suspense>
+      <CreateRowManager rowGeneration={generateRow} />
       {rowSettings.map((row) => {
         return (
           <RowSettingsManager

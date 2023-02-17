@@ -16,11 +16,11 @@ const Menu = (props) => {
     return (
         <div className={classes.MenuWrapper}>
             <ul>
-                <li>
+                <li onClick={() => props.tackleModal("DefaultPadding")}>
                     <RxPadding id="RxPadding" {...iconConfig} />
-                    <Tooltip anchorId="RxPadding" content="Add Page padding" place="right" />
+                    <Tooltip anchorId="RxPadding" content="Add Default Padding to Components" place="right" />
                 </li>
-                <li onClick={props.titleHandler}>
+                <li onClick={() => props.tackleModal("Title")}>
                     <MdOutlineTitle id="MdOutlineTitle" {...iconConfig} />
                     <Tooltip anchorId="MdOutlineTitle" content="Add Page Title" place="right" />
                 </li>

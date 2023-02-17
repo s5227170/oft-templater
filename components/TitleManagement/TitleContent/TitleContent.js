@@ -9,7 +9,7 @@ const TitleContent = (props) => {
   return (
     <div className={classes.TitleContent}>
       <div className={classes.Header}>
-        <h1>Row {props.position} settings</h1>
+        <h1>HTML title</h1>
         <div className={classes.EditorIcons}>
           <GiConfirmed
             id="confirm-text"

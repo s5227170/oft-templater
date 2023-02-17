@@ -1,6 +1,5 @@
 import { useState } from "react";
-import Modal from "../Modal/Modal";
-
+import Modal from "../../Modal/Modal";
 import ComponentTypeButton from "../ComponentTypeButton/ComponentTypeButton";
 import ComponentTypeContent from "../ComponentTypeContent/ComponentTypeContent";
 
@@ -18,8 +17,13 @@ const ComponentTypeManager = (props) => {
   return (
     <div className={classes.SettingsManager}>
       <ComponentTypeButton clickHandler={tackleModal}>
-        <Modal modalTackle={tackleModal} modalShow={modalShow}>
-          <ComponentTypeContent cancelHandler={tackleModal} confirmHandler={props.componentGeneration} elementPosition={props.elementPosition}/>
+        <Modal tackleModal={tackleModal} modalShow={modalShow}>
+          <ComponentTypeContent
+            cancelHandler={tackleModal}
+            confirmHandler={props.componentGeneration}
+            elementPosition={props.elementPosition}
+            rowColumns={props.rowColumns}
+          />
         </Modal>
       </ComponentTypeButton>
     </div>

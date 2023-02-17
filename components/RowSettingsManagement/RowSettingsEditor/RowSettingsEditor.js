@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import ComponentSummary from "../UI/ComponentSummary/ComponentSummary";
+import ComponentSummary from "../../UI/ComponentSummary/ComponentSummary";
 import classes from "./RowSettingsEditor.module.scss";
 
 const RowSettingsEditor = (props) => {
