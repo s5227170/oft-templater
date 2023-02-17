@@ -19,9 +19,9 @@ const Dropdown = (props) => {
 
   useEffect(() => {
     if (choice == null) {
-      setChoice(props.currentPosition);
+      setChoice(props.currentChoice);
     }
-  }, [props.currentPosition]);
+  }, [props.currentChoice]);
 
   useEffect(() => {
     if (currentChoiceRef.current) {

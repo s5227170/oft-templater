@@ -1,11 +1,19 @@
+import { useState } from "react";
 import { GiConfirmed } from "react-icons/gi";
 import { TiArrowMinimise } from "react-icons/ti";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import CustomInput from "../../UI/CustomInput/CustomInput";
 
 import classes from "./TitleContent.module.scss";
 
 const TitleContent = (props) => {
+  const [title, setTitle] = useState("");
+
+  const titleHandler = (e) => {
+    setTitle(e.target.value);
+  };
+
   return (
     <div className={classes.TitleContent}>
       <div className={classes.Header}>
@@ -16,12 +24,15 @@ const TitleContent = (props) => {
             color="#40CD9A"
             size="25px"
             onClick={() => {
-              props.confirmTitle();
+              if (!title.length) {
+                return alert("Please enter a title before submitting.")
+              }
+              props.confirmTitle(title);
               props.tackleModal();
             }}
           />
           <Tooltip anchorId="confirm-text" place="top">
-            Confirm row changes
+            Confirm title
           </Tooltip>
           <TiArrowMinimise
             id="close-modal-text"
@@ -34,7 +45,15 @@ const TitleContent = (props) => {
           </Tooltip>
         </div>
       </div>
-      <div className={classes.Content}></div>
+      <div className={classes.Content}>
+        <CustomInput
+          type="text"
+          style={{ width: "100%" }}
+          onChange={titleHandler}
+          value={title}
+          placeholder="Enter title for the email..."
+        />
+      </div>
     </div>
   );
 };

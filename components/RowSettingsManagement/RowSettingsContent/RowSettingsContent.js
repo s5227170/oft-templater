@@ -5,7 +5,7 @@ import { Tooltip } from "react-tooltip";
 
 import classes from "./RowSettingsContent.module.scss";
 import RowSettingsEditor from "../RowSettingsEditor/RowSettingsEditor";
-import Dropdown from "../../UI/PositionDropdown/Dropdown";
+import Dropdown from "../../UI/Dropdown/Dropdown";
 import { useState } from "react";
 
 const RowSettingsContent = (props) => {
@@ -60,9 +60,8 @@ const RowSettingsContent = (props) => {
         <h2>Set new row position</h2>
         <Dropdown
           options={props.positionOptions}
-          row={props.row}
           onSelect={selectConfirmation}
-          currentPosition={props.row ?{
+          currentChoice={props.row ?{
             title: "POSITION " + props.row.position,
             value: props.row.position,
           } : null}
