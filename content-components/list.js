@@ -10,7 +10,6 @@ const list = (
   align,
   columnSizes
 ) => {
-  console.log(content);
   const contentArray = [];
   const componentSize = columnSizes["col" + item];
   const contentDistribution = content.map((list) => {
@@ -53,16 +52,14 @@ const list = (
   max-width: ${componentSize}px;
   mso-table-lspace: 0pt;
   mso-table-rspace: 0pt;
-" valign="${align? align : ""}">
+" valign="${align ? align : ""}">
             <tbody>
                 <tr>
                     <td width="${paddingLeft}"></td>
                       <td>
-                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${
-                          componentSize - paddingLeft - paddingRight
-                        }" height="${paddingTop}" alt="" style="display:block; width: ${
-    componentSize - paddingLeft - paddingRight
-  }px; height:${paddingTop? paddingTop : 1}px;">
+                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${componentSize - paddingLeft - paddingRight
+    }" height="${paddingTop}" alt="" style="display:block; width: ${componentSize - paddingLeft - paddingRight
+    }px; height:${paddingTop ? paddingTop : 1}px;">
                       </td>
                     <td width="${paddingRight}"></td>
                 </tr>
@@ -78,11 +75,9 @@ const list = (
                 <tr>
                     <td width="${paddingLeft}"></td>
                       <td>
-                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${
-                          componentSize - paddingLeft - paddingRight
-                        }" height="${paddingBottom? paddingBottom : 1}" alt="" style="display:block; width: ${
-    componentSize - paddingLeft - paddingRight
-  }px; height:${paddingTop}px;">
+                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${componentSize - paddingLeft - paddingRight
+    }" height="${paddingBottom ? paddingBottom : 1}" alt="" style="display:block; width: ${componentSize - paddingLeft - paddingRight
+    }px; height:${paddingTop}px;">
                       </td>
                     <td width="${paddingRight}"></td>
                 </tr>
