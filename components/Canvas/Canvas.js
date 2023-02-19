@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef} from "react";
+import { useEffect, useState, useRef } from "react";
 import parse from "html-react-parser";
 
 import classes from "./Canvas.module.scss";
@@ -33,13 +33,17 @@ const Canvas = (props) => {
   const [rowPositionConfig, setRowPositionConfig] = useState([]);
   let root = null;
 
+  console.log(pageConfig)
+
   const generateComponent = (type, position, columns) => {
     const row = position
-      .split("#")[0]
-      .charAt(position.split("#")[0].length - 1);
+      .split("#")[0].substr(3);
+
     const number = position
       .split("#")[1]
       .charAt(position.split("#")[1].length - 1);
+
+    console.log(row)
     let component = {};
     if (type == "Text") {
       component = {
@@ -278,7 +282,6 @@ const Canvas = (props) => {
           }
 
           if (attribs.id === "componentManager") {
-            console.log(attribs)
             return (
               <ComponentTypeManager
                 componentGeneration={generateComponent}
