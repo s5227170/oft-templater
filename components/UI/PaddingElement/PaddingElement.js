@@ -22,6 +22,7 @@ const PaddingElement = (props) => {
         maxLength={3}
         onChange={props.change}
         placeholder="px"
+        value={props.value}
       ></input>
     </div>
   );

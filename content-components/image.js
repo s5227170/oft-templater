@@ -33,22 +33,21 @@ const image = (
   }
 
   if (!contentDistribution.length) {
-    items = items.concat(
-      `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"Image"}" data-columns="${rowType}"></span>`
-    );
+    const paddings = { paddingLeft: paddingLeft, paddingRight: paddingRight, paddingTop: paddingTop, paddingBottom: paddingBottom };
+    items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"Image"}" data-columns="${rowType}" data-paddings="${paddings}"></span>`
   }
 
   // if (rowType == 1) {
   return `<table width=${componentSize} border="0" cellspacing="0" cellpadding="0" style="
-    border-spacing: 0;
-    mso-table-lspace: 0pt;
-    mso-table-rspace: 0pt;
-  ">
+  border-spacing: 0;
+  width: ${componentSize}px;
+  max-width: ${componentSize}px;
+  mso-table-lspace: 0pt;
+  mso-table-rspace: 0pt;">
             <tbody>
                 <tr>
                     <td width="${paddingLeft}"></td>
-                      <td width="${componentSize - paddingLeft - paddingRight
-    }" height="${paddingTop ? paddingTop : 1}">
+                      <td>
                         <img src="http://welcome.hp-ww.com/img/s.gif" width="${componentSize - paddingLeft - paddingRight
     }" height="${paddingTop ? paddingTop : 1
     }" alt="" style="display:block; width: ${componentSize - paddingLeft - paddingRight
@@ -58,19 +57,18 @@ const image = (
                 </tr>
                 <tr>
                     <td></td>
-                    <td>
+                    <td width="${componentSize - paddingLeft - paddingRight}">
                       ${items}
                     </td>
                     <td></td>
                 </tr>
                 <tr>
                     <td width="${paddingLeft}"></td>
-                      <td width="${componentSize - paddingLeft - paddingRight
-    }" height="${paddingBottom ? paddingBottom : 1}">
+                      <td>
                         <img src="http://welcome.hp-ww.com/img/s.gif" width="${componentSize - paddingLeft - paddingRight
     }" height="${paddingBottom ? paddingBottom : 1
     }" alt="" style="display:block; width: ${componentSize - paddingLeft - paddingRight
-    }px; height:${paddingTop}px;">
+    }px; height:${paddingBottom}px;">
                       </td>
                     <td width="${paddingRight}"></td>
                 </tr>

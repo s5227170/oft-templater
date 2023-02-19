@@ -56,7 +56,8 @@ const text = (
   }
 
   if (!contentArray.length) {
-    items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"Text"}"  data-columns="${rowType}"></span>`;
+    const paddings = { paddingLeft: paddingLeft, paddingRight: paddingRight, paddingTop: paddingTop, paddingBottom: paddingBottom };
+    items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"Text"}"  data-columns="${rowType}" data-paddings="${paddings}"></span>`;
   }
 
   return `<table width=${componentSize} border="0" cellspacing="0" cellpadding="0" style="

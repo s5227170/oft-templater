@@ -14,12 +14,6 @@ const Canvas = (props) => {
   const rootRef = useRef(null);
   const [rowSettings, setRowSettings] = useState([]);
   const [content, setContent] = useState();
-  const [defaultComponentPadding] = useState({
-    paddingLeft: 0,
-    paddingRight: 0,
-    paddingTop: 0,
-    paddingBottom: 0
-  })
   const [pageConfig, setPageConfig] = useState({
     content: [],
     title: "",
@@ -33,8 +27,6 @@ const Canvas = (props) => {
   const [rowPositionConfig, setRowPositionConfig] = useState([]);
   let root = null;
 
-  console.log(pageConfig)
-
   const generateComponent = (type, position, columns) => {
     const row = position
       .split("#")[0].substr(3);
@@ -43,15 +35,37 @@ const Canvas = (props) => {
       .split("#")[1]
       .charAt(position.split("#")[1].length - 1);
 
-    console.log(row)
+    let parameters = {
+      paddingLeft: 0,
+      paddingRight: 0,
+      paddingTop: 0,
+      paddingBottom: 0,
+    };
+    if (props.defaultComponentPaddings != parameters) {
+      parameters = { ...props.defaultComponentPaddings }
+    }
+
+    if (number == 1 && columns > 1) {
+      parameters = { ...props.defaultComponentPaddings, paddingRight: 0 }
+    }
+    if (number == 2 && columns == 2) {
+      parameters = { ...props.defaultComponentPaddings, paddingLeft: 0 }
+    }
+    if (number == 3 && columns > 2) {
+      parameters = { ...props.defaultComponentPaddings, paddingLeft: 0 }
+    }
+    if (number == 2 && columns > 2) {
+      parameters = { ...props.defaultComponentPaddings, paddingLeft: 0, paddingRight: 0 }
+    }
+
     let component = {};
     if (type == "Text") {
       component = {
         type: "Text",
-        paddingLeft: 0,
-        paddingRight: 0,
-        paddingTop: 0,
-        paddingBottom: 0,
+        paddingLeft: parameters.paddingLeft,
+        paddingRight: parameters.paddingRight,
+        paddingTop: parameters.paddingTop,
+        paddingBottom: parameters.paddingBottom,
         content: [],
         position: number,
         verticalAlign: "",
@@ -60,10 +74,10 @@ const Canvas = (props) => {
     if (type == "List") {
       component = {
         type: "List",
-        paddingLeft: 0,
-        paddingRight: 0,
-        paddingTop: 0,
-        paddingBottom: 0,
+        paddingLeft: parameters.paddingLeft,
+        paddingRight: parameters.paddingRight,
+        paddingTop: parameters.paddingTop,
+        paddingBottom: parameters.paddingBottom,
         content: [],
         position: number,
         verticalAlign: "",
@@ -72,10 +86,10 @@ const Canvas = (props) => {
     if (type == "Image") {
       component = {
         type: "Image",
-        paddingLeft: 0,
-        paddingRight: 0,
-        paddingTop: 0,
-        paddingBottom: 0,
+        paddingLeft: parameters.paddingLeft,
+        paddingRight: parameters.paddingRight,
+        paddingTop: parameters.paddingTop,
+        paddingBottom: parameters.paddingBottom,
         url: [],
         imgWidth: 0,
         imgHeight: 0,
@@ -291,6 +305,7 @@ const Canvas = (props) => {
             );
           }
           if (attribs.id === "componentContentManager") {
+            console.log(attribs["data-paddings"])
             return (
               <ComponentContentManager
                 confirmContent={confirmContent}
@@ -298,6 +313,7 @@ const Canvas = (props) => {
                 componentType={attribs.role}
                 deleteFunction={deleteContent}
                 row={attribs["data-columns"]}
+                defaultPaddings={attribs["data-paddings"]}
               />
             );
           }

@@ -18,7 +18,12 @@ export default function Home() {
   const [titleModalShow, setTitleModalShow] = useState(false);
   const [defaultPaddingModalShow, setDefaultPaddingModalShow] = useState(false);
   const [emailTitle, setEmailTitle] = useState("");
-  const [defaultPadding, setDefaultPadding] = useState()
+  const [defaultComponentPadding, setDefaultComponentPadding] = useState({
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 0,
+    paddingBottom: 0
+  })
 
   const tackleModal = (type) => {
     if (type == "Title") {
@@ -57,8 +62,13 @@ export default function Home() {
     setEmailTitle(title);
   };
 
-  const confirmDefaultPadding = () => {
-
+  const confirmDefaultPadding = (setPaddings) => {
+    setDefaultComponentPadding({
+      paddingLeft: setPaddings.paddingLeft,
+      paddingRight: setPaddings.paddingRight,
+      paddingTop: setPaddings.paddingTop,
+      paddingBottom: setPaddings.paddingBottom
+    })
   }
 
   return (
@@ -101,7 +111,7 @@ export default function Home() {
           </HigherManagementButton>
         </div>
 
-        <Canvas setHTML={setHtmlContentString} />
+        <Canvas setHTML={setHtmlContentString} defaultComponentPaddings={defaultComponentPadding} />
         <TitleContentManager
           tackleModal={() => tackleModal("Title")}
           modalShow={titleModalShow}
@@ -110,7 +120,8 @@ export default function Home() {
         <DefaultPaddingManager
           tackleModal={() => tackleModal("DefaultPadding")}
           modalShow={defaultPaddingModalShow}
-          confirmTitle={confirmTitle}
+          confirmDefaultPadding={confirmDefaultPadding}
+          defaultComponentPaddings={defaultComponentPadding}
         />
       </main>
     </>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AiOutlineBorderBottom,
   AiOutlineBorderLeft,
@@ -23,6 +23,16 @@ const DefaultPaddingContent = (props) => {
     paddingBottom: 0,
   });
 
+  useEffect(() => {
+    if (props.defaultComponentPaddings.paddingLeft > 0 ||
+      props.defaultComponentPaddings.paddingRight > 0 ||
+      props.defaultComponentPaddings.paddingTop > 0 ||
+      props.defaultComponentPaddings.paddingBottom > 0) {
+      setPaddings(props.defaultComponentPaddings)
+    }
+  }, [props.defaultComponentPaddings])
+
+
   const constraints = [
     { value: ["Text"], title: "Apply only for text components" },
     { value: ["List"], title: "Apply only for list components" },
@@ -34,7 +44,7 @@ const DefaultPaddingContent = (props) => {
     if (e.target.value.length > 3) {
       e.target.value = e.target.value.slice(0, 3);
     }
-    const newPaddings = { ...paddings, [el]: e.target.value };
+    const newPaddings = { ...paddings, [el]: +e.target.value };
 
     setPaddings(newPaddings);
   };
@@ -42,7 +52,6 @@ const DefaultPaddingContent = (props) => {
   const selectConfirmation = (choice) => {
     setChosenConstraint(choice);
   };
-  console.log(chosenConstraint);
 
   return (
     <div className={classes.DefaultPaddingContent}>
@@ -54,7 +63,7 @@ const DefaultPaddingContent = (props) => {
             color="#40CD9A"
             size="25px"
             onClick={() => {
-              props.confirmTitle();
+              props.confirmDefaultPadding(paddings);
               props.tackleModal();
             }}
           />
@@ -74,16 +83,16 @@ const DefaultPaddingContent = (props) => {
       </div>
       <div className={classes.Content}>
         <div className={classes.PaddingInputs}>
-          <PaddingElement change={(e) => paddingHandler(e, "paddingLeft")}>
+          <PaddingElement change={(e) => paddingHandler(e, "paddingLeft")} value={paddings.paddingLeft}>
             <AiOutlineBorderLeft color="#000" size="40" />
           </PaddingElement>
-          <PaddingElement change={(e) => paddingHandler(e, "paddingRight")}>
+          <PaddingElement change={(e) => paddingHandler(e, "paddingRight")} value={paddings.paddingRight}>
             <AiOutlineBorderRight color="#000" size="40" />
           </PaddingElement>
-          <PaddingElement change={(e) => paddingHandler(e, "paddingTop")}>
+          <PaddingElement change={(e) => paddingHandler(e, "paddingTop")} value={paddings.paddingTop}>
             <AiOutlineBorderTop color="#000" size="40" />
           </PaddingElement>
-          <PaddingElement change={(e) => paddingHandler(e, "paddingBottom")}>
+          <PaddingElement change={(e) => paddingHandler(e, "paddingBottom")} value={paddings.paddingBottom}>
             <AiOutlineBorderBottom color="#000" size="40" />
           </PaddingElement>
         </div>

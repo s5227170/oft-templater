@@ -9,9 +9,10 @@ const DefaultPaddingManager = (props) => {
     <div className={classes.TitleContentManager}>
       <Modal tackleModal={props.tackleModal} modalShow={props.modalShow}>
         <DefaultPaddingContent
-          confirmTitle={props.confirmTitle}
+          confirmDefaultPadding={props.confirmDefaultPadding}
           tackleModal={props.tackleModal}
           modalShow={props.modalShow}
+          defaultComponentPaddings={props.defaultComponentPaddings}
         />
       </Modal>
     </div>

@@ -103,22 +103,31 @@ const TextEditor = (props) => {
     }
   }, [props.submission]);
 
+  useEffect(() => {
+    if (props.defaultPaddings.paddingLeft > 0 ||
+      props.defaultPaddings.paddingRight > 0 ||
+      props.defaultPaddings.paddingTop > 0 ||
+      props.defaultPaddings.paddingBottom > 0) {
+      setPaddings(props.defaultPaddings)
+    }
+  }, [props.defaultPaddings])
+
   return (
     <div className={classes.TextEditor}>
       <div className={classes.Editor}>
         <div className={classes.Padding}>
           <h2 className={classes.Heading}>Component padding:</h2>
           <div className={classes.PaddingInputs}>
-            <PaddingElement change={(e) => paddingHandler(e, "paddingLeft")}>
+            <PaddingElement change={(e) => paddingHandler(e, "paddingLeft")} value={paddings.paddingLeft}>
               <AiOutlineBorderLeft color="#000" size="40" />
             </PaddingElement>
-            <PaddingElement change={(e) => paddingHandler(e, "paddingRight")}>
+            <PaddingElement change={(e) => paddingHandler(e, "paddingRight")} value={paddings.paddingRight}>
               <AiOutlineBorderRight color="#000" size="40" />
             </PaddingElement>
-            <PaddingElement change={(e) => paddingHandler(e, "paddingTop")}>
+            <PaddingElement change={(e) => paddingHandler(e, "paddingTop")} value={paddings.paddingTop}>
               <AiOutlineBorderTop color="#000" size="40" />
             </PaddingElement>
-            <PaddingElement change={(e) => paddingHandler(e, "paddingBottom")}>
+            <PaddingElement change={(e) => paddingHandler(e, "paddingBottom")} value={paddings.paddingBottom}>
               <AiOutlineBorderBottom color="#000" size="40" />
             </PaddingElement>
           </div>

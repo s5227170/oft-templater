@@ -43,7 +43,8 @@ const list = (
   }
 
   if (!contentDistribution.length) {
-    items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"List"}"  data-columns="${rowType}"></span>`;
+    const paddings = { paddingLeft: paddingLeft, paddingRight: paddingRight, paddingTop: paddingTop, paddingBottom: paddingBottom };
+    items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"List"}"  data-columns="${rowType}" data-paddings="${paddings}"></span>`;
   }
 
   return `<table width=${componentSize} border="0" cellspacing="0" cellpadding="0" style="
@@ -77,7 +78,7 @@ const list = (
                       <td>
                         <img src="http://welcome.hp-ww.com/img/s.gif" width="${componentSize - paddingLeft - paddingRight
     }" height="${paddingBottom ? paddingBottom : 1}" alt="" style="display:block; width: ${componentSize - paddingLeft - paddingRight
-    }px; height:${paddingTop}px;">
+    }px; height:${paddingBottom}px;">
                       </td>
                     <td width="${paddingRight}"></td>
                 </tr>

@@ -36,10 +36,10 @@ const ComponentContent = (props) => {
           {props.componentType == "Text"
             ? "Text component"
             : props.componentType == "List"
-            ? "List component"
-            : props.componentType == "Image"
-            ? "Image component"
-            : ""}
+              ? "List component"
+              : props.componentType == "Image"
+                ? "Image component"
+                : ""}
         </h1>
         <div className={classes.EditorIcons}>
           <GiConfirmed
@@ -81,6 +81,7 @@ const ComponentContent = (props) => {
           contentHandler={props.confirmHandler}
           submission={submit}
           positionData={position}
+          defaultPaddings={props.defaultPaddings}
         />
       ) : props.componentType == "List" ? (
         <TextEditor
@@ -88,6 +89,7 @@ const ComponentContent = (props) => {
           contentHandler={props.confirmHandler}
           submission={submit}
           positionData={position}
+          defaultPaddings={props.defaultPaddings}
         />
       ) : (
         <ImageEditor
@@ -96,6 +98,7 @@ const ComponentContent = (props) => {
           submission={submit}
           positionData={position}
           row={props.row}
+          defaultPaddings={props.defaultPaddings}
         />
       )}
     </div>
