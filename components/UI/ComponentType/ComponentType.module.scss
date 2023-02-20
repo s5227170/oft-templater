@@ -1,16 +1,18 @@
 .ComponentType {
     width: 120px;
+    padding: 5px;
+    margin: 10px;
     height: auto;
     padding-top: 10px;
     padding-bottom: 10px;
     border: 1px solid #000;
     border-radius: 4px;
-    margin: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
+    text-align: center;
 
     &:hover {
         background-color: darken(#fff, 8);

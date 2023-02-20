@@ -19,7 +19,7 @@ const ComponentContentManager = (props) => {
         <div className={classes.ComponentContentManager}>
             <ComponentContentButton clickHandler={tackleModal} type={props.componentType}>
                 <Modal tackleModal={tackleModal} modalShow={modalShow}>
-                    <ComponentContent defaultPaddings={props.defaultPaddings} componentType={props.componentType} cancelHandler={tackleModal} confirmHandler={props.confirmContent} elementPosition={props.elementPosition} deleteFunction={props.deleteFunction} row={props.row} />
+                    <ComponentContent columnSize={props.columnSize} defaultPaddings={props.defaultPaddings} componentType={props.componentType} cancelHandler={tackleModal} confirmHandler={props.confirmContent} elementPosition={props.elementPosition} deleteFunction={props.deleteFunction} row={props.row} />
                 </Modal>
             </ComponentContentButton>
         </div>

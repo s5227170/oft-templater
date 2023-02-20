@@ -44,7 +44,7 @@ const list = (
 
   if (!contentDistribution.length) {
     const paddings = { paddingLeft: paddingLeft, paddingRight: paddingRight, paddingTop: paddingTop, paddingBottom: paddingBottom };
-    items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"List"}"  data-columns="${rowType}" data-paddings="${paddings}"></span>`;
+    items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"List"}"  data-columns="${rowType}" data-paddings="${paddings}" data-column-sizes="${componentSize}"></span>`;
   }
 
   return `<table width=${componentSize} border="0" cellspacing="0" cellpadding="0" style="

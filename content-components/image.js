@@ -34,7 +34,7 @@ const image = (
 
   if (!contentDistribution.length) {
     const paddings = { paddingLeft: paddingLeft, paddingRight: paddingRight, paddingTop: paddingTop, paddingBottom: paddingBottom };
-    items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"Image"}" data-columns="${rowType}" data-paddings="${paddings}"></span>`
+    items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"Image"}" data-columns="${rowType}" data-paddings="${paddings}" data-column-sizes="${componentSize}"></span>`
   }
 
   // if (rowType == 1) {
@@ -74,36 +74,6 @@ const image = (
                 </tr>
             </tbody>
           </table>`;
-  // } else {
-  //   return `<table width=${componentSize} border="0" cellspacing="0" cellpadding="0" style="
-  //   border-spacing: 0;
-  //   width: ${componentSize}px;
-  //   max-width: ${componentSize}px;
-  //   mso-table-lspace: 0pt;
-  //   mso-table-rspace: 0pt;
-  // "><tbody><tr>
-  //   <td width="${paddingLeft ? paddingLeft : 1}" height="${paddingTop ? paddingTop : 1
-  //     }">
-  //             <img src="http://welcome.hp-ww.com/img/s.gif" width="${paddingLeft ? paddingLeft : 1
-  //     }" height="${paddingTop ? paddingTop : 1
-  //     }" alt="" style="display:block; width: ${paddingLeft ? paddingLeft : 1
-  //     }px; height:${paddingTop}px;">
-  //           </td>
-  //           <td width="${!paddingLeft && !paddingRight
-  //       ? componentSize
-  //       : componentSize - paddingLeft - paddingRight
-  //     }">
-  //             ${items}
-  //           </td>
-  //                     <td width="${paddingRight ? paddingRight : 1}" height="${paddingBottom ? paddingBottom : 1
-  //     }">
-  //                       <img src="http://welcome.hp-ww.com/img/s.gif" width="${paddingRight ? paddingRight : 1
-  //     }" height="${paddingBottom ? paddingBottom : 1
-  //     }" alt="" style="display:block; width: ${paddingRight ? paddingRight : 1
-  //     }px; height:${paddingTop}px;">
-  //                     </td>
-  //                     </tr></tbody></table>`;
-  // }
 };
 
 export default image;

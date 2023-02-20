@@ -1,6 +1,7 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useRef, useState, useEffect } from "react";
 import PaddingElement from "../UI/PaddingElement/PaddingElement";
-import classes from "./ImageEditor.module.scss";
+import classes from "./MultiImageEditor.module.scss";
 
 import {
   AiOutlineBorderLeft,
@@ -9,9 +10,10 @@ import {
   AiOutlineBorderBottom,
 } from "react-icons/ai";
 import CustomInput from "../UI/CustomInput/CustomInput";
+import Dropdown from "../UI/Dropdown/Dropdown";
 
-const ImageEditor = (props) => {
-  const [url, setUrl] = useState("");
+const MultiImageEditor = (props) => {
+  const [url, setUrl] = useState(["", "", ""]);
   const [sizesAllwoed, setSizesAllowed] = useState({
     width: true,
     height: true,
@@ -26,7 +28,14 @@ const ImageEditor = (props) => {
     width: 0,
     height: 0,
   });
+  const [numberOfImages, setNumberOfImages] = useState(null);
   const imgHolderRef = useRef();
+
+  const dropdownOptions = [
+    { title: "One Image", value: 1 },
+    { title: "Two Images", value: 2 },
+    { title: "Three Images", value: 3 },
+  ];
 
   const paddingHandler = (e, el) => {
     if (e.target.value.length > 3) {
@@ -44,8 +53,8 @@ const ImageEditor = (props) => {
   };
 
   const imageSizeRestricter = (e, property) => {
-    if (e.target.value > columnSize) {
-      e.target.value = columnSize;
+    if (e.target.value > columnSize / 3) {
+      e.target.value = columnSize / 3;
     }
     if (e.target.value.length > 3) {
       e.target.value = e.target.value.slice(0, 3);
@@ -67,8 +76,14 @@ const ImageEditor = (props) => {
     }
   };
 
-  const urlHandler = (e) => {
-    setUrl(e.target.value);
+  const urlHandler = (e, index) => {
+    const newUrls = [...url];
+    newUrls[index-1] = e.target.value;
+    setUrl(newUrls);
+  };
+
+  const selectConfirmation = (choice) => {
+    setNumberOfImages(choice);
   };
 
   const settingHandler = (setting) => {
@@ -172,21 +187,41 @@ const ImageEditor = (props) => {
             </PaddingElement>
           </div>
         </div>
+        <h2>Choose desired number of images</h2>
+        <Dropdown
+          options={dropdownOptions}
+          onSelect={selectConfirmation}
+          currentChoice={dropdownOptions[2]}
+        />
         <div className={classes.ImageContent}>
+          <h2>Enter url's for the three images</h2>
+          <label>Images will be aligned as per preview</label>
           <CustomInput
             type="text"
             style={{ width: "400px" }}
             placeholder="Place your img url here"
-            onChange={urlHandler}
+            onChange={(e) => urlHandler(e, 1)}
+          />
+          <CustomInput
+            type="text"
+            style={{ width: "400px" }}
+            placeholder="Place your img url here"
+            onChange={(e) => urlHandler(e, 2)}
+          />
+          <CustomInput
+            type="text"
+            style={{ width: "400px" }}
+            placeholder="Place your img url here"
+            onChange={(e) => urlHandler(e, 3)}
           />
           <div className={classes.InputWithLabel}>
-            <label>Image width:</label>
+            <label>Image widths:</label>
             <CustomInput
               onKeyDown={preventMinus}
               style={{ width: "50px" }}
               type="number"
               min={0}
-              max={props.columnSize}
+              max={props.columnSize/3}
               maxLength={3}
               onChange={(e) => imageSizeRestricter(e, 1)}
               disabled={!sizesAllwoed.width}
@@ -195,13 +230,13 @@ const ImageEditor = (props) => {
             <button onClick={() => settingHandler(1)}>Disable setting</button>
           </div>
           <div className={classes.InputWithLabel}>
-            <label>Image height: </label>
+            <label>Image heights: </label>
             <CustomInput
               onKeyDown={preventMinus}
               style={{ width: "50px" }}
               type="number"
               min={0}
-              max={props.columnSize}
+              max={props.columnSize/3}
               maxLength={3}
               onChange={(e) => imageSizeRestricter(e, 2)}
               disabled={!sizesAllwoed.height}
@@ -211,7 +246,9 @@ const ImageEditor = (props) => {
           </div>
           <div className={classes.ImagePreview}>
             <div ref={imgHolderRef}>
-              {url ? <img src={url} /> : <h1>No image uploaded</h1>}
+              {url[0] ? <img src={url[0]} /> : <h1>No image uploaded</h1>}
+              {url[1] ? <img src={url[1]} /> : <h1>No image uploaded</h1>}
+              {url[0] ? <img src={url[2]} /> : <h1>No image uploaded</h1>}
             </div>
           </div>
         </div>
@@ -219,4 +256,4 @@ const ImageEditor = (props) => {
     </div>
   );
 };
-export default ImageEditor;
+export default MultiImageEditor;

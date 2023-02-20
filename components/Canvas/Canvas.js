@@ -28,8 +28,7 @@ const Canvas = (props) => {
   let root = null;
 
   const generateComponent = (type, position, columns) => {
-    const row = position
-      .split("#")[0].substr(3);
+    const row = position.split("#")[0].substr(3);
 
     const number = position
       .split("#")[1]
@@ -42,20 +41,24 @@ const Canvas = (props) => {
       paddingBottom: 0,
     };
     if (props.defaultComponentPaddings != parameters) {
-      parameters = { ...props.defaultComponentPaddings }
+      parameters = { ...props.defaultComponentPaddings };
     }
 
     if (number == 1 && columns > 1) {
-      parameters = { ...props.defaultComponentPaddings, paddingRight: 0 }
+      parameters = { ...props.defaultComponentPaddings, paddingRight: 0 };
     }
     if (number == 2 && columns == 2) {
-      parameters = { ...props.defaultComponentPaddings, paddingLeft: 0 }
+      parameters = { ...props.defaultComponentPaddings, paddingLeft: 0 };
     }
     if (number == 3 && columns > 2) {
-      parameters = { ...props.defaultComponentPaddings, paddingLeft: 0 }
+      parameters = { ...props.defaultComponentPaddings, paddingLeft: 0 };
     }
     if (number == 2 && columns > 2) {
-      parameters = { ...props.defaultComponentPaddings, paddingLeft: 0, paddingRight: 0 }
+      parameters = {
+        ...props.defaultComponentPaddings,
+        paddingLeft: 0,
+        paddingRight: 0,
+      };
     }
 
     let component = {};
@@ -86,6 +89,19 @@ const Canvas = (props) => {
     if (type == "Image") {
       component = {
         type: "Image",
+        paddingLeft: parameters.paddingLeft,
+        paddingRight: parameters.paddingRight,
+        paddingTop: parameters.paddingTop,
+        paddingBottom: parameters.paddingBottom,
+        url: [],
+        imgWidth: 0,
+        imgHeight: 0,
+        position: number,
+      };
+    }
+    if (type == "MultiImage") {
+      component = {
+        type: "MultiImage",
         paddingLeft: parameters.paddingLeft,
         paddingRight: parameters.paddingRight,
         paddingTop: parameters.paddingTop,
@@ -172,6 +188,17 @@ const Canvas = (props) => {
               updatedComponent.verticalAlign = content.verticalAlign;
             }
             if (component.type == "Image") {
+              updatedComponent.type = component.type;
+              updatedComponent.paddingLeft = content.paddingLeft;
+              updatedComponent.paddingRight = content.paddingRight;
+              updatedComponent.paddingTop = content.paddingTop;
+              updatedComponent.paddingBottom = content.paddingBottom;
+              updatedComponent.url = content.url;
+              updatedComponent.imgWidth = content.imgWidth;
+              updatedComponent.imgHeight = content.imgHeight;
+              updatedComponent.position = content.position;
+            }
+            if (component.type == "MultiImage") {
               updatedComponent.type = component.type;
               updatedComponent.paddingLeft = content.paddingLeft;
               updatedComponent.paddingRight = content.paddingRight;
@@ -305,7 +332,7 @@ const Canvas = (props) => {
             );
           }
           if (attribs.id === "componentContentManager") {
-            console.log(attribs["data-paddings"])
+            console.log(attribs["data-paddings"]);
             return (
               <ComponentContentManager
                 confirmContent={confirmContent}
@@ -314,6 +341,7 @@ const Canvas = (props) => {
                 deleteFunction={deleteContent}
                 row={attribs["data-columns"]}
                 defaultPaddings={attribs["data-paddings"]}
+                columnSize={attribs["data-column-sizes"]}
               />
             );
           }

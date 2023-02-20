@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { MdTextFields } from "react-icons/md";
 import { BsListTask } from "react-icons/bs";
 import { BsImage } from "react-icons/bs";
+import { ImImages } from "react-icons/im"
 
 import ConfirmationButtons from "../../UI/ConfirmationButtons/ConfirmationButtons";
 import ComponentType from "../../UI/ComponentType/ComponentType";
@@ -14,11 +15,13 @@ const ComponentTypeContent = (props) => {
     Text: false,
     List: false,
     Image: false,
+    MultiImage: false,
   });
 
   const textRef = useRef(null);
   const listRef = useRef(null);
   const imageRef = useRef(null);
+  const multiImageRef = useRef(null)
 
   const buttonChoiceTrigger = (name) => {
     const newComponentChoice = Object.assign({}, componentChoice);
@@ -51,6 +54,11 @@ const ComponentTypeContent = (props) => {
     if (type == 3) {
       if (imageRef) {
         imageRef.current.click();
+      }
+    }
+    if (type == 4) {
+      if (multiImageRef) {
+        multiImageRef.current.click();
       }
     }
   };
@@ -95,13 +103,29 @@ const ComponentTypeContent = (props) => {
             />
           }
         />
+        <ComponentType
+          title="Choose Multi-Image"
+          icon={<ImImages color="#CE4045" size="30" />}
+          onClick={() => typeClickHandler(4)}
+          confirm={
+            <RadioButton
+              click={() => buttonChoiceTrigger("MultiImage")}
+              active={componentChoice.MultiImage}
+              elementRef={multiImageRef}
+            />
+          }
+        />
       </div>
 
       <ConfirmationButtons
         confirm={"Confirm"}
         cancel={"Cancel"}
         confirmClick={() => {
-            props.confirmHandler(getChoice(), props.elementPosition, props.rowColumns);
+          props.confirmHandler(
+            getChoice(),
+            props.elementPosition,
+            props.rowColumns
+          );
         }}
         cancelClick={props.cancelHandler}
       />

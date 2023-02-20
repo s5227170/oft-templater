@@ -78,6 +78,25 @@ const convertPageConfig = (config) => {
             )
           );
         }
+        if (row.contentComponents[i].type == "MultiImage") {
+          //Fill the component content and settings
+          subComponents.push(
+            multiImage(
+              //Add the attributes just like for the text type
+              row.contentComponents[i].paddingLeft,
+              row.contentComponents[i].paddingRight,
+              row.contentComponents[i].paddingTop,
+              row.contentComponents[i].paddingBottom,
+              row.contentComponents[i].url,
+              row.contentComponents[i].imgWidth,
+              row.contentComponents[i].imgHeight,
+              row.position,
+              row.contentComponents[i].position,
+              row.columns,
+              row.columnSizes
+            )
+          );
+        }
       }
     } else {
     }
