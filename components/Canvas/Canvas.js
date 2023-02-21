@@ -332,7 +332,6 @@ const Canvas = (props) => {
             );
           }
           if (attribs.id === "componentContentManager") {
-            console.log(attribs["data-paddings"]);
             return (
               <ComponentContentManager
                 confirmContent={confirmContent}

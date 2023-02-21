@@ -279,9 +279,6 @@ const toggleBlock = (editor, format) => {
 };
 
 const toggleMark = (editor, format, color, background) => {
-  console.log(color);
-  console.log(background);
-  console.log(format);
   if (format == "background") {
     const isActive = isMarkActive(editor, format);
 

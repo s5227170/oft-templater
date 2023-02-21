@@ -70,8 +70,6 @@ const TextEditor = (props) => {
     setInputData(content);
   };
 
-  console.log(componentChoice);
-
   useEffect(() => {
     if (props.submission) {
       let alignment = "";

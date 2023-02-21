@@ -44,8 +44,11 @@ const ImageEditor = (props) => {
   };
 
   const imageSizeRestricter = (e, property) => {
-    if (e.target.value > columnSize) {
-      e.target.value = columnSize;
+    if (property == 1 && e.target.value > props.columnSize) {
+      e.target.value = props.columnSize;
+    }
+    if (property == 2 && e.target.value > 600) {
+      e.target.value = 600;
     }
     if (e.target.value.length > 3) {
       e.target.value = e.target.value.slice(0, 3);
@@ -104,8 +107,8 @@ const ImageEditor = (props) => {
       actualImgSize.width = imageSize.width;
     }
 
-    if (actualImgSize.width > columnSize || actualImgSize.width == "") {
-      actualImgSize.width = columnSize;
+    if (actualImgSize.width > props.columnSize || actualImgSize.width == "") {
+      actualImgSize.width = props.columnSize;
     }
 
     if (props.submission) {

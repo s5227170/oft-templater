@@ -18,8 +18,6 @@ const text = (
     //Maybe check what the "paragraph" element is and then set it up depending on that
     let wholeParagraph = "";
     for (let i = 0; i < paragraph.children.length; i++) {
-      console.log(paragraph);
-      console.log(paragraph.children[i]);
       if (paragraph.children[i].color && paragraph.children[i].background) {
         wholeParagraph += `<span style="color: ${paragraph.children[i].color}; background-color: ${paragraph.children[i].background}";>${paragraph.children[i].text}</span>`;
       } else if (paragraph.children[i].color) {

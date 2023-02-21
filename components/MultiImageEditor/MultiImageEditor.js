@@ -53,8 +53,11 @@ const MultiImageEditor = (props) => {
   };
 
   const imageSizeRestricter = (e, property) => {
-    if (e.target.value > columnSize / 3) {
-      e.target.value = columnSize / 3;
+    if (property == 1 && e.target.value > props.columnSize / 3) {
+      e.target.value = props.columnSize / 3;
+    }
+    if (property == 2 && e.target.value > 600) {
+      e.target.value = 600;
     }
     if (e.target.value.length > 3) {
       e.target.value = e.target.value.slice(0, 3);
@@ -77,8 +80,8 @@ const MultiImageEditor = (props) => {
   };
 
   const urlHandler = (e, index) => {
-    const newUrls = [...url];
-    newUrls[index-1] = e.target.value;
+    const newUrls = url;
+    newUrls[index - 1] = e.target.value;
     setUrl(newUrls);
   };
 
@@ -119,8 +122,8 @@ const MultiImageEditor = (props) => {
       actualImgSize.width = imageSize.width;
     }
 
-    if (actualImgSize.width > columnSize || actualImgSize.width == "") {
-      actualImgSize.width = columnSize;
+    if (actualImgSize.width > props.columnSize || actualImgSize.width == "") {
+      actualImgSize.width = props.columnSize;
     }
 
     if (props.submission) {
@@ -130,7 +133,7 @@ const MultiImageEditor = (props) => {
         paddingRight: paddings.paddingRight,
         paddingTop: paddings.paddingTop,
         paddingBottom: paddings.paddingBottom,
-        url: [url],
+        url: url,
         imgWidth: actualImgSize.width,
         imgHeight: actualImgSize.height,
         position: props.positionData.item,
@@ -221,7 +224,7 @@ const MultiImageEditor = (props) => {
               style={{ width: "50px" }}
               type="number"
               min={0}
-              max={props.columnSize/3}
+              max={props.columnSize / 3}
               maxLength={3}
               onChange={(e) => imageSizeRestricter(e, 1)}
               disabled={!sizesAllwoed.width}
@@ -236,7 +239,7 @@ const MultiImageEditor = (props) => {
               style={{ width: "50px" }}
               type="number"
               min={0}
-              max={props.columnSize/3}
+              max={props.columnSize / 3}
               maxLength={3}
               onChange={(e) => imageSizeRestricter(e, 2)}
               disabled={!sizesAllwoed.height}

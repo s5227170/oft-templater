@@ -2,6 +2,7 @@ import { Tooltip } from "react-tooltip";
 
 import TextEditor from "../../TextEditor/TextEditor";
 import ImageEditor from "../../ImageEditor/ImageEditor";
+import MultiImageEditor from "../../MultiImageEditor/MultiImageEditor";
 
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { GiConfirmed } from "react-icons/gi";
@@ -39,6 +40,8 @@ const ComponentContent = (props) => {
             ? "List component"
             : props.componentType == "Image"
             ? "Image component"
+            : props.componentType == "MultiImage"
+            ? "Multi image component"
             : ""}
         </h1>
         <div className={classes.EditorIcons}>
@@ -93,8 +96,18 @@ const ComponentContent = (props) => {
           defaultPaddings={props.defaultPaddings}
           columnSize={props.columnSize}
         />
-      ) : (
+      ) : props.componentType == "Image" ? (
         <ImageEditor
+          componentType={props.componentType}
+          contentHandler={props.confirmHandler}
+          submission={submit}
+          positionData={position}
+          row={props.row}
+          defaultPaddings={props.defaultPaddings}
+          columnSize={props.columnSize}
+        />
+      ) : (
+        <MultiImageEditor
           componentType={props.componentType}
           contentHandler={props.confirmHandler}
           submission={submit}

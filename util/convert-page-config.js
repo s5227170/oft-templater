@@ -2,6 +2,7 @@ import { oneColumn, twoColumns, threeColumns } from "../content-components/row";
 import text from "../content-components/text";
 import list from "../content-components/list";
 import image from "../content-components/image";
+import multiImage from "../content-components/multiImage";
 
 //Function is utilised to take the page config and add all rows and their components into an array of string html rows
 
@@ -173,7 +174,6 @@ const convertPageConfig = (config) => {
           }
         } else if (subComponents.length == 2) {
           if (row.contentComponents[0].position == 1) {
-            console.log("works 1");
             htmlContent.push(
               twoColumns(
                 row.columnSizes,
@@ -187,7 +187,6 @@ const convertPageConfig = (config) => {
               )
             );
           } else if (row.contentComponents[0].position == 2) {
-            console.log("works 2");
             htmlContent.push(
               twoColumns(
                 row.columnSizes,
