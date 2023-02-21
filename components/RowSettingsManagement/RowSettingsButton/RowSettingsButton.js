@@ -15,10 +15,16 @@ const RowSettingsButton = (props) => {
       btnRef.current.style.top =
         (props.coordinates.top + (props.rowHeight - 30) / 2).toString() + "px";
     }
-  }, [props]);
+  }, [props.coordinates]);
+
   return (
     <>
-      <button id={"row-" + props.position} className={classes.EditSettings} ref={btnRef} onClick={props.clickHandler}>
+      <button
+        id={"row-" + props.position}
+        className={classes.EditSettings}
+        ref={btnRef}
+        onClick={props.clickHandler}
+      >
         {/* <BiMessageRoundedEdit color="#000" size="24" /> */}
         Row {props.position}
         <Tooltip anchorId={"row-" + props.position} place="top">

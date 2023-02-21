@@ -408,7 +408,7 @@ const Canvas = (props) => {
         const row = document.getElementById("position-" + i);
         if (row) {
           const rowRightCoordinates = row.getBoundingClientRect().right;
-          const rowTopCoordinates = row.getBoundingClientRect().top;
+          const rowTopCoordinates = row.offsetTop;
           const rowHeight = row.offsetHeight;
           const settingsTriggerCoordinates = {
             position: i,
@@ -424,6 +424,49 @@ const Canvas = (props) => {
       setRowSettings(newRowSettings);
     }
   }, [content]);
+
+  useEffect(() => {
+    const debouncedHandleResize = debounce(function handleResize() {
+      if (content) {
+        const newRowSettings = [];
+        for (let i = 1; i <= pageConfig.content.length; i++) {
+          const row = document.getElementById("position-" + i);
+          if (row) {
+            const rowRightCoordinates = row.getBoundingClientRect().right;
+            const rowTopCoordinates = row.offsetTop;
+            const rowHeight = row.offsetHeight;
+            const settingsTriggerCoordinates = {
+              position: i,
+              coordinates: {
+                right: rowRightCoordinates,
+                top: rowTopCoordinates,
+              },
+              height: rowHeight,
+            };
+            newRowSettings.push(settingsTriggerCoordinates);
+          }
+        }
+        setRowSettings(newRowSettings);
+      }
+    }, 200);
+
+    window.addEventListener("resize", debouncedHandleResize);
+
+    return (_) => {
+      window.removeEventListener("resize", debouncedHandleResize);
+    };
+  });
+
+  function debounce(fn, ms) {
+    let timer;
+    return (_) => {
+      clearTimeout(timer);
+      timer = setTimeout((_) => {
+        timer = null;
+        fn.apply(this, arguments);
+      }, ms);
+    };
+  }
 
   return (
     <div className={classes.CanvasWrapper}>
