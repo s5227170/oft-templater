@@ -33,16 +33,16 @@ const text = (
     }
     if (paragraph.type == "heading-two") {
       contentArray.push(
-        `<h2 style="font-family: arial;">${wholeParagraph}</h2>`
+        `<h2 style="font-family: arial; font-size: 18px;">${wholeParagraph}</h2>`
       );
     }
     if (paragraph.type == "heading-one") {
       contentArray.push(
-        `<h1 style="font-family: arial;">${wholeParagraph}</h1>`
+        `<h1 style="font-family: arial; font-size: 20px;">${wholeParagraph}</h1>`
       );
     }
     if (paragraph.type == "paragraph") {
-      contentArray.push(`<p style="font-family: arial;">${wholeParagraph}</p>`);
+      contentArray.push(`<p style="font-family: arial; margin: 0px;">${wholeParagraph}</p>`);
     }
   });
 
@@ -77,7 +77,7 @@ const text = (
                         <img src="http://welcome.hp-ww.com/img/s.gif" width="${
                           componentSize - paddingLeft - paddingRight
                         }" height="${
-    paddingTop ? paddingTop : 1
+    paddingTop ? paddingTop : 0
   }" alt="" style="display:block; width: ${
     componentSize - paddingLeft - paddingRight
   }px; height:${paddingTop}px;">
@@ -97,7 +97,7 @@ const text = (
                         <img src="http://welcome.hp-ww.com/img/s.gif" width="${
                           componentSize - paddingLeft - paddingRight
                         }" height="${
-    paddingBottom ? paddingBottom : 1
+    paddingBottom ? paddingBottom : 0
   }" alt="" style="display:block; width: ${
     componentSize - paddingLeft - paddingRight
   }px; height:${paddingBottom}px;">

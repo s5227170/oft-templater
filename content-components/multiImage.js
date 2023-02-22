@@ -59,7 +59,7 @@ const multiImage = (
                           <img src="http://welcome.hp-ww.com/img/s.gif" width="${
                             componentSize - paddingLeft - paddingRight
                           }" height="${
-    paddingTop ? paddingTop : 1
+    paddingTop ? paddingTop : 0
   }" alt="" style="display:block; width: ${
     componentSize - paddingLeft - paddingRight
   }px; height:${paddingTop}px;">
@@ -85,7 +85,7 @@ const multiImage = (
                           <img src="http://welcome.hp-ww.com/img/s.gif" width="${
                             componentSize - paddingLeft - paddingRight
                           }" height="${
-    paddingBottom ? paddingBottom : 1
+    paddingBottom ? paddingBottom : 0
   }" alt="" style="display:block; width: ${
     componentSize - paddingLeft - paddingRight
   }px; height:${paddingBottom}px;">

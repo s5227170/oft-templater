@@ -30,7 +30,7 @@ const list = (
         }
       }
       contentArray.push(
-        `<li style="font-family: arial;">${wholeParagraph}</li>`
+        `<li style="font-family: arial; margin: 0px;">${wholeParagraph}</li>`
       );
     });
   });
@@ -60,7 +60,7 @@ const list = (
                       <td>
                         <img src="http://welcome.hp-ww.com/img/s.gif" width="${componentSize - paddingLeft - paddingRight
     }" height="${paddingTop}" alt="" style="display:block; width: ${componentSize - paddingLeft - paddingRight
-    }px; height:${paddingTop ? paddingTop : 1}px;">
+    }px; height:${paddingTop ? paddingTop : 0}px;">
                       </td>
                     <td width="${paddingRight}"></td>
                 </tr>
@@ -77,7 +77,7 @@ const list = (
                     <td width="${paddingLeft}"></td>
                       <td>
                         <img src="http://welcome.hp-ww.com/img/s.gif" width="${componentSize - paddingLeft - paddingRight
-    }" height="${paddingBottom ? paddingBottom : 1}" alt="" style="display:block; width: ${componentSize - paddingLeft - paddingRight
+    }" height="${paddingBottom ? paddingBottom : 0}" alt="" style="display:block; width: ${componentSize - paddingLeft - paddingRight
     }px; height:${paddingBottom}px;">
                       </td>
                     <td width="${paddingRight}"></td>

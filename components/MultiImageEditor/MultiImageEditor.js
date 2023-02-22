@@ -123,7 +123,8 @@ const MultiImageEditor = (props) => {
     }
 
     if (actualImgSize.width > props.columnSize || actualImgSize.width == "") {
-      actualImgSize.width = props.columnSize;
+      actualImgSize.width =
+        (props.columnSize - paddings.paddingLeft - paddings.paddingRight) / 3;
     }
 
     if (props.submission) {
@@ -138,6 +139,8 @@ const MultiImageEditor = (props) => {
         imgHeight: actualImgSize.height,
         position: props.positionData.item,
       };
+
+      console.log(allData);
 
       props.contentHandler(
         props.positionData.row,

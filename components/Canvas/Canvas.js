@@ -339,7 +339,6 @@ const Canvas = (props) => {
             paddingTop: attribs["data-padding-top"],
             paddingBottom: attribs["data-padding-bottom"],
           };
-          console.log(paddings);
           return (
             <ComponentContentManager
               confirmContent={confirmContent}

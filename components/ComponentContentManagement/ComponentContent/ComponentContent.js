@@ -32,15 +32,15 @@ const ComponentContent = (props) => {
   };
 
   useEffect(() => {
-      const row = props.elementPosition.split("#")[0].substr(3);
+    const row = props.elementPosition.split("#")[0].substr(3);
 
-      const item = props.elementPosition
-        .split("#")[1]
-        .charAt(props.elementPosition.split("#")[1].length - 1);
+    const item = props.elementPosition
+      .split("#")[1]
+      .charAt(props.elementPosition.split("#")[1].length - 1);
 
     setPosition({ row: row, item: item });
   }, [props.elementPosition]);
-console.log(props.defaultPaddings)
+
   return (
     <div className={classes.ComponentContent}>
       <div className={classes.Header}>
@@ -91,7 +91,11 @@ console.log(props.defaultPaddings)
       </div>
       <div className={classes.BackgroundManagement}>
         <h2>Choose row background</h2>
-        <div style={{backgroundColor: background}} className={classes.CurrentColour} onClick={colorHandler}></div>
+        <div
+          style={{ backgroundColor: background }}
+          className={classes.CurrentColour}
+          onClick={colorHandler}
+        ></div>
         {colourOpen ? (
           <PhotoshopPicker
             className={classes.ColourPicker}
