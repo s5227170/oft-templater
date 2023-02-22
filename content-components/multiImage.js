@@ -42,7 +42,7 @@ const multiImage = (
       paddingTop: paddingTop,
       paddingBottom: paddingBottom,
     };
-    items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"MultiImage"}" data-columns="${rowType}" data-paddings="${paddings}" data-column-sizes="${componentSize}"></span>`;
+    items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"MultiImage"}" data-columns="${rowType}" data-padding-left="${paddingLeft}" data-padding-right="${paddingRight}" data-padding-top="${paddingTop}" data-padding-bottom="${paddingBottom}" data-column-sizes="${componentSize}"></span>`;
   }
 
   // if (rowType == 1) {

@@ -96,6 +96,7 @@ const TextEditor = (props) => {
       props.contentHandler(
         props.positionData.row,
         props.positionData.item,
+        props.background,
         allData
       );
     }

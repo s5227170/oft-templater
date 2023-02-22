@@ -142,6 +142,7 @@ const MultiImageEditor = (props) => {
       props.contentHandler(
         props.positionData.row,
         props.positionData.item,
+        props.background,
         allData
       );
     }

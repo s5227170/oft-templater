@@ -106,7 +106,7 @@ const CreateRowContent = (props) => {
 
   return (
     <div className={classes.CreateRowContent}>
-      <h1 className={classes.Title}>Choose a component type</h1>
+      <h1 className={classes.Title}>Choose a row type</h1>
       <div className={classes.RowType} onClick={() => rowClickHandler(1)}>
         <div className={classes.Generalinfo}>
           <label>Single-column</label>

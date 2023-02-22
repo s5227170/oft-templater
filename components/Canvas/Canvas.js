@@ -9,6 +9,7 @@ import CreateRowManager from "../CreateRowManagement/CreateRowManager/CreateRowM
 import convertPageConfig from "../../util/convert-page-config";
 import ComponentContentManager from "../ComponentContentManagement/ComponentContentManager/ComponentContentManager";
 import RowSettingsManager from "../RowSettingsManagement/RowSettingsManager/RowSettingsManager";
+import debounce from "../../util/debounce";
 
 const Canvas = (props) => {
   const rootRef = useRef(null);
@@ -25,7 +26,6 @@ const Canvas = (props) => {
     },
   });
   const [rowPositionConfig, setRowPositionConfig] = useState([]);
-  let root = null;
 
   const generateComponent = (type, position, columns) => {
     const row = position.split("#")[0].substr(3);
@@ -136,6 +136,7 @@ const Canvas = (props) => {
       type: "row",
       columns: cols,
       columnSizes: colSizes,
+      background: "#fff",
       position: pageConfig.content.length + 1,
       parameters: {
         paddingLeft: 0,
@@ -151,7 +152,7 @@ const Canvas = (props) => {
     }));
   };
 
-  const confirmContent = (row, item, content) => {
+  const confirmContent = (row, item, rowBackground, content) => {
     const newPageContent = [];
 
     pageConfig.content.map((rowConfig) => {
@@ -228,6 +229,7 @@ const Canvas = (props) => {
         const newRowConfig = {
           ...rowConfig,
           parameters: newPaddings,
+          background: rowBackground,
           contentComponents: newRowComponentContent,
         };
 
@@ -309,96 +311,58 @@ const Canvas = (props) => {
   };
 
   useEffect(() => {
-    if (root == null) {
-      const conversion = convertPageConfig(pageConfig);
-      let fullStringContent = "";
-      conversion.map((stringRow) => {
-        fullStringContent += stringRow;
-      });
-      props.setHTML(fullStringContent);
-      const reactContent = parse(fullStringContent, {
-        replace: ({ attribs, children }) => {
-          if (!attribs) {
-            return;
-          }
+    const conversion = convertPageConfig(pageConfig);
+    let fullStringContent = "";
+    conversion.map((stringRow) => {
+      fullStringContent += stringRow;
+    });
+    props.setHTML(fullStringContent);
+    const reactContent = parse(fullStringContent, {
+      replace: ({ attribs, children }) => {
+        if (!attribs) {
+          return;
+        }
 
-          if (attribs.id === "componentManager") {
-            return (
-              <ComponentTypeManager
-                componentGeneration={generateComponent}
-                elementPosition={attribs.name}
-                rowColumns={attribs["data-columns"]}
-              />
-            );
-          }
-          if (attribs.id === "componentContentManager") {
-            return (
-              <ComponentContentManager
-                confirmContent={confirmContent}
-                elementPosition={attribs.name}
-                componentType={attribs.role}
-                deleteFunction={deleteContent}
-                row={attribs["data-columns"]}
-                defaultPaddings={attribs["data-paddings"]}
-                columnSize={attribs["data-column-sizes"]}
-              />
-            );
-          }
-        },
+        if (attribs.id === "componentManager") {
+          return (
+            <ComponentTypeManager
+              componentGeneration={generateComponent}
+              elementPosition={attribs.name}
+              rowColumns={attribs["data-columns"]}
+            />
+          );
+        }
+        if (attribs.id === "componentContentManager") {
+          const paddings = {
+            paddingLeft: attribs["data-padding-left"],
+            paddingRight: attribs["data-padding-right"],
+            paddingTop: attribs["data-padding-top"],
+            paddingBottom: attribs["data-padding-bottom"],
+          };
+          console.log(paddings);
+          return (
+            <ComponentContentManager
+              confirmContent={confirmContent}
+              elementPosition={attribs.name}
+              componentType={attribs.role}
+              deleteFunction={deleteContent}
+              row={attribs["data-columns"]}
+              defaultPaddings={paddings}
+              columnSize={attribs["data-column-sizes"]}
+            />
+          );
+        }
+      },
+    });
+    setContent(reactContent);
+    const newRowPositionConfig = [];
+    for (let i = 0; i < pageConfig.content.length; i++) {
+      newRowPositionConfig.push({
+        title: "POSITION " + pageConfig.content[i].position,
+        value: pageConfig.content[i].position,
       });
-      setContent(reactContent);
-      const newRowPositionConfig = [];
-      for (let i = 0; i < pageConfig.content.length; i++) {
-        newRowPositionConfig.push({
-          title: "POSITION " + pageConfig.content[i].position,
-          value: pageConfig.content[i].position,
-        });
-      }
-      setRowPositionConfig(newRowPositionConfig);
     }
-    // else {
-    //   const conversion = convertPageConfig(pageConfig);
-    //   let fullStringContent = "";
-    //   conversion.map((stringRow) => {
-    //     fullStringContent += stringRow;
-    //   });
-    //   props.setHTML(fullStringContent);
-    //   const reactContent = parse(fullStringContent, {
-    //     replace: ({ attribs, children }) => {
-    //       if (!attribs) {
-    //         return;
-    //       }
-    //       if (attribs.id === "componentManager") {
-    //         return (
-    //           <ComponentTypeManager
-    //             componentGeneration={generateComponent}
-    //             elementPosition={attribs.name}
-    //           />
-    //         );
-    //       }
-    //       if (attribs.id === "componentContentManager") {
-    //         return (
-    //           <ComponentContentManager
-    //             confirmContent={confirmContent}
-    //             elementPosition={attribs.name}
-    //             componentType={attribs.role}
-    //             deleteFunction={deleteContent}
-    //             row={attribs["data-columns"]}
-    //           />
-    //         );
-    //       }
-    //     },
-    //   });
-    //   setContent(reactContent);
-    //   const newRowPositionConfig = [];
-    //   for (let i = 0; i < pageConfig.content.length; i++) {
-    //     newRowPositionConfig.push({
-    //       title: "POSITION " + pageConfig.content[i].position,
-    //       value: pageConfig.content[i].position,
-    //     });
-    //   }
-    //   setRowPositionConfig(newRowPositionConfig);
-    // }
+    setRowPositionConfig(newRowPositionConfig);
   }, [pageConfig]);
 
   useEffect(() => {
@@ -456,17 +420,6 @@ const Canvas = (props) => {
       window.removeEventListener("resize", debouncedHandleResize);
     };
   });
-
-  function debounce(fn, ms) {
-    let timer;
-    return (_) => {
-      clearTimeout(timer);
-      timer = setTimeout((_) => {
-        timer = null;
-        fn.apply(this, arguments);
-      }, ms);
-    };
-  }
 
   return (
     <div className={classes.CanvasWrapper}>

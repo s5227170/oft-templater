@@ -54,8 +54,13 @@ const text = (
   }
 
   if (!contentArray.length) {
-    const paddings = { paddingLeft: paddingLeft, paddingRight: paddingRight, paddingTop: paddingTop, paddingBottom: paddingBottom };
-    items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"Text"}"  data-columns="${rowType}" data-paddings="${paddings}" data-column-sizes="${componentSize}"></span>`;
+    const paddings = {
+      paddingLeft: paddingLeft,
+      paddingRight: paddingRight,
+      paddingTop: paddingTop,
+      paddingBottom: paddingBottom,
+    };
+    items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"Text"}"  data-columns="${rowType}" data-padding-left="${paddingLeft}" data-padding-right="${paddingRight}" data-padding-top="${paddingTop}" data-padding-bottom="${paddingBottom}" data-column-sizes="${componentSize}"></span>`;
   }
 
   return `<table width=${componentSize} border="0" cellspacing="0" cellpadding="0" style="
@@ -69,10 +74,13 @@ const text = (
                 <tr>
                     <td width="${paddingLeft}"></td>
                       <td>
-                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${componentSize - paddingLeft - paddingRight
-    }" height="${paddingTop ? paddingTop : 1
-    }" alt="" style="display:block; width: ${componentSize - paddingLeft - paddingRight
-    }px; height:${paddingTop}px;">
+                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${
+                          componentSize - paddingLeft - paddingRight
+                        }" height="${
+    paddingTop ? paddingTop : 1
+  }" alt="" style="display:block; width: ${
+    componentSize - paddingLeft - paddingRight
+  }px; height:${paddingTop}px;">
                       </td>
                     <td width="${paddingRight}"></td>
                 </tr>
@@ -86,10 +94,13 @@ const text = (
                 <tr>
                     <td width="${paddingLeft}"></td>
                       <td>
-                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${componentSize - paddingLeft - paddingRight
-    }" height="${paddingBottom ? paddingBottom : 1
-    }" alt="" style="display:block; width: ${componentSize - paddingLeft - paddingRight
-    }px; height:${paddingBottom}px;">
+                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${
+                          componentSize - paddingLeft - paddingRight
+                        }" height="${
+    paddingBottom ? paddingBottom : 1
+  }" alt="" style="display:block; width: ${
+    componentSize - paddingLeft - paddingRight
+  }px; height:${paddingBottom}px;">
                       </td>
                     <td width="${paddingRight}"></td>
                 </tr>

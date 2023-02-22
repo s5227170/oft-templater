@@ -108,6 +108,7 @@ const convertPageConfig = (config) => {
           oneColumn(
             row.columnSizes,
             row.position,
+            row.background,
             row.parameters.paddingLeft,
             row.parameters.paddingRight,
             row.parameters.paddingTop,
@@ -120,6 +121,7 @@ const convertPageConfig = (config) => {
           oneColumn(
             row.columnSizes,
             row.position,
+            row.background,
             row.parameters.paddingLeft,
             row.parameters.paddingRight,
             row.parameters.paddingTop,
@@ -135,6 +137,7 @@ const convertPageConfig = (config) => {
           twoColumns(
             row.columnSizes,
             row.position,
+            row.background,
             row.parameters.paddingLeft,
             row.parameters.paddingRight,
             row.parameters.paddingTop,
@@ -150,6 +153,7 @@ const convertPageConfig = (config) => {
               twoColumns(
                 row.columnSizes,
                 row.position,
+                row.background,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
@@ -163,6 +167,7 @@ const convertPageConfig = (config) => {
               twoColumns(
                 row.columnSizes,
                 row.position,
+                row.background,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
@@ -178,6 +183,7 @@ const convertPageConfig = (config) => {
               twoColumns(
                 row.columnSizes,
                 row.position,
+                row.background,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
@@ -191,6 +197,7 @@ const convertPageConfig = (config) => {
               twoColumns(
                 row.columnSizes,
                 row.position,
+                row.background,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
@@ -209,6 +216,7 @@ const convertPageConfig = (config) => {
           threeColumns(
             row.columnSizes,
             row.position,
+            row.background,
             row.parameters.paddingLeft,
             row.parameters.paddingRight,
             row.parameters.paddingTop,
@@ -226,6 +234,7 @@ const convertPageConfig = (config) => {
               threeColumns(
                 row.columnSizes,
                 row.position,
+                row.background,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
@@ -241,6 +250,7 @@ const convertPageConfig = (config) => {
               threeColumns(
                 row.columnSizes,
                 row.position,
+                row.background,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
@@ -256,6 +266,7 @@ const convertPageConfig = (config) => {
               threeColumns(
                 row.columnSizes,
                 row.position,
+                row.background,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
@@ -275,6 +286,7 @@ const convertPageConfig = (config) => {
               threeColumns(
                 row.columnSizes,
                 row.position,
+                row.background,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
@@ -292,6 +304,7 @@ const convertPageConfig = (config) => {
               threeColumns(
                 row.columnSizes,
                 row.position,
+                row.background,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
@@ -309,6 +322,7 @@ const convertPageConfig = (config) => {
               threeColumns(
                 row.columnSizes,
                 row.position,
+                row.background,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
@@ -326,6 +340,7 @@ const convertPageConfig = (config) => {
               threeColumns(
                 row.columnSizes,
                 row.position,
+                row.background,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
@@ -343,6 +358,7 @@ const convertPageConfig = (config) => {
               threeColumns(
                 row.columnSizes,
                 row.position,
+                row.background,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
@@ -360,6 +376,7 @@ const convertPageConfig = (config) => {
               threeColumns(
                 row.columnSizes,
                 row.position,
+                row.background,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
@@ -377,6 +394,7 @@ const convertPageConfig = (config) => {
               threeColumns(
                 row.columnSizes,
                 row.position,
+                row.background,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
@@ -398,6 +416,7 @@ const convertPageConfig = (config) => {
               threeColumns(
                 row.columnSizes,
                 row.position,
+                row.background,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
@@ -416,6 +435,7 @@ const convertPageConfig = (config) => {
               threeColumns(
                 row.columnSizes,
                 row.position,
+                row.background,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
@@ -434,6 +454,7 @@ const convertPageConfig = (config) => {
               threeColumns(
                 row.columnSizes,
                 row.position,
+                row.background,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
@@ -454,6 +475,7 @@ const convertPageConfig = (config) => {
               threeColumns(
                 row.columnSizes,
                 row.position,
+                row.background,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
@@ -472,6 +494,7 @@ const convertPageConfig = (config) => {
               threeColumns(
                 row.columnSizes,
                 row.position,
+                row.background,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
@@ -490,6 +513,7 @@ const convertPageConfig = (config) => {
               threeColumns(
                 row.columnSizes,
                 row.position,
+                row.background,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
@@ -510,6 +534,7 @@ const convertPageConfig = (config) => {
               threeColumns(
                 row.columnSizes,
                 row.position,
+                row.background,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,
@@ -528,6 +553,7 @@ const convertPageConfig = (config) => {
               threeColumns(
                 row.columnSizes,
                 row.position,
+                row.background,
                 row.parameters.paddingLeft,
                 row.parameters.paddingRight,
                 row.parameters.paddingTop,

@@ -10,26 +10,37 @@ import { TiArrowMinimise } from "react-icons/ti";
 
 import classes from "./ComponentContent.module.scss";
 import { useState, useEffect } from "react";
+import Dropdown from "../../UI/Dropdown/Dropdown";
+import { PhotoshopPicker } from "react-color";
 
 const ComponentContent = (props) => {
   const [submit, setSubmit] = useState(false);
+  const [background, setBackground] = useState(props.row.background);
+  const [colourOpen, setColourOpen] = useState(false);
   const [position, setPosition] = useState({ row: "", item: "" });
 
-  useEffect(() => {
-    const row = props.elementPosition
-      .split("#")[0]
-      .charAt(props.elementPosition.split("#")[0].length - 1);
-    const item = props.elementPosition
-      .split("#")[1]
-      .charAt(props.elementPosition.split("#")[1].length - 1);
+  const colorChoice = (e) => {
+    setBackground(e.hex);
+  };
 
-    setPosition({ row: row, item: item });
-  }, [props.elementPosition]);
+  const colorHandler = () => {
+    setColourOpen(!colourOpen);
+  };
 
   const preConfirmHandler = () => {
     setSubmit(true);
   };
 
+  useEffect(() => {
+      const row = props.elementPosition.split("#")[0].substr(3);
+
+      const item = props.elementPosition
+        .split("#")[1]
+        .charAt(props.elementPosition.split("#")[1].length - 1);
+
+    setPosition({ row: row, item: item });
+  }, [props.elementPosition]);
+console.log(props.defaultPaddings)
   return (
     <div className={classes.ComponentContent}>
       <div className={classes.Header}>
@@ -78,6 +89,20 @@ const ComponentContent = (props) => {
           </Tooltip>
         </div>
       </div>
+      <div className={classes.BackgroundManagement}>
+        <h2>Choose row background</h2>
+        <div style={{backgroundColor: background}} className={classes.CurrentColour} onClick={colorHandler}></div>
+        {colourOpen ? (
+          <PhotoshopPicker
+            className={classes.ColourPicker}
+            color={background}
+            onChangeComplete={(e) => colorChoice(e)}
+            onAccept={() => colorHandler()}
+            onCancel={() => colorHandler()}
+            header="Background color"
+          />
+        ) : null}
+      </div>
       {props.componentType == "Text" ? (
         <TextEditor
           componentType={props.componentType}
@@ -86,6 +111,7 @@ const ComponentContent = (props) => {
           positionData={position}
           defaultPaddings={props.defaultPaddings}
           columnSize={props.columnSize}
+          background={background}
         />
       ) : props.componentType == "List" ? (
         <TextEditor
@@ -95,6 +121,7 @@ const ComponentContent = (props) => {
           positionData={position}
           defaultPaddings={props.defaultPaddings}
           columnSize={props.columnSize}
+          background={background}
         />
       ) : props.componentType == "Image" ? (
         <ImageEditor
@@ -105,6 +132,7 @@ const ComponentContent = (props) => {
           row={props.row}
           defaultPaddings={props.defaultPaddings}
           columnSize={props.columnSize}
+          background={background}
         />
       ) : (
         <MultiImageEditor
@@ -115,6 +143,7 @@ const ComponentContent = (props) => {
           row={props.row}
           defaultPaddings={props.defaultPaddings}
           columnSize={props.columnSize}
+          background={background}
         />
       )}
     </div>

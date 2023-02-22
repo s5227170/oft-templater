@@ -2,6 +2,7 @@
 const oneColumn = (
   columnSizes,
   position,
+  background,
   paddingLeft,
   paddingRight,
   paddingTop,
@@ -19,7 +20,7 @@ const oneColumn = (
     contentAlignment = "bottom";
   }
   return `
-        <table id="position-${position}" width="600" border="0" cellspacing="0" cellpadding="0" style="
+        <table id="position-${position}" bgcolor="${background}" width="600" border="0" cellspacing="0" cellpadding="0" style="
             border-spacing: 0;
             mso-table-lspace: 0pt;
             mso-table-rspace: 0pt;
@@ -27,7 +28,7 @@ const oneColumn = (
             margin-right: auto;
             width: 600px;
             max-width: 600px;
-            background: #fff;">
+            background: ${background? background : "#fff"};">
             <tbody>
                 <tr>
                     <td width="${paddingLeft}"></td>
@@ -70,6 +71,7 @@ const oneColumn = (
 const twoColumns = (
   columnSizes,
   position,
+  background,
   paddingLeft,
   paddingRight,
   paddingTop,
@@ -97,7 +99,7 @@ const twoColumns = (
     contentAlignment[1] = "bottom";
   }
   return `
-            <table id="position-${position}" width="600" border="0" cellspacing="0" cellpadding="0" style="
+            <table id="position-${position}" bgcolor="${background}" width="600" border="0" cellspacing="0" cellpadding="0" style="
             border-spacing: 0;
             mso-table-lspace: 0pt;
             mso-table-rspace: 0pt;
@@ -105,7 +107,7 @@ const twoColumns = (
             margin-right: auto;
             width: 600px;
             max-width: 600px;
-            background: #fff;">
+            background: ${background? background : "#fff"};">
             <tbody>
                 <tr>
                     <td width="${paddingLeft}"></td>
@@ -143,6 +145,7 @@ const twoColumns = (
 const threeColumns = (
   columnSizes,
   position,
+  background,
   paddingLeft,
   paddingRight,
   paddingTop,
@@ -180,7 +183,7 @@ const threeColumns = (
     contentAlignment[2] = "bottom";
   }
   return `
-    <table id="position-${position}" width="600" border="0" cellspacing="0" cellpadding="0" style="
+    <table id="position-${position}" bgcolor="${background}" width="600" border="0" cellspacing="0" cellpadding="0" style="
     border-spacing: 0;
     mso-table-lspace: 0pt;
     mso-table-rspace: 0pt;
@@ -188,7 +191,7 @@ const threeColumns = (
     margin-right: auto;
     width: 600px;
     max-width: 600px;
-    background: #fff;
+    background: ${background? background : "#fff"};
     ">
     <tbody>
         <tr>
