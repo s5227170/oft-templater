@@ -32,35 +32,19 @@ const oneColumn = (
             <tbody>
                 <tr>
                     <td width="${paddingLeft}"></td>
-                    <td height="${
-                      paddingTop ? paddingTop : 0
-                    }"><img src="http://welcome.hp-ww.com/img/s.gif" width="${
-    600 - paddingLeft - paddingRight
-  }" height="${
-    paddingTop ? paddingTop : 0
-  }" alt="" style="display:block; width: ${
-    600 - paddingLeft - paddingRight
-  }px; height:${paddingTop}px;"></td>
+                    <td height="${paddingTop ? paddingTop : 0}"></td>
                     <td width="${paddingRight}"></td>
                 </tr>
                 <tr>
-                    <td width="${paddingLeft}"><img src="http://welcome.hp-ww.com/img/s.gif" width="${paddingLeft}" height="0" alt="" style="display:block; width: ${paddingLeft}px;"></td>
+                    <td width="${paddingLeft}"></td>
                     <td valign="${contentAlignment}">
                         ${contentComponentOne}
                     </td>
-                    <td width="${paddingRight}"><img src="http://welcome.hp-ww.com/img/s.gif" width="${paddingRight}" height="0" alt="" style="display:block; width: ${paddingRight}px;"></td>
+                    <td width="${paddingRight}"></td>
                 </tr>
                 <tr>
                     <td width="${paddingLeft}"></td>
-                    <td height="${
-                      paddingBottom ? paddingBottom : 0
-                    }"><img src="http://welcome.hp-ww.com/img/s.gif" width="${
-    600 - paddingLeft - paddingRight
-  }" height="${
-    paddingBottom ? paddingBottom : 0
-  }" alt="" style="display:block; width: ${
-    600 - paddingLeft - paddingRight
-  }px; height:${paddingTop}px;"></td>
+                    <td height="${paddingBottom ? paddingBottom : 0}"></td>
                     <td width="${paddingRight}"></td>
                 </tr>
             </tbody>
@@ -124,6 +108,7 @@ const twoColumns = (
                         width: 600px;
                         max-width: 600px;
                       " border="0" cellspacing="0" cellpadding="0" width="600">
+                        <tbody>
                             <tr>
                                 <td width="${columnSizes.col1}" valign="${
     contentAlignment[0]
@@ -132,6 +117,7 @@ const twoColumns = (
     contentAlignment[1]
   }">${contentComponentTwo}</td>
                             </tr>
+                          </tbody>
                         </table>
                     </td>
                     <td width="${paddingRight}"></td>
@@ -200,15 +186,11 @@ const threeColumns = (
     <tbody>
         <tr>
             <td width="${paddingLeft}"></td>
-            <td height="${paddingTop}"><img src="http://welcome.hp-ww.com/img/s.gif" width="${
-    600 - paddingLeft - paddingRight
-  }" height="${paddingTop}" alt="" style="display:block; width: ${
-    600 - paddingLeft - paddingRight
-  }px; height:${paddingTop}px;"></td>
+            <td height="${paddingTop}"></td>
             <td width="${paddingRight}"></td>
         </tr>
         <tr>
-            <td width="${paddingLeft}"><img src="http://welcome.hp-ww.com/img/s.gif" width="${paddingLeft}" alt="" style="display:block; width: ${paddingLeft}px;"></td>
+            <td width="${paddingLeft}"></td>
             <td>
                 <table style="
                 border-spacing: 0;
@@ -219,6 +201,7 @@ const threeColumns = (
                 max-width: 600px;
                 margin-right: auto;
               " border="0" cellspacing="0" cellpadding="0" width="600">
+              <tbody>
                     <tr>
                         <td width="${columnSizes.col1}" valign="${
     contentAlignment[0]
@@ -230,17 +213,14 @@ const threeColumns = (
     contentAlignment[2]
   }">${contentComponentThree}</td>
                     </tr>
-                </table>
+                </tbody>
+              </table>
             </td>
-            <td width="${paddingRight}"><img src="http://welcome.hp-ww.com/img/s.gif" width="${paddingRight}" alt="" style="display:block; width: ${paddingRight}px;"></td>
+            <td width="${paddingRight}"></td>
         </tr>
         <tr>
             <td width="${paddingLeft}"></td>
-            <td height="${paddingBottom}"><img src="http://welcome.hp-ww.com/img/s.gif" width="${
-    600 - paddingLeft - paddingRight
-  }" height="${paddingBottom}" alt="" style="display:block; width: ${
-    600 - paddingLeft - paddingRight
-  }px; height:${paddingTop}px;"></td>
+            <td height="${paddingBottom}"></td>
             <td width="${paddingRight}"></td>
         </tr>
     </tbody>
@@ -249,40 +229,3 @@ const threeColumns = (
 };
 
 export { oneColumn, twoColumns, threeColumns };
-
-//         <table id="position-${position}" border="0" cellspacing="0" cellpadding="0" style="
-//     border-spacing: 0;
-//     mso-table-lspace: 0pt;
-//     mso-table-rspace: 0pt;
-//     width: 600px;
-//     max-width: 600px;
-//     margin-left: auto;
-//     margin-right: auto;
-//     background: #fff;
-//     " align="center">
-//     <tbody>
-//         <tr>
-//             <td width="${paddingLeft}"></td>
-//             <td height="${paddingTop}"><img src="http://welcome.hp-ww.com/img/s.gif" width="${600 - paddingLeft - paddingRight}" height="${paddingTop}" alt="" style="display:block; width: ${600 - paddingLeft - paddingRight}px; height:${paddingTop}px;"></td>
-//             <td width="${paddingRight}"></td>
-//         </tr>
-//         <tr>
-//             <td width="${paddingLeft}"><img src="http://welcome.hp-ww.com/img/s.gif" width="${paddingLeft}" alt="" style="display:block; width: ${paddingLeft}px;"></td>
-//             <td>
-//                 <table>
-//                     <tr>
-//                         <td width="200">${contentComponentOne}</td>
-//                         <td width="200">${contentComponentTwo}</td>
-//                         <td width="200">${contentComponentThree}</td>
-//                     </tr>
-//                 </table>
-//             </td>
-//             <td width="${paddingRight}"><img src="http://welcome.hp-ww.com/img/s.gif" width="${paddingRight}" alt="" style="display:block; width: ${paddingRight}px;"></td>
-//         </tr>
-//         <tr>
-//             <td width="${paddingLeft}"></td>
-//             <td height="${paddingBottom}"><img src="http://welcome.hp-ww.com/img/s.gif" width="${600 - paddingLeft - paddingRight}" height="${paddingBottom}" alt="" style="display:block; width: ${600 - paddingLeft - paddingRight}px; height:${paddingTop}px;"></td>
-//             <td width="${paddingRight}"></td>
-//         </tr>
-//     </tbody>
-// </table>

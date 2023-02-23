@@ -18,31 +18,34 @@ const text = (
     //Maybe check what the "paragraph" element is and then set it up depending on that
     let wholeParagraph = "";
     for (let i = 0; i < paragraph.children.length; i++) {
+      let textContent = paragraph.children[i].text;
       if (paragraph.children[i].color && paragraph.children[i].background) {
-        wholeParagraph += `<span style="color: ${paragraph.children[i].color}; background-color: ${paragraph.children[i].background}";>${paragraph.children[i].text}</span>`;
+        wholeParagraph += `<span style="color: ${paragraph.children[i].color}; background-color: ${paragraph.children[i].background}";>${textContent}</span>`;
       } else if (paragraph.children[i].color) {
-        wholeParagraph += `<span style="color: ${paragraph.children[i].color}";>${paragraph.children[i].text}</span>`;
+        wholeParagraph += `<span style="color: ${paragraph.children[i].color}";>${textContent}</span>`;
       } else if (paragraph.children[i].background) {
-        wholeParagraph += `<span style="background-color: ${paragraph.children[i].background}";>${paragraph.children[i].text}</span>`;
+        wholeParagraph += `<span style="background-color: ${paragraph.children[i].background}";>${textContent}</span>`;
       } else {
-        wholeParagraph += paragraph.children[i].text;
+        wholeParagraph += textContent;
       }
       if (paragraph.children[i].bold) {
-        wholeParagraph = `<strong>${wholeParagraph}</strong>`;
+        wholeParagraph = `<strong style="text-decoration: none; color:#fff;">${wholeParagraph}</strong>`;
       }
     }
     if (paragraph.type == "heading-two") {
       contentArray.push(
-        `<h2 style="font-family: arial; font-size: 18px;">${wholeParagraph}</h2>`
+        `<h2 style="font-family: arial; font-size: 18px; margin: 0px;">${wholeParagraph}</h2>`
       );
     }
     if (paragraph.type == "heading-one") {
       contentArray.push(
-        `<h1 style="font-family: arial; font-size: 20px;">${wholeParagraph}</h1>`
+        `<h1 style="font-family: arial; font-size: 20px; margin: 0px;">${wholeParagraph}</h1>`
       );
     }
     if (paragraph.type == "paragraph") {
-      contentArray.push(`<p style="font-family: arial; margin: 0px;">${wholeParagraph}</p>`);
+      contentArray.push(
+        `<p style="font-family: arial; margin: 0px;">${wholeParagraph}</p>`
+      );
     }
   });
 
@@ -73,35 +76,19 @@ const text = (
             <tbody>
                 <tr>
                     <td width="${paddingLeft}"></td>
-                      <td>
-                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${
-                          componentSize - paddingLeft - paddingRight
-                        }" height="${
-    paddingTop ? paddingTop : 0
-  }" alt="" style="display:block; width: ${
-    componentSize - paddingLeft - paddingRight
-  }px; height:${paddingTop}px;">
-                      </td>
+                    <td height="${paddingTop}"></td>
                     <td width="${paddingRight}"></td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td width="${componentSize - paddingLeft - paddingRight}">
+                    <td width="${componentSize - paddingLeft - paddingRight}" valign="${align ? align : ""}">
                       ${items}
                     </td>
                     <td></td>
                 </tr>
                 <tr>
                     <td width="${paddingLeft}"></td>
-                      <td>
-                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${
-                          componentSize - paddingLeft - paddingRight
-                        }" height="${
-    paddingBottom ? paddingBottom : 0
-  }" alt="" style="display:block; width: ${
-    componentSize - paddingLeft - paddingRight
-  }px; height:${paddingBottom}px;">
-                      </td>
+                    <td height="${paddingBottom}"></td>
                     <td width="${paddingRight}"></td>
                 </tr>
             </tbody>

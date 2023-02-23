@@ -57,17 +57,13 @@ const list = (
             <tbody>
                 <tr>
                     <td width="${paddingLeft}"></td>
-                      <td>
-                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${componentSize - paddingLeft - paddingRight
-    }" height="${paddingTop}" alt="" style="display:block; width: ${componentSize - paddingLeft - paddingRight
-    }px; height:${paddingTop ? paddingTop : 0}px;">
-                      </td>
+                    <td></td>
                     <td width="${paddingRight}"></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td width="${componentSize - paddingLeft - paddingRight}">
-                      <ul>
+                      <ul style="padding-left: 20px">
                       ${items}
                       </ul>
                     </td>
@@ -75,11 +71,7 @@ const list = (
                 </tr>
                 <tr>
                     <td width="${paddingLeft}"></td>
-                      <td>
-                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${componentSize - paddingLeft - paddingRight
-    }" height="${paddingBottom ? paddingBottom : 0}" alt="" style="display:block; width: ${componentSize - paddingLeft - paddingRight
-    }px; height:${paddingBottom}px;">
-                      </td>
+                    <td></td>
                     <td width="${paddingRight}"></td>
                 </tr>
             </tbody>

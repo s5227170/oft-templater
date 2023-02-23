@@ -22,7 +22,7 @@ const multiImage = (
   const contentDistribution = [];
   url.map((url) => {
     contentDistribution.push(
-      `<td><img style="height:${height}px; width:${width}px;"  width="${width}" height="${height}" src="${url}" /></td>`
+      `<td><img style="height:${height}px; width:${width}px; margin: 0px;"  width="${width}" height="${height}" src="${url}" /></td>`
     );
   });
 
@@ -55,41 +55,25 @@ const multiImage = (
               <tbody>
                   <tr>
                       <td width="${paddingLeft}"></td>
-                        <td>
-                          <img src="http://welcome.hp-ww.com/img/s.gif" width="${
-                            componentSize - paddingLeft - paddingRight
-                          }" height="${
-    paddingTop ? paddingTop : 0
-  }" alt="" style="display:block; width: ${
-    componentSize - paddingLeft - paddingRight
-  }px; height:${paddingTop}px;">
-                        </td>
+                      <td height="${paddingTop}"></td>
                       <td width="${paddingRight}"></td>
                   </tr>
                   <tr>
-                      <td></td>
-                      <td width="${componentSize - paddingLeft - paddingRight}">
+                    <td  width="${paddingLeft}"></td>
+                    <td>
                       <table>
-                        <tbody
-                         <tr>
-                          ${items}
-                         </tr>
+                        <tbody>
+                          <tr>
+                            ${items}
+                          </tr>
                         </tbody>
                       </table>
-                      </td>
-                      <td></td>
+                    </td>
+                    <td width="${paddingRight}"></td>
                   </tr>
                   <tr>
                       <td width="${paddingLeft}"></td>
-                        <td>
-                          <img src="http://welcome.hp-ww.com/img/s.gif" width="${
-                            componentSize - paddingLeft - paddingRight
-                          }" height="${
-    paddingBottom ? paddingBottom : 0
-  }" alt="" style="display:block; width: ${
-    componentSize - paddingLeft - paddingRight
-  }px; height:${paddingBottom}px;">
-                        </td>
+                      <td height="${paddingTop}"></td>
                       <td width="${paddingRight}"></td>
                   </tr>
               </tbody>

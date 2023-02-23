@@ -55,13 +55,6 @@ const image = (
                 <tr>
                     <td width="${paddingLeft}"></td>
                       <td>
-                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${
-                          componentSize - paddingLeft - paddingRight
-                        }" height="${
-    paddingTop ? paddingTop : 0
-  }" alt="" style="display:block; width: ${
-    componentSize - paddingLeft - paddingRight
-  }px; height:${paddingTop}px;">
                       </td>
                     <td width="${paddingRight}"></td>
                 </tr>
@@ -75,13 +68,7 @@ const image = (
                 <tr>
                     <td width="${paddingLeft}"></td>
                       <td>
-                        <img src="http://welcome.hp-ww.com/img/s.gif" width="${
-                          componentSize - paddingLeft - paddingRight
-                        }" height="${
-    paddingBottom ? paddingBottom : 0
-  }" alt="" style="display:block; width: ${
-    componentSize - paddingLeft - paddingRight
-  }px; height:${paddingBottom}px;">
+
                       </td>
                     <td width="${paddingRight}"></td>
                 </tr>
