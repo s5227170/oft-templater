@@ -29,7 +29,7 @@ const text = (
         wholeParagraph += textContent;
       }
       if (paragraph.children[i].bold) {
-        wholeParagraph = `<strong style="text-decoration: none; color:#fff;">${wholeParagraph}</strong>`;
+        wholeParagraph = `<strong>${wholeParagraph}</strong>`;
       }
     }
     if (paragraph.type == "heading-two") {
