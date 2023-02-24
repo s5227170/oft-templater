@@ -20,11 +20,11 @@ const text = (
     for (let i = 0; i < paragraph.children.length; i++) {
       let textContent = paragraph.children[i].text;
       if (paragraph.children[i].color && paragraph.children[i].background) {
-        wholeParagraph += `<span style="color: ${paragraph.children[i].color}; background-color: ${paragraph.children[i].background}";>${textContent}</span>`;
+        wholeParagraph += `<span style="text-decoration: none; color: ${paragraph.children[i].color}; background-color: ${paragraph.children[i].background}";>${textContent}</span>`;
       } else if (paragraph.children[i].color) {
-        wholeParagraph += `<span style="color: ${paragraph.children[i].color}";>${textContent}</span>`;
+        wholeParagraph += `<span style="text-decoration: none; color: ${paragraph.children[i].color}";>${textContent}</span>`;
       } else if (paragraph.children[i].background) {
-        wholeParagraph += `<span style="background-color: ${paragraph.children[i].background}";>${textContent}</span>`;
+        wholeParagraph += `<span style="text-decoration: none; background-color: ${paragraph.children[i].background}";>${textContent}</span>`;
       } else {
         wholeParagraph += textContent;
       }
@@ -66,29 +66,25 @@ const text = (
     items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"Text"}"  data-columns="${rowType}" data-padding-left="${paddingLeft}" data-padding-right="${paddingRight}" data-padding-top="${paddingTop}" data-padding-bottom="${paddingBottom}" data-column-sizes="${componentSize}"></span>`;
   }
 
-  return `<table width=${componentSize} border="0" cellspacing="0" cellpadding="0" style="
-  border-spacing: 0;
-  width: ${componentSize}px;
-  max-width: ${componentSize}px;
-  mso-table-lspace: 0pt;
-  mso-table-rspace: 0pt;
-" valign="${align ? align : ""}">
+  return `<table width=${componentSize} border="0" cellspacing="0" cellpadding="0" style="border-spacing: 0; width: ${componentSize}px; max-width: ${componentSize}px;mso-table-lspace: 0pt; mso-table-rspace: 0pt;" valign="${align ? align : ""}">
             <tbody>
                 <tr>
                     <td width="${paddingLeft}"></td>
-                    <td height="${paddingTop}"></td>
+                    <td height="${paddingTop}" width="1"></td>
                     <td width="${paddingRight}"></td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td width="${componentSize - paddingLeft - paddingRight}" valign="${align ? align : ""}">
+                    <td width="${
+                      componentSize - paddingLeft - paddingRight
+                    }" valign="${align ? align : ""}">
                       ${items}
                     </td>
                     <td></td>
                 </tr>
                 <tr>
                     <td width="${paddingLeft}"></td>
-                    <td height="${paddingBottom}"></td>
+                    <td height="${paddingBottom}" width="1"></td>
                     <td width="${paddingRight}"></td>
                 </tr>
             </tbody>

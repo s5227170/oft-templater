@@ -45,17 +45,11 @@ const image = (
   }
 
   // if (rowType == 1) {
-  return `<table width=${componentSize} border="0" cellspacing="0" cellpadding="0" style="
-  border-spacing: 0;
-  width: ${componentSize}px;
-  max-width: ${componentSize}px;
-  mso-table-lspace: 0pt;
-  mso-table-rspace: 0pt;">
+  return `<table width=${componentSize} border="0" cellspacing="0" cellpadding="0" style="border-spacing: 0; width: ${componentSize}px; max-width: ${componentSize}px;mso-table-lspace: 0pt; mso-table-rspace: 0pt;" valign="${align ? align : ""}">
             <tbody>
                 <tr>
                     <td width="${paddingLeft}"></td>
-                      <td>
-                      </td>
+                    <td height="${paddingTop}" width="1"></td>
                     <td width="${paddingRight}"></td>
                 </tr>
                 <tr>
@@ -67,9 +61,7 @@ const image = (
                 </tr>
                 <tr>
                     <td width="${paddingLeft}"></td>
-                      <td>
-
-                      </td>
+                    <td height="${paddingBottom}" width="1"></td>
                     <td width="${paddingRight}"></td>
                 </tr>
             </tbody>

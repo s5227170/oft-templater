@@ -17,16 +17,29 @@ const list = (
     //to the type of element, set the size accordingly, and depending on properties, add bold, or similar
     //Maybe check what the "paragraph" element is and then set it up depending on that
     list.children.map((paragraph) => {
+      console.log(paragraph);
       let wholeParagraph = "";
-      for (let i = 0; i < paragraph.children.length; i++) {
-        if (paragraph.children[i].color && paragraph.children[i].background) {
-          wholeParagraph += `<span style="color: ${paragraph.children[i].color}; background-color: ${paragraph.children[i].background}";>${paragraph.children[i].text}</span>`;
-        } else if (paragraph.children[i].color) {
-          wholeParagraph += `<span style="color: ${paragraph.children[i].color}">${paragraph.children[i].text}</span>`;
-        } else if (paragraph.children[i].background) {
-          wholeParagraph += `<span style="background-color: ${paragraph.children[i].background}">${paragraph.children[i].text}</span>`;
+      if (paragraph.children) {
+        for (let i = 0; i < paragraph.children.length; i++) {
+          if (paragraph.children[i].color && paragraph.children[i].background) {
+            wholeParagraph += `<span style="color: ${paragraph.children[i].color}; background-color: ${paragraph.children[i].background}";>${paragraph.children[i].text}</span>`;
+          } else if (paragraph.children[i].color) {
+            wholeParagraph += `<span style="color: ${paragraph.children[i].color}">${paragraph.children[i].text}</span>`;
+          } else if (paragraph.children[i].background) {
+            wholeParagraph += `<span style="background-color: ${paragraph.children[i].background}">${paragraph.children[i].text}</span>`;
+          } else {
+            wholeParagraph += paragraph.children[i].text;
+          }
+        }
+      } else {
+        if (paragraph.color && paragraph.background) {
+          wholeParagraph += `<span style="color: ${paragraph.color}; background-color: ${paragraph.background}";>${paragraph.text}</span>`;
+        } else if (paragraph.color) {
+          wholeParagraph += `<span style="color: ${paragraph.color}">${paragraph.text}</span>`;
+        } else if (paragraph.background) {
+          wholeParagraph += `<span style="background-color: ${paragraph.background}">${paragraph.text}</span>`;
         } else {
-          wholeParagraph += paragraph.children[i].text;
+          wholeParagraph += paragraph.text;
         }
       }
       contentArray.push(
@@ -43,7 +56,12 @@ const list = (
   }
 
   if (!contentDistribution.length) {
-    const paddings = { paddingLeft: paddingLeft, paddingRight: paddingRight, paddingTop: paddingTop, paddingBottom: paddingBottom };
+    const paddings = {
+      paddingLeft: paddingLeft,
+      paddingRight: paddingRight,
+      paddingTop: paddingTop,
+      paddingBottom: paddingBottom,
+    };
     items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"List"}"  data-columns="${rowType}" data-padding-left="${paddingLeft}" data-padding-right="${paddingRight}" data-padding-top="${paddingTop}" data-padding-bottom="${paddingBottom}" data-column-sizes="${componentSize}"></span>`;
   }
 
@@ -63,7 +81,7 @@ const list = (
                 <tr>
                     <td></td>
                     <td width="${componentSize - paddingLeft - paddingRight}">
-                      <ul style="padding-left: 20px">
+                      <ul>
                       ${items}
                       </ul>
                     </td>

@@ -31,7 +31,7 @@ const boilerplate = (bodyContent, title) => `
         <tr>
           <td>
             ${bodyContent}
-          </td
+          </td>
         </tr>
       </tbody>
     </table>
