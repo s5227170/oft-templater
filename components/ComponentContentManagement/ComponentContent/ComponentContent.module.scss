@@ -30,6 +30,7 @@
       svg {
         outline: none;
         margin-left: 5px;
+
         &:hover {
           cursor: pointer;
           filter: brightness(135%);
@@ -38,9 +39,9 @@
     }
   }
 
-  .BackgroundManagement {
-    width: 100%;
-    margin-top: 10px;
+  .BackgroundAndSizing {
+    display: flex;
+    flex-direction: row;
 
     h2 {
       font-weight: bold;
@@ -49,35 +50,45 @@
         0px -5px 35px rgba(255, 255, 255, 0.3);
     }
 
-    .ColourPicker {
-    }
+    .BackgroundManagement {
+      width: 50%;
+      margin-top: 10px;
 
-    .CurrentColour {
-      width: 50px;
-      height: 50px;
-      border-radius: 6px;
-      position: relative;
-      background-color: #fff;
-      margin: 10px;
+      .ColourPicker {}
 
-      &:hover {
-        filter: brightness(135%);
-        cursor: pointer;
-      }
-
-      &:before {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border-radius: 6px;
-        border: 10px solid #646464;
+      .CurrentColour {
         width: 50px;
         height: 50px;
-        z-index: 5;
-        background-color: transparent;
+        border-radius: 6px;
+        position: relative;
+        background-color: #fff;
+        margin: 10px;
+
+        &:hover {
+          filter: brightness(135%);
+          cursor: pointer;
+        }
+
+        &:before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          border-radius: 6px;
+          border: 10px solid #646464;
+          width: 50px;
+          height: 50px;
+          z-index: 5;
+          background-color: transparent;
+        }
       }
+    }
+
+    .SizingManagement {
+      width: 50%;
+      margin: 10px;
+      padding-left: 10px;
     }
   }
 }

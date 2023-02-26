@@ -162,6 +162,14 @@ const MultiImageEditor = (props) => {
     }
   }, [props.defaultPaddings]);
 
+  useEffect(() => {
+    props.getPaddings(paddings)
+  }, [paddings])
+
+  useEffect(() => {
+    props.getContentSize(imageSize.width)
+  }, [imageSize.width])
+
   return (
     <div className={classes.ImageEditor}>
       <div className={classes.Editor}>

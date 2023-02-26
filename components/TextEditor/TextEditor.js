@@ -111,6 +111,11 @@ const TextEditor = (props) => {
     }
   }, [props.defaultPaddings])
 
+  useEffect(() => {
+    props.getPaddings(paddings)
+    props.getContentSize(props.columnSize - paddings.paddingLeft - paddings.paddingRight)
+  }, [paddings, props.columnSize])
+
   return (
     <div className={classes.TextEditor}>
       <div className={classes.Editor}>

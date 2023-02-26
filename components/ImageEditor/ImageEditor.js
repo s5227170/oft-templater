@@ -14,7 +14,7 @@ const ImageEditor = (props) => {
   const [url, setUrl] = useState("");
   const [sizesAllwoed, setSizesAllowed] = useState({
     width: true,
-    height: true,
+    height: false,
   });
   const [paddings, setPaddings] = useState({
     paddingLeft: 0,
@@ -23,7 +23,7 @@ const ImageEditor = (props) => {
     paddingBottom: 0,
   });
   const [imageSize, setImageSize] = useState({
-    width: 0,
+    width: props.columnSize,
     height: 0,
   });
   const imgHolderRef = useRef();
@@ -44,24 +44,24 @@ const ImageEditor = (props) => {
   };
 
   const imageSizeRestricter = (e, property) => {
-    if (property == 1 && e.target.value > props.columnSize) {
-      e.target.value = props.columnSize;
+    if (property == 1 && +e.target.value > +props.columnSize) {
+      e.target.value = +props.columnSize;
     }
-    if (property == 2 && e.target.value > 600) {
+    if (property == 2 && imageSize.height > 600) {
       e.target.value = 600;
     }
     if (e.target.value.length > 3) {
       e.target.value = e.target.value.slice(0, 3);
     }
     if (property == 1) {
-      setImageSize({ ...imageSize, width: e.target.value });
+      setImageSize({ ...imageSize, width: +e.target.value });
       if (sizesAllwoed.width) {
         imgHolderRef.current.style.width = `${e.target.value}px`;
       } else {
         imgHolderRef.current.style.width = `auto`;
       }
     } else {
-      setImageSize({ ...imageSize, height: e.target.value });
+      setImageSize({ ...imageSize, height: +e.target.value });
       if (sizesAllwoed.height) {
         imgHolderRef.current.style.height = `${e.target.value}px`;
       } else {
@@ -144,6 +144,20 @@ const ImageEditor = (props) => {
     }
   }, [props.defaultPaddings]);
 
+  useEffect(() => {
+    props.getPaddings(paddings)
+  }, [paddings])
+
+  useEffect(() => {
+    props.getContentSize(imageSize.width)
+  }, [imageSize.width])
+
+  useEffect(() => {
+    if (imgHolderRef.current) {
+      imgHolderRef.current.style.width = `${imageSize.width}px`;
+    }
+  }, [imgHolderRef])
+
   return (
     <div className={classes.ImageEditor}>
       <div className={classes.Editor}>
@@ -194,6 +208,7 @@ const ImageEditor = (props) => {
               maxLength={3}
               onChange={(e) => imageSizeRestricter(e, 1)}
               disabled={!sizesAllwoed.width}
+              value={+imageSize.width}
             />
             <label>px</label>
             <button onClick={() => settingHandler(1)}>Disable setting</button>
@@ -209,6 +224,7 @@ const ImageEditor = (props) => {
               maxLength={3}
               onChange={(e) => imageSizeRestricter(e, 2)}
               disabled={!sizesAllwoed.height}
+              value={+imageSize.height}
             />
             <label>px</label>
             <button onClick={() => settingHandler(2)}>Disable setting</button>

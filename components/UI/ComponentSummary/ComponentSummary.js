@@ -35,7 +35,7 @@ const ComponentSummary = (props) => {
             </tr>
             <tr>
               <td>{props.type}</td>
-              <td>{...props.paddings.join(",")}</td>
+              <td>{...props.paddings.join(", ")}</td>
               <td>
                 {props.content.map((paragraph) => {
                   return (
@@ -61,8 +61,29 @@ const ComponentSummary = (props) => {
             </tr>
             <tr>
               <td>{props.type}</td>
-              <td>{...props.paddings}</td>
+              <td>{...props.paddings.join(", ")}</td>
               <td>{props.url}</td>
+              <td>{props.width}px</td>
+              <td>{props.height}px</td>
+            </tr>
+          </tbody>
+        </table>
+      ) : props.type == "MultiImage" ? (
+        <table>
+          <tbody>
+            <tr>
+              <th>Type</th>
+              <th>Paddings</th>
+              <th>URL</th>
+              <th>Widths</th>
+              <th>Heights</th>
+            </tr>
+            <tr>
+              <td>{props.type}</td>
+              <td>{...props.paddings.join(", ")}</td>
+              <td>{props.url.map(url => {
+                return <>{url}<br></br></>
+              })}</td>
               <td>{props.width}px</td>
               <td>{props.height}px</td>
             </tr>

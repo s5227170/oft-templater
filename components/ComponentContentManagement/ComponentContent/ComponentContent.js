@@ -12,24 +12,48 @@ import classes from "./ComponentContent.module.scss";
 import { useState, useEffect } from "react";
 import Dropdown from "../../UI/Dropdown/Dropdown";
 import { PhotoshopPicker } from "react-color";
+import WidthManager from "../../UI/WidthManager/WidthManager";
 
 const ComponentContent = (props) => {
   const [submit, setSubmit] = useState(false);
   const [background, setBackground] = useState(props.row.background);
   const [colourOpen, setColourOpen] = useState(false);
   const [position, setPosition] = useState({ row: "", item: "" });
+  const [paddings, setPaddings] = useState(null)
+  const [contentSize, setContentSize] = useState(0)
+  const [remainingWidth, setRemainingWidth] = useState(0)
 
   const colorChoice = (e) => {
     setBackground(e.hex);
   };
+
+  const getContentSize = (size) => {
+    setContentSize(size)
+  }
+
+  const getPaddings = (commponentPaddings) => {
+    setPaddings(commponentPaddings)
+  }
 
   const colorHandler = () => {
     setColourOpen(!colourOpen);
   };
 
   const preConfirmHandler = () => {
-    setSubmit(true);
+    if (remainingWidth > 0) {
+      return alert("There is still available width that requires to be set")
+    }
+    if (remainingWidth < 0) {
+      return alert("Set sizes exceed the size of the component")
+    }
+    if (remainingWidth == 0) {
+      setSubmit(true);
+    }
   };
+
+  const widthErrorHandler = (remainingWidth) => {
+    setRemainingWidth(remainingWidth)
+  }
 
   useEffect(() => {
     const row = props.elementPosition.split("#")[0].substr(3);
@@ -48,12 +72,12 @@ const ComponentContent = (props) => {
           {props.componentType == "Text"
             ? "Text component"
             : props.componentType == "List"
-            ? "List component"
-            : props.componentType == "Image"
-            ? "Image component"
-            : props.componentType == "MultiImage"
-            ? "Multi image component"
-            : ""}
+              ? "List component"
+              : props.componentType == "Image"
+                ? "Image component"
+                : props.componentType == "MultiImage"
+                  ? "Multi image component"
+                  : ""}
         </h1>
         <div className={classes.EditorIcons}>
           <GiConfirmed
@@ -89,23 +113,29 @@ const ComponentContent = (props) => {
           </Tooltip>
         </div>
       </div>
-      <div className={classes.BackgroundManagement}>
-        <h2>Choose row background</h2>
-        <div
-          style={{ backgroundColor: background }}
-          className={classes.CurrentColour}
-          onClick={colorHandler}
-        ></div>
-        {colourOpen ? (
-          <PhotoshopPicker
-            className={classes.ColourPicker}
-            color={background}
-            onChangeComplete={(e) => colorChoice(e)}
-            onAccept={() => colorHandler()}
-            onCancel={() => colorHandler()}
-            header="Background color"
-          />
-        ) : null}
+      <div className={classes.BackgroundAndSizing}>
+        <div className={classes.BackgroundManagement}>
+          <h2>Choose row background</h2>
+          <div
+            style={{ backgroundColor: background }}
+            className={classes.CurrentColour}
+            onClick={colorHandler}
+          ></div>
+          {colourOpen ? (
+            <PhotoshopPicker
+              className={classes.ColourPicker}
+              color={background}
+              onChangeComplete={(e) => colorChoice(e)}
+              onAccept={() => colorHandler()}
+              onCancel={() => colorHandler()}
+              header="Background color"
+            />
+          ) : null}
+        </div>
+        <div className={classes.SizingManagement}>
+          <h2>Remaining space to fill</h2>
+          <WidthManager constraintWidth={widthErrorHandler} rowSize={props.columnSize} paddingLeft={paddings ? paddings.paddingLeft : 0} paddingRight={paddings ? paddings.paddingRight : 0} componentSize={contentSize} />
+        </div>
       </div>
       {props.componentType == "Text" ? (
         <TextEditor
@@ -116,6 +146,8 @@ const ComponentContent = (props) => {
           defaultPaddings={props.defaultPaddings}
           columnSize={props.columnSize}
           background={background}
+          getPaddings={getPaddings}
+          getContentSize={getContentSize}
         />
       ) : props.componentType == "List" ? (
         <TextEditor
@@ -126,6 +158,8 @@ const ComponentContent = (props) => {
           defaultPaddings={props.defaultPaddings}
           columnSize={props.columnSize}
           background={background}
+          getPaddings={getPaddings}
+          getContentSize={getContentSize}
         />
       ) : props.componentType == "Image" ? (
         <ImageEditor
@@ -137,6 +171,8 @@ const ComponentContent = (props) => {
           defaultPaddings={props.defaultPaddings}
           columnSize={props.columnSize}
           background={background}
+          getPaddings={getPaddings}
+          getContentSize={getContentSize}
         />
       ) : (
         <MultiImageEditor
@@ -148,6 +184,8 @@ const ComponentContent = (props) => {
           defaultPaddings={props.defaultPaddings}
           columnSize={props.columnSize}
           background={background}
+          getPaddings={getPaddings}
+          getContentSize={getContentSize}
         />
       )}
     </div>

@@ -10,15 +10,19 @@ import {
 } from "slate";
 
 import { withHistory } from "slate-history";
-import { Button, Icon, Toolbar } from "./components/components";
+import { Button, HyperlinkContent, Icon, Toolbar } from "./components/components";
 
 import { FaItalic, FaHeading, FaListUl } from "react-icons/fa";
 import { ImBold } from "react-icons/im";
 import { MdOutlineBorderColor, MdOutlineFormatColorFill } from "react-icons/md";
+import { GrTextAlignLeft, GrTextAlignCenter, GrTextAlignRight, GrTextAlignFull } from "react-icons/gr";
+import { AiOutlineLink } from "react-icons/ai";
+
 import { SketchPicker, PhotoshopPicker } from "react-color";
 
+import Modal from "../../Modal/Modal";
+
 import classes from "./TextFormatter.module.scss";
-import { innerText } from "domutils";
 
 const HOTKEYS = {
   "mod+b": "bold",
@@ -35,6 +39,8 @@ const RichTextExample = (editorProps) => {
     background: "rgb(255, 255, 255)",
     color: "rgb(0, 0, 0)",
   });
+  const [hyperlink, setHyperlink] = useState("")
+  const [hyperlinkModal, setHyperlinkModal] = useState(false)
   const renderElement = useCallback(
     (props, elementSettings) => {
       const newProps = Object.assign(props, elementSettings);
@@ -66,6 +72,16 @@ const RichTextExample = (editorProps) => {
       setColorScheme({ ...colorScheme, color: !colorScheme.color });
     }
   };
+
+  const openHyperlinkSettings = () => {
+    setTimeout(() => {
+      setHyperlinkModal(!hyperlinkModal)
+    }, 250);
+  }
+
+  const confirmLink = () => {
+
+  }
 
   return (
     <Slate
@@ -148,6 +164,41 @@ const RichTextExample = (editorProps) => {
               value={elementSettings}
               icon={<FaHeading color="#008DD7" size="16" />}
             />
+            <BlockButton format="left" icon={<GrTextAlignLeft
+              color="#008DD7"
+              size="22"
+            />} />
+            <BlockButton format="center" icon={<GrTextAlignCenter
+              color="#008DD7"
+              size="22"
+            />} />
+            <BlockButton format="right" icon={<GrTextAlignRight
+              color="#008DD7"
+              size="22"
+            />} />
+            <BlockButton format="justify" icon={<GrTextAlignFull
+              color="#008DD7"
+              size="22"
+            />} />
+            <MarkButton
+              format="color"
+              value={elementSettings}
+              icon={
+                <AiOutlineLink
+                  onClick={openHyperlinkSettings}
+                  color="#008DD7"
+                  size="22"
+                />
+              }
+            />
+            {hyperlinkModal ? (
+              console.log("worsk"),
+              <div className={classes.HyperlinkManager}>
+                <Modal tackleModal={openHyperlinkSettings} modalShow={hyperlinkModal}>
+                  <HyperlinkContent confirmLink={confirmLink} openHyperlinkSettings={openHyperlinkSettings} />
+                </Modal>
+              </div>
+            ) : null}
           </>
         ) : (
           <>

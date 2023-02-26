@@ -2,7 +2,14 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from "react";
 import ReactDOM from "react-dom";
+
 import { cx, css } from "@emotion/css";
+import { Tooltip } from "react-tooltip";
+
+import { GiConfirmed } from "react-icons/gi";
+import { TiArrowMinimise } from "react-icons/ti"
+
+import classes from "./components.module.scss";
 
 export const Button = React.forwardRef(
   ({ className, active, reversed, ...props }, ref) => (
@@ -18,8 +25,8 @@ export const Button = React.forwardRef(
               ? "white"
               : "#aaa"
             : active
-            ? "black"
-            : "#ccc"};
+              ? "black"
+              : "#ccc"};
         `
       )}
     />
@@ -105,7 +112,7 @@ export const Instruction = React.forwardRef(({ className, ...props }, ref) => (
 ));
 
 export const Menu = React.forwardRef(({ className, ...props }, ref) => (
-  <div
+  <section
     {...props}
     ref={ref}
     className={cx(
@@ -145,3 +152,31 @@ export const Toolbar = React.forwardRef(({ className, ...props }, ref) => (
     )}
   />
 ));
+
+export const HyperlinkContent = (props) => {
+  return <div className={classes.HyperlinkContent}>
+    <div className={classes.Header}>
+      <GiConfirmed
+        id="confirm-hyperlink"
+        color="#40CD9A"
+        size="25px"
+        onClick={props.confirmLink}
+      />
+      <Tooltip anchorId="confirm-hyperlink" place="top">
+        Confirm hyperlink
+      </Tooltip>
+      <TiArrowMinimise
+        id="close-modal-hyperlink"
+        color="#008DD7"
+        size="25px"
+        onClick={props.openHyperlinkSettings}
+      />
+      <Tooltip anchorId="close-modal-hyperlink" place="top">
+        Close Modal
+      </Tooltip>
+    </div>
+    <div className={classes.Content}>
+      <h1>Hello, lil shat</h1>
+    </div>
+  </div>
+}

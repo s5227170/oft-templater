@@ -1,9 +1,17 @@
 .ColourPicker {
-    z-index: 10;
-    margin-left: 100px;
-    margin-right: 100px;
-    position: fixed;
-    bottom: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
+  z-index: 10;
+  margin-left: 100px;
+  margin-right: 100px;
+  position: fixed;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.HyperlinkManager {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 0px;
+}

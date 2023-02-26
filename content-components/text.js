@@ -13,12 +13,10 @@ const text = (
   const contentArray = [];
   const componentSize = columnSizes["col" + item];
   const contentDistribution = content.map((paragraph) => {
-    //Add functionality for recognition of content type. For example, the compiler should recognise if some text is an h1, h2, or a p. According
-    //to the type of element, set the size accordingly, and depending on properties, add bold, or similar
-    //Maybe check what the "paragraph" element is and then set it up depending on that
     let wholeParagraph = "";
     for (let i = 0; i < paragraph.children.length; i++) {
       let textContent = paragraph.children[i].text;
+      textContent = textContent.replace("<", "&#60;")
       if (paragraph.children[i].color && paragraph.children[i].background) {
         wholeParagraph += `<span style="text-decoration: none; color: ${paragraph.children[i].color}; background-color: ${paragraph.children[i].background}";>${textContent}</span>`;
       } else if (paragraph.children[i].color) {
@@ -34,17 +32,17 @@ const text = (
     }
     if (paragraph.type == "heading-two") {
       contentArray.push(
-        `<h2 style="font-family: arial; font-size: 18px; margin: 0px;">${wholeParagraph}</h2>`
+        `<h2 style="font-family: arial; font-size: 18px; margin: 0px; display: inline-block; line-height: 24px; text-align: ${paragraph.align ? paragraph.align : "left"};">${wholeParagraph}</h2>`
       );
     }
     if (paragraph.type == "heading-one") {
       contentArray.push(
-        `<h1 style="font-family: arial; font-size: 20px; margin: 0px;">${wholeParagraph}</h1>`
+        `<h1 style="font-family: arial; font-size: 20px; margin: 0px; display: inline-block; line-height: 24px; text-align: ${paragraph.align ? paragraph.align : "left"};">${wholeParagraph}</h1>`
       );
     }
     if (paragraph.type == "paragraph") {
       contentArray.push(
-        `<p style="font-family: arial; margin: 0px;">${wholeParagraph}</p>`
+        `<p style="font-family: arial; margin: 0px; display: inline-block; line-height: 24px; text-align: ${paragraph.align ? paragraph.align : "left"};">${wholeParagraph}</p>`
       );
     }
   });
@@ -75,9 +73,8 @@ const text = (
                 </tr>
                 <tr>
                     <td></td>
-                    <td width="${
-                      componentSize - paddingLeft - paddingRight
-                    }" valign="${align ? align : ""}">
+                    <td width="${componentSize - paddingLeft - paddingRight
+    }" valign="${align ? align : ""}">
                       ${items}
                     </td>
                     <td></td>

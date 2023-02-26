@@ -45,7 +45,7 @@ const image = (
   }
 
   // if (rowType == 1) {
-  return `<table width=${componentSize} border="0" cellspacing="0" cellpadding="0" style="border-spacing: 0; width: ${componentSize}px; max-width: ${componentSize}px;mso-table-lspace: 0pt; mso-table-rspace: 0pt;" valign="${align ? align : ""}">
+  return `<table width=${componentSize} border="0" cellspacing="0" cellpadding="0" style="border-spacing: 0; width: ${componentSize}px; max-width: ${componentSize}px;mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
             <tbody>
                 <tr>
                     <td width="${paddingLeft}"></td>
