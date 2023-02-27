@@ -30,6 +30,7 @@ const text = (
         wholeParagraph = `<strong>${wholeParagraph}</strong>`;
       }
     }
+    //Add an if-statement that checks if the paragraph has a property "hyperlink"? And, if it does, turn the text inside of it into a hyperlink
     if (paragraph.type == "heading-two") {
       contentArray.push(
         `<h2 style="font-family: arial; font-size: 18px; margin: 0px; display: inline-block; line-height: 24px; text-align: ${paragraph.align ? paragraph.align : "left"};">${wholeParagraph}</h2>`

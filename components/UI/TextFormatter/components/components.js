@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 /* eslint-disable react/no-unescaped-entities */
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
 import { cx, css } from "@emotion/css";
@@ -8,6 +8,8 @@ import { Tooltip } from "react-tooltip";
 
 import { GiConfirmed } from "react-icons/gi";
 import { TiArrowMinimise } from "react-icons/ti"
+
+import CustomInput from "../../CustomInput/CustomInput";
 
 import classes from "./components.module.scss";
 
@@ -154,29 +156,44 @@ export const Toolbar = React.forwardRef(({ className, ...props }, ref) => (
 ));
 
 export const HyperlinkContent = (props) => {
+  const [url, setUrl] = useState();
+
+  const urlHandler = (e) => {
+    setUrl(e.target.value)
+  }
+
   return <div className={classes.HyperlinkContent}>
     <div className={classes.Header}>
-      <GiConfirmed
-        id="confirm-hyperlink"
-        color="#40CD9A"
-        size="25px"
-        onClick={props.confirmLink}
-      />
-      <Tooltip anchorId="confirm-hyperlink" place="top">
-        Confirm hyperlink
-      </Tooltip>
-      <TiArrowMinimise
-        id="close-modal-hyperlink"
-        color="#008DD7"
-        size="25px"
-        onClick={props.openHyperlinkSettings}
-      />
-      <Tooltip anchorId="close-modal-hyperlink" place="top">
-        Close Modal
-      </Tooltip>
+      <h2>Add the desired link</h2>
+      <div className={classes.ControlIcons}>
+        <GiConfirmed
+          id="confirm-hyperlink"
+          color="#40CD9A"
+          size="25px"
+          onClick={() => { props.confirmLink(url), props.tackleModal() }}
+        />
+        <Tooltip anchorId="confirm-hyperlink" place="top">
+          Confirm hyperlink
+        </Tooltip>
+        <TiArrowMinimise
+          id="close-modal-hyperlink"
+          color="#008DD7"
+          size="25px"
+          onClick={props.openHyperlinkSettings}
+        />
+        <Tooltip anchorId="close-modal-hyperlink" place="top">
+          Close Modal
+        </Tooltip>
+      </div>
     </div>
     <div className={classes.Content}>
-      <h1>Hello, lil shat</h1>
+      <CustomInput
+        style={{ width: "90%" }}
+        type="text"
+        onChange={urlHandler}
+        value={url}
+        placeholder={"url..."}
+      />
     </div>
   </div>
 }

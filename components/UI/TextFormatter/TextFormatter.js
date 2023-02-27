@@ -42,11 +42,11 @@ const RichTextExample = (editorProps) => {
   const [hyperlink, setHyperlink] = useState("")
   const [hyperlinkModal, setHyperlinkModal] = useState(false)
   const renderElement = useCallback(
-    (props, elementSettings) => {
-      const newProps = Object.assign(props, elementSettings);
+    (props, elementSettings, hyperlink) => {
+      const newProps = Object.assign(props, elementSettings, { url: hyperlink });
       return <Element {...newProps} />;
     },
-    [elementSettings]
+    [elementSettings, hyperlink]
   );
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
@@ -79,8 +79,8 @@ const RichTextExample = (editorProps) => {
     }, 250);
   }
 
-  const confirmLink = () => {
-
+  const confirmLink = (link) => {
+    setHyperlink(link)
   }
 
   return (
@@ -89,6 +89,7 @@ const RichTextExample = (editorProps) => {
       value={initialValue}
       //This line bellow could be used to generate text into oft format
       onChange={(value) => {
+        console.log(value)
         editorProps.extractData(value);
         const isAstChange = editor.operations.some(
           (op) => "set_selection" !== op.type
@@ -181,8 +182,9 @@ const RichTextExample = (editorProps) => {
               size="22"
             />} />
             <MarkButton
-              format="color"
+              format="hyperlink"
               value={elementSettings}
+              url={hyperlink}
               icon={
                 <AiOutlineLink
                   onClick={openHyperlinkSettings}
@@ -192,10 +194,9 @@ const RichTextExample = (editorProps) => {
               }
             />
             {hyperlinkModal ? (
-              console.log("worsk"),
               <div className={classes.HyperlinkManager}>
                 <Modal tackleModal={openHyperlinkSettings} modalShow={hyperlinkModal}>
-                  <HyperlinkContent confirmLink={confirmLink} openHyperlinkSettings={openHyperlinkSettings} />
+                  <HyperlinkContent tackleModal={openHyperlinkSettings} confirmLink={confirmLink} url={hyperlink} openHyperlinkSettings={openHyperlinkSettings} />
                 </Modal>
               </div>
             ) : null}
@@ -267,7 +268,7 @@ const RichTextExample = (editorProps) => {
         )}
       </Toolbar>
       <Editable
-        renderElement={(elProps) => renderElement(elProps, elementSettings)}
+        renderElement={(elProps) => renderElement(elProps, elementSettings, hyperlink)}
         renderLeaf={renderLeaf}
         placeholder="Write or paste the desired text content in here..."
         spellCheck
@@ -285,7 +286,7 @@ const RichTextExample = (editorProps) => {
               const color = matches[0].toString();
               const background = matches[1].toString();
 
-              toggleMark(editor, mark, color, background);
+              toggleMark(editor, mark, color, background, hyperlink);
             }
           }
         }}
@@ -329,7 +330,7 @@ const toggleBlock = (editor, format) => {
   }
 };
 
-const toggleMark = (editor, format, color, background) => {
+const toggleMark = (editor, format, color, background, url) => {
   if (format == "background") {
     const isActive = isMarkActive(editor, format);
 
@@ -345,6 +346,14 @@ const toggleMark = (editor, format, color, background) => {
       Editor.removeMark(editor, format);
     } else {
       Editor.addMark(editor, format, color);
+    }
+  } else if (format == "hyperlink") {
+    const isActive = isMarkActive(editor, format);
+
+    if (isActive) {
+      Editor.removeMark(editor, format);
+    } else {
+      Editor.addMark(editor, format, url);
     }
   } else {
     const isActive = isMarkActive(editor, format);
@@ -379,11 +388,17 @@ const isMarkActive = (editor, format) => {
   return marks ? marks[format] === true : false;
 };
 
-const Element = ({ attributes, children, element, color, background }) => {
+const Element = ({ attributes, children, element, color, background, url }) => {
   const style = {
     textAlign: element.align,
   };
   switch (element.type) {
+    case "hyperlink":
+      return (
+        <a href={url} style={{ backgroundColor: background }} {...attributes}>
+          {children}
+        </a>
+      );
     case "background":
       return (
         <span style={{ backgroundColor: background }} {...attributes}>
@@ -446,6 +461,10 @@ const Leaf = ({ attributes, children, leaf }) => {
     children = <strong>{children}</strong>;
   }
 
+  if (leaf.hyperlink) {
+    children = <a data-hyperlink={`hyperlink: ${leaf.hyperlink}`} href={leaf.hyperlink}>{children}</a>
+  }
+
   if (leaf.code) {
     children = <code>{children}</code>;
   }
@@ -488,14 +507,14 @@ const BlockButton = ({ format, icon }) => {
   );
 };
 
-const MarkButton = ({ format, icon, value }) => {
+const MarkButton = ({ format, icon, value, url }) => {
   const editor = useSlate();
   return (
     <Button
       active={isMarkActive(editor, format)}
       onMouseDown={(event) => {
         event.preventDefault();
-        toggleMark(editor, format, value.color, value.background);
+        toggleMark(editor, format, value.color, value.background, url);
       }}
     >
       {icon}
