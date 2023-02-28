@@ -16,7 +16,13 @@ const text = (
     let wholeParagraph = "";
     for (let i = 0; i < paragraph.children.length; i++) {
       let textContent = paragraph.children[i].text;
-      textContent = textContent.replace("<", "&#60;")
+      textContent = textContent.replace("<", "&#60;");
+      if (paragraph.children[i].hyperlink) {
+        textContent = `<a href="${paragraph.children[i].hyperlink}">${textContent}</a>`;
+      }
+      if (paragraph.children[i].underline) {
+        textContent = `<u>${textContent}</u>`;
+      }
       if (paragraph.children[i].color && paragraph.children[i].background) {
         wholeParagraph += `<span style="text-decoration: none; color: ${paragraph.children[i].color}; background-color: ${paragraph.children[i].background}";>${textContent}</span>`;
       } else if (paragraph.children[i].color) {
@@ -29,21 +35,30 @@ const text = (
       if (paragraph.children[i].bold) {
         wholeParagraph = `<strong>${wholeParagraph}</strong>`;
       }
+      console.log(wholeParagraph);
+      
     }
     //Add an if-statement that checks if the paragraph has a property "hyperlink"? And, if it does, turn the text inside of it into a hyperlink
+
     if (paragraph.type == "heading-two") {
       contentArray.push(
-        `<h2 style="font-family: arial; font-size: 18px; margin: 0px; display: inline-block; line-height: 24px; text-align: ${paragraph.align ? paragraph.align : "left"};">${wholeParagraph}</h2>`
+        `<h2 style="font-family: arial; font-size: 18px; margin: 0px; display: inline-block; line-height: 24px; text-align: ${
+          paragraph.align ? paragraph.align : "left"
+        };">${wholeParagraph}</h2>`
       );
     }
     if (paragraph.type == "heading-one") {
       contentArray.push(
-        `<h1 style="font-family: arial; font-size: 20px; margin: 0px; display: inline-block; line-height: 24px; text-align: ${paragraph.align ? paragraph.align : "left"};">${wholeParagraph}</h1>`
+        `<h1 style="font-family: arial; font-size: 20px; margin: 0px; display: inline-block; line-height: 24px; text-align: ${
+          paragraph.align ? paragraph.align : "left"
+        };">${wholeParagraph}</h1>`
       );
     }
     if (paragraph.type == "paragraph") {
       contentArray.push(
-        `<p style="font-family: arial; margin: 0px; display: inline-block; line-height: 24px; text-align: ${paragraph.align ? paragraph.align : "left"};">${wholeParagraph}</p>`
+        `<p style="font-family: arial; margin: 0px; display: inline-block; line-height: 24px; text-align: ${
+          paragraph.align ? paragraph.align : "left"
+        };">${wholeParagraph}</p>`
       );
     }
   });
@@ -65,7 +80,9 @@ const text = (
     items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"Text"}"  data-columns="${rowType}" data-padding-left="${paddingLeft}" data-padding-right="${paddingRight}" data-padding-top="${paddingTop}" data-padding-bottom="${paddingBottom}" data-column-sizes="${componentSize}"></span>`;
   }
 
-  return `<table width=${componentSize} border="0" cellspacing="0" cellpadding="0" style="border-spacing: 0; width: ${componentSize}px; max-width: ${componentSize}px;mso-table-lspace: 0pt; mso-table-rspace: 0pt;" valign="${align ? align : ""}">
+  return `<table width=${componentSize} border="0" cellspacing="0" cellpadding="0" style="border-spacing: 0; width: ${componentSize}px; max-width: ${componentSize}px;mso-table-lspace: 0pt; mso-table-rspace: 0pt;" valign="${
+    align ? align : ""
+  }">
             <tbody>
                 <tr>
                     <td width="${paddingLeft}"></td>
@@ -74,8 +91,9 @@ const text = (
                 </tr>
                 <tr>
                     <td></td>
-                    <td width="${componentSize - paddingLeft - paddingRight
-    }" valign="${align ? align : ""}">
+                    <td width="${
+                      componentSize - paddingLeft - paddingRight
+                    }" valign="${align ? align : ""}">
                       ${items}
                     </td>
                     <td></td>

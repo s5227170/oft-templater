@@ -22,6 +22,7 @@ export const Button = React.forwardRef(
         className,
         css`
           cursor: pointer;
+          position: relative;
           color: ${reversed
             ? active
               ? "white"

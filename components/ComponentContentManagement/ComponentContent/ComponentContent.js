@@ -10,7 +10,6 @@ import { TiArrowMinimise } from "react-icons/ti";
 
 import classes from "./ComponentContent.module.scss";
 import { useState, useEffect } from "react";
-import Dropdown from "../../UI/Dropdown/Dropdown";
 import { PhotoshopPicker } from "react-color";
 import WidthManager from "../../UI/WidthManager/WidthManager";
 
