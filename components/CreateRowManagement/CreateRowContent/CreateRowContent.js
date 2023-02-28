@@ -12,10 +12,12 @@ const CreateRowContent = (props) => {
     single: false,
     double: false,
     triple: false,
+    quadruple: false,
   });
   const btnOneRef = useRef(null);
   const btnTwoRef = useRef(null);
   const btnThreeRef = useRef(null);
+  const btnFourRef = useRef(null);
   const [customColumnsSize, setCustomColumnsSize] = useState(null);
 
   const buttonChoiceTrigger = (name) => {
@@ -30,6 +32,7 @@ const CreateRowContent = (props) => {
     1: "#40cd9a",
     2: "#008dd7",
     3: "#ce4045",
+    4: "#CE40A3",
   };
 
   const getChoice = () => {
@@ -44,6 +47,9 @@ const CreateRowContent = (props) => {
         }
         if (choice == "triple") {
           return 3;
+        }
+        if (choice == "quadruple") {
+          return 4;
         }
       }
     }
@@ -70,6 +76,13 @@ const CreateRowContent = (props) => {
         btnThreeRef.current.click();
         setCustomColumnsSize(null);
         setCustomColumnsSize({ col1: 200, col2: 200, col3: 200 });
+      }
+    }
+    if (row == 4) {
+      if (btnFourRef) {
+        btnFourRef.current.click();
+        setCustomColumnsSize(null);
+        setCustomColumnsSize({ col1: 150, col2: 150, col3: 150, col4: 150 });
       }
     }
   };
@@ -100,6 +113,12 @@ const CreateRowContent = (props) => {
       setCustomColumnsSize({
         ...customColumnsSize,
         col3: Number(e.target.value),
+      });
+    }
+    if (position == 4) {
+      setCustomColumnsSize({
+        ...customColumnsSize,
+        col4: Number(e.target.value),
       });
     }
   };
@@ -143,7 +162,19 @@ const CreateRowContent = (props) => {
           elementRef={btnThreeRef}
         ></RadioButton>
       </div>
-      {rowConfig.double || rowConfig.triple ? (
+      <div className={classes.RowType} onClick={() => rowClickHandler(4)}>
+        <div className={classes.Generalinfo}>
+          <label>Quadruple-column</label>
+          {/* <img src={Triple} /> */}
+          <Image src="/images/Quadruple.png" alt="" width="100" height="46" />
+        </div>
+        <RadioButton
+          click={() => buttonChoiceTrigger("quadruple")}
+          active={rowConfig.quadruple}
+          elementRef={btnFourRef}
+        ></RadioButton>
+      </div>
+      {rowConfig.double || rowConfig.triple || rowConfig.quadruple ? (
         <div className={classes.RowSizes}>
           <h2>Custom columns sizes</h2>
           <p>Note: Minimum column width is 100 pixels</p>
@@ -186,10 +217,32 @@ const CreateRowContent = (props) => {
                   </div>
                 );
               })
+            : rowConfig.quadruple
+            ? [1, 2, 3, 4].map((row, index) => {
+                return (
+                  <div key={index} className={classes.SizeWrapper}>
+                    <label>Row {index + 1} width</label>
+                    <CustomInput
+                      onKeyDown={preventMinus}
+                      style={{ width: "50px" }}
+                      type="number"
+                      min={0}
+                      max={600}
+                      maxLength={3}
+                      onChange={(e) => sizeChangeHandler(e, index + 1)}
+                      value={customColumnsSize["col" + (index + 1)]}
+                      // disabled={}
+                    />
+                  </div>
+                );
+              })
             : null}
         </div>
       ) : null}
-      {rowConfig.single || rowConfig.double || rowConfig.triple ? (
+      {rowConfig.single ||
+      rowConfig.double ||
+      rowConfig.triple ||
+      rowConfig.quadruple ? (
         <div className={classes.RowPreview}>
           {rowConfig.single
             ? [1].map((row, index) => {
@@ -242,6 +295,23 @@ const CreateRowContent = (props) => {
                   </div>
                 );
               })
+            : rowConfig.quadruple
+            ? [1, 2, 3, 4].map((row, index) => {
+                return (
+                  <div
+                    key={index}
+                    style={{
+                      width: `${customColumnsSize["col" + (index + 1)]}px`,
+                      height: "100%",
+                      backgroundColor: rowColors[(index + 1).toString()],
+                    }}
+                  >
+                    {customColumnsSize["col" + (index + 1)] >= 100
+                      ? "Row " + (index + 1)
+                      : null}
+                  </div>
+                );
+              })
             : null}
         </div>
       ) : null}
@@ -249,7 +319,7 @@ const CreateRowContent = (props) => {
         confirm={"Confirm"}
         cancel={"Cancel"}
         confirmClick={() => {
-          if (!rowConfig.single && !rowConfig.double && !rowConfig.triple) {
+          if (!rowConfig.single && !rowConfig.double && !rowConfig.triple && !rowConfig.quadruple) {
             return alert("PLease choose a row type");
           }
           let overallValue = 0;
