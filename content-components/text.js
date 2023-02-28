@@ -23,6 +23,12 @@ const text = (
       if (paragraph.children[i].underline) {
         textContent = `<u>${textContent}</u>`;
       }
+      if (paragraph.children[i].bold) {
+        textContent = `<strong>${textContent}</strong>`;
+      }
+      if (paragraph.children[i].small) {
+        textContent = `<span style="font-size: 11px;">${textContent}</span>`;
+      }
       if (paragraph.children[i].color && paragraph.children[i].background) {
         wholeParagraph += `<span style="text-decoration: none; color: ${paragraph.children[i].color}; background-color: ${paragraph.children[i].background}";>${textContent}</span>`;
       } else if (paragraph.children[i].color) {
@@ -32,14 +38,7 @@ const text = (
       } else {
         wholeParagraph += textContent;
       }
-      if (paragraph.children[i].bold) {
-        wholeParagraph = `<strong>${wholeParagraph}</strong>`;
-      }
-      console.log(wholeParagraph);
-      
     }
-    //Add an if-statement that checks if the paragraph has a property "hyperlink"? And, if it does, turn the text inside of it into a hyperlink
-
     if (paragraph.type == "heading-two") {
       contentArray.push(
         `<h2 style="font-family: arial; font-size: 18px; margin: 0px; display: inline-block; line-height: 24px; text-align: ${
@@ -71,12 +70,6 @@ const text = (
   }
 
   if (!contentArray.length) {
-    const paddings = {
-      paddingLeft: paddingLeft,
-      paddingRight: paddingRight,
-      paddingTop: paddingTop,
-      paddingBottom: paddingBottom,
-    };
     items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"Text"}"  data-columns="${rowType}" data-padding-left="${paddingLeft}" data-padding-right="${paddingRight}" data-padding-top="${paddingTop}" data-padding-bottom="${paddingBottom}" data-column-sizes="${componentSize}"></span>`;
   }
 
