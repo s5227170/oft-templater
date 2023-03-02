@@ -84,7 +84,7 @@ const ComponentContent = (props) => {
             onMouseDown={props.startResize}
           />
           <Tooltip anchorId="confirm-text" place="top">
-            Confirm text component
+            Resize window
           </Tooltip>
         </div>
         <div className={classes.Header}>
@@ -101,12 +101,12 @@ const ComponentContent = (props) => {
           </h1>
           <div className={classes.EditorIcons}>
             <GiConfirmed
-              id="confirm-text"
+              id="resize-window"
               color="#40CD9A"
               size="25px"
               onClick={preConfirmHandler}
             />
-            <Tooltip anchorId="confirm-text" place="top">
+            <Tooltip anchorId="resize-window" place="top">
               Confirm text component
             </Tooltip>
             <MdOutlineDeleteOutline

@@ -1,11 +1,13 @@
 .ImageEditor {
   display: flex;
   flex-direction: row;
-  width: 700px;
+  min-width: 700px;
+  width: 100%;
 
   .Editor {
     display: flex;
     flex-direction: column;
+    width: 100%;
     .Padding {
       width: 240px;
       display: flex;
@@ -67,14 +69,14 @@
           background: #dddddd;
         }
 
-        input:disabled + span{
+        input:disabled + span {
           background: #dddddd;
         }
       }
     }
 
     .ImagePreview {
-      width: 700px;
+      width: 100%;
       height: 400px;
       margin: auto;
       display: flex;

@@ -47,6 +47,7 @@ const ComponentContentManager = (props) => {
 
   const boxStyle = {
     width: `${dims.w}px`,
+    minWidth: props.componentType == "Image" ? 750 : "auto"
   };
 
   console.log(boxStyle)
