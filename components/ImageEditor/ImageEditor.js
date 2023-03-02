@@ -12,6 +12,7 @@ import CustomInput from "../UI/CustomInput/CustomInput";
 
 const ImageEditor = (props) => {
   const [url, setUrl] = useState("");
+  const [hyperlink, setHyperlink] = useState("");
   const [sizesAllwoed, setSizesAllowed] = useState({
     width: true,
     height: false,
@@ -74,6 +75,10 @@ const ImageEditor = (props) => {
     setUrl(e.target.value);
   };
 
+  const hyperlinkHandler = (e) => {
+    setHyperlink(e.target.value)
+  }
+
   const settingHandler = (setting) => {
     if (setting == 1) {
       setSizesAllowed({ ...sizesAllwoed, width: !sizesAllwoed.width });
@@ -122,6 +127,7 @@ const ImageEditor = (props) => {
         imgWidth: actualImgSize.width,
         imgHeight: actualImgSize.height,
         position: props.positionData.item,
+        hyperlink: hyperlink,
       };
 
       props.contentHandler(
@@ -196,6 +202,12 @@ const ImageEditor = (props) => {
             style={{ width: "400px" }}
             placeholder="Place your img url here"
             onChange={urlHandler}
+          />
+          <CustomInput
+            type="text"
+            style={{ width: "400px" }}
+            placeholder="Add a hyperlink to the image here..."
+            onChange={hyperlinkHandler}
           />
           <div className={classes.InputWithLabel}>
             <label>Image width:</label>

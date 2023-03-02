@@ -97,6 +97,7 @@ const Canvas = (props) => {
         imgWidth: 0,
         imgHeight: 0,
         position: number,
+        hyperlink: "",
       };
     }
     if (type == "MultiImage") {
@@ -198,6 +199,7 @@ const Canvas = (props) => {
               updatedComponent.imgWidth = content.imgWidth;
               updatedComponent.imgHeight = content.imgHeight;
               updatedComponent.position = content.position;
+              updatedComponent.hyperlink = content.hyperlink;
             }
             if (component.type == "MultiImage") {
               updatedComponent.type = component.type;

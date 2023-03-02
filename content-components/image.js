@@ -9,7 +9,8 @@ const image = (
   rowPosition,
   item,
   rowType,
-  columnSizes
+  columnSizes,
+  hyperlink
 ) => {
   let height = "";
   let width = "";
@@ -20,7 +21,11 @@ const image = (
     width = imgWIdth;
   }
   const contentDistribution = url.map((url) => {
-    return `<img style="height:${height}px; width:${width}px;"  width="${width}" height="${height}" src="${url}" />`;
+    if (hyperlink.length) {
+      return `<a href=${hyperlink}><img style="height:${height}px; width:${width}px;"  width="${width}" height="${height}" src="${url}" /></a>`;
+    } else {
+      return `<img style="height:${height}px; width:${width}px;"  width="${width}" height="${height}" src="${url}" />`;
+    }
   });
 
   const componentSize = columnSizes["col" + item];

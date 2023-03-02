@@ -80,7 +80,8 @@ const convertPageConfig = (config) => {
               row.position,
               row.contentComponents[i].position,
               row.columns,
-              row.columnSizes
+              row.columnSizes,
+              row.contentComponents[i].hyperlink
             )
           );
         }
