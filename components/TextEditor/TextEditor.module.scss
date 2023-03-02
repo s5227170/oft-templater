@@ -5,6 +5,7 @@
   .Editor {
     display: flex;
     flex-direction: column;
+    width: 100%;
 
     .VerticalAlign {
       max-width: 240px;
@@ -39,7 +40,6 @@
     .Inputs {
       display: flex;
       flex-direction: column;
-      width: 600px;
       padding: 0px 0px 10px 0px;
       max-height: 500px;
 

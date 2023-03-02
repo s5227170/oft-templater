@@ -39,6 +39,7 @@ const CreateRowContent = (props) => {
     for (let i = 1; i <= Object.keys(customColumnsSize).length; i++) {}
     for (let choice in rowConfig) {
       if (rowConfig[choice] === true) {
+        console.log(choice);
         if (choice == "single") {
           return 1;
         }
@@ -319,7 +320,12 @@ const CreateRowContent = (props) => {
         confirm={"Confirm"}
         cancel={"Cancel"}
         confirmClick={() => {
-          if (!rowConfig.single && !rowConfig.double && !rowConfig.triple && !rowConfig.quadruple) {
+          if (
+            !rowConfig.single &&
+            !rowConfig.double &&
+            !rowConfig.triple &&
+            !rowConfig.quadruple
+          ) {
             return alert("PLease choose a row type");
           }
           let overallValue = 0;

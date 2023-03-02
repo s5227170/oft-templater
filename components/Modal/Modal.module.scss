@@ -15,7 +15,6 @@
   box-shadow: 0px 3px 5px -1px #fff;
   width: fit-content;
   max-height: 90vh;
-
 }
 
 .Backdrop {
@@ -24,11 +23,14 @@
   position: fixed;
   top: 0px;
   left: 0px;
-  background-color: rgb(124, 124, 124);
-  opacity: 0;
+  background-color: rgba(124, 124, 124, 0);
   z-index: 10;
   animation: fadeInAnimation 0.25s linear forwards;
   transition: 0.3s;
+
+  * {
+    opacity: 1 !important;
+  }
 }
 
 .closeModal {
@@ -57,10 +59,10 @@
 
 @keyframes fadeInAnimation {
   from {
-    opacity: 0;
+    background-color: rgba(124, 124, 124, 0);
   }
 
   to {
-    opacity: 0.8;
+    background-color: rgba(124, 124, 124, 0.8);
   }
 }

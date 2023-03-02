@@ -776,9 +776,8 @@ const Leaf = ({ attributes, children, leaf }) => {
   if (leaf.bold) {
     children = <strong>{children}</strong>;
   }
-  console.log(leaf);
   if (leaf.small) {
-    children = <span style={{ fontSize: "11px" }}>{children}</span>;
+    children = <span style={{ fontSize: "11px", lineHeight: "14px" , display: "inline-block" }}>{children}</span>;
   }
   if (leaf.hyperlink) {
     children = (

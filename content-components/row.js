@@ -228,7 +228,7 @@ const threeColumns = (
     `;
 };
 
-const FourColumns = (
+const fourColumns = (
   columnSizes,
   position,
   background,
@@ -238,7 +238,8 @@ const FourColumns = (
   paddingBottom,
   contentComponentOne,
   contentComponentTwo,
-  contentComponentThree
+  contentComponentThree,
+  contentComponentFour
 ) => {
   let contentAlignment = [];
   if (contentComponentOne.verticalAlign == "top") {
@@ -318,8 +319,8 @@ const FourColumns = (
     contentAlignment[2]
   }">${contentComponentThree}</td>
                         <td width="${columnSizes.col4}" valign="${
-    contentAlignment[4]
-  }">${contentComponentThree}</td>
+    contentAlignment[3]
+  }">${contentComponentFour}</td>
                     </tr>
                 </tbody>
               </table>
@@ -336,4 +337,4 @@ const FourColumns = (
     `;
 };
 
-export { oneColumn, twoColumns, threeColumns, FourColumns };
+export { oneColumn, twoColumns, threeColumns, fourColumns };

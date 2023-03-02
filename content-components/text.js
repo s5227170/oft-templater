@@ -27,7 +27,9 @@ const text = (
         textContent = `<strong>${textContent}</strong>`;
       }
       if (paragraph.children[i].small) {
-        textContent = `<span style="font-size: 11px;">${textContent}</span>`;
+        textContent = `<span style="font-size: 11px; line-height: 14px; display: inline-block;">${textContent}</span>`;
+      } else {
+        textContent = `<span style="font-size: 14px; line-height: 20px; display: inline-block;">${textContent}</span>`;
       }
       if (paragraph.children[i].color && paragraph.children[i].background) {
         wholeParagraph += `<span style="text-decoration: none; color: ${paragraph.children[i].color}; background-color: ${paragraph.children[i].background}";>${textContent}</span>`;
@@ -41,21 +43,27 @@ const text = (
     }
     if (paragraph.type == "heading-two") {
       contentArray.push(
-        `<h2 style="font-family: arial; font-size: 18px; margin: 0px; display: inline-block; line-height: 24px; text-align: ${
+        `<h2 style="font-family: arial; font-size: 18px; margin: 0px; display: ${
+          paragraph.align ? "block" : "inline-block"
+        }; line-height: 24px; text-align: ${
           paragraph.align ? paragraph.align : "left"
         };">${wholeParagraph}</h2>`
       );
     }
     if (paragraph.type == "heading-one") {
       contentArray.push(
-        `<h1 style="font-family: arial; font-size: 20px; margin: 0px; display: inline-block; line-height: 24px; text-align: ${
+        `<h1 style="font-family: arial; font-size: 20px; margin: 0px; display: ${
+          paragraph.align ? "block" : "inline-block"
+        }; line-height: 24px; text-align: ${
           paragraph.align ? paragraph.align : "left"
         };">${wholeParagraph}</h1>`
       );
     }
     if (paragraph.type == "paragraph") {
       contentArray.push(
-        `<p style="font-family: arial; margin: 0px; display: inline-block; line-height: 24px; text-align: ${
+        `<p style="font-family: arial; margin: 0px; display: ${
+          paragraph.align ? "block" : "inline-block"
+        }; text-align: ${
           paragraph.align ? paragraph.align : "left"
         };">${wholeParagraph}</p>`
       );

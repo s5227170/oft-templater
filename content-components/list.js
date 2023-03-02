@@ -33,7 +33,9 @@ const list = (
             textContent = `<strong>${textContent}</strong>`;
           }
           if (paragraph.children[i].small) {
-            textContent = `<span style="font-size: 11px;">${textContent}</span>`;
+            textContent = `<span style="font-size: 11px; line-height: 14px;">${textContent}</span>`;
+          } else {
+            textContent = `<span style="font-size: 14px; line-height: 20px;">${textContent}</span>`;
           }
           if (paragraph.children[i].color && paragraph.children[i].background) {
             wholeParagraph += `<span style="text-decoration: none; color: ${paragraph.children[i].color}; background-color: ${paragraph.children[i].background}";>${textContent}</span>`;
@@ -57,7 +59,9 @@ const list = (
           wholeParagraph = `<strong>${paragraph.text}</strong>`;
         }
         if (paragraph.children[i].small) {
-          wholeParagraph = `<span style="font-size: 11px;">${paragraph.text}</span>`;
+          wholeParagraph = `<span style="font-size: 11px; line-height: 14px; display: inline-block;">${paragraph.text}</span>`;
+        } else {
+          wholeParagraph = `<span style="font-size: 14px; line-height: 20px; display: inline-block;">${paragraph.text}</span>`;
         }
         if (paragraph.color && paragraph.background) {
           wholeParagraph += `<span style="color: ${paragraph.color}; background-color: ${paragraph.background}";>${paragraph.text}</span>`;
@@ -70,7 +74,9 @@ const list = (
         }
       }
       contentArray.push(
-        `<li style="font-family: arial; margin: 0px;">${wholeParagraph}</li>`
+        `<li style="font-family: arial; margin: 0px; text-align: ${
+          paragraph.align ? paragraph.align : "left"
+        };">${wholeParagraph}</li>`
       );
     });
   });
