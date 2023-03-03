@@ -50,8 +50,6 @@ const ComponentContentManager = (props) => {
     minWidth: props.componentType == "Image" ? 750 : "auto"
   };
 
-  console.log(boxStyle)
-
   return (
     <div className={classes.ComponentContentManager}>
       <ComponentContentButton

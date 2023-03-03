@@ -314,7 +314,22 @@ const Canvas = (props) => {
   };
 
   useEffect(() => {
-    console.log(pageConfig);
+    if (props.newCanvas) {
+      setPageConfig({
+        content: [],
+        title: "",
+        parameters: {
+          paddingLeft: 0,
+          paddingRight: 0,
+          paddingTop: 0,
+          paddingBottom: 0,
+        },
+      });
+      props.resetCanvasSetting(false);
+    }
+  }, [props.newCanvas]);
+
+  useEffect(() => {
     if (
       pageConfig.content.length ||
       pageConfig.title.length ||
@@ -401,7 +416,7 @@ const Canvas = (props) => {
       }
       setRowSettings(newRowSettings);
     }
-  }, [content]);
+  }, [content, props.guideExpand]);
 
   // console.log(pageConfig)
 

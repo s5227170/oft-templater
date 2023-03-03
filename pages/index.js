@@ -2,28 +2,62 @@
 import { useState } from "react";
 import Head from "next/head";
 
+import { MdArrowDropDownCircle } from "react-icons/md";
+
 import Canvas from "../components/Canvas/Canvas";
 import Menu from "../components/Menu/Menu";
 import TitleContentManager from "../components/TitleManagement/TitleContentManager/TitleContentManager";
 import HigherManagementButton from "../components/UI/HigherManagementButton/HigherManagementButton";
+import DefaultPaddingManager from "../components/DefaultPaddingManagement/DefaultPaddingManager/DefaultPaddingManager";
+import NewCanvasManager from "../components/NewCanvasManagement/NewCanvasManager/NewCanvasManager";
 
 import boilerplate from "../content-components/boilerplate";
 import downloadFile from "../util/downloadFile";
 
 import classes from "../styles/global.module.scss";
-import DefaultPaddingManager from "../components/DefaultPaddingManagement/DefaultPaddingManager/DefaultPaddingManager";
+import TabbedContent from "../components/UI/TabbedContent/TabbedContent";
 
 export default function Home() {
   const [htmlContentString, setHtmlContentString] = useState(``);
   const [titleModalShow, setTitleModalShow] = useState(false);
   const [defaultPaddingModalShow, setDefaultPaddingModalShow] = useState(false);
+  const [newCanvasShow, setNewCanvasShow] = useState(false);
+  const [resetCanvas, setResetCanvas] = useState(false);
   const [emailTitle, setEmailTitle] = useState("");
+  const [guideExpand, setGuideExpand] = useState(false);
   const [defaultComponentPadding, setDefaultComponentPadding] = useState({
     paddingLeft: 0,
     paddingRight: 0,
     paddingTop: 0,
-    paddingBottom: 0
-  })
+    paddingBottom: 0,
+  });
+
+  const tabConfig = [
+    {
+      title: "To begin",
+      text: `To start using this tool, simply create a row from the button with a
+    plus inside of it. This will generate a component that will allow
+    for the creation of a certain type of a row, depending on the user's
+    requirements. Once the user picks a row type, the row will be
+    generated and slots for the different components will be created.
+    These slots allow the users to add and customise content. Once the
+    user has added and finished their component, they click on the tick
+    icon in the upper right, which will confirm the changes and close
+    the modal.`,
+    },
+    {
+      title: "Rows",
+      text: `Rows provide a button for limited customisations at the moment due
+    to the early stage of the application. Some aspects like editing
+    content after submission is currently not available. In order to
+    change content, the user must replace an already existing row with a
+    new one, and adjust its position through the row settings window,
+    which can be accessed via the row buttons on the right.`,
+    },
+    { title: "Components", text: `` },
+    { title: "Editing", text: `` },
+    { title: "Notes", text: `` },
+  ];
 
   const tackleModal = (type) => {
     if (type == "Title") {
@@ -36,12 +70,17 @@ export default function Home() {
         setDefaultPaddingModalShow(!defaultPaddingModalShow);
       }, 250);
     }
+    if (type == "NewCanvas") {
+      setTimeout(() => {
+        setNewCanvasShow(!newCanvasShow);
+      }, 250);
+    }
   };
 
   const exportHtmlHandler = async () => {
     const submitContent = boilerplate(
       htmlContentString ? htmlContentString : "No data",
-      "HTML title"
+      emailTitle ? emailTitle : "HTML title"
     );
     //use .replace(/(\r\n|\n|\r)/gm, ""); in case new line symbols arent removed on the BE
     fetch("http://localhost:3000/api/html", {
@@ -62,14 +101,22 @@ export default function Home() {
     setEmailTitle(title);
   };
 
+  const guideExpandHandler = () => {
+    setGuideExpand(!guideExpand);
+  };
+
+  const confirmNewCanvas = (reset) => {
+    setResetCanvas(reset);
+  };
+
   const confirmDefaultPadding = (setPaddings) => {
     setDefaultComponentPadding({
       paddingLeft: setPaddings.paddingLeft,
       paddingRight: setPaddings.paddingRight,
       paddingTop: setPaddings.paddingTop,
-      paddingBottom: setPaddings.paddingBottom
-    })
-  }
+      paddingBottom: setPaddings.paddingBottom,
+    });
+  };
 
   return (
     <>
@@ -81,29 +128,25 @@ export default function Home() {
       </Head>
       <main>
         <Menu tackleModal={tackleModal} />
-        <div className={classes.Guide}>
+        <div
+          className={classes.Guide}
+          style={{
+            height: guideExpand ? "fit-content" : "50px",
+            transition: ".2s",
+          }}
+        >
+          <MdArrowDropDownCircle
+            className={classes.DropdownToggle}
+            color="#40cd9a"
+            size="30"
+            onClick={guideExpandHandler}
+            style={{
+              transform: guideExpand ? "rotate(180deg)" : "rotate(0deg)",
+              transition: ".2s",
+            }}
+          />
           <h1>Guide</h1>
-          <br></br>
-          <p>
-            To start using this tool, simply create a row from the button with a
-            plus inside of it. This will generate a component that will allow
-            for the creation of a certain type of a row, depending on the user's
-            requirements. Once the user picks a row type, the row will be
-            generated and slots for the different components will be created.
-            These slots allow the users to add and customise content. Once the
-            user has added and finished their component, they click on the tick
-            icon in the upper right, which will confirm the changes and close
-            the modal.
-          </p>
-          <br></br>
-          <p>
-            Rows provide a button for limited customisations at the moment due
-            to the early stage of the application. Some aspects like editing
-            content after submission is currently not available. In order to
-            change content, the user must replace an already existing row with a
-            new one, and adjust its position through the row settings window,
-            which can be accessed via the row buttons on the right.
-          </p>
+          <TabbedContent contents={tabConfig} />
         </div>
         <div className={classes.Export}>
           <HigherManagementButton submitHandler={exportHtmlHandler}>
@@ -111,7 +154,13 @@ export default function Home() {
           </HigherManagementButton>
         </div>
 
-        <Canvas setHTML={setHtmlContentString} defaultComponentPaddings={defaultComponentPadding} />
+        <Canvas
+          setHTML={setHtmlContentString}
+          defaultComponentPaddings={defaultComponentPadding}
+          newCanvas={resetCanvas}
+          resetCanvasSetting={confirmNewCanvas}
+          guideExpand={guideExpand}
+        />
         <TitleContentManager
           tackleModal={() => tackleModal("Title")}
           modalShow={titleModalShow}
@@ -122,6 +171,11 @@ export default function Home() {
           modalShow={defaultPaddingModalShow}
           confirmDefaultPadding={confirmDefaultPadding}
           defaultComponentPaddings={defaultComponentPadding}
+        />
+        <NewCanvasManager
+          tackleModal={() => tackleModal("NewCanvas")}
+          modalShow={newCanvasShow}
+          confirmHandler={confirmNewCanvas}
         />
       </main>
     </>

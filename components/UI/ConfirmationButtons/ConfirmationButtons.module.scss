@@ -7,35 +7,30 @@
     justify-content: flex-end;
 
   .ConfirmButton {
-    padding: 6px 24px;
-    background-color: blue;
-    border-radius: 25px;
-    margin: 0px 10px;
-    background-color: #CE40A3;
-    color: #fff;
-    font-size: 16px;
-    border: 2px solid #fff;
-
-    &:hover {
-        
-        font-weight: bold;
-    }
-  }
-
-  .CancelButton {
-    padding: 6px 24px;
-    background-color: green;
+    padding: 4px 24px;
     border-radius: 24px;
     border: 2px solid #CE40A3;
     background-color: #fff;
     color: #CE40A3;
-    font-size: 16px;
+    margin: 0px 5px;
+
+    &:hover {
+      background-color: #CE40A3;
+        color: #fff;
+    }
+  }
+
+  .CancelButton {
+    padding: 4px 24px;
+    border-radius: 24px;
+    border: 2px solid #CE40A3;
+    background-color: #fff;
+    color: #CE40A3;
+    margin: 0px 5px;
 
     &:hover {
         background-color: #CE40A3;
         color: #fff;
-        font-weight: bold;
-        border: 0px;
     }
   }
 }

@@ -1,0 +1,45 @@
+.TabbedContent {
+  width: 100%;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  .TabWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-end;
+    height: 30px;
+    margin-bottom: 10px;
+
+    .active {
+      height: 50px;
+    }
+    .Tab {
+      background-color: #40cd9a;
+      color: #fff;
+      font-size: 20px;
+      border: 2px solid #fff;
+      padding: 0px 5px;
+      border-radius: 12px 12px 0px 0px;
+      margin: 0px -1px;
+      transition: .3s;
+
+      &:hover {
+        cursor: pointer;
+        filter: brightness(130%);
+        transition: .3s;
+      }
+
+      &:first-child {
+        margin-left: 0px;
+      }
+
+      &:last-child {
+        margin-right: 0px;
+      }
+    }
+  }
+
+  .ContentText {
+  }
+}
