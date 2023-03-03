@@ -15,6 +15,7 @@ const Canvas = (props) => {
   const rootRef = useRef(null);
   const [rowSettings, setRowSettings] = useState([]);
   const [content, setContent] = useState();
+  const [initialLoad, setInitialLoad] = useState(true);
   const [pageConfig, setPageConfig] = useState({
     content: [],
     title: "",
@@ -313,6 +314,18 @@ const Canvas = (props) => {
   };
 
   useEffect(() => {
+    console.log(pageConfig);
+    if (
+      pageConfig.content.length ||
+      pageConfig.title.length ||
+      pageConfig.parameters.paddingLeft != 0 ||
+      pageConfig.parameters.paddingRight != 0 ||
+      pageConfig.parameters.paddingTop != 0 ||
+      pageConfig.parameters.paddingBottom != 0
+    ) {
+      localStorage.setItem("pageConfig", JSON.stringify(pageConfig));
+    }
+
     const conversion = convertPageConfig(pageConfig);
     let fullStringContent = "";
     conversion.map((stringRow) => {
@@ -390,7 +403,18 @@ const Canvas = (props) => {
     }
   }, [content]);
 
+  // console.log(pageConfig)
+
   useEffect(() => {
+    if (initialLoad == true) {
+      let existingConfig = localStorage.getItem("pageConfig");
+      // console.log(existingConfig)
+      if (existingConfig) {
+        existingConfig = JSON.parse(existingConfig);
+        setPageConfig(existingConfig);
+      }
+      setInitialLoad(false);
+    }
     const debouncedHandleResize = debounce(function handleResize() {
       if (content) {
         const newRowSettings = [];
@@ -420,7 +444,7 @@ const Canvas = (props) => {
     return (_) => {
       window.removeEventListener("resize", debouncedHandleResize);
     };
-  });
+  }, []);
 
   return (
     <div className={classes.CanvasWrapper}>

@@ -104,7 +104,6 @@ const convertPageConfig = (config) => {
             )
           );
         }
-        console.log(row.contentComponents);
       }
     } else {
     }
