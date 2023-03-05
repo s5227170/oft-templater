@@ -16,13 +16,18 @@ import downloadFile from "../util/downloadFile";
 
 import classes from "../styles/global.module.scss";
 import TabbedContent from "../components/UI/TabbedContent/TabbedContent";
+import SaveTemplateManager from "../components/SaveTemplateManagement/SaveTemplateManager/SaveTemplateManager";
+import LoadTemplateManager from "../components/LoadTemplateManagement/LoadTemplateManager/LoadTemplateManager";
 
 export default function Home() {
   const [htmlContentString, setHtmlContentString] = useState(``);
-  const [titleModalShow, setTitleModalShow] = useState(false);
-  const [defaultPaddingModalShow, setDefaultPaddingModalShow] = useState(false);
-  const [newCanvasShow, setNewCanvasShow] = useState(false);
+  const [currentPageConfig, setCurrentPageConfig] = useState()
   const [resetCanvas, setResetCanvas] = useState(false);
+  const [loadedTemplate, setLoadedTemplate] = useState(null)
+  const [templateList, setTemplateList] = useState({
+    templates: [],
+    loading: false
+  })
   const [emailTitle, setEmailTitle] = useState("");
   const [guideExpand, setGuideExpand] = useState(false);
   const [defaultComponentPadding, setDefaultComponentPadding] = useState({
@@ -31,6 +36,12 @@ export default function Home() {
     paddingTop: 0,
     paddingBottom: 0,
   });
+
+  const [titleModalShow, setTitleModalShow] = useState(false);
+  const [defaultPaddingModalShow, setDefaultPaddingModalShow] = useState(false);
+  const [newCanvasShow, setNewCanvasShow] = useState(false);
+  const [saveTemplateShow, setSaveTemplateShow] = useState(false)
+  const [loadTemplateShow, setLoadTemplateShow] = useState(false)
 
   const tabConfig = [
     {
@@ -57,6 +68,7 @@ export default function Home() {
     { title: "Components", text: `` },
     { title: "Editing", text: `` },
     { title: "Notes", text: `` },
+    { title: "About", text: `` }
   ];
 
   const tackleModal = (type) => {
@@ -75,14 +87,26 @@ export default function Home() {
         setNewCanvasShow(!newCanvasShow);
       }, 250);
     }
+    if (type == "SaveTemplate") {
+      setTimeout(() => {
+        setSaveTemplateShow(!saveTemplateShow);
+      }, 250);
+    }
+    if (type == "LoadTemplate") {
+      setTimeout(() => {
+        setLoadTemplateShow(!loadTemplateShow);
+      }, 250);
+    }
   };
 
   const exportHtmlHandler = async () => {
+    if (!htmlContentString.length) {
+      return alert("No content to export.")
+    }
     const submitContent = boilerplate(
       htmlContentString ? htmlContentString : "No data",
       emailTitle ? emailTitle : "HTML title"
     );
-    //use .replace(/(\r\n|\n|\r)/gm, ""); in case new line symbols arent removed on the BE
     fetch("http://localhost:3000/api/html", {
       method: "POST",
       body: JSON.stringify(submitContent),
@@ -97,6 +121,47 @@ export default function Home() {
     });
   };
 
+  const saveHtmlHandler = async (filename) => {
+    if (!currentPageConfig.content.length) {
+      return alert("No content to save.")
+    }
+
+    fetch("http://localhost:3000/api/saveHtml", {
+      method: "POST",
+      body: JSON.stringify({
+        content: currentPageConfig,
+        filename: filename,
+      })
+    }).then(async (response) => {
+      if (response.status == 200) {
+        setSaveTemplateShow(!saveTemplateShow);
+        return alert("Template has been successfully saved.")
+      }
+    });
+  }
+
+  const loadListHtmlHandler = async () => {
+    setTemplateList({ ...templateList.templates, loading: true })
+    fetch("http://localhost:3000/api/listTemplates", {
+      method: "GET",
+    }).then(async (response) => {
+      const refiendResponse = await response.json()
+      setTemplateList({ templates: refiendResponse.templates, loading: false })
+    });
+  }
+
+  const loadHtmlHandler = async (filename) => {
+    fetch("http://localhost:3000/api/getTemplate", {
+      method: "POST",
+      body: JSON.stringify({ filename: filename })
+    }).then(async (template) => {
+      const loadedPageConfig = await template.json()
+      setLoadedTemplate({ ...loadedPageConfig })
+      setLoadTemplateShow(!loadTemplateShow)
+      alert("Template has been loaded.")
+    });
+  }
+
   const confirmTitle = (title) => {
     setEmailTitle(title);
   };
@@ -108,6 +173,14 @@ export default function Home() {
   const confirmNewCanvas = (reset) => {
     setResetCanvas(reset);
   };
+
+  const saveTemplateModalHandler = () => {
+    setSaveTemplateShow(!saveTemplateShow);
+  }
+
+  const loadTemplateModalHandler = () => {
+    setLoadTemplateShow(!loadTemplateShow);
+  }
 
   const confirmDefaultPadding = (setPaddings) => {
     setDefaultComponentPadding({
@@ -153,13 +226,26 @@ export default function Home() {
             Export HTML
           </HigherManagementButton>
         </div>
+        <div className={classes.Save}>
+          <HigherManagementButton submitHandler={saveTemplateModalHandler}>
+            Save template
+          </HigherManagementButton>
+        </div>
+        <div className={classes.Load}>
+          <HigherManagementButton submitHandler={() => { loadTemplateModalHandler(), loadListHtmlHandler() }}>
+            Load template
+          </HigherManagementButton>
+        </div>
 
         <Canvas
           setHTML={setHtmlContentString}
+          setStringifiedHTML={setCurrentPageConfig}
           defaultComponentPaddings={defaultComponentPadding}
           newCanvas={resetCanvas}
           resetCanvasSetting={confirmNewCanvas}
           guideExpand={guideExpand}
+          loadedTemplate={loadedTemplate}
+          resetLoadedTemplate={setLoadedTemplate}
         />
         <TitleContentManager
           tackleModal={() => tackleModal("Title")}
@@ -177,6 +263,13 @@ export default function Home() {
           modalShow={newCanvasShow}
           confirmHandler={confirmNewCanvas}
         />
+        <SaveTemplateManager tackleModal={() => tackleModal("SaveTemplate")}
+          modalShow={saveTemplateShow}
+          confirmSave={saveHtmlHandler} />
+
+        <LoadTemplateManager tackleModal={() => tackleModal("LoadTemplate")}
+          modalShow={loadTemplateShow}
+          confirmSave={loadHtmlHandler} config={templateList} />
       </main>
     </>
   );

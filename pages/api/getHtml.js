@@ -7,5 +7,4 @@ export default async function handler(req, res) {
   res.setHeader("Content-Type", "text/html");
   res.setHeader("Content-Disposition", "attachment; filename=Content.html");
   await fs.createReadStream(filePath).pipe(res);
-
 }

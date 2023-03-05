@@ -347,6 +347,7 @@ const Canvas = (props) => {
       fullStringContent += stringRow;
     });
     props.setHTML(fullStringContent);
+    props.setStringifiedHTML(pageConfig)
     const reactContent = parse(fullStringContent, {
       replace: ({ attribs, children }) => {
         if (!attribs) {
@@ -460,6 +461,14 @@ const Canvas = (props) => {
       window.removeEventListener("resize", debouncedHandleResize);
     };
   }, []);
+
+  useEffect(() => {
+    if (props.loadedTemplate) {
+      setPageConfig(props.loadedTemplate)
+      props.resetLoadedTemplate(null)
+    }
+  }, [props.loadedTemplate])
+
 
   return (
     <div className={classes.CanvasWrapper}>
