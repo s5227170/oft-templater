@@ -347,7 +347,7 @@ const Canvas = (props) => {
       fullStringContent += stringRow;
     });
     props.setHTML(fullStringContent);
-    props.setStringifiedHTML(pageConfig)
+    props.setStringifiedHTML(pageConfig);
     const reactContent = parse(fullStringContent, {
       replace: ({ attribs, children }) => {
         if (!attribs) {
@@ -422,15 +422,6 @@ const Canvas = (props) => {
   // console.log(pageConfig)
 
   useEffect(() => {
-    if (initialLoad == true) {
-      let existingConfig = localStorage.getItem("pageConfig");
-      // console.log(existingConfig)
-      if (existingConfig) {
-        existingConfig = JSON.parse(existingConfig);
-        setPageConfig(existingConfig);
-      }
-      setInitialLoad(false);
-    }
     const debouncedHandleResize = debounce(function handleResize() {
       if (content) {
         const newRowSettings = [];
@@ -453,7 +444,7 @@ const Canvas = (props) => {
         }
         setRowSettings(newRowSettings);
       }
-    }, 200);
+    }, 50);
 
     window.addEventListener("resize", debouncedHandleResize);
 
@@ -464,11 +455,22 @@ const Canvas = (props) => {
 
   useEffect(() => {
     if (props.loadedTemplate) {
-      setPageConfig(props.loadedTemplate)
-      props.resetLoadedTemplate(null)
+      setPageConfig(props.loadedTemplate);
+      props.resetLoadedTemplate(null);
     }
-  }, [props.loadedTemplate])
+  }, [props.loadedTemplate]);
 
+  useEffect(() => {
+    if (initialLoad == true) {
+      let existingConfig = localStorage.getItem("pageConfig");
+      // console.log(existingConfig)
+      if (existingConfig) {
+        existingConfig = JSON.parse(existingConfig);
+        setPageConfig(existingConfig);
+      }
+      setInitialLoad(false);
+    }
+  }, []);
 
   return (
     <div className={classes.CanvasWrapper}>
