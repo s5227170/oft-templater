@@ -46,6 +46,7 @@ const TitleContent = (props) => {
         </div>
       </div>
       <div className={classes.Content}>
+        <label>You can add a title for the html file here.</label>
         <CustomInput
           type="text"
           style={{ width: "100%" }}

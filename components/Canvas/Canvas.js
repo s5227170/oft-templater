@@ -325,6 +325,7 @@ const Canvas = (props) => {
           paddingBottom: 0,
         },
       });
+      localStorage.removeItem("pageConfig");
       props.resetCanvasSetting(false);
     }
   }, [props.newCanvas]);

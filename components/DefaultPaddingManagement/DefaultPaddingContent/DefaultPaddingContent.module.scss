@@ -57,6 +57,10 @@
     flex-direction: column;
     width: 100%;
 
+    label {
+      margin: 10px 0px;
+    }
+
     .PaddingInputs {
       display: flex;
       flex-direction: row;

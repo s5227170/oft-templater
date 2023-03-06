@@ -24,10 +24,10 @@ const Menu = (props) => {
                     <MdOutlineTitle id="MdOutlineTitle" {...iconConfig} />
                     <Tooltip anchorId="MdOutlineTitle" content="Add Page Title" place="right" />
                 </li>
-                <li>
+                {/* <li>
                     <MdOutlineSettingsApplications id="MdOutlineSettingsApplications" {...iconConfig} />
                     <Tooltip anchorId="MdOutlineSettingsApplications" content="Configure page settings" place="right" />
-                </li>
+                </li> */}
                 <li  onClick={() => props.tackleModal("NewCanvas")}>
                     <AiOutlineFileAdd id="AiOutlineFileAdd" {...iconConfig} />
                     <Tooltip anchorId="AiOutlineFileAdd" content="Create new canvas" place="right" />

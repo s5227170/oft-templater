@@ -82,6 +82,7 @@ const DefaultPaddingContent = (props) => {
         </div>
       </div>
       <div className={classes.Content}>
+        <label>You can set default padding that will be applied on all components upon creation.</label>
         <div className={classes.PaddingInputs}>
           <PaddingElement change={(e) => paddingHandler(e, "paddingLeft")} value={paddings.paddingLeft}>
             <AiOutlineBorderLeft color="#000" size="40" />

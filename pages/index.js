@@ -18,16 +18,17 @@ import classes from "../styles/global.module.scss";
 import TabbedContent from "../components/UI/TabbedContent/TabbedContent";
 import SaveTemplateManager from "../components/SaveTemplateManagement/SaveTemplateManager/SaveTemplateManager";
 import LoadTemplateManager from "../components/LoadTemplateManagement/LoadTemplateManager/LoadTemplateManager";
+import { tabs } from "../util/tabConfig";
 
 export default function Home() {
   const [htmlContentString, setHtmlContentString] = useState(``);
-  const [currentPageConfig, setCurrentPageConfig] = useState()
+  const [currentPageConfig, setCurrentPageConfig] = useState();
   const [resetCanvas, setResetCanvas] = useState(false);
-  const [loadedTemplate, setLoadedTemplate] = useState(null)
+  const [loadedTemplate, setLoadedTemplate] = useState(null);
   const [templateList, setTemplateList] = useState({
     templates: [],
-    loading: false
-  })
+    loading: false,
+  });
   const [emailTitle, setEmailTitle] = useState("");
   const [guideExpand, setGuideExpand] = useState(false);
   const [defaultComponentPadding, setDefaultComponentPadding] = useState({
@@ -40,36 +41,10 @@ export default function Home() {
   const [titleModalShow, setTitleModalShow] = useState(false);
   const [defaultPaddingModalShow, setDefaultPaddingModalShow] = useState(false);
   const [newCanvasShow, setNewCanvasShow] = useState(false);
-  const [saveTemplateShow, setSaveTemplateShow] = useState(false)
-  const [loadTemplateShow, setLoadTemplateShow] = useState(false)
+  const [saveTemplateShow, setSaveTemplateShow] = useState(false);
+  const [loadTemplateShow, setLoadTemplateShow] = useState(false);
 
-  const tabConfig = [
-    {
-      title: "To begin",
-      text: `To start using this tool, simply create a row from the button with a
-    plus inside of it. This will generate a component that will allow
-    for the creation of a certain type of a row, depending on the user's
-    requirements. Once the user picks a row type, the row will be
-    generated and slots for the different components will be created.
-    These slots allow the users to add and customise content. Once the
-    user has added and finished their component, they click on the tick
-    icon in the upper right, which will confirm the changes and close
-    the modal.`,
-    },
-    {
-      title: "Rows",
-      text: `Rows provide a button for limited customisations at the moment due
-    to the early stage of the application. Some aspects like editing
-    content after submission is currently not available. In order to
-    change content, the user must replace an already existing row with a
-    new one, and adjust its position through the row settings window,
-    which can be accessed via the row buttons on the right.`,
-    },
-    { title: "Components", text: `` },
-    { title: "Editing", text: `` },
-    { title: "Notes", text: `` },
-    { title: "About", text: `` }
-  ];
+  const tabConfig = tabs;
 
   const tackleModal = (type) => {
     if (type == "Title") {
@@ -101,7 +76,7 @@ export default function Home() {
 
   const exportHtmlHandler = async () => {
     if (!htmlContentString.length) {
-      return alert("No content to export.")
+      return alert("No content to export.");
     }
     const submitContent = boilerplate(
       htmlContentString ? htmlContentString : "No data",
@@ -123,7 +98,7 @@ export default function Home() {
 
   const saveHtmlHandler = async (filename) => {
     if (!currentPageConfig.content.length) {
-      return alert("No content to save.")
+      return alert("No content to save.");
     }
 
     fetch("http://localhost:3000/api/saveHtml", {
@@ -131,36 +106,36 @@ export default function Home() {
       body: JSON.stringify({
         content: currentPageConfig,
         filename: filename,
-      })
+      }),
     }).then(async (response) => {
       if (response.status == 200) {
         setSaveTemplateShow(!saveTemplateShow);
-        return alert("Template has been successfully saved.")
+        return alert("Template has been successfully saved.");
       }
     });
-  }
+  };
 
   const loadListHtmlHandler = async () => {
-    setTemplateList({ ...templateList.templates, loading: true })
+    setTemplateList({ ...templateList.templates, loading: true });
     fetch("http://localhost:3000/api/listTemplates", {
       method: "GET",
     }).then(async (response) => {
-      const refiendResponse = await response.json()
-      setTemplateList({ templates: refiendResponse.templates, loading: false })
+      const refiendResponse = await response.json();
+      setTemplateList({ templates: refiendResponse.templates, loading: false });
     });
-  }
+  };
 
   const loadHtmlHandler = async (filename) => {
     fetch("http://localhost:3000/api/getTemplate", {
       method: "POST",
-      body: JSON.stringify({ filename: filename })
+      body: JSON.stringify({ filename: filename }),
     }).then(async (template) => {
-      const loadedPageConfig = await template.json()
-      setLoadedTemplate({ ...loadedPageConfig })
-      setLoadTemplateShow(!loadTemplateShow)
-      alert("Template has been loaded.")
+      const loadedPageConfig = await template.json();
+      setLoadedTemplate({ ...loadedPageConfig });
+      setLoadTemplateShow(!loadTemplateShow);
+      alert("Template has been loaded.");
     });
-  }
+  };
 
   const confirmTitle = (title) => {
     setEmailTitle(title);
@@ -176,11 +151,11 @@ export default function Home() {
 
   const saveTemplateModalHandler = () => {
     setSaveTemplateShow(!saveTemplateShow);
-  }
+  };
 
   const loadTemplateModalHandler = () => {
     setLoadTemplateShow(!loadTemplateShow);
-  }
+  };
 
   const confirmDefaultPadding = (setPaddings) => {
     setDefaultComponentPadding({
@@ -232,7 +207,11 @@ export default function Home() {
           </HigherManagementButton>
         </div>
         <div className={classes.Load}>
-          <HigherManagementButton submitHandler={() => { loadTemplateModalHandler(), loadListHtmlHandler() }}>
+          <HigherManagementButton
+            submitHandler={() => {
+              loadTemplateModalHandler(), loadListHtmlHandler();
+            }}
+          >
             Load template
           </HigherManagementButton>
         </div>
@@ -263,13 +242,18 @@ export default function Home() {
           modalShow={newCanvasShow}
           confirmHandler={confirmNewCanvas}
         />
-        <SaveTemplateManager tackleModal={() => tackleModal("SaveTemplate")}
+        <SaveTemplateManager
+          tackleModal={() => tackleModal("SaveTemplate")}
           modalShow={saveTemplateShow}
-          confirmSave={saveHtmlHandler} />
+          confirmSave={saveHtmlHandler}
+        />
 
-        <LoadTemplateManager tackleModal={() => tackleModal("LoadTemplate")}
+        <LoadTemplateManager
+          tackleModal={() => tackleModal("LoadTemplate")}
           modalShow={loadTemplateShow}
-          confirmSave={loadHtmlHandler} config={templateList} />
+          confirmSave={loadHtmlHandler}
+          config={templateList}
+        />
       </main>
     </>
   );
