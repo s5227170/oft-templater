@@ -14,7 +14,7 @@ const boilerplate = (bodyContent, title) => `
         padding: 0;
         -ms-text-size-adjust: 100%;
         -webkit-text-size-adjust: 100%;
-        background: #e3e3e3;
+        background: #fff;
         font-family: Arial, Helvetica, sans-serif;
         font-size: 14px;
       " leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">

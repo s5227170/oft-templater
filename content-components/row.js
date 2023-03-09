@@ -20,7 +20,7 @@ const oneColumn = (
     contentAlignment = "bottom";
   }
   return `
-        <table id="position-${position}" bgcolor="${background}" width="600" border="0" cellspacing="0" cellpadding="0" style="
+        <table id="position-${position}" bgcolor="${background ? background : "#fff"}" width="600" border="0" cellspacing="0" cellpadding="0" style="
             border-spacing: 0;
             mso-table-lspace: 0pt;
             mso-table-rspace: 0pt;
@@ -83,7 +83,7 @@ const twoColumns = (
     contentAlignment[1] = "bottom";
   }
   return `
-            <table id="position-${position}" bgcolor="${background}" width="600" border="0" cellspacing="0" cellpadding="0" style="
+            <table id="position-${position}" bgcolor="${background ? background : "#fff"}" width="600" border="0" cellspacing="0" cellpadding="0" style="
             border-spacing: 0;
             mso-table-lspace: 0pt;
             mso-table-rspace: 0pt;
@@ -173,7 +173,7 @@ const threeColumns = (
     contentAlignment[2] = "bottom";
   }
   return `
-    <table id="position-${position}" bgcolor="${background}" width="600" border="0" cellspacing="0" cellpadding="0" style="
+    <table id="position-${position}" bgcolor="${background ? background : "#fff"}" width="600" border="0" cellspacing="0" cellpadding="0" style="
     border-spacing: 0;
     mso-table-lspace: 0pt;
     mso-table-rspace: 0pt;

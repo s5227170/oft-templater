@@ -1,4 +1,4 @@
-const downloadFile = async (data) => {
+const downloadFile = async (data, filename, extension) => {
   const blob = await data.blob();
   const newBlob = new Blob([blob]);
 
@@ -6,9 +6,9 @@ const downloadFile = async (data) => {
 
   const link = document.createElement("a");
   link.href = blobUrl;
-  const filename = "Content";
-  const extension = "html";
-  link.setAttribute("download", `${filename}.${extension}`);
+  const fname = filename;
+  const ext = extension;
+  link.setAttribute("download", `${fname}.${ext}`);
   document.body.appendChild(link);
   link.click();
   link.parentNode.removeChild(link);
