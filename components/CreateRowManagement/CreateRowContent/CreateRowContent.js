@@ -369,7 +369,7 @@ const CreateRowContent = (props) => {
           }
           let overallValue = 0
           for (let i = 1; i <= Object.keys(customColumnsSize).length; i++) {
-            if (customColumnsSize["col" + i] < 100) {
+            if (customColumnsSize["col" + i] < 70) {
               return setmessageContent({
                 ...messageContent,
                 message: "Minimum column width is 100 pixels",

@@ -8,7 +8,7 @@ import classes from "./LoadTemplateContent.module.scss"
 import CustomInput from "../../UI/CustomInput/CustomInput"
 import ConfirmationButtons from "../../UI/ConfirmationButtons/ConfirmationButtons"
 import PulseLoader from "react-spinners/PulseLoader"
-import ResultMassage from "../../UI/ResultMessage/ResultMesage"
+import ResultMessage from "../../UI/ResultMessage/ResultMesage"
 
 const LoadTemplateContent = (props) => {
   const [filename, setFilename] = useState("")
@@ -30,12 +30,12 @@ const LoadTemplateContent = (props) => {
       <h1>Load a template</h1>
       <p>
         {error.length ? (
-          <ResultMassage massage={{ massage: error, error: true }} />
+          <ResultMessage message={{ message: error, error: true }} />
         ) : null}
       </p>
       <p>
-        {props.massage.massage.length && props.massage.local ? (
-          <ResultMassage massage={props.massage} />
+        {props.message.message.length && props.message.local ? (
+          <ResultMessage message={props.message} />
         ) : null}
       </p>
       <div className={classes.Templates}>

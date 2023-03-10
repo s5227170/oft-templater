@@ -13,8 +13,8 @@ const LoadTemplateManager = (props) => {
           confirmSave={props.confirmSave}
           config={props.config}
           error={props.error}
-          massage={props.massage}
-          clearMassage={props.clearMassage}
+          message={props.message}
+          clearMessage={props.clearMessage}
         />
       </Modal>
     </div>

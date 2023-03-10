@@ -34,8 +34,6 @@ const list = (
           }
           if (paragraph.children[i].small) {
             textContent = `<span style="font-size: 11px; line-height: 14px;">${textContent}</span>`;
-          } else {
-            textContent = `<span style="font-size: 14px; line-height: 20px;">${textContent}</span>`;
           }
           if (paragraph.children[i].color && paragraph.children[i].background) {
             wholeParagraph += `<span style="text-decoration: none; color: ${paragraph.children[i].color}; background-color: ${paragraph.children[i].background}";>${textContent}</span>`;

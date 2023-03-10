@@ -13,8 +13,8 @@ const SaveTemplateManager = (props) => {
           modalShow={props.modalShow}
           confirmSave={props.confirmSave}
           error={props.error}
-          massage={props.massage}
-          clearMassage={props.clearMassage}
+          message={props.message}
+          clearMessage={props.clearMessage}
         />
       </Modal>
     </div>

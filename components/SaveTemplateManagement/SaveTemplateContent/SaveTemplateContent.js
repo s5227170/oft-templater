@@ -7,7 +7,7 @@ import { ImImages } from "react-icons/im"
 import classes from "./SaveTemplateContent.module.scss"
 import CustomInput from "../../UI/CustomInput/CustomInput"
 import ConfirmationButtons from "../../UI/ConfirmationButtons/ConfirmationButtons"
-import ResultMassage from "../../UI/ResultMessage/ResultMesage"
+import ResultMessage from "../../UI/ResultMessage/ResultMesage"
 
 const SaveTemplateContent = (props) => {
   const [filename, setFilename] = useState("")
@@ -30,12 +30,12 @@ const SaveTemplateContent = (props) => {
       <label>It is a good practice to keep namings clean of white-space.</label>
       <p>
         {error.length ? (
-          <ResultMassage massage={{ massage: error, error: true }} />
+          <ResultMessage message={{ message: error, error: true }} />
         ) : null}
       </p>
       <p>
-        {props.massage.massage.length && props.massage.local ? (
-          <ResultMassage massage={props.massage} />
+        {props.message.message.length && props.message.local ? (
+          <ResultMessage message={props.message} />
         ) : null}
       </p>
       <CustomInput
@@ -47,11 +47,11 @@ const SaveTemplateContent = (props) => {
       <ConfirmationButtons
         confirmClick={() => {
           setError("")
-          props.clearMassage()
+          props.clearMessage
           confirmSubmit()
         }}
         cancelClick={() => {
-          props.tackleModal(), setError(""), props.clearMassage()
+          props.tackleModal(), setError(""), props.clearMessage
         }}
         confirm="Confirm"
         cancel="Cancel"

@@ -6,6 +6,7 @@ import {
 } from "../content-components/row";
 
 const converter = (row, subComponents) => {
+  console.log(subComponents)
   const components = [];
   const htmlContent = [];
   switch (row.columns) {
@@ -44,10 +45,6 @@ const converter = (row, subComponents) => {
           for (let j = 0; j < row.contentComponents.length; j++) {
             if (row.contentComponents[j].position == l) {
               components.push(subComponents[j]);
-            } else {
-              components.push(
-                `<span data-columns="${row.columns}"  id="componentManager" name="row${row.position}#item${l}"></span>`
-              );
             }
           }
         }
@@ -58,6 +55,7 @@ const converter = (row, subComponents) => {
           );
         }
       }
+      console.log(components)
 
       htmlContent.push(
         twoColumns(
