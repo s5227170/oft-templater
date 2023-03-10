@@ -38,8 +38,8 @@ export default function Home() {
     paddingTop: 0,
     paddingBottom: 0,
   })
-  const [massageContent, setMassageContent] = useState({
-    massage: "",
+  const [messageContent, setmessageContent] = useState({
+    message: "",
     success: false,
     error: false,
     local: false,
@@ -50,7 +50,7 @@ export default function Home() {
   const [newCanvasShow, setNewCanvasShow] = useState(false)
   const [saveTemplateShow, setSaveTemplateShow] = useState(false)
   const [loadTemplateShow, setLoadTemplateShow] = useState(false)
-  const [massageHandlerShow, setMassagegeHandlerShow] = useState(false)
+  const [messageHandlerShow, setmessagegeHandlerShow] = useState(false)
 
   const tabConfig = tabs
 
@@ -86,8 +86,8 @@ export default function Home() {
 
   const exportHtmlHandler = async () => {
     if (!htmlContentString.length) {
-      return setMassageContent({
-        massage: "No content to export.",
+      return setmessageContent({
+        message: "No content to export.",
         success: false,
         error: true,
         local: false,
@@ -116,8 +116,8 @@ export default function Home() {
 
   const saveHtmlHandler = async (filename) => {
     if (!currentPageConfig.content.length) {
-      return setMassageContent({
-        massage: "No content to save.",
+      return setmessageContent({
+        message: "No content to save.",
         success: false,
         error: true,
         local: true,
@@ -133,8 +133,8 @@ export default function Home() {
     }).then(async (response) => {
       if (response.status == 200) {
         setSaveTemplateShow(!saveTemplateShow)
-        return setMassageContent({
-          massage: "Template has been successfully saved.",
+        return setmessageContent({
+          message: "Template has been successfully saved.",
           success: true,
           error: false,
           local: false,
@@ -161,8 +161,8 @@ export default function Home() {
       const loadedPageConfig = await template.json()
       setLoadedTemplate({ ...loadedPageConfig })
       setLoadTemplateShow(!loadTemplateShow)
-      return setMassageContent({
-        massage: "Template has been loaded.",
+      return setmessageContent({
+        message: "Template has been loaded.",
         success: true,
         error: false,
         local: false,
@@ -180,10 +180,10 @@ export default function Home() {
   }
 
   useEffect(() => {
-    if (massageContent.massage) {
-      setMassagegeHandlerShow(!massageHandlerShow)
+    if (messageContent.message) {
+      setmessagegeHandlerShow(!messageHandlerShow)
     }
-  }, [massageContent])
+  }, [messageContent])
 
   return (
     <>
@@ -267,11 +267,11 @@ export default function Home() {
           tackleModal={() => tackleModal("SaveTemplate")}
           modalShow={saveTemplateShow}
           confirmSave={saveHtmlHandler}
-          error={setMassageContent}
-          massage={massageContent}
-          clearMassage={() =>
-            setMassageContent({
-              massage: "",
+          error={setmessageContent}
+          message={messageContent}
+          clearmessage={() =>
+            setmessageContent({
+              message: "",
               success: false,
               error: false,
               local: false,
@@ -284,25 +284,25 @@ export default function Home() {
           modalShow={loadTemplateShow}
           confirmSave={loadHtmlHandler}
           config={templateList}
-          error={setMassageContent}
-          massage={massageContent}
-          clearMassage={() =>
-            setMassageContent({
-              massage: "",
+          error={setmessageContent}
+          message={messageContent}
+          clearmessage={() =>
+            setmessageContent({
+              message: "",
               success: false,
               error: false,
               local: false,
             })
           }
         />
-        {!massageContent.local && massageContent.massage.length ? (
+        {!messageContent.local && messageContent.message.length ? (
           <ResultHandler
-            tackleModal={() => setMassagegeHandlerShow(!massageHandlerShow)}
-            modalShow={massageHandlerShow}
-            massage={massageContent}
-            clearMassage={() =>
-              setMassageContent({
-                massage: "",
+            tackleModal={() => setmessagegeHandlerShow(!messageHandlerShow)}
+            modalShow={messageHandlerShow}
+            message={messageContent}
+            clearmessage={() =>
+              setmessageContent({
+                message: "",
                 success: false,
                 error: false,
                 local: false,

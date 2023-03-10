@@ -1,14 +1,14 @@
-import { useRef, useState } from "react";
-import { MdTextFields } from "react-icons/md";
-import { BsListTask } from "react-icons/bs";
-import { BsImage } from "react-icons/bs";
+import { useEffect, useRef, useState } from "react"
+import { MdTextFields } from "react-icons/md"
+import { BsListTask } from "react-icons/bs"
+import { BsImage } from "react-icons/bs"
 import { ImImages } from "react-icons/im"
 
-import ConfirmationButtons from "../../UI/ConfirmationButtons/ConfirmationButtons";
-import ComponentType from "../../UI/ComponentType/ComponentType";
-import RadioButton from "../../UI/RadioButton/RadioButton";
+import ConfirmationButtons from "../../UI/ConfirmationButtons/ConfirmationButtons"
+import ComponentType from "../../UI/ComponentType/ComponentType"
+import RadioButton from "../../UI/RadioButton/RadioButton"
 
-import classes from "./ComponentTypeContent.module.scss";
+import classes from "./ComponentTypeContent.module.scss"
 
 const ComponentTypeContent = (props) => {
   const [componentChoice, setComponentChoice] = useState({
@@ -16,52 +16,52 @@ const ComponentTypeContent = (props) => {
     List: false,
     Image: false,
     MultiImage: false,
-  });
+  })
 
-  const textRef = useRef(null);
-  const listRef = useRef(null);
-  const imageRef = useRef(null);
+  const textRef = useRef(null)
+  const listRef = useRef(null)
+  const imageRef = useRef(null)
   const multiImageRef = useRef(null)
 
   const buttonChoiceTrigger = (name) => {
-    const newComponentChoice = Object.assign({}, componentChoice);
+    const newComponentChoice = Object.assign({}, componentChoice)
     for (let el in newComponentChoice) {
-      newComponentChoice[el] = false;
+      newComponentChoice[el] = false
     }
-    newComponentChoice[name] = true;
-    setComponentChoice(newComponentChoice);
-  };
+    newComponentChoice[name] = true
+    setComponentChoice(newComponentChoice)
+  }
 
   const getChoice = () => {
     for (let choice in componentChoice) {
       if (componentChoice[choice] === true) {
-        return choice;
+        return choice
       }
     }
-  };
+  }
 
   const typeClickHandler = (type) => {
     if (type == 1) {
       if (textRef) {
-        textRef.current.click();
+        textRef.current.click()
       }
     }
     if (type == 2) {
       if (listRef) {
-        listRef.current.click();
+        listRef.current.click()
       }
     }
     if (type == 3) {
       if (imageRef) {
-        imageRef.current.click();
+        imageRef.current.click()
       }
     }
     if (type == 4) {
       if (multiImageRef) {
-        multiImageRef.current.click();
+        multiImageRef.current.click()
       }
     }
-  };
+  }
 
   return (
     <div className={classes.ComponentTypeContent}>
@@ -116,7 +116,7 @@ const ComponentTypeContent = (props) => {
           }
         />
       </div>
-
+      
       <ConfirmationButtons
         confirm={"Confirm"}
         cancel={"Cancel"}
@@ -125,12 +125,12 @@ const ComponentTypeContent = (props) => {
             getChoice(),
             props.elementPosition,
             props.rowColumns
-          );
+          )
         }}
         cancelClick={props.cancelHandler}
       />
     </div>
-  );
-};
+  )
+}
 
-export default ComponentTypeContent;
+export default ComponentTypeContent

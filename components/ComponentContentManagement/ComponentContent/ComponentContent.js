@@ -1,69 +1,97 @@
-import { Tooltip } from "react-tooltip";
+import { Tooltip } from "react-tooltip"
 
-import TextEditor from "../../TextEditor/TextEditor";
-import ImageEditor from "../../ImageEditor/ImageEditor";
-import MultiImageEditor from "../../MultiImageEditor/MultiImageEditor";
+import TextEditor from "../../TextEditor/TextEditor"
+import ImageEditor from "../../ImageEditor/ImageEditor"
+import MultiImageEditor from "../../MultiImageEditor/MultiImageEditor"
 
-import { MdOutlineDeleteOutline } from "react-icons/md";
-import { GiConfirmed } from "react-icons/gi";
-import { TiArrowMinimise } from "react-icons/ti";
-import { CgArrowsExpandLeftAlt } from "react-icons/cg";
+import { MdOutlineDeleteOutline } from "react-icons/md"
+import { GiConfirmed } from "react-icons/gi"
+import { TiArrowMinimise } from "react-icons/ti"
+import { CgArrowsExpandLeftAlt } from "react-icons/cg"
 
-import classes from "./ComponentContent.module.scss";
-import { useState, useEffect, useRef } from "react";
-import { PhotoshopPicker } from "react-color";
-import WidthManager from "../../UI/WidthManager/WidthManager";
+import classes from "./ComponentContent.module.scss"
+import { useState, useEffect, useRef } from "react"
+import { PhotoshopPicker } from "react-color"
+import WidthManager from "../../UI/WidthManager/WidthManager"
+import ResultHandler from "../../ResultHandler/ResultHandler"
 
 const ComponentContent = (props) => {
-  const [submit, setSubmit] = useState(false);
-  const [background, setBackground] = useState(props.row.background);
-  const [colourOpen, setColourOpen] = useState(false);
-  const [position, setPosition] = useState({ row: "", item: "" });
-  const [paddings, setPaddings] = useState(null);
-  const [contentSize, setContentSize] = useState(0);
-  const [remainingWidth, setRemainingWidth] = useState(0);
+  const [submit, setSubmit] = useState(false)
+  const [background, setBackground] = useState(props.row.background)
+  const [colourOpen, setColourOpen] = useState(false)
+  const [position, setPosition] = useState({ row: "", item: "" })
+  const [paddings, setPaddings] = useState(null)
+  const [contentSize, setContentSize] = useState(0)
+  const [remainingWidth, setRemainingWidth] = useState(0)
+  const [modalShow, setModalShow] = useState(false)
+  const [messageContent, setmessageContent] = useState({
+    message: "",
+    success: false,
+    error: false,
+    local: false,
+  })
+
+  const tackleModal = () => {
+    setTimeout(() => {
+      setModalShow(!modalShow)
+    }, 250)
+  }
 
   const colorChoice = (e) => {
-    setBackground(e.hex);
-  };
+    setBackground(e.hex)
+  }
 
   const getContentSize = (size) => {
-    setContentSize(size);
-  };
+    setContentSize(size)
+  }
 
   const getPaddings = (commponentPaddings) => {
-    setPaddings(commponentPaddings);
-  };
+    setPaddings(commponentPaddings)
+  }
 
   const colorHandler = () => {
-    setColourOpen(!colourOpen);
-  };
+    setColourOpen(!colourOpen)
+  }
 
   const preConfirmHandler = () => {
     if (remainingWidth > 0) {
-      return alert("There is still available width that requires to be set");
+      return setmessageContent({
+        ...messageContent,
+        message: "There is still available width that requires to be set",
+        error: true,
+      })
     }
     if (remainingWidth < 0) {
-      return alert("Set sizes exceed the size of the component");
+      return setmessageContent({
+        ...messageContent,
+        message: "Set sizes exceed the size of the component",
+        error: true,
+      })
     }
     if (remainingWidth == 0) {
-      setSubmit(true);
+      setSubmit(true)
     }
-  };
+  }
 
   const widthErrorHandler = (remainingWidth) => {
-    setRemainingWidth(remainingWidth);
-  };
+    setRemainingWidth(remainingWidth)
+  }
 
   useEffect(() => {
-    const row = props.elementPosition.split("#")[0].substr(3);
+    const row = props.elementPosition.split("#")[0].substr(3)
 
     const item = props.elementPosition
       .split("#")[1]
-      .charAt(props.elementPosition.split("#")[1].length - 1);
+      .charAt(props.elementPosition.split("#")[1].length - 1)
 
-    setPosition({ row: row, item: item });
-  }, [props.elementPosition]);
+    setPosition({ row: row, item: item })
+  }, [props.elementPosition])
+
+  useEffect(() => {
+    if (messageContent.message.length) {
+      tackleModal()
+    }
+  }, [messageContent.message])
 
   return (
     <div
@@ -107,15 +135,15 @@ const ComponentContent = (props) => {
               onClick={preConfirmHandler}
             />
             <Tooltip anchorId="resize-window" place="top">
-              Confirm text component
+              Confirm component
             </Tooltip>
             <MdOutlineDeleteOutline
               id="delete-sub-component"
               color="#CE4045"
               size="25px"
               onClick={() => {
-                props.deleteFunction(position.row, position.item);
-                props.cancelHandler();
+                props.deleteFunction(position.row, position.item)
+                props.cancelHandler()
               }}
             />
             <Tooltip anchorId="delete-sub-component" place="top">
@@ -163,6 +191,21 @@ const ComponentContent = (props) => {
             />
           </div>
         </div>
+        {messageContent.message.length ? (
+          <ResultHandler
+            tackleModal={() => tackleModal()}
+            modalShow={modalShow}
+            message={messageContent}
+            clearMessage={() =>
+              setmessageContent({
+                message: "",
+                success: false,
+                error: false,
+                local: false,
+              })
+            }
+          />
+        ) : null}
         {props.componentType == "Text" ? (
           <TextEditor
             componentType={props.componentType}
@@ -216,7 +259,7 @@ const ComponentContent = (props) => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ComponentContent;
+export default ComponentContent

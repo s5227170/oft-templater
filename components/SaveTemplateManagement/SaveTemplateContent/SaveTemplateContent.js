@@ -7,7 +7,7 @@ import { ImImages } from "react-icons/im"
 import classes from "./SaveTemplateContent.module.scss"
 import CustomInput from "../../UI/CustomInput/CustomInput"
 import ConfirmationButtons from "../../UI/ConfirmationButtons/ConfirmationButtons"
-import ResultMassage from "../../UI/ResultMassage/ResultMasage"
+import ResultMassage from "../../UI/ResultMessage/ResultMesage"
 
 const SaveTemplateContent = (props) => {
   const [filename, setFilename] = useState("")

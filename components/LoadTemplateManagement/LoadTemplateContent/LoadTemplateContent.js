@@ -8,7 +8,7 @@ import classes from "./LoadTemplateContent.module.scss"
 import CustomInput from "../../UI/CustomInput/CustomInput"
 import ConfirmationButtons from "../../UI/ConfirmationButtons/ConfirmationButtons"
 import PulseLoader from "react-spinners/PulseLoader"
-import ResultMassage from "../../UI/ResultMassage/ResultMasage"
+import ResultMassage from "../../UI/ResultMessage/ResultMesage"
 
 const LoadTemplateContent = (props) => {
   const [filename, setFilename] = useState("")
