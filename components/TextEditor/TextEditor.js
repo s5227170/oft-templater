@@ -25,6 +25,12 @@ const TextEditor = (props) => {
     bottomAlign: false,
   });
   const [inputData, setInputData] = useState([]);
+  const [mode, setMode] = useState(props.edit ? "Edit" : "Create")
+  const [editComponentStatus, setEditComponentStatus] = useState(props.edit ? {
+    content: props.row.contentComponents.find(item => item.position === props.item),
+    paddings: props.row.contentComponents.find(item => item.position === props.item),
+
+  } : null)
 
   const topAlignRef = useRef(null);
   const middleAlignRef = useRef(null);

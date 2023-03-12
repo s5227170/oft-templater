@@ -28,6 +28,8 @@ const RowSettingsEditor = (props) => {
                   content={refinedContent}
                   position={component.position}
                   deleteComponent={props.deleteComponent}
+                  editComponent={props.editComponent}
+                  tackleEditModal={props.tackleEditModal}
                   tackleModal={props.tackleModal}
                   row={props.row}
                 />
@@ -43,6 +45,8 @@ const RowSettingsEditor = (props) => {
                   height={component.imgHeight}
                   position={component.position}
                   deleteComponent={props.deleteComponent}
+                  editComponent={props.editComponent}
+                  tackleEditModal={props.tackleEditModal}
                   tackleModal={props.tackleModal}
                   row={props.row}
                 />

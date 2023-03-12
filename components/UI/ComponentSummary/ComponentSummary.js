@@ -5,6 +5,7 @@ import { FaAngleDown } from "react-icons/fa";
 
 const ComponentSummary = (props) => {
   const [open, setOpen] = useState(false);
+  console.log(props)
   return (
     <div
       className={
@@ -90,15 +91,27 @@ const ComponentSummary = (props) => {
           </tbody>
         </table>
       ) : null}
-      <button
-        onClick={() => {
-          props.deleteComponent(props.row.position, props.position),
+      <div className={classes.ComponentOptions}>
+        <button
+          onClick={() => {
+            props.tackleEditModal();
+            props.editComponent(props.row, props.position, props.row.position);
             props.tackleModal();
-        }}
-        className={classes.DeleteComponent}
-      >
-        Delete this component
-      </button>
+          }}
+          className={classes.EditComponent}
+        >
+          Edit this component
+        </button>
+        <button
+          onClick={() => {
+            props.deleteComponent(props.row.position, props.position);
+            props.tackleModal();
+          }}
+          className={classes.DeleteComponent}
+        >
+          Delete this component
+        </button>
+      </div>
     </div>
   );
 };

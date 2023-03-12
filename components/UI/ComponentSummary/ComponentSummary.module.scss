@@ -27,8 +27,7 @@
   }
 
   table {
-    tr {
-    }
+    tr {}
 
     th {
       text-align: left;
@@ -55,6 +54,7 @@
       padding-right: 5px;
     }
   }
+
   .DeleteComponent {
     color: #ce4045;
     border: 2px solid #ce4045;
@@ -70,6 +70,22 @@
       color: #fff;
     }
   }
+
+  .EditComponent {
+    color: #40cd9a;
+    border: 2px solid #40cd9a;
+    border-radius: 6px;
+    padding: 5px 10px;
+    background-color: #fff;
+    filter: none;
+    margin-left: auto;
+    margin-right: 5px;
+
+    &:hover {
+      background-color: #40cd9a;
+      color: #fff;
+    }
+  }
 }
 
 .ComponentSummaryNoHover {
@@ -77,6 +93,7 @@
     filter: none;
     cursor: auto;
   }
+
   .dropMode {
     &:hover {
       background-color: #f3f3f3;
@@ -84,5 +101,13 @@
       filter: brightness(80%);
       transition: 0.2s;
     }
+  }
+
+  .ComponentOptions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: fit-content;
+    align-self: flex-end;
   }
 }

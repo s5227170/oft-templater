@@ -61,7 +61,7 @@ const RowSettingsContent = (props) => {
         <Dropdown
           options={props.positionOptions}
           onSelect={selectConfirmation}
-          currentChoice={props.row ?{
+          currentChoice={props.row ? {
             title: "POSITION " + props.row.position,
             value: props.row.position,
           } : null}
@@ -74,6 +74,8 @@ const RowSettingsContent = (props) => {
             row={props.row}
             deleteComponent={props.deleteComponent}
             tackleModal={props.tackleModal}
+            editComponent={props.editComponent}
+            tackleEditModal={props.tackleEditModal}
           />
         ) : (
           <h3>Row has no components yet</h3>

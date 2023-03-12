@@ -10,6 +10,7 @@ import convertPageConfig from "../../util/convert-page-config";
 import ComponentContentManager from "../ComponentContentManagement/ComponentContentManager/ComponentContentManager";
 import RowSettingsManager from "../RowSettingsManagement/RowSettingsManager/RowSettingsManager";
 import debounce from "../../util/debounce";
+import EditComponentManager from "../EditComponentManagement/EditComponentManager/EditComponentManager";
 
 const Canvas = (props) => {
   const rootRef = useRef(null);
@@ -27,6 +28,12 @@ const Canvas = (props) => {
     },
   });
   const [rowPositionConfig, setRowPositionConfig] = useState([]);
+  const [rowComponentStatus, setRowComponentStatus] = useState({
+    row: null,
+    item: null,
+    rowNumber: null,
+  })
+  const [editComponentShow, setEditComponentShow] = useState(false)
 
   const generateComponent = (type, position, columns) => {
     const row = position.split("#")[0].substr(3);
@@ -232,7 +239,7 @@ const Canvas = (props) => {
         const newRowConfig = {
           ...rowConfig,
           parameters: newPaddings,
-          background: rowBackground,
+          background: rowBackground ? rowBackground : "#fff",
           contentComponents: newRowComponentContent,
         };
 
@@ -276,6 +283,14 @@ const Canvas = (props) => {
     // setPageConfig(newPageContent);
   };
 
+  const editComponent = (row, item, rowNumber) => {
+    setRowComponentStatus({
+      row: row,
+      item: item,
+      rowNumber: rowNumber,
+    })
+  }
+
   const deleteRowHandler = (rowPosition) => {
     const newPageContent = [];
     for (let i = 0; i < pageConfig.content.length; i++) {
@@ -312,6 +327,10 @@ const Canvas = (props) => {
       content: [...newPageContent],
     }));
   };
+
+  const tackleEditModal = () => {
+    setEditComponentShow(!editComponentShow)
+  }
 
   useEffect(() => {
     if (props.newCanvas) {
@@ -420,8 +439,6 @@ const Canvas = (props) => {
     }
   }, [content, props.guideExpand]);
 
-  // console.log(pageConfig)
-
   useEffect(() => {
     const debouncedHandleResize = debounce(function handleResize() {
       if (content) {
@@ -479,6 +496,15 @@ const Canvas = (props) => {
         {content}
       </div>
       <CreateRowManager rowGeneration={generateRow} />
+      <EditComponentManager
+        confirmContent={confirmContent}
+        rowNumber={rowComponentStatus.rowNumber}
+        item={rowComponentStatus.item}
+        componentType={rowComponentStatus.type}
+        deleteFunction={deleteContent}
+        row={rowComponentStatus.row}
+        showModal={editComponentShow}
+      />
       {rowSettings.map((row) => {
         return (
           <RowSettingsManager
@@ -489,6 +515,8 @@ const Canvas = (props) => {
             deleteRowHandler={deleteRowHandler}
             positionOptions={rowPositionConfig}
             deleteComponent={deleteContent}
+            editComponent={editComponent}
+            tackleEditModal={tackleEditModal}
           />
         );
       })}
