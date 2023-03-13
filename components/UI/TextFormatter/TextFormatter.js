@@ -1,115 +1,117 @@
-import React, { useCallback, useMemo, useState } from "react";
-import { Tooltip } from "react-tooltip";
-import { SketchPicker, PhotoshopPicker } from "react-color";
-import isHotkey from "is-hotkey";
-import { Editable, withReact, useSlate, Slate } from "slate-react";
+import React, { useCallback, useMemo, useState } from "react"
+import { Tooltip } from "react-tooltip"
+import { SketchPicker, PhotoshopPicker } from "react-color"
+import isHotkey from "is-hotkey"
+import { Editable, withReact, useSlate, Slate } from "slate-react"
 import {
   Editor,
   Transforms,
   createEditor,
   Element as SlateElement,
-} from "slate";
-import { withHistory } from "slate-history";
+} from "slate"
+import { withHistory } from "slate-history"
 
-import { FaItalic, FaHeading, FaListUl, FaUnderline } from "react-icons/fa";
-import { ImBold } from "react-icons/im";
+import { FaItalic, FaHeading, FaListUl, FaUnderline } from "react-icons/fa"
+import { ImBold } from "react-icons/im"
 import {
   MdOutlineBorderColor,
   MdOutlineFormatColorFill,
   MdTextFields,
-} from "react-icons/md";
+} from "react-icons/md"
 import {
   GrTextAlignLeft,
   GrTextAlignCenter,
   GrTextAlignRight,
   GrTextAlignFull,
-} from "react-icons/gr";
-import { AiOutlineLink } from "react-icons/ai";
+} from "react-icons/gr"
+import { AiOutlineLink } from "react-icons/ai"
 
-import Modal from "../../Modal/Modal";
+import Modal from "../../Modal/Modal"
 import {
   Button,
   HyperlinkContent,
   Icon,
   Toolbar,
-} from "./components/components";
+} from "./components/components"
 
-import classes from "./TextFormatter.module.scss";
+import classes from "./TextFormatter.module.scss"
 
 const HOTKEYS = {
   "mod+b": "bold",
   "mod+i": "italic",
   "mod+u": "underline",
   "mod+`": "code",
-};
+}
 
-const LIST_TYPES = ["numbered-list", "bulleted-list"];
-const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
+const LIST_TYPES = ["numbered-list", "bulleted-list"]
+const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"]
 
 const RichTextExample = (editorProps) => {
   const [elementSettings, setElementSettings] = useState({
     background: "rgb(255, 255, 255)",
     color: "rgb(0, 0, 0)",
-  });
-  const [hyperlink, setHyperlink] = useState("");
-  const [hyperlinkModal, setHyperlinkModal] = useState(false);
+  })
+  const [hyperlink, setHyperlink] = useState("")
+  const [hyperlinkModal, setHyperlinkModal] = useState(false)
   const renderElement = useCallback(
     (props, elementSettings, hyperlink) => {
       const newProps = Object.assign(props, elementSettings, {
         url: hyperlink,
-      });
-      return <Element {...newProps} />;
+      })
+      return <Element {...newProps} />
     },
     [elementSettings, hyperlink]
-  );
-  const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
-  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
+  )
+  const renderLeaf = useCallback((props) => <Leaf {...props} />, [])
+  const editor = useMemo(() => withHistory(withReact(createEditor())), [])
   const [colorScheme, setColorScheme] = useState({
     background: false,
     color: false,
-  });
+  })
 
   const colorChoice = (e, colorType) => {
     if (colorType == 1) {
-      setElementSettings({ ...elementSettings, background: e.hex });
+      setElementSettings({ ...elementSettings, background: e.hex })
     }
     if (colorType == 2) {
-      setElementSettings({ ...elementSettings, color: e.hex });
+      setElementSettings({ ...elementSettings, color: e.hex })
     }
-  };
+  }
 
   const colorHandler = (colorType) => {
     if (colorType == 1) {
-      setColorScheme({ ...colorScheme, background: !colorScheme.background });
+      setColorScheme({ ...colorScheme, background: !colorScheme.background })
     }
     if (colorType == 2) {
-      setColorScheme({ ...colorScheme, color: !colorScheme.color });
+      setColorScheme({ ...colorScheme, color: !colorScheme.color })
     }
-  };
+  }
 
   const openHyperlinkSettings = () => {
     setTimeout(() => {
-      setHyperlinkModal(!hyperlinkModal);
-    }, 250);
-  };
+      setHyperlinkModal(!hyperlinkModal)
+    }, 250)
+  }
 
   const confirmLink = (link) => {
-    setHyperlink(link);
-  };
+    setHyperlink(link)
+  }
 
   return (
     <Slate
       editor={editor}
-      value={initialValue}
+      value={
+        editorProps.currentContent ? editorProps.currentContent : initialValue
+      }
       //This line bellow could be used to generate text into oft format
       onChange={(value) => {
-        editorProps.extractData(value);
+        editorProps.extractData(value)
         const isAstChange = editor.operations.some(
           (op) => "set_selection" !== op.type
-        );
+        )
         if (isAstChange) {
           // Save the value to Local Storage.
-          const content = JSON.stringify(value);
+          const content = JSON.stringify(value)
         }
       }}
     >
@@ -397,7 +399,7 @@ const RichTextExample = (editorProps) => {
               value={elementSettings}
               icon={
                 <>
-                  <FaListUl color="#008DD7" size="22" id="list-item-list"/>
+                  <FaListUl color="#008DD7" size="22" id="list-item-list" />
                   <Tooltip anchorId="list-item-list" place="top">
                     Turn Into a List
                   </Tooltip>
@@ -433,7 +435,11 @@ const RichTextExample = (editorProps) => {
               value={elementSettings}
               icon={
                 <>
-                  <FaUnderline color="#008DD7" size="20" id="font-underline-list" />
+                  <FaUnderline
+                    color="#008DD7"
+                    size="20"
+                    id="font-underline-list"
+                  />
                   <Tooltip anchorId="font-underline-list" place="top">
                     Underline
                   </Tooltip>
@@ -490,7 +496,11 @@ const RichTextExample = (editorProps) => {
               format="left"
               icon={
                 <>
-                  <GrTextAlignLeft color="#008DD7" size="22" id="align-left-list" />
+                  <GrTextAlignLeft
+                    color="#008DD7"
+                    size="22"
+                    id="align-left-list"
+                  />
                   <Tooltip anchorId="align-left-list" place="top">
                     Align Left
                   </Tooltip>
@@ -589,32 +599,32 @@ const RichTextExample = (editorProps) => {
         onKeyDown={(event) => {
           for (const hotkey in HOTKEYS) {
             if (isHotkey(hotkey, event)) {
-              event.preventDefault();
-              const mark = HOTKEYS[hotkey];
+              event.preventDefault()
+              const mark = HOTKEYS[hotkey]
 
-              const innerHTML = event.target.innerHTML;
+              const innerHTML = event.target.innerHTML
               const matches = innerHTML.match(
                 /(?:[0-9]{3})\b|(?:rgb)\([^\)]*\)/gi
-              );
-              const color = matches[0].toString();
-              const background = matches[1].toString();
+              )
+              const color = matches[0].toString()
+              const background = matches[1].toString()
 
-              toggleMark(editor, mark, color, background, hyperlink);
+              toggleMark(editor, mark, color, background, hyperlink)
             }
           }
         }}
       />
     </Slate>
-  );
-};
+  )
+}
 
 const toggleBlock = (editor, format) => {
   const isActive = isBlockActive(
     editor,
     format,
     TEXT_ALIGN_TYPES.includes(format) ? "align" : "type"
-  );
-  const isList = LIST_TYPES.includes(format);
+  )
+  const isList = LIST_TYPES.includes(format)
 
   Transforms.unwrapNodes(editor, {
     match: (n) =>
@@ -623,73 +633,73 @@ const toggleBlock = (editor, format) => {
       LIST_TYPES.includes(n.type) &&
       !TEXT_ALIGN_TYPES.includes(format),
     split: true,
-  });
-  let newProperties;
+  })
+  let newProperties
   if (TEXT_ALIGN_TYPES.includes(format)) {
     newProperties = {
       align: isActive ? undefined : format,
-    };
+    }
   } else {
     newProperties = {
       type: isActive ? "paragraph" : isList ? "list-item" : format,
-    };
+    }
   }
 
-  Transforms.setNodes(editor, newProperties);
+  Transforms.setNodes(editor, newProperties)
 
   if (!isActive && isList) {
-    const block = { type: format, children: [] };
-    Transforms.wrapNodes(editor, block);
+    const block = { type: format, children: [] }
+    Transforms.wrapNodes(editor, block)
   }
-};
+}
 
 const toggleMark = (editor, format, color, background, url) => {
   if (format == "background") {
-    const isActive = isMarkActive(editor, format);
+    const isActive = isMarkActive(editor, format)
 
     if (isActive) {
-      Editor.removeMark(editor, format);
+      Editor.removeMark(editor, format)
     } else {
-      Editor.addMark(editor, format, background);
+      Editor.addMark(editor, format, background)
     }
   } else if (format == "color") {
-    const isActive = isMarkActive(editor, format);
+    const isActive = isMarkActive(editor, format)
 
     if (isActive) {
-      Editor.removeMark(editor, format);
+      Editor.removeMark(editor, format)
     } else {
-      Editor.addMark(editor, format, color);
+      Editor.addMark(editor, format, color)
     }
   } else if (format == "hyperlink") {
-    const isActive = isMarkActive(editor, format);
+    const isActive = isMarkActive(editor, format)
 
     if (isActive) {
-      Editor.removeMark(editor, format);
+      Editor.removeMark(editor, format)
     } else {
-      Editor.addMark(editor, format, url);
+      Editor.addMark(editor, format, url)
     }
   } else if (format == "small-text") {
-    const isActive = isMarkActive(editor, format);
+    const isActive = isMarkActive(editor, format)
 
     if (isActive) {
-      Editor.removeMark(editor, format);
+      Editor.removeMark(editor, format)
     } else {
-      Editor.addMark(editor, format, true);
+      Editor.addMark(editor, format, true)
     }
   } else {
-    const isActive = isMarkActive(editor, format);
+    const isActive = isMarkActive(editor, format)
 
     if (isActive) {
-      Editor.removeMark(editor, format);
+      Editor.removeMark(editor, format)
     } else {
-      Editor.addMark(editor, format, true);
+      Editor.addMark(editor, format, true)
     }
   }
-};
+}
 
 const isBlockActive = (editor, format, blockType = "type") => {
-  const { selection } = editor;
-  if (!selection) return false;
+  const { selection } = editor
+  if (!selection) return false
 
   const [match] = Array.from(
     Editor.nodes(editor, {
@@ -699,118 +709,128 @@ const isBlockActive = (editor, format, blockType = "type") => {
         SlateElement.isElement(n) &&
         n[blockType] === format,
     })
-  );
+  )
 
-  return !!match;
-};
+  return !!match
+}
 
 const isMarkActive = (editor, format) => {
-  const marks = Editor.marks(editor);
-  return marks ? marks[format] === true : false;
-};
+  const marks = Editor.marks(editor)
+  return marks ? marks[format] === true : false
+}
 
 const Element = ({ attributes, children, element, color, background, url }) => {
   const style = {
     textAlign: element.align,
-  };
+  }
   switch (element.type) {
     case "background":
       return (
         <span style={{ backgroundColor: background }} {...attributes}>
           {children}
         </span>
-      );
+      )
     case "color":
       return (
         <span style={{ color: color }} {...attributes}>
           {children}
         </span>
-      );
+      )
     case "block-quote":
       return (
         <blockquote style={style} {...attributes}>
           {children}
         </blockquote>
-      );
+      )
     case "bulleted-list":
       return (
         <ul style={style} {...attributes}>
           {children}
         </ul>
-      );
+      )
     case "heading-one":
       return (
         <h1 style={style} {...attributes}>
           {children}
         </h1>
-      );
+      )
     case "heading-two":
       return (
         <h2 style={style} {...attributes}>
           {children}
         </h2>
-      );
+      )
     case "list-item":
       return (
         <li style={style} {...attributes}>
           {children}
         </li>
-      );
+      )
     case "numbered-list":
       return (
         <ol style={style} {...attributes}>
           {children}
         </ol>
-      );
+      )
     default:
       return (
         <p style={style} {...attributes}>
           {children}
         </p>
-      );
+      )
   }
-};
+}
 
 const Leaf = ({ attributes, children, leaf }) => {
   if (leaf.bold) {
-    children = <strong>{children}</strong>;
+    children = <strong>{children}</strong>
   }
   if (leaf.small) {
-    children = <span style={{ fontSize: "11px", lineHeight: "14px" , display: "inline-block" }}>{children}</span>;
+    children = (
+      <span
+        style={{
+          fontSize: "11px",
+          lineHeight: "14px",
+          display: "inline-block",
+        }}
+      >
+        {children}
+      </span>
+    )
   }
   if (leaf.hyperlink) {
     children = (
       <a data-hyperlink={`hyperlink: ${leaf.hyperlink}`} href={leaf.hyperlink}>
         {children}
       </a>
-    );
+    )
   }
 
   if (leaf.code) {
-    children = <code>{children}</code>;
+    children = <code>{children}</code>
   }
 
   if (leaf.italic) {
-    children = <em>{children}</em>;
+    children = <em>{children}</em>
   }
 
   if (leaf.underline) {
-    children = <u>{children}</u>;
+    children = <u>{children}</u>
   }
   if (leaf.color) {
-    children = <span style={{ color: leaf.color }}>{children}</span>;
+    children = <span style={{ color: leaf.color }}>{children}</span>
   }
   if (leaf.background) {
     children = (
       <span style={{ backgroundColor: leaf.background }}>{children}</span>
-    );
+    )
   }
 
-  return <span {...attributes}>{children}</span>;
-};
+  return <span {...attributes}>{children}</span>
+}
 
 const BlockButton = ({ format, icon }) => {
-  const editor = useSlate();
+  const editor = useSlate()
   return (
     <Button
       active={isBlockActive(
@@ -819,35 +839,35 @@ const BlockButton = ({ format, icon }) => {
         TEXT_ALIGN_TYPES.includes(format) ? "align" : "type"
       )}
       onMouseDown={(event) => {
-        event.preventDefault();
-        toggleBlock(editor, format);
+        event.preventDefault()
+        toggleBlock(editor, format)
       }}
     >
       <Icon>{icon}</Icon>
     </Button>
-  );
-};
+  )
+}
 
 const MarkButton = ({ format, icon, value, url }) => {
-  const editor = useSlate();
+  const editor = useSlate()
   return (
     <Button
       active={isMarkActive(editor, format)}
       onMouseDown={(event) => {
-        event.preventDefault();
-        toggleMark(editor, format, value.color, value.background, url);
+        event.preventDefault()
+        toggleMark(editor, format, value.color, value.background, url)
       }}
     >
       {icon}
     </Button>
-  );
-};
+  )
+}
 
 const initialValue = [
   {
     type: "paragraph",
     children: [{ text: "" }],
   },
-];
+]
 
-export default RichTextExample;
+export default RichTextExample

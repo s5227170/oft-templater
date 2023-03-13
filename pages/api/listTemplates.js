@@ -1,5 +1,5 @@
 import fs from "fs";
-const htmlFolder = './html';
+const htmlFolder = './html/saves';
 
 export default async function handler(req, res) {
     const availableFiles = [];

@@ -6,6 +6,7 @@ import classes from "./EditComponentManager.module.scss";
 
 const EditComponentManager = (props) => {
     const [modalShow, setModalShow] = useState(false);
+    console.log(modalShow)
 
     const tackleModal = () => {
         setTimeout(() => {
@@ -53,14 +54,12 @@ const EditComponentManager = (props) => {
         setModalShow(props.showModal)
     }, [props.showModal])
 
-    console.log(props)
-
     return (
         <div className={classes.EditComponentManager}>
             <Modal tackleModal={tackleModal} modalShow={modalShow}>
                 <EditComponentContent
-                    cancelHandler={tackleModal}
-                    confirmHandler={props.confirmContent}
+                    tackleModal={tackleModal}
+                    confirmContent={props.confirmContent}
                     deleteFunction={props.deleteFunction}
                     row={props.row}
                     rowNumber={props.rowNumber}
@@ -68,7 +67,10 @@ const EditComponentManager = (props) => {
                     boxStyle={boxStyle}
                     startResize={startResize}
                     resizeFrame={resizeFrame}
-                    stopResize={stopResize} />
+                    stopResize={stopResize} 
+                    resetModal={props.resetModal}
+                    edit={true}
+                    />
             </Modal>
         </div>
     );

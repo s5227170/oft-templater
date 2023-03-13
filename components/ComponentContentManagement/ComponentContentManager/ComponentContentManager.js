@@ -61,7 +61,7 @@ const ComponentContentManager = (props) => {
             columnSize={props.columnSize}
             defaultPaddings={props.defaultPaddings}
             componentType={props.componentType}
-            cancelHandler={tackleModal}
+            tackleModal={tackleModal}
             confirmHandler={props.confirmContent}
             elementPosition={props.elementPosition}s
             deleteFunction={props.deleteFunction}

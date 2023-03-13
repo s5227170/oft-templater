@@ -1,11 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useState } from "react";
-import classes from "./ComponentSummary.module.scss";
-import { FaAngleDown } from "react-icons/fa";
+import { useState } from "react"
+import classes from "./ComponentSummary.module.scss"
+import { FaAngleDown } from "react-icons/fa"
 
 const ComponentSummary = (props) => {
-  const [open, setOpen] = useState(false);
-  console.log(props)
+  const [open, setOpen] = useState(false)
   return (
     <div
       className={
@@ -38,13 +37,13 @@ const ComponentSummary = (props) => {
               <td>{props.type}</td>
               <td>{...props.paddings.join(", ")}</td>
               <td>
-                {props.content.map((paragraph) => {
+                {props.content.map((paragraph, index) => {
                   return (
-                    <>
+                    <div key={"paragraph-" + index}>
                       {paragraph}
                       <br></br>
-                    </>
-                  );
+                    </div>
+                  )
                 })}
               </td>
             </tr>
@@ -82,9 +81,16 @@ const ComponentSummary = (props) => {
             <tr>
               <td>{props.type}</td>
               <td>{...props.paddings.join(", ")}</td>
-              <td>{props.url.map(url => {
-                return <>{url}<br></br></>
-              })}</td>
+              <td>
+                {props.url.map(url, (index) => {
+                  return (
+                    <div key={"url-" + index}>
+                      {url}
+                      <br></br>
+                    </div>
+                  )
+                })}
+              </td>
               <td>{props.width}px</td>
               <td>{props.height}px</td>
             </tr>
@@ -94,9 +100,9 @@ const ComponentSummary = (props) => {
       <div className={classes.ComponentOptions}>
         <button
           onClick={() => {
-            props.tackleEditModal();
-            props.editComponent(props.row, props.position, props.row.position);
-            props.tackleModal();
+            props.tackleEditModal()
+            props.editComponent(props.row, props.position, props.row.position)
+            props.tackleModal()
           }}
           className={classes.EditComponent}
         >
@@ -104,8 +110,8 @@ const ComponentSummary = (props) => {
         </button>
         <button
           onClick={() => {
-            props.deleteComponent(props.row.position, props.position);
-            props.tackleModal();
+            props.deleteComponent(props.row.position, props.position)
+            props.tackleModal()
           }}
           className={classes.DeleteComponent}
         >
@@ -113,7 +119,7 @@ const ComponentSummary = (props) => {
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ComponentSummary;
+export default ComponentSummary

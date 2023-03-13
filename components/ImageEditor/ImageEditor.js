@@ -1,79 +1,80 @@
-import { useRef, useState, useEffect } from "react";
-import PaddingElement from "../UI/PaddingElement/PaddingElement";
-import classes from "./ImageEditor.module.scss";
+import { useRef, useState, useEffect } from "react"
+import PaddingElement from "../UI/PaddingElement/PaddingElement"
+import classes from "./ImageEditor.module.scss"
 
 import {
   AiOutlineBorderLeft,
   AiOutlineBorderRight,
   AiOutlineBorderTop,
   AiOutlineBorderBottom,
-} from "react-icons/ai";
-import CustomInput from "../UI/CustomInput/CustomInput";
+} from "react-icons/ai"
+import CustomInput from "../UI/CustomInput/CustomInput"
 
 const ImageEditor = (props) => {
-  const [url, setUrl] = useState("");
-  const [hyperlink, setHyperlink] = useState("");
+  console.log(props)
+  const [url, setUrl] = useState(props.edit? props.component.url  : "")
+  const [hyperlink, setHyperlink] = useState("")
   const [sizesAllwoed, setSizesAllowed] = useState({
     width: true,
     height: false,
-  });
+  })
   const [paddings, setPaddings] = useState({
     paddingLeft: 0,
     paddingRight: 0,
     paddingTop: 0,
     paddingBottom: 0,
-  });
+  })
   const [imageSize, setImageSize] = useState({
-    width: props.columnSize,
+    width: props.edit ? props.imgWidth : props.columnSize,
     height: 0,
-  });
-  const imgHolderRef = useRef();
+  })
+  const imgHolderRef = useRef()
 
   const paddingHandler = (e, el) => {
     if (e.target.value.length > 3) {
-      e.target.value = e.target.value.slice(0, 3);
+      e.target.value = e.target.value.slice(0, 3)
     }
-    const newPaddings = { ...paddings, [el]: e.target.value };
+    const newPaddings = { ...paddings, [el]: e.target.value }
 
-    setPaddings(newPaddings);
-  };
+    setPaddings(newPaddings)
+  }
 
   const preventMinus = (e) => {
     if (e.code === "Minus") {
-      e.preventDefault();
+      e.preventDefault()
     }
-  };
+  }
 
   const imageSizeRestricter = (e, property) => {
     if (property == 1 && +e.target.value > +props.columnSize) {
-      e.target.value = +props.columnSize;
+      e.target.value = +props.columnSize
     }
     if (property == 2 && imageSize.height > 600) {
-      e.target.value = 600;
+      e.target.value = 600
     }
     if (e.target.value.length > 3) {
-      e.target.value = e.target.value.slice(0, 3);
+      e.target.value = e.target.value.slice(0, 3)
     }
     if (property == 1) {
-      setImageSize({ ...imageSize, width: +e.target.value });
+      setImageSize({ ...imageSize, width: +e.target.value })
       if (sizesAllwoed.width) {
-        imgHolderRef.current.style.width = `${e.target.value}px`;
+        imgHolderRef.current.style.width = `${e.target.value}px`
       } else {
-        imgHolderRef.current.style.width = `auto`;
+        imgHolderRef.current.style.width = `auto`
       }
     } else {
-      setImageSize({ ...imageSize, height: +e.target.value });
+      setImageSize({ ...imageSize, height: +e.target.value })
       if (sizesAllwoed.height) {
-        imgHolderRef.current.style.height = `${e.target.value}px`;
+        imgHolderRef.current.style.height = `${e.target.value}px`
       } else {
-        imgHolderRef.current.style.height = `auto`;
+        imgHolderRef.current.style.height = `auto`
       }
     }
-  };
+  }
 
   const urlHandler = (e) => {
-    setUrl(e.target.value);
-  };
+    setUrl(e.target.value)
+  }
 
   const hyperlinkHandler = (e) => {
     setHyperlink(e.target.value)
@@ -81,39 +82,39 @@ const ImageEditor = (props) => {
 
   const settingHandler = (setting) => {
     if (setting == 1) {
-      setSizesAllowed({ ...sizesAllwoed, width: !sizesAllwoed.width });
+      setSizesAllowed({ ...sizesAllwoed, width: !sizesAllwoed.width })
       if (sizesAllwoed.width) {
-        imgHolderRef.current.style.width = `auto`;
+        imgHolderRef.current.style.width = `auto`
       } else {
-        imgHolderRef.current.style.width = `${imageSize.width}px`;
+        imgHolderRef.current.style.width = `${imageSize.width}px`
       }
     }
     if (setting == 2) {
-      setSizesAllowed({ ...sizesAllwoed, height: !sizesAllwoed.height });
+      setSizesAllowed({ ...sizesAllwoed, height: !sizesAllwoed.height })
       if (sizesAllwoed.height) {
-        imgHolderRef.current.style.height = `auto`;
+        imgHolderRef.current.style.height = `auto`
       } else {
-        imgHolderRef.current.style.height = `${imageSize.height}px`;
+        imgHolderRef.current.style.height = `${imageSize.height}px`
       }
     }
-  };
+  }
 
   useEffect(() => {
     //Use props.row to check how many columns there are and set size according to that
-    const actualImgSize = { width: "", height: "" };
+    const actualImgSize = { width: "", height: "" }
     if (sizesAllwoed.width && !sizesAllwoed.height) {
-      actualImgSize.width = imageSize.width;
+      actualImgSize.width = imageSize.width
     }
     if (!sizesAllwoed.width && sizesAllwoed.height) {
-      actualImgSize.height = imageSize.height;
+      actualImgSize.height = imageSize.height
     }
     if (sizesAllwoed.width && sizesAllwoed.height) {
-      actualImgSize.height = imageSize.height;
-      actualImgSize.width = imageSize.width;
+      actualImgSize.height = imageSize.height
+      actualImgSize.width = imageSize.width
     }
 
     if (actualImgSize.width > props.columnSize || actualImgSize.width == "") {
-      actualImgSize.width = props.columnSize;
+      actualImgSize.width = props.columnSize
     }
 
     if (props.submission) {
@@ -128,16 +129,17 @@ const ImageEditor = (props) => {
         imgHeight: actualImgSize.height,
         position: props.positionData.item,
         hyperlink: hyperlink,
-      };
+      }
 
-      props.contentHandler(
+      props.confirmContent(
         props.positionData.row,
         props.positionData.item,
         props.background,
         allData
-      );
+      )
+      props.resetComponent()
     }
-  }, [props.submission]);
+  }, [props.submission])
 
   useEffect(() => {
     if (
@@ -146,9 +148,9 @@ const ImageEditor = (props) => {
       props.defaultPaddings.paddingTop > 0 ||
       props.defaultPaddings.paddingBottom > 0
     ) {
-      setPaddings(props.defaultPaddings);
+      setPaddings(props.defaultPaddings)
     }
-  }, [props.defaultPaddings]);
+  }, [props.defaultPaddings])
 
   useEffect(() => {
     props.getPaddings(paddings)
@@ -160,7 +162,7 @@ const ImageEditor = (props) => {
 
   useEffect(() => {
     if (imgHolderRef.current) {
-      imgHolderRef.current.style.width = `${imageSize.width}px`;
+      imgHolderRef.current.style.width = `${imageSize.width}px`
     }
   }, [imgHolderRef])
 
@@ -249,6 +251,6 @@ const ImageEditor = (props) => {
         </div>
       </div>
     </div>
-  );
-};
-export default ImageEditor;
+  )
+}
+export default ImageEditor

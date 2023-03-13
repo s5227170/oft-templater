@@ -15,6 +15,7 @@ const ContentInput = (props) => {
             index={props.textId}
             componentType={props.componentType}
             positionData={props.positionData}
+            currentContent={props.currentContent? props.currentContent : null}
           />
         </div>
       </div>

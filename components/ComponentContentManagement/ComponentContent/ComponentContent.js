@@ -143,7 +143,7 @@ const ComponentContent = (props) => {
               size="25px"
               onClick={() => {
                 props.deleteFunction(position.row, position.item)
-                props.cancelHandler()
+                props.tackleModal()
               }}
             />
             <Tooltip anchorId="delete-sub-component" place="top">
@@ -154,7 +154,7 @@ const ComponentContent = (props) => {
               id="close-modal-text"
               color="#008DD7"
               size="25px"
-              onClick={props.cancelHandler}
+              onClick={props.tackleModal}
             />
             <Tooltip anchorId="close-modal-text" place="top">
               Close Modal
@@ -209,7 +209,7 @@ const ComponentContent = (props) => {
         {props.componentType == "Text" ? (
           <TextEditor
             componentType={props.componentType}
-            contentHandler={props.confirmHandler}
+            confirmContent={props.confirmHandler}
             submission={submit}
             positionData={position}
             defaultPaddings={props.defaultPaddings}
@@ -217,6 +217,12 @@ const ComponentContent = (props) => {
             background={background}
             getPaddings={getPaddings}
             getContentSize={getContentSize}
+            resetComponent={() => {
+              props.tackleModal(), setSubmit(false)
+            }}
+            errorBridge={(content) =>
+              setmessageContent({ ...messageContent, ...content })
+            }
           />
         ) : props.componentType == "List" ? (
           <TextEditor

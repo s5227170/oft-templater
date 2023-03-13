@@ -1,16 +1,16 @@
-import { useState, useEffect, useRef } from "react";
-import PaddingElement from "../UI/PaddingElement/PaddingElement";
-import classes from "./TextEditor.module.scss";
+import { useState, useEffect, useRef } from "react"
+import PaddingElement from "../UI/PaddingElement/PaddingElement"
+import classes from "./TextEditor.module.scss"
 
 import {
   AiOutlineBorderLeft,
   AiOutlineBorderRight,
   AiOutlineBorderTop,
   AiOutlineBorderBottom,
-} from "react-icons/ai";
-import ContentInput from "../UI/ContentInput/ContentInput";
-import AlignType from "../UI/AlignType/AlignType";
-import RadioButton from "../UI/RadioButton/RadioButton";
+} from "react-icons/ai"
+import ContentInput from "../UI/ContentInput/ContentInput"
+import AlignType from "../UI/AlignType/AlignType"
+import RadioButton from "../UI/RadioButton/RadioButton"
 
 const TextEditor = (props) => {
   const [paddings, setPaddings] = useState({
@@ -18,108 +18,132 @@ const TextEditor = (props) => {
     paddingRight: 0,
     paddingTop: 0,
     paddingBottom: 0,
-  });
+  })
   const [componentChoice, setComponentChoice] = useState({
     topAlign: false,
     middleAlign: false,
     bottomAlign: false,
-  });
-  const [inputData, setInputData] = useState([]);
-  const [mode, setMode] = useState(props.edit ? "Edit" : "Create")
-  const [editComponentStatus, setEditComponentStatus] = useState(props.edit ? {
-    content: props.row.contentComponents.find(item => item.position === props.item),
-    paddings: props.row.contentComponents.find(item => item.position === props.item),
+  })
+  const [inputData, setInputData] = useState([])
+  const [editComponentStatus, setEditComponentStatus] = useState(
+    props.edit
+      ? {
+          content: props.row.contentComponents.find(
+            (item) => item.position === props.item
+          ),
+          paddings: props.row.contentComponents.find(
+            (item) => item.position === props.item
+          ),
+        }
+      : null
+  )
 
-  } : null)
-
-  const topAlignRef = useRef(null);
-  const middleAlignRef = useRef(null);
-  const bottomAlignRef = useRef(null);
+  const topAlignRef = useRef(null)
+  const middleAlignRef = useRef(null)
+  const bottomAlignRef = useRef(null)
 
   const buttonChoiceTrigger = (name) => {
-    const newComponentChoice = Object.assign({}, componentChoice);
+    const newComponentChoice = Object.assign({}, componentChoice)
     for (let el in newComponentChoice) {
-      newComponentChoice[el] = false;
+      newComponentChoice[el] = false
     }
-    newComponentChoice[name] = true;
-    setComponentChoice(newComponentChoice);
-  };
+    newComponentChoice[name] = true
+    setComponentChoice(newComponentChoice)
+  }
 
   const typeClickHandler = (type) => {
     if (type == 1) {
       if (topAlignRef) {
-        topAlignRef.current.click();
+        topAlignRef.current.click()
       }
     }
     if (type == 2) {
       if (middleAlignRef) {
-        middleAlignRef.current.click();
+        middleAlignRef.current.click()
       }
     }
     if (type == 3) {
       if (bottomAlignRef) {
-        bottomAlignRef.current.click();
+        bottomAlignRef.current.click()
       }
     }
-  };
+  }
 
   const paddingHandler = (e, el) => {
     if (e.target.value.length > 3) {
-      e.target.value = e.target.value.slice(0, 3);
+      e.target.value = e.target.value.slice(0, 3)
     }
-    const newPaddings = { ...paddings, [el]: e.target.value };
+    const newPaddings = { ...paddings, [el]: e.target.value }
 
-    setPaddings(newPaddings);
-  };
+    setPaddings(newPaddings)
+  }
 
   const dataExtractionHandler = (content) => {
-    setInputData(content);
-  };
+    setInputData(content)
+  }
 
   useEffect(() => {
     if (props.submission) {
-      let alignment = "";
+      let textContent = []
+      if (inputData.length) {
+        textContent = inputData
+      } else if (props.currentContent) {
+        textContent = props.currentContent
+      } else {
+        return props.errorBridge({
+          message: "You haven't made any changes.",
+          error: true,
+        })
+      }
+      let alignment = ""
       if (componentChoice.topAlign) {
-        alignment = "top";
+        alignment = "top"
       }
       if (componentChoice.middleAlign) {
-        alignment = "middle";
+        alignment = "middle"
       }
       if (componentChoice.bottomAlign) {
-        alignment = "bottom";
+        alignment = "bottom"
       }
+      console.log(props.currentContent)
       const allData = {
         type: props.componentType,
         paddingLeft: paddings.paddingLeft,
         paddingRight: paddings.paddingRight,
         paddingTop: paddings.paddingTop,
         paddingBottom: paddings.paddingBottom,
-        content: inputData,
+        content: textContent,
         position: props.positionData.item,
         VerticalAlign: alignment,
-      };
-
-      props.contentHandler(
+      }
+      props.confirmContent(
         props.positionData.row,
         props.positionData.item,
         props.background,
         allData
-      );
+      )
+      props.resetComponent()
     }
-  }, [props.submission]);
+  }, [props.submission])
 
   useEffect(() => {
-    if (props.defaultPaddings.paddingLeft > 0 ||
+    if (
+      props.defaultPaddings.paddingLeft > 0 ||
       props.defaultPaddings.paddingRight > 0 ||
       props.defaultPaddings.paddingTop > 0 ||
-      props.defaultPaddings.paddingBottom > 0) {
+      props.defaultPaddings.paddingBottom > 0
+    ) {
       setPaddings(props.defaultPaddings)
     }
   }, [props.defaultPaddings])
 
   useEffect(() => {
-    props.getPaddings(paddings)
-    props.getContentSize(props.columnSize - paddings.paddingLeft - paddings.paddingRight)
+    if (!props.edit) {
+      props.getPaddings(paddings)
+      props.getContentSize(
+        props.columnSize - paddings.paddingLeft - paddings.paddingRight
+      )
+    }
   }, [paddings, props.columnSize])
 
   return (
@@ -128,16 +152,28 @@ const TextEditor = (props) => {
         <div className={classes.Padding}>
           <h2 className={classes.Heading}>Component padding:</h2>
           <div className={classes.PaddingInputs}>
-            <PaddingElement change={(e) => paddingHandler(e, "paddingLeft")} value={paddings.paddingLeft}>
+            <PaddingElement
+              change={(e) => paddingHandler(e, "paddingLeft")}
+              value={paddings.paddingLeft}
+            >
               <AiOutlineBorderLeft color="#000" size="40" />
             </PaddingElement>
-            <PaddingElement change={(e) => paddingHandler(e, "paddingRight")} value={paddings.paddingRight}>
+            <PaddingElement
+              change={(e) => paddingHandler(e, "paddingRight")}
+              value={paddings.paddingRight}
+            >
               <AiOutlineBorderRight color="#000" size="40" />
             </PaddingElement>
-            <PaddingElement change={(e) => paddingHandler(e, "paddingTop")} value={paddings.paddingTop}>
+            <PaddingElement
+              change={(e) => paddingHandler(e, "paddingTop")}
+              value={paddings.paddingTop}
+            >
               <AiOutlineBorderTop color="#000" size="40" />
             </PaddingElement>
-            <PaddingElement change={(e) => paddingHandler(e, "paddingBottom")} value={paddings.paddingBottom}>
+            <PaddingElement
+              change={(e) => paddingHandler(e, "paddingBottom")}
+              value={paddings.paddingBottom}
+            >
               <AiOutlineBorderBottom color="#000" size="40" />
             </PaddingElement>
           </div>
@@ -185,12 +221,15 @@ const TextEditor = (props) => {
             <ContentInput
               extractData={dataExtractionHandler}
               componentType={props.componentType}
+              currentContent={
+                props.currentContent ? props.currentContent : null
+              }
             />
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TextEditor;
+export default TextEditor
