@@ -1,12 +1,5 @@
 import { useEffect, useRef, useState } from "react"
 import { MdOutlineDeleteOutline, MdTextFields } from "react-icons/md"
-import { BsListTask } from "react-icons/bs"
-import { BsImage } from "react-icons/bs"
-import { ImImages } from "react-icons/im"
-
-import ConfirmationButtons from "../../UI/ConfirmationButtons/ConfirmationButtons"
-import ComponentType from "../../UI/ComponentType/ComponentType"
-import RadioButton from "../../UI/RadioButton/RadioButton"
 
 import classes from "./EditComponentContent.module.scss"
 import TextEditor from "../../TextEditor/TextEditor"

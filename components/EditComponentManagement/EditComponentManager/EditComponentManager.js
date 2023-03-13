@@ -6,7 +6,6 @@ import classes from "./EditComponentManager.module.scss";
 
 const EditComponentManager = (props) => {
     const [modalShow, setModalShow] = useState(false);
-    console.log(modalShow)
 
     const tackleModal = () => {
         setTimeout(() => {

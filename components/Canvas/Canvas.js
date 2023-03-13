@@ -490,8 +490,6 @@ const Canvas = (props) => {
     }
   }, [])
 
-  console.log(editComponentShow)
-
   return (
     <div className={classes.CanvasWrapper}>
       <div id="targetDiv" ref={rootRef}>
