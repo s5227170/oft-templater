@@ -82,7 +82,7 @@ const ComponentSummary = (props) => {
               <td>{props.type}</td>
               <td>{...props.paddings.join(", ")}</td>
               <td>
-                {props.url.map(url, (index) => {
+                {props.url.map((url, index) => {
                   return (
                     <div key={"url-" + index}>
                       {url}

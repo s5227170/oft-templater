@@ -11,27 +11,29 @@ const multiImage = (
   rowType,
   columnSizes
 ) => {
-  let height = "";
-  let width = "";
+  let height = ""
+  let width = ""
   if (imgHeight != 0) {
-    height = imgHeight;
+    height = imgHeight
   }
   if (imgWIdth != 0) {
-    width = imgWIdth;
+    width = imgWIdth
   }
-  const contentDistribution = [];
+  const contentDistribution = []
   url.map((url) => {
     contentDistribution.push(
-      `<td><img style="height:${height}px; width:${width}px; margin: 0px;"  width="${width}" height="${height}" src="${url}" /></td>`
-    );
-  });
+      `<img style="height:${height}px; width:${width}px; margin: 0px;"  width="${width}" height="${height}" src="${url}" />`
+    )
+  })
 
-  const componentSize = columnSizes["col" + item];
+  const componentSize = columnSizes["col" + item]
 
-  let items = "";
+  console.log(componentSize)
+
+  let items = ""
   if (contentDistribution.length) {
     for (let i = 0; i < contentDistribution.length; i++) {
-      items += contentDistribution[i];
+      items += contentDistribution[i]
     }
   }
 
@@ -41,8 +43,8 @@ const multiImage = (
       paddingRight: paddingRight,
       paddingTop: paddingTop,
       paddingBottom: paddingBottom,
-    };
-    items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"MultiImage"}" data-columns="${rowType}" data-padding-left="${paddingLeft}" data-padding-right="${paddingRight}" data-padding-top="${paddingTop}" data-padding-bottom="${paddingBottom}" data-column-sizes="${componentSize}"></span>`;
+    }
+    items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"MultiImage"}" data-columns="${rowType}" data-padding-left="${paddingLeft}" data-padding-right="${paddingRight}" data-padding-top="${paddingTop}" data-padding-bottom="${paddingBottom}" data-column-sizes="${componentSize}"></span>`
   }
 
   // if (rowType == 1) {
@@ -55,29 +57,25 @@ const multiImage = (
               <tbody>
                   <tr>
                       <td width="${paddingLeft}"></td>
-                      <td height="${paddingTop}"></td>
+                      <td height="${paddingTop}" width="1"></td>
                       <td width="${paddingRight}"></td>
                   </tr>
                   <tr>
                     <td  width="${paddingLeft}"></td>
-                    <td>
-                      <table>
-                        <tbody>
-                          <tr>
+                    <td width="${componentSize - paddingLeft - paddingRight}">
+                     
                             ${items}
-                          </tr>
-                        </tbody>
-                      </table>
+                          
                     </td>
                     <td width="${paddingRight}"></td>
                   </tr>
                   <tr>
                       <td width="${paddingLeft}"></td>
-                      <td height="${paddingTop}"></td>
+                      <td height="${paddingTop}" width="1"></td>
                       <td width="${paddingRight}"></td>
                   </tr>
               </tbody>
-            </table>`;
-};
+            </table>`
+}
 
-export default multiImage;
+export default multiImage

@@ -18,6 +18,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
   padding-bottom: 25px;
+  max-height: 90vh;
+  overflow: hidden;
 
   .Resizer {
     position: absolute;
@@ -26,9 +28,12 @@
     margin: 10px 5px 5px 10px;
     z-index: 10;
 
+    svg:focus {
+      outline: none;
+    }
+
     &:hover {
       filter: brightness(130%);
-      cursor: pointer;
     }
   }
 

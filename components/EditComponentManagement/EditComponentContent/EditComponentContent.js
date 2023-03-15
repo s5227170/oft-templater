@@ -186,7 +186,11 @@ const EditComponentContent = (props) => {
                 <h2>Remaining space to fill</h2>
                 <WidthManager
                   constraintWidth={widthErrorHandler}
-                  rowSize={props.edit? props.row.columnSizes[`col${props.item}`] : props.columnSize}
+                  rowSize={
+                    props.edit
+                      ? props.row.columnSizes[`col${props.item}`]
+                      : props.columnSize
+                  }
                   paddingLeft={paddings ? paddings.paddingLeft : 0}
                   paddingRight={paddings ? paddings.paddingRight : 0}
                   componentSize={contentSize}
@@ -296,11 +300,11 @@ const EditComponentContent = (props) => {
             edit={true}
             row={props.row}
             resetComponent={() => {
-                props.resetModal(), setSubmit(false)
-              }}
-              errorBridge={(content) =>
-                setmessageContent({ ...messageContent, ...content })
-              }
+              props.resetModal(), setSubmit(false)
+            }}
+            errorBridge={(content) =>
+              setmessageContent({ ...messageContent, ...content })
+            }
           />
         )}
       </div>

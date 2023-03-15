@@ -239,7 +239,7 @@ const ComponentContent = (props) => {
         ) : props.componentType == "Image" ? (
           <ImageEditor
             componentType={props.componentType}
-            contentHandler={props.confirmHandler}
+            confirmContent={props.confirmContent}
             submission={submit}
             positionData={position}
             row={props.row}
@@ -248,11 +248,17 @@ const ComponentContent = (props) => {
             background={background}
             getPaddings={getPaddings}
             getContentSize={getContentSize}
+            resetComponent={() => {
+              props.tackleModal(), setSubmit(false)
+            }}
+            errorBridge={(content) =>
+              setmessageContent({ ...messageContent, ...content })
+            }
           />
         ) : (
           <MultiImageEditor
             componentType={props.componentType}
-            contentHandler={props.confirmHandler}
+            confirmContent={props.confirmContent}
             submission={submit}
             positionData={position}
             row={props.row}
@@ -261,6 +267,12 @@ const ComponentContent = (props) => {
             background={background}
             getPaddings={getPaddings}
             getContentSize={getContentSize}
+            resetComponent={() => {
+              props.tackleModal(), setSubmit(false)
+            }}
+            errorBridge={(content) =>
+              setmessageContent({ ...messageContent, ...content })
+            }
           />
         )}
       </div>

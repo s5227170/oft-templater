@@ -437,7 +437,7 @@ const Canvas = (props) => {
       }
       setRowSettings(newRowSettings)
     }
-  }, [content, props.guideExpand])
+  }, [content, props.guideExpand, pageConfig])
 
   useEffect(() => {
     const debouncedHandleResize = debounce(function handleResize() {
