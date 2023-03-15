@@ -34,3 +34,6 @@ yarn-error.log*
 #html generated files
 # html/Content.html
 html/*
+
+#Code counter extension
+.VSCodeCounter
