@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-const filePath = path.join(__dirname, "../../../../html/");
+const filePath = path.join(__dirname, "../../../../html/saves/");
 
 export default async function handler(req, res) {
     const parsedData = JSON.parse(req.body);

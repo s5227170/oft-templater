@@ -18,7 +18,7 @@ const text = (
       let textContent = paragraph.children[i].text
       textContent = textContent.replace("<", "&#60;")
       if (paragraph.children[i].hyperlink) {
-        textContent = `<a style="text-decoration: none;" href="${paragraph.children[i].hyperlink}">${textContent}</a>`
+        textContent = `<a style="text-decoration: none; color: ${paragraph.children[i].color? paragraph.children[i].color : "inherit"};" href="${paragraph.children[i].hyperlink}">${textContent}</a>`
       }
       if (paragraph.children[i].underline) {
         textContent = `<u>${textContent}</u>`
