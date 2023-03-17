@@ -59,7 +59,6 @@ const text = (
       )
     }
     if (paragraph.type == "paragraph") {
-      console.log(paragraph)
       contentArray.push(
         `<p style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; display: inline-block; text-align: ${
           paragraph.align ? paragraph.align : "left"

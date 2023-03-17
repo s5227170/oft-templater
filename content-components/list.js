@@ -15,7 +15,6 @@ const list = (
   let type = ""
   const componentSize = columnSizes["col" + item]
   const contentDistribution = content.map((paragraph) => {
-    console.log(paragraph)
     let wholeParagraph = ""
     if (paragraph.children) {
       for (let i = 0; i < paragraph.children.length; i++) {
@@ -55,7 +54,6 @@ const list = (
             } else {
               wholeParagraph += textContent
             }
-            console.log(wholeParagraph)
             contentArray.push(
               `<li style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${
                 paragraph.align ? paragraph.align : "left"
@@ -97,7 +95,6 @@ const list = (
     } else {
       type = "Type 3"
       wholeParagraph = wholeParagraph.replace("<", "&#60;")
-      console.log(paragraph)
       let textContent = paragraph.text
       textContent = textContent.replace("<", "&#60;")
       if (paragraph.hyperlink) {
@@ -124,7 +121,6 @@ const list = (
         wholeParagraph += textContent
       }
     }
-    // console.log(wholeParagraph)
     if (wholeParagraph != "") {
       if (type != "type 1") {
         contentArray.push(

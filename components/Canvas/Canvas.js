@@ -417,25 +417,27 @@ const Canvas = (props) => {
 
   useEffect(() => {
     if (content) {
-      const newRowSettings = []
-      for (let i = 1; i <= pageConfig.content.length; i++) {
-        const row = document.getElementById("position-" + i)
-        if (row) {
-          const rowRightCoordinates = row.getBoundingClientRect().right
-          const rowTopCoordinates = row.offsetTop
-          const rowHeight = row.offsetHeight
-          const settingsTriggerCoordinates = {
-            position: i,
-            coordinates: {
-              right: rowRightCoordinates,
-              top: rowTopCoordinates,
-            },
-            height: rowHeight,
+      setTimeout(() => {
+        const newRowSettings = []
+        for (let i = 1; i <= pageConfig.content.length; i++) {
+          const row = document.getElementById("position-" + i)
+          if (row) {
+            const rowRightCoordinates = row.getBoundingClientRect().right
+            const rowTopCoordinates = row.offsetTop
+            const rowHeight = row.offsetHeight
+            const settingsTriggerCoordinates = {
+              position: i,
+              coordinates: {
+                right: rowRightCoordinates,
+                top: rowTopCoordinates,
+              },
+              height: rowHeight,
+            }
+            newRowSettings.push(settingsTriggerCoordinates)
           }
-          newRowSettings.push(settingsTriggerCoordinates)
         }
-      }
-      setRowSettings(newRowSettings)
+        setRowSettings(newRowSettings)
+      }, 50)
     }
   }, [content, props.guideExpand, pageConfig])
 
@@ -460,9 +462,14 @@ const Canvas = (props) => {
             newRowSettings.push(settingsTriggerCoordinates)
           }
         }
+        console.log(newRowSettings)
         setRowSettings(newRowSettings)
       }
-    }, 50)
+    }, 20)
+
+    setTimeout(() => {
+      debouncedHandleResize()
+    }, 500)
 
     window.addEventListener("resize", debouncedHandleResize)
 
@@ -504,7 +511,9 @@ const Canvas = (props) => {
         deleteFunction={deleteContent}
         row={rowComponentStatus.row}
         showModal={editComponentShow}
-        resetModal={() => {setEditComponentShow(false)}}
+        resetModal={() => {
+          setEditComponentShow(false)
+        }}
       />
       {rowSettings.map((row) => {
         return (
