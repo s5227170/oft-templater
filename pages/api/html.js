@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     `X-Microsoft-CDO-MessageType: 0x1000`,
   ]
 
-  fs.mkdir("./html/saves", { recursive: true }, (err) => {
+  fs.mkdir("./html/content", { recursive: true }, (err) => {
     if (err) throw err
   })
 
