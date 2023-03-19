@@ -29,6 +29,7 @@ export const tabs = [
     title: "Components",
     text: (
       <>
+        <h3><strong>Components</strong></h3>
         <p>
           There are three main types of components - Text, List, and Image. The
           Text and List components are almost identical, although, Text
@@ -43,6 +44,7 @@ export const tabs = [
           modal window resized width-wise for comfort.
         </p>
         <br></br>
+        <h3><strong>Text</strong></h3>
         <p>
           Text components is straightforward. It has a text editor field which
           does require the user to click on an option, set the colour they want,
@@ -53,6 +55,7 @@ export const tabs = [
           may be troublesome, however, it will be fixed in a future update.
         </p>
         <br></br>
+        <h3><strong>List</strong></h3>
         <p>
           In a List component, all "new" lines will be created as a separate
           bullet point. This means that if an empty line is left empty, it will
@@ -62,6 +65,7 @@ export const tabs = [
           turned into li elements after compilation.
         </p>
         <br></br>
+        <h3><strong>Image</strong></h3>
         <p>
           Image components utilise url's to load images. Fetched images can be
           seen on the screen on the bottom of the modal window. They can be

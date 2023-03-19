@@ -4,6 +4,7 @@ import { TiArrowMinimise } from "react-icons/ti";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import CustomInput from "../../UI/CustomInput/CustomInput";
+import IconButton from "../../UI/IconButton/IconButton";
 
 import classes from "./TitleContent.module.scss";
 
@@ -19,30 +20,17 @@ const TitleContent = (props) => {
       <div className={classes.Header}>
         <h1>HTML title</h1>
         <div className={classes.EditorIcons}>
-          <GiConfirmed
-            id="confirm-text"
+          <IconButton submit={() => {
+            props.confirmDefaultPadding(paddings);
+            props.tackleModal();
+          }} icon={<GiConfirmed
             color="#40CD9A"
             size="25px"
-            onClick={() => {
-              if (!title.length) {
-                return alert("Please enter a title before submitting.")
-              }
-              props.confirmTitle(title);
-              props.tackleModal();
-            }}
-          />
-          <Tooltip anchorId="confirm-text" place="top">
-            Confirm title
-          </Tooltip>
-          <TiArrowMinimise
-            id="close-modal-text"
+          />} tooltip="Confirm title" />
+          <IconButton submit={props.tackleModal} icon={<TiArrowMinimise
             color="#008DD7"
             size="25px"
-            onClick={props.tackleModal}
-          />
-          <Tooltip anchorId="close-modal-text" place="top">
-            Close Modal
-          </Tooltip>
+          />} tooltip="Close Modal" />
         </div>
       </div>
       <div className={classes.Content}>

@@ -1,5 +1,5 @@
 import fs from "fs"
-const archiver = require("archiver")
+import archiver from "archiver"
 
 export default async function handler(req, res) {
   const parsedData = JSON.parse(req.body)
@@ -18,6 +18,11 @@ export default async function handler(req, res) {
     "X-Unsent: 1",
     `X-Microsoft-CDO-MessageType: 0x1000`,
   ]
+
+  fs.mkdir("./html/saves", { recursive: true }, (err) => {
+    if (err) throw err
+  })
+
   const message = headers.join("\r\n") + "\r\n" + htmlContent
   fs.writeFileSync(`./html/content/${subject}.eml`, message, { mode: 0o666 })
 

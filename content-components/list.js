@@ -25,13 +25,11 @@ const list = (
             textContent = textContent.replace("<", "&#60;")
 
             if (paragraph.children[i].children[j].hyperlink) {
-              textContent = `<a style="text-decoration: none; color: ${
-                paragraph.children[i].children[j].color
-                  ? paragraph.children[i].children[j].color
-                  : "inherit"
-              };" href="${
-                paragraph.children[i].children[j].hyperlink
-              }">${textContent}</a>`
+              textContent = `<a style="text-decoration: none; color: ${paragraph.children[i].children[j].color
+                ? paragraph.children[i].children[j].color
+                : "inherit"
+                };" href="${paragraph.children[i].children[j].hyperlink
+                }">${textContent}</a>`
             }
             if (paragraph.children[i].children[j].underline) {
               textContent = `<u>${textContent}</u>`
@@ -54,11 +52,12 @@ const list = (
             } else {
               wholeParagraph += textContent
             }
-            contentArray.push(
-              `<li style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${
-                paragraph.align ? paragraph.align : "left"
-              };">${wholeParagraph}</li>`
-            )
+            if (wholeParagraph != "") {
+              contentArray.push(
+                `<li style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${paragraph.align ? paragraph.align : "left"
+                };">${wholeParagraph}</li>`
+              )
+            }
           }
           wholeParagraph = ""
         } else {
@@ -66,11 +65,10 @@ const list = (
           let textContent = paragraph.children[i].text
           textContent = textContent.replace("<", "&#60;")
           if (paragraph.children[i].hyperlink) {
-            textContent = `<a style="text-decoration: none; color: ${
-              paragraph.children[i].color
-                ? paragraph.children[i].color
-                : "inherit"
-            };" href="${paragraph.children[i].hyperlink}">${textContent}</a>`
+            textContent = `<a style="text-decoration: none; color: ${paragraph.children[i].color
+              ? paragraph.children[i].color
+              : "inherit"
+              };" href="${paragraph.children[i].hyperlink}">${textContent}</a>`
           }
           if (paragraph.children[i].underline) {
             textContent = `<u>${textContent}</u>`
@@ -98,9 +96,8 @@ const list = (
       let textContent = paragraph.text
       textContent = textContent.replace("<", "&#60;")
       if (paragraph.hyperlink) {
-        textContent = `<a style="text-decoration: none; color: ${
-          paragraph.children[i].color ? paragraph.children[i].color : "inherit"
-        };" href="${paragraph.hyperlink}">${textContent}</a>`
+        textContent = `<a style="text-decoration: none; color: ${paragraph.children[i].color ? paragraph.children[i].color : "inherit"
+          };" href="${paragraph.hyperlink}">${textContent}</a>`
       }
       if (paragraph.underline) {
         textContent = `<u>${textContent}</u>`
@@ -124,8 +121,7 @@ const list = (
     if (wholeParagraph != "") {
       if (type != "type 1") {
         contentArray.push(
-          `<li style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${
-            paragraph.align ? paragraph.align : "left"
+          `<li style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${paragraph.align ? paragraph.align : "left"
           };">${wholeParagraph}</li>`
         )
       }
@@ -159,9 +155,8 @@ const list = (
                 </tr>
                 <tr>
                     <td></td>
-                    <td width="${
-                      componentSize - paddingLeft - paddingRight
-                    }" valign="${align ? align : ""}">
+                    <td width="${componentSize - paddingLeft - paddingRight
+    }" valign="${align ? align : ""}">
                       <ul style="margin-top: 0px; margin-bottom: 0px;">
                       ${items}
                       </ul>

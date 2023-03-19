@@ -12,6 +12,7 @@ import { TiArrowMinimise } from "react-icons/ti"
 import { PhotoshopPicker } from "react-color"
 import WidthManager from "../../UI/WidthManager/WidthManager"
 import ResultHandler from "../../ResultHandler/ResultHandler"
+import IconButton from "../../UI/IconButton/IconButton"
 
 const EditComponentContent = (props) => {
   const component = props.row.contentComponents
@@ -120,45 +121,29 @@ const EditComponentContent = (props) => {
             {component.type == "Text"
               ? "Text component update"
               : component.type == "List"
-              ? "List component update"
-              : component.type == "Image"
-              ? "Image component update"
-              : component.type == "MultiImage"
-              ? "Multi image component update"
-              : ""}
+                ? "List component update"
+                : component.type == "Image"
+                  ? "Image component update"
+                  : component.type == "MultiImage"
+                    ? "Multi image component update"
+                    : ""}
           </h1>
           <div className={classes.EditorIcons}>
-            <GiConfirmed
-              id="resize-window"
+            <IconButton submit={preConfirmHandler} icon={<GiConfirmed
               color="#40CD9A"
               size="25px"
-              onClick={preConfirmHandler}
-            />
-            <Tooltip anchorId="resize-window" place="top">
-              Confirm component
-            </Tooltip>
-            <MdOutlineDeleteOutline
-              id="delete-sub-component"
+            />} tooltip="Confirm component" />
+            <IconButton submit={() => {
+              props.deleteFunction(position.row, position.item)
+              props.tackleModal()
+            }} icon={<MdOutlineDeleteOutline
               color="#CE4045"
               size="25px"
-              onClick={() => {
-                props.deleteFunction(position.row, position.item)
-                props.tackleModal()
-              }}
-            />
-            <Tooltip anchorId="delete-sub-component" place="top">
-              Delete component
-            </Tooltip>
-
-            <TiArrowMinimise
-              id="close-modal-text"
+            />} tooltip="Delete component" />
+            <IconButton submit={props.tackleModal} icon={<TiArrowMinimise
               color="#008DD7"
               size="25px"
-              onClick={props.tackleModal}
-            />
-            <Tooltip anchorId="close-modal-text" place="top">
-              Close Modal
-            </Tooltip>
+            />} tooltip="Close Modal" />
           </div>
         </div>
         <div className={classes.BackgroundAndSizing}>

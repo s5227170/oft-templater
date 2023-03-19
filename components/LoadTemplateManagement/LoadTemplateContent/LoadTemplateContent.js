@@ -13,6 +13,7 @@ import ResultMessage from "../../UI/ResultMessage/ResultMesage"
 const LoadTemplateContent = (props) => {
   const [filename, setFilename] = useState("")
   const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
 
   const filenameHandler = (name) => {
     setFilename(name)
@@ -43,7 +44,7 @@ const LoadTemplateContent = (props) => {
           <PulseLoader
             color={"#40cd9a"}
             loading={props.config.loading}
-            size={30}
+            size={20}
           />
         ) : props.config.templates.length ? (
           props.config.templates.map((templateName, index) => {
@@ -65,7 +66,8 @@ const LoadTemplateContent = (props) => {
       </div>
       <div className={classes.Decision}>
         <ConfirmationButtons
-          confirmClick={confirmSubmit}
+          loading={loading}
+          confirmClick={() => { setLoading(true); confirmSubmit() }}
           cancelClick={props.tackleModal}
           confirm="Confirm"
           cancel="Cancel"

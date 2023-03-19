@@ -151,6 +151,9 @@ export default function Home() {
       const refiendResponse = await response.json()
       setTemplateList({ templates: refiendResponse.templates, loading: false })
     })
+    // if (!templateList.length) {
+    //   setTemplateList({ templates: [], loading: false })
+    // }
   }
 
   const loadHtmlHandler = async (filename) => {

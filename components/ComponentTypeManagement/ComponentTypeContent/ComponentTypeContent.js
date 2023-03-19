@@ -17,6 +17,7 @@ const ComponentTypeContent = (props) => {
     Image: false,
     MultiImage: false,
   })
+  const [loading, setLoading] = useState(false)
 
   const textRef = useRef(null)
   const listRef = useRef(null)
@@ -116,11 +117,13 @@ const ComponentTypeContent = (props) => {
           }
         />
       </div>
-      
+
       <ConfirmationButtons
         confirm={"Confirm"}
+        loading={loading}
         cancel={"Cancel"}
         confirmClick={() => {
+          setLoading(true);
           props.confirmHandler(
             getChoice(),
             props.elementPosition,

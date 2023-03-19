@@ -332,6 +332,30 @@ const Canvas = (props) => {
     setEditComponentShow(!editComponentShow)
   }
 
+  const debouncedHandleResize = function handleResize() {
+    if (content) {
+      const newRowSettings = []
+      for (let i = 1; i <= pageConfig.content.length; i++) {
+        const row = document.getElementById("position-" + i)
+        if (row) {
+          const rowRightCoordinates = row.getBoundingClientRect().right
+          const rowTopCoordinates = row.offsetTop
+          const rowHeight = row.offsetHeight
+          const settingsTriggerCoordinates = {
+            position: i,
+            coordinates: {
+              right: rowRightCoordinates,
+              top: rowTopCoordinates,
+            },
+            height: rowHeight,
+          }
+          newRowSettings.push(settingsTriggerCoordinates)
+        }
+      }
+      setRowSettings(newRowSettings)
+    }
+  }
+
   useEffect(() => {
     if (props.newCanvas) {
       setPageConfig({
@@ -416,74 +440,14 @@ const Canvas = (props) => {
   }, [pageConfig])
 
   useEffect(() => {
-    if (content) {
-      setTimeout(() => {
-        const newRowSettings = []
-        for (let i = 1; i <= pageConfig.content.length; i++) {
-          const row = document.getElementById("position-" + i)
-          if (row) {
-            const rowRightCoordinates = row.getBoundingClientRect().right
-            const rowTopCoordinates = row.offsetTop
-            const rowHeight = row.offsetHeight
-            const settingsTriggerCoordinates = {
-              position: i,
-              coordinates: {
-                right: rowRightCoordinates,
-                top: rowTopCoordinates,
-              },
-              height: rowHeight,
-            }
-            newRowSettings.push(settingsTriggerCoordinates)
-          }
-        }
-        setRowSettings(newRowSettings)
-      }, 50)
-    }
-  }, [content, props.guideExpand, pageConfig])
-
-  useEffect(() => {
-    const debouncedHandleResize = debounce(function handleResize() {
-      if (content) {
-        const newRowSettings = []
-        for (let i = 1; i <= pageConfig.content.length; i++) {
-          const row = document.getElementById("position-" + i)
-          if (row) {
-            const rowRightCoordinates = row.getBoundingClientRect().right
-            const rowTopCoordinates = row.offsetTop
-            const rowHeight = row.offsetHeight
-            const settingsTriggerCoordinates = {
-              position: i,
-              coordinates: {
-                right: rowRightCoordinates,
-                top: rowTopCoordinates,
-              },
-              height: rowHeight,
-            }
-            newRowSettings.push(settingsTriggerCoordinates)
-          }
-        }
-        console.log(newRowSettings)
-        setRowSettings(newRowSettings)
-      }
-    }, 20)
-
-    setTimeout(() => {
-      debouncedHandleResize()
-    }, 500)
+    debouncedHandleResize();
 
     window.addEventListener("resize", debouncedHandleResize)
 
     return (_) => {
       window.removeEventListener("resize", debouncedHandleResize)
     }
-  }, [])
-
-  useEffect(() => {
-    if (props.loadedTemplate) {
-      setPageConfig(props.loadedTemplate)
-      props.resetLoadedTemplate(null)
-    }
-  }, [props.loadedTemplate])
+  }, [content, props.guideExpand, pageConfig])
 
   useEffect(() => {
     if (initialLoad == true) {
@@ -495,7 +459,20 @@ const Canvas = (props) => {
       }
       setInitialLoad(false)
     }
+
+    // window.addEventListener("resize", debouncedHandleResize)
+
+    // return (_) => {
+    //   window.removeEventListener("resize", debouncedHandleResize)
+    // }
   }, [])
+
+  useEffect(() => {
+    if (props.loadedTemplate) {
+      setPageConfig(props.loadedTemplate)
+      props.resetLoadedTemplate(null)
+    }
+  }, [props.loadedTemplate])
 
   return (
     <div className={classes.CanvasWrapper}>
@@ -510,9 +487,9 @@ const Canvas = (props) => {
         componentType={rowComponentStatus.type}
         deleteFunction={deleteContent}
         row={rowComponentStatus.row}
-        showModal={editComponentShow}
-        resetModal={() => {
-          setEditComponentShow(false)
+        modalShow={editComponentShow}
+        tackleModal={() => {
+          setEditComponentShow(!editComponentShow)
         }}
       />
       {rowSettings.map((row) => {

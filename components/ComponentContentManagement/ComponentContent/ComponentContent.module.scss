@@ -6,6 +6,7 @@
   width: 100vw;
   height: 100vh;
 }
+
 .ComponentContent {
   display: flex;
   flex-direction: column;
@@ -59,14 +60,8 @@
       flex-direction: row;
       justify-content: space-between;
 
-      svg {
-        outline: none;
-        margin-left: 5px;
-
-        &:hover {
-          cursor: pointer;
-          filter: brightness(135%);
-        }
+      button {
+        margin: 0px 4px;
       }
     }
   }
@@ -87,8 +82,7 @@
       margin-top: 10px;
       z-index: 10;
 
-      .ColourPicker {
-      }
+      .ColourPicker {}
 
       .CurrentColour {
         width: 50px;

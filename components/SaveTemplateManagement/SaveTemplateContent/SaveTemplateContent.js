@@ -12,6 +12,7 @@ import ResultMessage from "../../UI/ResultMessage/ResultMesage"
 const SaveTemplateContent = (props) => {
   const [filename, setFilename] = useState("")
   const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
 
   const confirmSubmit = () => {
     if (!filename.length) {
@@ -45,7 +46,9 @@ const SaveTemplateContent = (props) => {
         onChange={filenameHandler}
       />
       <ConfirmationButtons
+        loading={loading}
         confirmClick={() => {
+          setLoading(true)
           setError("")
           props.clearMessage
           confirmSubmit()

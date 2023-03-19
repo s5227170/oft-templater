@@ -14,6 +14,7 @@ import { useState, useEffect, useRef } from "react"
 import { PhotoshopPicker } from "react-color"
 import WidthManager from "../../UI/WidthManager/WidthManager"
 import ResultHandler from "../../ResultHandler/ResultHandler"
+import IconButton from "../../UI/IconButton/IconButton"
 
 const ComponentContent = (props) => {
   const [submit, setSubmit] = useState(false)
@@ -105,60 +106,41 @@ const ComponentContent = (props) => {
         style={props.boxStyle}
       >
         <div className={classes.Resizer}>
-          <CgArrowsExpandLeftAlt
+          <IconButton icon={<CgArrowsExpandLeftAlt
             id="confirm-text"
             color="#008dd7"
             size="15px"
             onMouseDown={props.startResize}
-          />
-          <Tooltip anchorId="confirm-text" place="top">
-            Resize window
-          </Tooltip>
+          />} tooltip="Resize window" />
         </div>
         <div className={classes.Header}>
           <h1>
             {props.componentType == "Text"
               ? "Text component"
               : props.componentType == "List"
-              ? "List component"
-              : props.componentType == "Image"
-              ? "Image component"
-              : props.componentType == "MultiImage"
-              ? "Multi image component"
-              : ""}
+                ? "List component"
+                : props.componentType == "Image"
+                  ? "Image component"
+                  : props.componentType == "MultiImage"
+                    ? "Multi image component"
+                    : ""}
           </h1>
           <div className={classes.EditorIcons}>
-            <GiConfirmed
-              id="resize-window"
+            <IconButton submit={preConfirmHandler} icon={<GiConfirmed
               color="#40CD9A"
               size="25px"
-              onClick={preConfirmHandler}
-            />
-            <Tooltip anchorId="resize-window" place="top">
-              Confirm component
-            </Tooltip>
-            <MdOutlineDeleteOutline
-              id="delete-sub-component"
+            />} tooltip="Confirm component" />
+            <IconButton submit={() => {
+              props.deleteFunction(position.row, position.item)
+              props.tackleModal()
+            }} icon={<MdOutlineDeleteOutline
               color="#CE4045"
               size="25px"
-              onClick={() => {
-                props.deleteFunction(position.row, position.item)
-                props.tackleModal()
-              }}
-            />
-            <Tooltip anchorId="delete-sub-component" place="top">
-              Delete component
-            </Tooltip>
-
-            <TiArrowMinimise
-              id="close-modal-text"
+            />} tooltip="Delete component" />
+            <IconButton submit={props.tackleModal} icon={<TiArrowMinimise
               color="#008DD7"
               size="25px"
-              onClick={props.tackleModal}
-            />
-            <Tooltip anchorId="close-modal-text" place="top">
-              Close Modal
-            </Tooltip>
+            />} tooltip="Close Modal" />
           </div>
         </div>
         <div className={classes.BackgroundAndSizing}>

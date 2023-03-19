@@ -36,14 +36,8 @@
       flex-direction: row;
       justify-content: space-between;
 
-      svg {
-        outline: none;
-        margin-left: 5px;
-
-        &:hover {
-          cursor: pointer;
-          filter: brightness(135%);
-        }
+      button {
+        margin: 0px 4px;
       }
     }
 
@@ -52,6 +46,7 @@
       flex-direction: column;
     }
   }
+
   .Content {
     display: flex;
     flex-direction: column;

@@ -7,9 +7,9 @@ import {
 } from "react-icons/ai";
 import { GiConfirmed } from "react-icons/gi";
 import { TiArrowMinimise } from "react-icons/ti";
-import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import Dropdown from "../../UI/Dropdown/Dropdown";
+import IconButton from "../../UI/IconButton/IconButton";
 import PaddingElement from "../../UI/PaddingElement/PaddingElement";
 
 import classes from "./DefaultPaddingContent.module.scss";
@@ -58,27 +58,17 @@ const DefaultPaddingContent = (props) => {
       <div className={classes.Header}>
         <h1>Confirm default component padding</h1>
         <div className={classes.EditorIcons}>
-          <GiConfirmed
-            id="confirm-text"
+          <IconButton submit={() => {
+            props.confirmDefaultPadding(paddings);
+            props.tackleModal();
+          }} icon={<GiConfirmed
             color="#40CD9A"
             size="25px"
-            onClick={() => {
-              props.confirmDefaultPadding(paddings);
-              props.tackleModal();
-            }}
-          />
-          <Tooltip anchorId="confirm-text" place="top">
-            Confirm row changes
-          </Tooltip>
-          <TiArrowMinimise
-            id="close-modal-text"
+          />} tooltip="Confirm paddings" />
+          <IconButton submit={props.tackleModal} icon={<TiArrowMinimise
             color="#008DD7"
             size="25px"
-            onClick={props.tackleModal}
-          />
-          <Tooltip anchorId="close-modal-text" place="top">
-            Close Modal
-          </Tooltip>
+          />} tooltip="Close Modal" />
         </div>
       </div>
       <div className={classes.Content}>

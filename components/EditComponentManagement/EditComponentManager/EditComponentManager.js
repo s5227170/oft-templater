@@ -9,7 +9,7 @@ const EditComponentManager = (props) => {
 
     const tackleModal = () => {
         setTimeout(() => {
-            setModalShow(!modalShow);
+            props.tackleModal()
         }, 250);
     };
 
@@ -50,8 +50,8 @@ const EditComponentManager = (props) => {
     };
 
     useEffect(() => {
-        setModalShow(props.showModal)
-    }, [props.showModal])
+        setModalShow(props.modalShow)
+    }, [props.modalShow])
 
     return (
         <div className={classes.EditComponentManager}>
@@ -66,10 +66,10 @@ const EditComponentManager = (props) => {
                     boxStyle={boxStyle}
                     startResize={startResize}
                     resizeFrame={resizeFrame}
-                    stopResize={stopResize} 
+                    stopResize={stopResize}
                     resetModal={props.resetModal}
                     edit={true}
-                    />
+                />
             </Modal>
         </div>
     );

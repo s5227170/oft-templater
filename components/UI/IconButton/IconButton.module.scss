@@ -1,0 +1,17 @@
+.IconButton {
+  background-color: #777777;
+  padding: 3px;
+  border-radius: 10px;
+  outline: none;
+  -webkit-box-shadow: 0px 4px 10px -3px rgba(0, 0, 0, 0.45);
+  box-shadow: 0px 4px 10px -3px rgba(0, 0, 0, 0.45);
+
+  &:hover {
+    cursor: pointer;
+    filter: brightness(135%);
+  }
+
+  svg {
+    margin: 0px;
+  }
+}

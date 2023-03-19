@@ -21,6 +21,7 @@ const CreateRowContent = (props) => {
   const btnFourRef = useRef(null)
   const [customColumnsSize, setCustomColumnsSize] = useState(null)
   const [modalShow, setModalShow] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [messageContent, setmessageContent] = useState({
     message: "",
     success: false,
@@ -50,7 +51,7 @@ const CreateRowContent = (props) => {
   }
 
   const getChoice = () => {
-    for (let i = 1; i <= Object.keys(customColumnsSize).length; i++) {}
+    for (let i = 1; i <= Object.keys(customColumnsSize).length; i++) { }
     for (let choice in rowConfig) {
       if (rowConfig[choice] === true) {
         console.log(choice)
@@ -202,25 +203,25 @@ const CreateRowContent = (props) => {
           <p>Note: Overall value should be less than 600 pixels</p>
           {rowConfig.double
             ? [1, 2].map((row, index) => {
-                return (
-                  <div key={index} className={classes.SizeWrapper}>
-                    <label>Row {index + 1} width</label>
-                    <CustomInput
-                      onKeyDown={preventMinus}
-                      style={{ width: "50px" }}
-                      type="number"
-                      min={0}
-                      max={600}
-                      maxLength={3}
-                      onChange={(e) => sizeChangeHandler(e, index + 1)}
-                      value={customColumnsSize["col" + (index + 1)]}
-                      // disabled={}
-                    />
-                  </div>
-                )
-              })
+              return (
+                <div key={index} className={classes.SizeWrapper}>
+                  <label>Row {index + 1} width</label>
+                  <CustomInput
+                    onKeyDown={preventMinus}
+                    style={{ width: "50px" }}
+                    type="number"
+                    min={0}
+                    max={600}
+                    maxLength={3}
+                    onChange={(e) => sizeChangeHandler(e, index + 1)}
+                    value={customColumnsSize["col" + (index + 1)]}
+                  // disabled={}
+                  />
+                </div>
+              )
+            })
             : rowConfig.triple
-            ? [1, 2, 3].map((row, index) => {
+              ? [1, 2, 3].map((row, index) => {
                 return (
                   <div key={index} className={classes.SizeWrapper}>
                     <label>Row {index + 1} width</label>
@@ -233,57 +234,57 @@ const CreateRowContent = (props) => {
                       maxLength={3}
                       onChange={(e) => sizeChangeHandler(e, index + 1)}
                       value={customColumnsSize["col" + (index + 1)]}
-                      // disabled={}
+                    // disabled={}
                     />
                   </div>
                 )
               })
-            : rowConfig.quadruple
-            ? [1, 2, 3, 4].map((row, index) => {
-                return (
-                  <div key={index} className={classes.SizeWrapper}>
-                    <label>Row {index + 1} width</label>
-                    <CustomInput
-                      onKeyDown={preventMinus}
-                      style={{ width: "50px" }}
-                      type="number"
-                      min={0}
-                      max={600}
-                      maxLength={3}
-                      onChange={(e) => sizeChangeHandler(e, index + 1)}
-                      value={customColumnsSize["col" + (index + 1)]}
+              : rowConfig.quadruple
+                ? [1, 2, 3, 4].map((row, index) => {
+                  return (
+                    <div key={index} className={classes.SizeWrapper}>
+                      <label>Row {index + 1} width</label>
+                      <CustomInput
+                        onKeyDown={preventMinus}
+                        style={{ width: "50px" }}
+                        type="number"
+                        min={0}
+                        max={600}
+                        maxLength={3}
+                        onChange={(e) => sizeChangeHandler(e, index + 1)}
+                        value={customColumnsSize["col" + (index + 1)]}
                       // disabled={}
-                    />
-                  </div>
-                )
-              })
-            : null}
+                      />
+                    </div>
+                  )
+                })
+                : null}
         </div>
       ) : null}
       {rowConfig.single ||
-      rowConfig.double ||
-      rowConfig.triple ||
-      rowConfig.quadruple ? (
+        rowConfig.double ||
+        rowConfig.triple ||
+        rowConfig.quadruple ? (
         <div className={classes.RowPreview}>
           {rowConfig.single
             ? [1].map((row, index) => {
-                return (
-                  <div
-                    key={index}
-                    style={{
-                      width: `${customColumnsSize["col" + (index + 1)]}px`,
-                      height: "100%",
-                      backgroundColor: rowColors[(index + 1).toString()],
-                    }}
-                  >
-                    {customColumnsSize["col" + (index + 1)] >= 100
-                      ? "Row " + (index + 1)
-                      : null}
-                  </div>
-                )
-              })
+              return (
+                <div
+                  key={index}
+                  style={{
+                    width: `${customColumnsSize["col" + (index + 1)]}px`,
+                    height: "100%",
+                    backgroundColor: rowColors[(index + 1).toString()],
+                  }}
+                >
+                  {customColumnsSize["col" + (index + 1)] >= 100
+                    ? "Row " + (index + 1)
+                    : null}
+                </div>
+              )
+            })
             : rowConfig.double
-            ? [1, 2].map((row, index) => {
+              ? [1, 2].map((row, index) => {
                 return (
                   <div
                     key={index}
@@ -299,41 +300,41 @@ const CreateRowContent = (props) => {
                   </div>
                 )
               })
-            : rowConfig.triple
-            ? [1, 2, 3].map((row, index) => {
-                return (
-                  <div
-                    key={index}
-                    style={{
-                      width: `${customColumnsSize["col" + (index + 1)]}px`,
-                      height: "100%",
-                      backgroundColor: rowColors[(index + 1).toString()],
-                    }}
-                  >
-                    {customColumnsSize["col" + (index + 1)] >= 100
-                      ? "Row " + (index + 1)
-                      : null}
-                  </div>
-                )
-              })
-            : rowConfig.quadruple
-            ? [1, 2, 3, 4].map((row, index) => {
-                return (
-                  <div
-                    key={index}
-                    style={{
-                      width: `${customColumnsSize["col" + (index + 1)]}px`,
-                      height: "100%",
-                      backgroundColor: rowColors[(index + 1).toString()],
-                    }}
-                  >
-                    {customColumnsSize["col" + (index + 1)] >= 100
-                      ? "Row " + (index + 1)
-                      : null}
-                  </div>
-                )
-              })
-            : null}
+              : rowConfig.triple
+                ? [1, 2, 3].map((row, index) => {
+                  return (
+                    <div
+                      key={index}
+                      style={{
+                        width: `${customColumnsSize["col" + (index + 1)]}px`,
+                        height: "100%",
+                        backgroundColor: rowColors[(index + 1).toString()],
+                      }}
+                    >
+                      {customColumnsSize["col" + (index + 1)] >= 100
+                        ? "Row " + (index + 1)
+                        : null}
+                    </div>
+                  )
+                })
+                : rowConfig.quadruple
+                  ? [1, 2, 3, 4].map((row, index) => {
+                    return (
+                      <div
+                        key={index}
+                        style={{
+                          width: `${customColumnsSize["col" + (index + 1)]}px`,
+                          height: "100%",
+                          backgroundColor: rowColors[(index + 1).toString()],
+                        }}
+                      >
+                        {customColumnsSize["col" + (index + 1)] >= 100
+                          ? "Row " + (index + 1)
+                          : null}
+                      </div>
+                    )
+                  })
+                  : null}
         </div>
       ) : null}
       {messageContent.message.length ? (
@@ -354,13 +355,16 @@ const CreateRowContent = (props) => {
       <ConfirmationButtons
         confirm={"Confirm"}
         cancel={"Cancel"}
+        loading={loading}
         confirmClick={() => {
+          setLoading(true)
           if (
             !rowConfig.single &&
             !rowConfig.double &&
             !rowConfig.triple &&
             !rowConfig.quadruple
           ) {
+            setLoading(false)
             return setmessageContent({
               ...messageContent,
               message: "Please choose a row type",
@@ -370,6 +374,7 @@ const CreateRowContent = (props) => {
           let overallValue = 0
           for (let i = 1; i <= Object.keys(customColumnsSize).length; i++) {
             if (customColumnsSize["col" + i] < 70) {
+              setLoading(false)
               return setmessageContent({
                 ...messageContent,
                 message: "Minimum column width is 100 pixels",
@@ -379,6 +384,7 @@ const CreateRowContent = (props) => {
             overallValue += customColumnsSize["col" + i]
           }
           if (overallValue > 600) {
+            setLoading(false)
             return setmessageContent({
               ...messageContent,
               message: "Overall columns width cannot exceed 600 pixels",
