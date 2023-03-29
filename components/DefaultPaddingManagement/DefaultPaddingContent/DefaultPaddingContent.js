@@ -88,14 +88,14 @@ const DefaultPaddingContent = (props) => {
           </PaddingElement>
         </div>
         <div className={classes.Constraints}>
-          <Dropdown
+          {/* <Dropdown
             options={constraints}
             onSelect={selectConfirmation}
             currentChoice={{
               title: "Apply to all components",
               value: ["Text", "List", "Image"],
             }}
-          />
+          /> */}
         </div>
       </div>
     </div>

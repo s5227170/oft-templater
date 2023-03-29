@@ -108,7 +108,7 @@ const ComponentContent = (props) => {
         <div className={classes.Resizer}>
           <IconButton icon={<CgArrowsExpandLeftAlt
             id="confirm-text"
-            color="#008dd7"
+            color="#40cd9a"
             size="15px"
             onMouseDown={props.startResize}
           />} tooltip="Resize window" />

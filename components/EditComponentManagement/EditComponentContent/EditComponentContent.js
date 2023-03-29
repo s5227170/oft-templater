@@ -108,7 +108,7 @@ const EditComponentContent = (props) => {
         <div className={classes.Resizer}>
           <CgArrowsExpandLeftAlt
             id="confirm-text"
-            color="#008dd7"
+            color="#40cd9a"
             size="15px"
             onMouseDown={props.startResize}
           />
@@ -216,7 +216,7 @@ const EditComponentContent = (props) => {
             row={props.row}
             currentContent={component.content}
             resetComponent={() => {
-              props.resetModal(), setSubmit(false)
+              props.tackleModal(), setSubmit(false)
             }}
             errorBridge={(content) =>
               setmessageContent({ ...messageContent, ...content })
@@ -239,7 +239,7 @@ const EditComponentContent = (props) => {
             row={props.row}
             currentContent={component.content}
             resetComponent={() => {
-              props.resetModal(), setSubmit(false)
+              props.tackleModal(), setSubmit(false)
             }}
             errorBridge={(content) =>
               setmessageContent({ ...messageContent, ...content })
@@ -263,7 +263,7 @@ const EditComponentContent = (props) => {
             imgWidth={component.imgWidth}
             row={props.row}
             resetComponent={() => {
-              props.resetModal(), setSubmit(false)
+              props.tackleModal(), setSubmit(false)
             }}
             errorBridge={(content) =>
               setmessageContent({ ...messageContent, ...content })
@@ -285,7 +285,7 @@ const EditComponentContent = (props) => {
             edit={true}
             row={props.row}
             resetComponent={() => {
-              props.resetModal(), setSubmit(false)
+              props.tackleModal(), setSubmit(false)
             }}
             errorBridge={(content) =>
               setmessageContent({ ...messageContent, ...content })
