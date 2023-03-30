@@ -13,7 +13,6 @@ export default async function handler(req, res) {
             availableFiles.push(file)
         }
     });
-    console.log(availableFiles)
     res.status(200).json({ templates: availableFiles })
 }
 

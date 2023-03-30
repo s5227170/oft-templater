@@ -11,6 +11,7 @@ import ComponentContentManager from "../ComponentContentManagement/ComponentCont
 import RowSettingsManager from "../RowSettingsManagement/RowSettingsManager/RowSettingsManager"
 import debounce from "../../util/debounce"
 import EditComponentManager from "../EditComponentManagement/EditComponentManager/EditComponentManager"
+import initComponent from "../../util/initComponent"
 
 const Canvas = (props) => {
   const rootRef = useRef(null)
@@ -71,55 +72,16 @@ const Canvas = (props) => {
 
     let component = {}
     if (type == "Text") {
-      component = {
-        type: "Text",
-        paddingLeft: parameters.paddingLeft,
-        paddingRight: parameters.paddingRight,
-        paddingTop: parameters.paddingTop,
-        paddingBottom: parameters.paddingBottom,
-        content: [],
-        position: number,
-        verticalAlign: "",
-      }
+      component = initComponent.text(parameters, number)
     }
     if (type == "List") {
-      component = {
-        type: "List",
-        paddingLeft: parameters.paddingLeft,
-        paddingRight: parameters.paddingRight,
-        paddingTop: parameters.paddingTop,
-        paddingBottom: parameters.paddingBottom,
-        content: [],
-        position: number,
-        verticalAlign: "",
-      }
+      component = initComponent.list(parameters, number)
     }
     if (type == "Image") {
-      component = {
-        type: "Image",
-        paddingLeft: parameters.paddingLeft,
-        paddingRight: parameters.paddingRight,
-        paddingTop: parameters.paddingTop,
-        paddingBottom: parameters.paddingBottom,
-        url: [],
-        imgWidth: 0,
-        imgHeight: 0,
-        position: number,
-        hyperlink: "",
-      }
+      component = initComponent.image(parameters, number)
     }
     if (type == "MultiImage") {
-      component = {
-        type: "MultiImage",
-        paddingLeft: parameters.paddingLeft,
-        paddingRight: parameters.paddingRight,
-        paddingTop: parameters.paddingTop,
-        paddingBottom: parameters.paddingBottom,
-        url: [],
-        imgWidth: 0,
-        imgHeight: 0,
-        position: number,
-      }
+      component = initComponent.multiImage(parameters, number)
     }
 
     const newPageContent = []
@@ -141,20 +103,11 @@ const Canvas = (props) => {
   }
 
   const generateRow = (cols, colSizes) => {
-    const newRowConfig = {
-      type: "row",
-      columns: cols,
-      columnSizes: colSizes,
-      background: "#fff",
-      position: pageConfig.content.length + 1,
-      parameters: {
-        paddingLeft: 0,
-        paddingRight: 0,
-        paddingTop: 0,
-        paddingBottom: 0,
-      },
-      contentComponents: [],
-    }
+    const newRowConfig = initComponent.row(
+      cols,
+      colSizes,
+      pageConfig.content.length + 1
+    )
     setPageConfig((pageConfig) => ({
       ...pageConfig,
       content: [...pageConfig.content, newRowConfig],
@@ -175,50 +128,54 @@ const Canvas = (props) => {
         }
         rowConfig.contentComponents.map((component) => {
           if (component.position == item) {
-            const updatedComponent = {}
+            let updatedComponent = {}
             //Check what type the component is and add the content depending on that
             if (component.type == "Text") {
-              updatedComponent.type = component.type
-              updatedComponent.paddingLeft = componentData.paddingLeft
-              updatedComponent.paddingRight = componentData.paddingRight
-              updatedComponent.paddingTop = componentData.paddingTop
-              updatedComponent.paddingBottom = componentData.paddingBottom
-              updatedComponent.content = componentData.content
-              updatedComponent.position = componentData.position
-              updatedComponent.verticalAlign = componentData.verticalAlign
+              updatedComponent = { ...componentData, type: component.type }
+              // updatedComponent.type = component.type
+              // updatedComponent.paddingLeft = componentData.paddingLeft
+              // updatedComponent.paddingRight = componentData.paddingRight
+              // updatedComponent.paddingTop = componentData.paddingTop
+              // updatedComponent.paddingBottom = componentData.paddingBottom
+              // updatedComponent.content = componentData.content
+              // updatedComponent.position = componentData.position
+              // updatedComponent.verticalAlign = componentData.verticalAlign
             }
             if (component.type == "List") {
-              updatedComponent.type = component.type
-              updatedComponent.paddingLeft = componentData.paddingLeft
-              updatedComponent.paddingRight = componentData.paddingRight
-              updatedComponent.paddingTop = componentData.paddingTop
-              updatedComponent.paddingBottom = componentData.paddingBottom
-              updatedComponent.content = componentData.content
-              updatedComponent.position = componentData.position
-              updatedComponent.verticalAlign = componentData.verticalAlign
+              updatedComponent = { ...componentData, type: component.type }
+              // updatedComponent.type = component.type
+              // updatedComponent.paddingLeft = componentData.paddingLeft
+              // updatedComponent.paddingRight = componentData.paddingRight
+              // updatedComponent.paddingTop = componentData.paddingTop
+              // updatedComponent.paddingBottom = componentData.paddingBottom
+              // updatedComponent.content = componentData.content
+              // updatedComponent.position = componentData.position
+              // updatedComponent.verticalAlign = componentData.verticalAlign
             }
             if (component.type == "Image") {
-              updatedComponent.type = component.type
-              updatedComponent.paddingLeft = componentData.paddingLeft
-              updatedComponent.paddingRight = componentData.paddingRight
-              updatedComponent.paddingTop = componentData.paddingTop
-              updatedComponent.paddingBottom = componentData.paddingBottom
-              updatedComponent.url = componentData.url
-              updatedComponent.imgWidth = componentData.imgWidth
-              updatedComponent.imgHeight = componentData.imgHeight
-              updatedComponent.position = componentData.position
-              updatedComponent.hyperlink = componentData.hyperlink
+              updatedComponent = { ...componentData, type: component.type }
+              // updatedComponent.type = component.type
+              // updatedComponent.paddingLeft = componentData.paddingLeft
+              // updatedComponent.paddingRight = componentData.paddingRight
+              // updatedComponent.paddingTop = componentData.paddingTop
+              // updatedComponent.paddingBottom = componentData.paddingBottom
+              // updatedComponent.url = componentData.url
+              // updatedComponent.imgWidth = componentData.imgWidth
+              // updatedComponent.imgHeight = componentData.imgHeight
+              // updatedComponent.position = componentData.position
+              // updatedComponent.hyperlink = componentData.hyperlink
             }
             if (component.type == "MultiImage") {
-              updatedComponent.type = component.type
-              updatedComponent.paddingLeft = componentData.paddingLeft
-              updatedComponent.paddingRight = componentData.paddingRight
-              updatedComponent.paddingTop = componentData.paddingTop
-              updatedComponent.paddingBottom = componentData.paddingBottom
-              updatedComponent.url = componentData.url
-              updatedComponent.imgWidth = componentData.imgWidth
-              updatedComponent.imgHeight = componentData.imgHeight
-              updatedComponent.position = componentData.position
+              updatedComponent = { ...componentData, type: component.type }
+              // updatedComponent.type = component.type
+              // updatedComponent.paddingLeft = componentData.paddingLeft
+              // updatedComponent.paddingRight = componentData.paddingRight
+              // updatedComponent.paddingTop = componentData.paddingTop
+              // updatedComponent.paddingBottom = componentData.paddingBottom
+              // updatedComponent.url = componentData.url
+              // updatedComponent.imgWidth = componentData.imgWidth
+              // updatedComponent.imgHeight = componentData.imgHeight
+              // updatedComponent.position = componentData.position
             }
 
             if (rowConfig.cols == 1) {
@@ -334,13 +291,13 @@ const Canvas = (props) => {
 
   const debouncedHandleResize = debounce(function handleResize() {
     if (content) {
-      const newRowSettings = [];
+      const newRowSettings = []
       for (let i = 1; i <= pageConfig.content.length; i++) {
-        const row = document.getElementById("position-" + i);
+        const row = document.getElementById("position-" + i)
         if (row) {
-          const rowRightCoordinates = row.getBoundingClientRect().right;
-          const rowTopCoordinates = row.offsetTop;
-          const rowHeight = row.offsetHeight;
+          const rowRightCoordinates = row.getBoundingClientRect().right
+          const rowTopCoordinates = row.offsetTop
+          const rowHeight = row.offsetHeight
           const settingsTriggerCoordinates = {
             position: i,
             coordinates: {
@@ -348,13 +305,13 @@ const Canvas = (props) => {
               top: rowTopCoordinates,
             },
             height: rowHeight,
-          };
-          newRowSettings.push(settingsTriggerCoordinates);
+          }
+          newRowSettings.push(settingsTriggerCoordinates)
         }
       }
-      setRowSettings(newRowSettings);
+      setRowSettings(newRowSettings)
     }
-  }, 20);
+  }, 20)
 
   useEffect(() => {
     if (props.newCanvas) {

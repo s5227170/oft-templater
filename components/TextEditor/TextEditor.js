@@ -105,7 +105,6 @@ const TextEditor = (props) => {
       if (componentChoice.bottomAlign) {
         alignment = "bottom"
       }
-      console.log(props.currentContent)
       const allData = {
         type: props.componentType,
         paddingLeft: paddings.paddingLeft,

@@ -28,8 +28,6 @@ const multiImage = (
 
   const componentSize = columnSizes["col" + item]
 
-  console.log(componentSize)
-
   let items = ""
   if (contentDistribution.length) {
     for (let i = 0; i < contentDistribution.length; i++) {

@@ -54,7 +54,6 @@ const CreateRowContent = (props) => {
     for (let i = 1; i <= Object.keys(customColumnsSize).length; i++) { }
     for (let choice in rowConfig) {
       if (rowConfig[choice] === true) {
-        console.log(choice)
         if (choice == "single") {
           return 1
         }

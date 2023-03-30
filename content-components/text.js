@@ -18,7 +18,9 @@ const text = (
       let textContent = paragraph.children[i].text
       textContent = textContent.replace("<", "&#60;")
       if (paragraph.children[i].hyperlink) {
-        textContent = `<a style="text-decoration: none; color: ${paragraph.children[i].color? paragraph.children[i].color : "inherit"};" href="${paragraph.children[i].hyperlink}">${textContent}</a>`
+        textContent = `<a style="text-decoration: none; color: ${
+          paragraph.children[i].color ? paragraph.children[i].color : "inherit"
+        };" href="${paragraph.children[i].hyperlink}">${textContent}</a>`
       }
       if (paragraph.children[i].underline) {
         textContent = `<u>${textContent}</u>`
@@ -46,21 +48,33 @@ const text = (
     }
     if (paragraph.type == "heading-two") {
       contentArray.push(
-        `<h2 style="font-family: arial; font-size: 18px; margin: 0px; display: inline-block; line-height: 24px; text-align: ${
+        `<h2 width="${
+          componentSize - paddingLeft - paddingRight
+        }" style="font-family: arial; font-size: 18px; margin: 0px; display: inline-block; line-height: 24px; width: ${
+          componentSize - paddingLeft - paddingRight
+        }px; text-align: ${
           paragraph.align ? paragraph.align : "left"
         };">${wholeParagraph}</h2>`
       )
     }
     if (paragraph.type == "heading-one") {
       contentArray.push(
-        `<h1 style="font-family: arial; font-size: 20px; margin: 0px; display: inline-block; line-height: 24px; text-align: ${
+        `<h1 width="${
+          componentSize - paddingLeft - paddingRight
+        }" style="font-family: arial; font-size: 20px; margin: 0px; display: inline-block; line-height: 24px; width: ${
+          componentSize - paddingLeft - paddingRight
+        }px; text-align: ${
           paragraph.align ? paragraph.align : "left"
         };">${wholeParagraph}</h1>`
       )
     }
     if (paragraph.type == "paragraph") {
       contentArray.push(
-        `<p style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; display: inline-block; text-align: ${
+        `<p width="${
+          componentSize - paddingLeft - paddingRight
+        }" style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; display: inline-block; width: ${
+          componentSize - paddingLeft - paddingRight
+        }px; text-align: ${
           paragraph.align ? paragraph.align : "left"
         };">${wholeParagraph}</p>`
       )

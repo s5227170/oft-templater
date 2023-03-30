@@ -606,8 +606,6 @@ const RichTextExample = (editorProps) => {
               const matches = innerHTML.match(
                 /(?:[0-9]{3})\b|(?:rgb)\([^\)]*\)/gi
               )
-              console.log(matches)
-              console.log(innerHTML)
               let color = "#000"
               let background = "#fff"
               if (matches[0]) {
