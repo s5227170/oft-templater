@@ -16,7 +16,7 @@ import initComponent from "../../util/initComponent"
 const Canvas = (props) => {
   const rootRef = useRef(null)
   const [rowSettings, setRowSettings] = useState([])
-  const [content, setContent] = useState()
+  const [reactifiedContent, setReactifiedContent] = useState()
   const [initialLoad, setInitialLoad] = useState(true)
   const [pageConfig, setPageConfig] = useState({
     content: [],
@@ -36,10 +36,17 @@ const Canvas = (props) => {
   })
   const [editComponentShow, setEditComponentShow] = useState(false)
 
+  const setPageContents = (newPageContent) => {
+    setPageConfig((pageConfig) => ({
+      ...pageConfig,
+      content: newPageContent,
+    }))
+  }
+
   const generateComponent = (type, position, columns) => {
     const row = position.split("#")[0].substr(3)
 
-    const number = position
+    const componentPosition = position
       .split("#")[1]
       .charAt(position.split("#")[1].length - 1)
 
@@ -53,16 +60,16 @@ const Canvas = (props) => {
       parameters = { ...props.defaultComponentPaddings }
     }
 
-    if (number == 1 && columns > 1) {
+    if (componentPosition == 1 && columns > 1) {
       parameters = { ...props.defaultComponentPaddings, paddingRight: 0 }
     }
-    if (number == 2 && columns == 2) {
+    if (componentPosition == 2 && columns == 2) {
       parameters = { ...props.defaultComponentPaddings, paddingLeft: 0 }
     }
-    if (number == 3 && columns > 2) {
+    if (componentPosition == 3 && columns > 2) {
       parameters = { ...props.defaultComponentPaddings, paddingLeft: 0 }
     }
-    if (number == 2 && columns > 2) {
+    if (componentPosition == 2 && columns > 2) {
       parameters = {
         ...props.defaultComponentPaddings,
         paddingLeft: 0,
@@ -72,16 +79,16 @@ const Canvas = (props) => {
 
     let component = {}
     if (type == "Text") {
-      component = initComponent.text(parameters, number)
+      component = initComponent.text(parameters, componentPosition)
     }
     if (type == "List") {
-      component = initComponent.list(parameters, number)
+      component = initComponent.list(parameters, componentPosition)
     }
     if (type == "Image") {
-      component = initComponent.image(parameters, number)
+      component = initComponent.image(parameters, componentPosition)
     }
     if (type == "MultiImage") {
-      component = initComponent.multiImage(parameters, number)
+      component = initComponent.multiImage(parameters, componentPosition)
     }
 
     const newPageContent = []
@@ -96,10 +103,12 @@ const Canvas = (props) => {
       }
     })
 
-    setPageConfig((pageConfig) => ({
-      ...pageConfig,
-      content: [...newPageContent],
-    }))
+    setPageContents([...newPageContent])
+
+    // setPageConfig((pageConfig) => ({
+    //   ...pageConfig,
+    //   content: [...newPageContent],
+    // }))
   }
 
   const generateRow = (cols, colSizes) => {
@@ -108,10 +117,12 @@ const Canvas = (props) => {
       colSizes,
       pageConfig.content.length + 1
     )
-    setPageConfig((pageConfig) => ({
-      ...pageConfig,
-      content: [...pageConfig.content, newRowConfig],
-    }))
+    setPageContents([...pageConfig.content, newRowConfig])
+
+    // setPageConfig((pageConfig) => ({
+    //   ...pageConfig,
+    //   content: [...pageConfig.content, newRowConfig],
+    // }))
   }
 
   const confirmContent = (row, item, rowBackground, componentData) => {
@@ -132,50 +143,15 @@ const Canvas = (props) => {
             //Check what type the component is and add the content depending on that
             if (component.type == "Text") {
               updatedComponent = { ...componentData, type: component.type }
-              // updatedComponent.type = component.type
-              // updatedComponent.paddingLeft = componentData.paddingLeft
-              // updatedComponent.paddingRight = componentData.paddingRight
-              // updatedComponent.paddingTop = componentData.paddingTop
-              // updatedComponent.paddingBottom = componentData.paddingBottom
-              // updatedComponent.content = componentData.content
-              // updatedComponent.position = componentData.position
-              // updatedComponent.verticalAlign = componentData.verticalAlign
             }
             if (component.type == "List") {
               updatedComponent = { ...componentData, type: component.type }
-              // updatedComponent.type = component.type
-              // updatedComponent.paddingLeft = componentData.paddingLeft
-              // updatedComponent.paddingRight = componentData.paddingRight
-              // updatedComponent.paddingTop = componentData.paddingTop
-              // updatedComponent.paddingBottom = componentData.paddingBottom
-              // updatedComponent.content = componentData.content
-              // updatedComponent.position = componentData.position
-              // updatedComponent.verticalAlign = componentData.verticalAlign
             }
             if (component.type == "Image") {
               updatedComponent = { ...componentData, type: component.type }
-              // updatedComponent.type = component.type
-              // updatedComponent.paddingLeft = componentData.paddingLeft
-              // updatedComponent.paddingRight = componentData.paddingRight
-              // updatedComponent.paddingTop = componentData.paddingTop
-              // updatedComponent.paddingBottom = componentData.paddingBottom
-              // updatedComponent.url = componentData.url
-              // updatedComponent.imgWidth = componentData.imgWidth
-              // updatedComponent.imgHeight = componentData.imgHeight
-              // updatedComponent.position = componentData.position
-              // updatedComponent.hyperlink = componentData.hyperlink
             }
             if (component.type == "MultiImage") {
               updatedComponent = { ...componentData, type: component.type }
-              // updatedComponent.type = component.type
-              // updatedComponent.paddingLeft = componentData.paddingLeft
-              // updatedComponent.paddingRight = componentData.paddingRight
-              // updatedComponent.paddingTop = componentData.paddingTop
-              // updatedComponent.paddingBottom = componentData.paddingBottom
-              // updatedComponent.url = componentData.url
-              // updatedComponent.imgWidth = componentData.imgWidth
-              // updatedComponent.imgHeight = componentData.imgHeight
-              // updatedComponent.position = componentData.position
             }
 
             if (rowConfig.cols == 1) {
@@ -208,10 +184,12 @@ const Canvas = (props) => {
       }
     })
 
-    setPageConfig((pageConfig) => ({
-      ...pageConfig,
-      content: newPageContent,
-    }))
+    setPageContents(newPageContent)
+
+    // setPageConfig((pageConfig) => ({
+    //   ...pageConfig,
+    //   content: newPageContent,
+    // }))
   }
 
   const deleteContent = (row, item) => {
@@ -233,11 +211,12 @@ const Canvas = (props) => {
     const newPageConfig = pageConfig
     newPageConfig.content = newPageContent
 
-    setPageConfig((pageConfig) => ({
-      ...pageConfig,
-      content: [...newPageContent],
-    }))
-    // setPageConfig(newPageContent);
+    setPageContents([...newPageContent])
+
+    // setPageConfig((pageConfig) => ({
+    //   ...pageConfig,
+    //   content: [...newPageContent],
+    // }))
   }
 
   const editComponent = (row, item, rowNumber) => {
@@ -263,10 +242,13 @@ const Canvas = (props) => {
         newPageContent[i].position = newPageContent[i].position - 1
       }
     }
-    setPageConfig((pageConfig) => ({
-      ...pageConfig,
-      content: [...newPageContent],
-    }))
+
+    setPageContents([...newPageContent])
+
+    // setPageConfig((pageConfig) => ({
+    //   ...pageConfig,
+    //   content: [...newPageContent],
+    // }))
   }
 
   const confirmRowChanges = (row, newPosition) => {
@@ -279,10 +261,13 @@ const Canvas = (props) => {
         newPageContent[i].position = newPosition.value
       }
     }
-    setPageConfig((pageConfig) => ({
-      ...pageConfig,
-      content: [...newPageContent],
-    }))
+
+    setPageContents([...newPageContent])
+
+    // setPageConfig((pageConfig) => ({
+    //   ...pageConfig,
+    //   content: [...newPageContent],
+    // }))
   }
 
   const tackleEditModal = () => {
@@ -290,7 +275,7 @@ const Canvas = (props) => {
   }
 
   const debouncedHandleResize = debounce(function handleResize() {
-    if (content) {
+    if (reactifiedContent) {
       const newRowSettings = []
       for (let i = 1; i <= pageConfig.content.length; i++) {
         const row = document.getElementById("position-" + i)
@@ -385,7 +370,7 @@ const Canvas = (props) => {
         }
       },
     })
-    setContent(reactContent)
+    setReactifiedContent(reactContent)
     const newRowPositionConfig = []
     for (let i = 0; i < pageConfig.content.length; i++) {
       newRowPositionConfig.push({
@@ -406,7 +391,7 @@ const Canvas = (props) => {
     return (_) => {
       window.removeEventListener("resize", debouncedHandleResize)
     }
-  }, [content, props.guideExpand, pageConfig])
+  }, [reactifiedContent, props.guideExpand, pageConfig])
 
   useEffect(() => {
     if (initialLoad == true) {
@@ -429,7 +414,7 @@ const Canvas = (props) => {
   return (
     <div className={classes.CanvasWrapper}>
       <div id="targetDiv" ref={rootRef}>
-        {content}
+        {reactifiedContent}
       </div>
       <CreateRowManager rowGeneration={generateRow} />
       <EditComponentManager

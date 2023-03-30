@@ -9,7 +9,7 @@ const oneColumn = (
   paddingBottom,
   contentComponentOne
 ) => {
-  let contentAlignment = ";";
+  let contentAlignment = "top";
   if (contentComponentOne.verticalAlign == "top") {
     contentAlignment = "top";
   }
