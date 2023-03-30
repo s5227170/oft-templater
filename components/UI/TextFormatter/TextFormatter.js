@@ -606,8 +606,16 @@ const RichTextExample = (editorProps) => {
               const matches = innerHTML.match(
                 /(?:[0-9]{3})\b|(?:rgb)\([^\)]*\)/gi
               )
-              const color = matches[0].toString()
-              const background = matches[1].toString()
+              console.log(matches)
+              console.log(innerHTML)
+              let color = "#000"
+              let background = "#fff"
+              if (matches[0]) {
+                color = matches[0].toString()
+              }
+              if (matches[1]) {
+                background = matches[1]
+              }
 
               toggleMark(editor, mark, color, background, hyperlink)
             }
