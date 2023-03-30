@@ -332,15 +332,15 @@ const Canvas = (props) => {
     setEditComponentShow(!editComponentShow)
   }
 
-  const debouncedHandleResize = function handleResize() {
+  const debouncedHandleResize = debounce(function handleResize() {
     if (content) {
-      const newRowSettings = []
+      const newRowSettings = [];
       for (let i = 1; i <= pageConfig.content.length; i++) {
-        const row = document.getElementById("position-" + i)
+        const row = document.getElementById("position-" + i);
         if (row) {
-          const rowRightCoordinates = row.getBoundingClientRect().right
-          const rowTopCoordinates = row.offsetTop
-          const rowHeight = row.offsetHeight
+          const rowRightCoordinates = row.getBoundingClientRect().right;
+          const rowTopCoordinates = row.offsetTop;
+          const rowHeight = row.offsetHeight;
           const settingsTriggerCoordinates = {
             position: i,
             coordinates: {
@@ -348,13 +348,13 @@ const Canvas = (props) => {
               top: rowTopCoordinates,
             },
             height: rowHeight,
-          }
-          newRowSettings.push(settingsTriggerCoordinates)
+          };
+          newRowSettings.push(settingsTriggerCoordinates);
         }
       }
-      setRowSettings(newRowSettings)
+      setRowSettings(newRowSettings);
     }
-  }
+  }, 20);
 
   useEffect(() => {
     if (props.newCanvas) {
@@ -440,7 +440,9 @@ const Canvas = (props) => {
   }, [pageConfig])
 
   useEffect(() => {
-    debouncedHandleResize();
+    setTimeout(() => {
+      debouncedHandleResize()
+    })
 
     window.addEventListener("resize", debouncedHandleResize)
 
@@ -452,19 +454,12 @@ const Canvas = (props) => {
   useEffect(() => {
     if (initialLoad == true) {
       let existingConfig = localStorage.getItem("pageConfig")
-      // console.log(existingConfig)
       if (existingConfig) {
         existingConfig = JSON.parse(existingConfig)
         setPageConfig(existingConfig)
       }
       setInitialLoad(false)
     }
-
-    // window.addEventListener("resize", debouncedHandleResize)
-
-    // return (_) => {
-    //   window.removeEventListener("resize", debouncedHandleResize)
-    // }
   }, [])
 
   useEffect(() => {

@@ -11,7 +11,6 @@ import {
 import CustomInput from "../UI/CustomInput/CustomInput"
 
 const ImageEditor = (props) => {
-  console.log(props)
   const [url, setUrl] = useState(props.edit? props.component.url  : "")
   const [hyperlink, setHyperlink] = useState("")
   const [sizesAllwoed, setSizesAllowed] = useState({

@@ -23,13 +23,11 @@ const RowSettingsButton = (props) => {
   useEffect(() => {
     const currentItem = document.getElementById("row-" + props.position)
     const rowForItem = document.getElementById("position-" + props.position)
-    currentItem.addEventListener(
-      "mouseenter",
+    currentItem.addEventListener("mouseenter", () =>
       highlightFunctions.highlight(rowForItem)
     )
 
-    currentItem.addEventListener(
-      "mouseleave",
+    currentItem.addEventListener("mouseleave", () =>
       highlightFunctions.lowlight(rowForItem)
     )
 
