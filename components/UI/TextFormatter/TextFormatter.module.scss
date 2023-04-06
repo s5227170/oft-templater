@@ -15,3 +15,27 @@
   justify-content: center;
   padding: 5px 0px;
 }
+
+.colorMark {
+  width: 50%;
+  margin: auto;
+  height: 10px;
+  border: 1px solid #008DD7;
+  border-radius: 4px;
+  margin-top: 5px;
+
+  -webkit-box-shadow: 0px 5px 15px -3px rgba(0, 0, 0, 0.45);
+  box-shadow: 0px 5px 15px -3px rgba(0, 0, 0, 0.45);
+}
+
+.backgroundMark {
+  width: 50%;
+  margin: auto;
+  height: 10px;
+  border: 1px solid #008DD7;
+  border-radius: 4px;
+  margin-top: 5px;
+
+  -webkit-box-shadow: 0px 5px 15px -3px rgba(0, 0, 0, 0.45);
+  box-shadow: 0px 5px 15px -3px rgba(0, 0, 0, 0.45);
+}
