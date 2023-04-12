@@ -8,9 +8,9 @@ import {
   AiOutlineBorderTop,
   AiOutlineBorderBottom,
 } from "react-icons/ai"
-import ContentInput from "../UI/ContentInput/ContentInput"
 import AlignType from "../UI/AlignType/AlignType"
 import RadioButton from "../UI/RadioButton/RadioButton"
+import ContentInput from "./ContentInput/ContentInput"
 
 const TextEditor = (props) => {
   const [paddings, setPaddings] = useState({

@@ -1,0 +1,18 @@
+.ColourItem {
+    width: 40px;
+    height: 14px;
+    border: 3px solid #fff;
+    border-radius: 6px;
+    margin: 2px 2px;
+
+    &:hover {
+        filter: brightness(130%);
+        cursor: pointer;
+        transition: .2s;
+    }
+
+    &:active {
+        filter: brightness(80%);
+        transition: .2s;
+    }
+}

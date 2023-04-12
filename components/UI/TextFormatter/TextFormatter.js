@@ -13,21 +13,15 @@ import { withHistory } from "slate-history"
 
 import { FaItalic, FaHeading, FaListUl, FaUnderline } from "react-icons/fa"
 import { ImBold } from "react-icons/im"
-import {
-  MdTextFields,
-} from "react-icons/md"
+import { MdTextFields } from "react-icons/md"
 import {
   GrTextAlignLeft,
   GrTextAlignCenter,
   GrTextAlignRight,
   GrTextAlignFull,
 } from "react-icons/gr"
-import {
-  ImTextColor,
-} from "react-icons/im"
-import {
-  BiColorFill
-} from "react-icons/bi"
+import { ImTextColor } from "react-icons/im"
+import { BiColorFill } from "react-icons/bi"
 import { AiOutlineLink } from "react-icons/ai"
 
 import Modal from "../../Modal/Modal"
@@ -61,6 +55,7 @@ const RichTextExample = (editorProps) => {
   })
   const [hyperlink, setHyperlink] = useState("")
   const [hyperlinkModal, setHyperlinkModal] = useState(false)
+  const [chosenColour, setChosenColour] = useState(null)
   const renderElement = useCallback(
     (props, confirmedColor, hyperlink) => {
       const newProps = Object.assign(props, confirmedColor, {
@@ -78,7 +73,6 @@ const RichTextExample = (editorProps) => {
   })
 
   const colorConfirmation = (color, colorType) => {
-    console.log(color, colorType)
     if (colorType == 1) {
       setConfirmedColor({ ...confirmedColor, background: color })
     }
@@ -88,6 +82,7 @@ const RichTextExample = (editorProps) => {
   }
 
   const colorChoice = (e, colorType) => {
+    setChosenColour(e.hex)
     if (colorType == 1) {
       setElementSettings({ ...elementSettings, background: e.hex })
     }
@@ -96,14 +91,28 @@ const RichTextExample = (editorProps) => {
     }
   }
 
-  const colorHandler = (colorType) => {
+  const colorHandlerTacle = (colorType) => {
     if (colorType == 1) {
       setColorScheme({ ...colorScheme, background: !colorScheme.background })
     }
     if (colorType == 2) {
       setColorScheme({ ...colorScheme, color: !colorScheme.color })
     }
+  }
 
+  const confirmColourHandler = (colorType) => {
+    if (chosenColour) {
+      const filteredArray = editorProps.currentColours.filter(item => item !== chosenColour.toString())
+      console.log(filteredArray)
+      console.log(chosenColour)
+      editorProps.setColours([...filteredArray, chosenColour])
+    }
+    if (colorType == 1) {
+      setColorScheme({ ...colorScheme, background: !colorScheme.background })
+    }
+    if (colorType == 2) {
+      setColorScheme({ ...colorScheme, color: !colorScheme.color })
+    }
   }
 
   const openHyperlinkSettings = () => {
@@ -149,10 +158,11 @@ const RichTextExample = (editorProps) => {
                     onClick={() => colorConfirmation(elementSettings.color, 2)}
                   />
                   <div
-                    onClick={() => colorHandler(2)}
+                    onClick={() => colorHandlerTacle(2)}
                     className={classes.colorMark}
                     style={{ background: elementSettings.color }}
-                    id="set-font-color" />
+                    id="set-font-color"
+                  />
                   <Tooltip anchorId="font-color" place="top">
                     Set Font Color
                   </Tooltip>
@@ -167,8 +177,8 @@ const RichTextExample = (editorProps) => {
                 className={classes.ColourPicker}
                 color={elementSettings.color}
                 onChangeComplete={(e) => colorChoice(e, 2)}
-                onAccept={() => colorHandler(2)}
-                onCancel={() => colorHandler(2)}
+                onAccept={() => confirmColourHandler(2)}
+                onCancel={() => colorHandlerTacle(2)}
                 header="Font color"
               />
             ) : null}
@@ -181,13 +191,16 @@ const RichTextExample = (editorProps) => {
                     color="#008DD7"
                     size="22"
                     id="choose-background-color"
-                    onClick={() => colorConfirmation(elementSettings.background, 1)}
+                    onClick={() =>
+                      colorConfirmation(elementSettings.background, 1)
+                    }
                   />
                   <div
-                    onClick={() => colorHandler(1)}
+                    onClick={() => colorHandlerTacle(1)}
                     className={classes.colorMark}
                     style={{ background: elementSettings.background }}
-                    id="set-background-color" />
+                    id="set-background-color"
+                  />
                   <Tooltip anchorId="choose-background-color" place="top">
                     Set Background Color
                   </Tooltip>
@@ -202,8 +215,8 @@ const RichTextExample = (editorProps) => {
                 className={classes.ColourPicker}
                 color={elementSettings.background}
                 onChangeComplete={(e) => colorChoice(e, 1)}
-                onAccept={() => colorHandler(1)}
-                onCancel={() => colorHandler(1)}
+                onAccept={() => confirmColourHandler(1)}
+                onCancel={() => colorHandlerTacle(1)}
                 header="Background color"
               />
             ) : null}
@@ -393,10 +406,11 @@ const RichTextExample = (editorProps) => {
                     onClick={() => colorConfirmation(elementSettings.color, 2)}
                   />
                   <div
-                    onClick={() => colorHandler(2)}
+                    onClick={() => colorHandlerTacle(2)}
                     className={classes.colorMark}
                     style={{ background: elementSettings.color }}
-                    id="choose-font-color-list" />
+                    id="choose-font-color-list"
+                  />
                   <Tooltip anchorId="set-font-color-list" place="top">
                     Set Font Color
                   </Tooltip>
@@ -411,8 +425,8 @@ const RichTextExample = (editorProps) => {
                 className={classes.ColourPicker}
                 color={elementSettings.color}
                 onChangeComplete={(e) => colorChoice(e, 2)}
-                onAccept={() => colorHandler(2)}
-                onCancel={() => colorHandler(2)}
+                onAccept={() => confirmColourHandler(2)}
+                onCancel={() => colorHandlerTacle(2)}
                 header="Font color"
               />
             ) : null}
@@ -425,13 +439,16 @@ const RichTextExample = (editorProps) => {
                     color="#008DD7"
                     size="22"
                     id="set-background-list"
-                    onClick={() => colorConfirmation(elementSettings.background, 1)}
+                    onClick={() =>
+                      colorConfirmation(elementSettings.background, 1)
+                    }
                   />
                   <div
-                    onClick={() => colorHandler(1)}
+                    onClick={() => colorHandlerTacle(1)}
                     className={classes.colorMark}
                     style={{ background: elementSettings.background }}
-                    id="choose-background-color-list" />
+                    id="choose-background-color-list"
+                  />
                   <Tooltip anchorId="set-background-list" place="top">
                     Set Background Color
                   </Tooltip>
@@ -446,8 +463,8 @@ const RichTextExample = (editorProps) => {
                 className={classes.ColourPicker}
                 color={elementSettings.background}
                 onChangeComplete={(e) => colorChoice(e, 1)}
-                onAccept={() => colorHandler(1)}
-                onCancel={() => colorHandler(1)}
+                onAccept={() => confirmColourHandler(1)}
+                onCancel={() => colorHandlerTacle(1)}
                 header="Background color"
               />
             ) : null}
