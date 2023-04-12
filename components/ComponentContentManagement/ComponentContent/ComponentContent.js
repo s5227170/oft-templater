@@ -106,41 +106,49 @@ const ComponentContent = (props) => {
         style={props.boxStyle}
       >
         <div className={classes.Resizer}>
-          <IconButton icon={<CgArrowsExpandLeftAlt
-            id="confirm-text"
-            color="#40cd9a"
-            size="15px"
-            onMouseDown={props.startResize}
-          />} tooltip="Resize window" />
+          <IconButton
+            icon={
+              <CgArrowsExpandLeftAlt
+                id="confirm-text"
+                color="#40cd9a"
+                size="15px"
+                onMouseDown={props.startResize}
+              />
+            }
+            tooltip="Resize window"
+          />
         </div>
         <div className={classes.Header}>
           <h1>
             {props.componentType == "Text"
               ? "Text component"
               : props.componentType == "List"
-                ? "List component"
-                : props.componentType == "Image"
-                  ? "Image component"
-                  : props.componentType == "MultiImage"
-                    ? "Multi image component"
-                    : ""}
+              ? "List component"
+              : props.componentType == "Image"
+              ? "Image component"
+              : props.componentType == "MultiImage"
+              ? "Multi image component"
+              : ""}
           </h1>
           <div className={classes.EditorIcons}>
-            <IconButton submit={preConfirmHandler} icon={<GiConfirmed
-              color="#40CD9A"
-              size="25px"
-            />} tooltip="Confirm component" />
-            <IconButton submit={() => {
-              props.deleteFunction(position.row, position.item)
-              props.tackleModal()
-            }} icon={<MdOutlineDeleteOutline
-              color="#CE4045"
-              size="25px"
-            />} tooltip="Delete component" />
-            <IconButton submit={props.tackleModal} icon={<TiArrowMinimise
-              color="#008DD7"
-              size="25px"
-            />} tooltip="Close Modal" />
+            <IconButton
+              submit={preConfirmHandler}
+              icon={<GiConfirmed color="#40CD9A" size="25px" />}
+              tooltip="Confirm component"
+            />
+            <IconButton
+              submit={() => {
+                props.deleteFunction(position.row, position.item)
+                props.tackleModal()
+              }}
+              icon={<MdOutlineDeleteOutline color="#CE4045" size="25px" />}
+              tooltip="Delete component"
+            />
+            <IconButton
+              submit={props.tackleModal}
+              icon={<TiArrowMinimise color="#008DD7" size="25px" />}
+              tooltip="Close Modal"
+            />
           </div>
         </div>
         <div className={classes.BackgroundAndSizing}>
@@ -205,6 +213,8 @@ const ComponentContent = (props) => {
             errorBridge={(content) =>
               setmessageContent({ ...messageContent, ...content })
             }
+            currentColours={props.currentColours}
+            setColours={props.setColours}
           />
         ) : props.componentType == "List" ? (
           <TextEditor
@@ -223,6 +233,8 @@ const ComponentContent = (props) => {
             errorBridge={(content) =>
               setmessageContent({ ...messageContent, ...content })
             }
+            currentColours={props.currentColours}
+            setColours={props.setColours}
           />
         ) : props.componentType == "Image" ? (
           <ImageEditor

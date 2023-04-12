@@ -1,54 +1,53 @@
-import { useState } from "react";
-import Modal from "../../Modal/Modal";
+import { useState } from "react"
+import Modal from "../../Modal/Modal"
 
-import ComponentContentButton from "../ComponentContentButton/ComponentContentButton";
-import ComponentContent from "../ComponentContent/ComponentContent";
+import ComponentContentButton from "../ComponentContentButton/ComponentContentButton"
+import ComponentContent from "../ComponentContent/ComponentContent"
 
-import classes from "./ComponentContentManager.module.scss";
+import classes from "./ComponentContentManager.module.scss"
 
 const ComponentContentManager = (props) => {
-  const [modalShow, setModalShow] = useState(false);
+  const [modalShow, setModalShow] = useState(false)
   const [drag, setDrag] = useState({
     active: false,
     x: "",
-  });
+  })
   const [dims, setDims] = useState({
     w: 620,
-  });
+  })
 
   const tackleModal = () => {
     setTimeout(() => {
-      setModalShow(!modalShow);
-    }, 250);
-  };
+      setModalShow(!modalShow)
+    }, 250)
+  }
 
   const resizeFrame = (e) => {
-    const { active, x } = drag;
+    const { active, x } = drag
     if (active) {
-      const xDiff = Math.abs(x - e.clientX);
-      const newW = x > e.clientX ? dims.w - xDiff : dims.w + xDiff;
+      const xDiff = Math.abs(x - e.clientX)
+      const newW = x > e.clientX ? dims.w - xDiff : dims.w + xDiff
 
-      setDrag({ ...drag, x: e.clientX });
-      setDims({ w: newW });
+      setDrag({ ...drag, x: e.clientX })
+      setDims({ w: newW })
     }
-  };
+  }
 
   const stopResize = (e) => {
-    setDrag({ ...drag, active: false });
-  };
+    setDrag({ ...drag, active: false })
+  }
 
   const startResize = (e) => {
     setDrag({
       active: true,
       x: e.clientX,
-    });
-  };
-
+    })
+  }
 
   const boxStyle = {
     width: `${dims.w}px`,
-    minWidth: props.componentType == "Image" ? 750 : "auto"
-  };
+    minWidth: props.componentType == "Image" ? 750 : "auto",
+  }
 
   return (
     <div className={classes.ComponentContentManager}>
@@ -63,18 +62,20 @@ const ComponentContentManager = (props) => {
             componentType={props.componentType}
             tackleModal={tackleModal}
             confirmContent={props.confirmContent}
-            elementPosition={props.elementPosition}s
+            elementPosition={props.elementPosition}
             deleteFunction={props.deleteFunction}
             row={props.row}
             boxStyle={boxStyle}
             startResize={startResize}
             resizeFrame={resizeFrame}
             stopResize={stopResize}
+            currentColours={props.currentColours}
+            setColours={props.setColours}
           />
         </Modal>
       </ComponentContentButton>
     </div>
-  );
-};
+  )
+}
 
-export default ComponentContentManager;
+export default ComponentContentManager

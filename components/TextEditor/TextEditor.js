@@ -206,6 +206,8 @@ const TextEditor = (props) => {
         <div className={classes.Inputs}>
           <div className={classes.Fields}>
             <ContentInput
+              currentColours={props.currentColours}
+              setColours={props.setColours}
               extractData={dataExtractionHandler}
               componentType={props.componentType}
               currentContent={

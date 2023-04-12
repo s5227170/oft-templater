@@ -91,7 +91,7 @@ const RichTextExample = (editorProps) => {
     }
   }
 
-  const colorHandlerTacle = (colorType) => {
+  const colorHandlerTackle = (colorType) => {
     if (colorType == 1) {
       setColorScheme({ ...colorScheme, background: !colorScheme.background })
     }
@@ -102,10 +102,11 @@ const RichTextExample = (editorProps) => {
 
   const confirmColourHandler = (colorType) => {
     if (chosenColour) {
-      const filteredArray = editorProps.currentColours.filter(item => item !== chosenColour.toString())
-      console.log(filteredArray)
-      console.log(chosenColour)
-      editorProps.setColours([...filteredArray, chosenColour])
+      let newColours = [...editorProps.currentColours];
+      newColours = newColours.filter(item => item != chosenColour)
+      newColours.push(chosenColour)
+      
+      editorProps.setColours(newColours)
     }
     if (colorType == 1) {
       setColorScheme({ ...colorScheme, background: !colorScheme.background })
@@ -158,7 +159,7 @@ const RichTextExample = (editorProps) => {
                     onClick={() => colorConfirmation(elementSettings.color, 2)}
                   />
                   <div
-                    onClick={() => colorHandlerTacle(2)}
+                    onClick={() => colorHandlerTackle(2)}
                     className={classes.colorMark}
                     style={{ background: elementSettings.color }}
                     id="set-font-color"
@@ -178,7 +179,7 @@ const RichTextExample = (editorProps) => {
                 color={elementSettings.color}
                 onChangeComplete={(e) => colorChoice(e, 2)}
                 onAccept={() => confirmColourHandler(2)}
-                onCancel={() => colorHandlerTacle(2)}
+                onCancel={() => colorHandlerTackle(2)}
                 header="Font color"
               />
             ) : null}
@@ -196,7 +197,7 @@ const RichTextExample = (editorProps) => {
                     }
                   />
                   <div
-                    onClick={() => colorHandlerTacle(1)}
+                    onClick={() => colorHandlerTackle(1)}
                     className={classes.colorMark}
                     style={{ background: elementSettings.background }}
                     id="set-background-color"
@@ -216,7 +217,7 @@ const RichTextExample = (editorProps) => {
                 color={elementSettings.background}
                 onChangeComplete={(e) => colorChoice(e, 1)}
                 onAccept={() => confirmColourHandler(1)}
-                onCancel={() => colorHandlerTacle(1)}
+                onCancel={() => colorHandlerTackle(1)}
                 header="Background color"
               />
             ) : null}
@@ -406,7 +407,7 @@ const RichTextExample = (editorProps) => {
                     onClick={() => colorConfirmation(elementSettings.color, 2)}
                   />
                   <div
-                    onClick={() => colorHandlerTacle(2)}
+                    onClick={() => colorHandlerTackle(2)}
                     className={classes.colorMark}
                     style={{ background: elementSettings.color }}
                     id="choose-font-color-list"
@@ -426,7 +427,7 @@ const RichTextExample = (editorProps) => {
                 color={elementSettings.color}
                 onChangeComplete={(e) => colorChoice(e, 2)}
                 onAccept={() => confirmColourHandler(2)}
-                onCancel={() => colorHandlerTacle(2)}
+                onCancel={() => colorHandlerTackle(2)}
                 header="Font color"
               />
             ) : null}
@@ -444,7 +445,7 @@ const RichTextExample = (editorProps) => {
                     }
                   />
                   <div
-                    onClick={() => colorHandlerTacle(1)}
+                    onClick={() => colorHandlerTackle(1)}
                     className={classes.colorMark}
                     style={{ background: elementSettings.background }}
                     id="choose-background-color-list"
@@ -464,7 +465,7 @@ const RichTextExample = (editorProps) => {
                 color={elementSettings.background}
                 onChangeComplete={(e) => colorChoice(e, 1)}
                 onAccept={() => confirmColourHandler(1)}
-                onCancel={() => colorHandlerTacle(1)}
+                onCancel={() => colorHandlerTackle(1)}
                 header="Background color"
               />
             ) : null}

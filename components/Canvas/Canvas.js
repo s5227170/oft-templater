@@ -18,6 +18,7 @@ const Canvas = (props) => {
   const [rowSettings, setRowSettings] = useState([])
   const [reactifiedContent, setReactifiedContent] = useState()
   const [initialLoad, setInitialLoad] = useState(true)
+  const [usedColours, setUsedColours] = useState([])
   const [pageConfig, setPageConfig] = useState({
     content: [],
     title: "",
@@ -365,6 +366,8 @@ const Canvas = (props) => {
               row={attribs["data-columns"]}
               defaultPaddings={paddings}
               columnSize={attribs["data-column-sizes"]}
+              currentColours={usedColours}
+              setColours={setUsedColours}
             />
           )
         }
@@ -379,7 +382,7 @@ const Canvas = (props) => {
       })
     }
     setRowPositionConfig(newRowPositionConfig)
-  }, [pageConfig])
+  }, [pageConfig, usedColours])
 
   useEffect(() => {
     setTimeout(() => {
@@ -428,6 +431,8 @@ const Canvas = (props) => {
         tackleModal={() => {
           setEditComponentShow(!editComponentShow)
         }}
+        currentColours={usedColours}
+        setColours={setUsedColours}
       />
       {rowSettings.map((row) => {
         return (

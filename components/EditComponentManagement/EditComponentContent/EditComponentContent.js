@@ -121,29 +121,32 @@ const EditComponentContent = (props) => {
             {component.type == "Text"
               ? "Text component update"
               : component.type == "List"
-                ? "List component update"
-                : component.type == "Image"
-                  ? "Image component update"
-                  : component.type == "MultiImage"
-                    ? "Multi image component update"
-                    : ""}
+              ? "List component update"
+              : component.type == "Image"
+              ? "Image component update"
+              : component.type == "MultiImage"
+              ? "Multi image component update"
+              : ""}
           </h1>
           <div className={classes.EditorIcons}>
-            <IconButton submit={preConfirmHandler} icon={<GiConfirmed
-              color="#40CD9A"
-              size="25px"
-            />} tooltip="Confirm component" />
-            <IconButton submit={() => {
-              props.deleteFunction(position.row, position.item)
-              props.tackleModal()
-            }} icon={<MdOutlineDeleteOutline
-              color="#CE4045"
-              size="25px"
-            />} tooltip="Delete component" />
-            <IconButton submit={props.tackleModal} icon={<TiArrowMinimise
-              color="#008DD7"
-              size="25px"
-            />} tooltip="Close Modal" />
+            <IconButton
+              submit={preConfirmHandler}
+              icon={<GiConfirmed color="#40CD9A" size="25px" />}
+              tooltip="Confirm component"
+            />
+            <IconButton
+              submit={() => {
+                props.deleteFunction(position.row, position.item)
+                props.tackleModal()
+              }}
+              icon={<MdOutlineDeleteOutline color="#CE4045" size="25px" />}
+              tooltip="Delete component"
+            />
+            <IconButton
+              submit={props.tackleModal}
+              icon={<TiArrowMinimise color="#008DD7" size="25px" />}
+              tooltip="Close Modal"
+            />
           </div>
         </div>
         <div className={classes.BackgroundAndSizing}>
@@ -221,6 +224,8 @@ const EditComponentContent = (props) => {
             errorBridge={(content) =>
               setmessageContent({ ...messageContent, ...content })
             }
+            currentColours={props.currentColours}
+            setColours={props.setColours}
           />
         ) : component.type == "List" ? (
           <TextEditor
@@ -244,6 +249,8 @@ const EditComponentContent = (props) => {
             errorBridge={(content) =>
               setmessageContent({ ...messageContent, ...content })
             }
+            currentColours={props.currentColours}
+            setColours={props.setColours}
           />
         ) : component.type == "Image" ? (
           <ImageEditor
