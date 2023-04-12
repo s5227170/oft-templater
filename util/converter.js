@@ -26,6 +26,8 @@ const converter = (row, subComponents) => {
         resultArray[i] = `<span data-columns="${row.columns}"  id="componentManager" name="row${row.position}#item${i + 1}"></span>`;
       }
     }
+    console.log(row.contentComponents)
+
     htmlContent.push(
       oneColumn(
         row.columnSizes,
@@ -35,7 +37,8 @@ const converter = (row, subComponents) => {
         row.parameters.paddingRight,
         row.parameters.paddingTop,
         row.parameters.paddingBottom,
-        resultArray[0]
+        resultArray[0],
+        row.contentComponents[0] ? row.contentComponents[0].verticalAlign : "top"
       )
     );
   }
@@ -66,7 +69,9 @@ const converter = (row, subComponents) => {
         row.parameters.paddingTop,
         row.parameters.paddingBottom,
         resultArray[0],
-        resultArray[1]
+        resultArray[1],
+        row.contentComponents[0] ? row.contentComponents[0].verticalAlign : "top",
+        row.contentComponents[1] ? row.contentComponents[1].verticalAlign : "top"
       )
     );
   }
@@ -98,7 +103,10 @@ const converter = (row, subComponents) => {
         row.parameters.paddingBottom,
         resultArray[0],
         resultArray[1],
-        resultArray[2]
+        resultArray[2],
+        row.contentComponents[0] ? row.contentComponents[0].verticalAlign : "top",
+        row.contentComponents[1] ? row.contentComponents[1].verticalAlign : "top",
+        row.contentComponents[2] ? row.contentComponents[2].verticalAlign : "top",
       )
     );
   }
@@ -132,11 +140,13 @@ const converter = (row, subComponents) => {
         resultArray[1],
         resultArray[2],
         resultArray[3],
+        row.contentComponents[0] ? row.contentComponents[0].verticalAlign : "top",
+        row.contentComponents[1] ? row.contentComponents[1].verticalAlign : "top",
+        row.contentComponents[2] ? row.contentComponents[2].verticalAlign : "top",
+        row.contentComponents[3] ? row.contentComponents[3].verticalAlign : "top",
       )
     );
   }
-  // console.log(subComponents)
-  // console.log(htmlContent)
 
   return htmlContent;
 };

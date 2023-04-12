@@ -93,7 +93,7 @@ const text = (
   }
 
   return `<table width=${componentSize} border="0" cellspacing="0" cellpadding="0" style="border-spacing: 0; width: ${componentSize}px; max-width: ${componentSize}px;mso-table-lspace: 0pt; mso-table-rspace: 0pt;" valign="${
-    align ? align : ""
+    align ? align : "top"
   }">
             <tbody>
                 <tr>
@@ -105,7 +105,7 @@ const text = (
                     <td></td>
                     <td width="${
                       componentSize - paddingLeft - paddingRight
-                    }" valign="${align ? align : ""}">
+                    }" valign="${align ? align : "top"}">
                       ${items}
                     </td>
                     <td></td>

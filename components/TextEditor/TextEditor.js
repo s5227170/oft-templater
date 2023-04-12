@@ -20,23 +20,11 @@ const TextEditor = (props) => {
     paddingBottom: 0,
   })
   const [componentChoice, setComponentChoice] = useState({
-    topAlign: false,
+    topAlign: true,
     middleAlign: false,
     bottomAlign: false,
   })
   const [inputData, setInputData] = useState([])
-  const [editComponentStatus, setEditComponentStatus] = useState(
-    props.edit
-      ? {
-          content: props.row.contentComponents.find(
-            (item) => item.position === props.item
-          ),
-          paddings: props.row.contentComponents.find(
-            (item) => item.position === props.item
-          ),
-        }
-      : null
-  )
 
   const topAlignRef = useRef(null)
   const middleAlignRef = useRef(null)
@@ -113,7 +101,7 @@ const TextEditor = (props) => {
         paddingBottom: paddings.paddingBottom,
         content: textContent,
         position: props.positionData.item,
-        VerticalAlign: alignment,
+        verticalAlign: alignment,
       }
       props.confirmContent(
         props.positionData.row,
