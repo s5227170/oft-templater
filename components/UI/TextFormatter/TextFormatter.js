@@ -14,8 +14,6 @@ import { withHistory } from "slate-history"
 import { FaItalic, FaHeading, FaListUl, FaUnderline } from "react-icons/fa"
 import { ImBold } from "react-icons/im"
 import {
-  MdOutlineBorderColor,
-  MdOutlineFormatColorFill,
   MdTextFields,
 } from "react-icons/md"
 import {
@@ -24,6 +22,12 @@ import {
   GrTextAlignRight,
   GrTextAlignFull,
 } from "react-icons/gr"
+import {
+  ImTextColor,
+} from "react-icons/im"
+import {
+  BiColorFill
+} from "react-icons/bi"
 import { AiOutlineLink } from "react-icons/ai"
 
 import Modal from "../../Modal/Modal"
@@ -51,16 +55,20 @@ const RichTextExample = (editorProps) => {
     background: "rgb(255, 255, 255)",
     color: "rgb(0, 0, 0)",
   })
+  const [confirmedColor, setConfirmedColor] = useState({
+    background: "rgb(255, 255, 255)",
+    color: "rgb(0, 0, 0)",
+  })
   const [hyperlink, setHyperlink] = useState("")
   const [hyperlinkModal, setHyperlinkModal] = useState(false)
   const renderElement = useCallback(
-    (props, elementSettings, hyperlink) => {
-      const newProps = Object.assign(props, elementSettings, {
+    (props, confirmedColor, hyperlink) => {
+      const newProps = Object.assign(props, confirmedColor, {
         url: hyperlink,
       })
       return <Element {...newProps} />
     },
-    [elementSettings, hyperlink]
+    [confirmedColor, hyperlink]
   )
   const renderLeaf = useCallback((props) => <Leaf {...props} />, [])
   const editor = useMemo(() => withHistory(withReact(createEditor())), [])
@@ -68,6 +76,16 @@ const RichTextExample = (editorProps) => {
     background: false,
     color: false,
   })
+
+  const colorConfirmation = (color, colorType) => {
+    console.log(color, colorType)
+    if (colorType == 1) {
+      setConfirmedColor({ ...confirmedColor, background: color })
+    }
+    if (colorType == 2) {
+      setConfirmedColor({ ...confirmedColor, color: color })
+    }
+  }
 
   const colorChoice = (e, colorType) => {
     if (colorType == 1) {
@@ -85,6 +103,7 @@ const RichTextExample = (editorProps) => {
     if (colorType == 2) {
       setColorScheme({ ...colorScheme, color: !colorScheme.color })
     }
+
   }
 
   const openHyperlinkSettings = () => {
@@ -120,17 +139,25 @@ const RichTextExample = (editorProps) => {
           <>
             <MarkButton
               format="color"
-              value={elementSettings}
+              value={confirmedColor}
               icon={
                 <>
-                  <MdOutlineBorderColor
-                    onClick={() => colorHandler(2)}
+                  <ImTextColor
                     color="#008DD7"
                     size="22"
                     id="font-color"
+                    onClick={() => colorConfirmation(elementSettings.color, 2)}
                   />
+                  <div
+                    onClick={() => colorHandler(2)}
+                    className={classes.colorMark}
+                    style={{ background: elementSettings.color }}
+                    id="set-font-color" />
                   <Tooltip anchorId="font-color" place="top">
-                    Font Color
+                    Set Font Color
+                  </Tooltip>
+                  <Tooltip anchorId="set-font-color" place="top">
+                    Choose Font Color
                   </Tooltip>
                 </>
               }
@@ -147,17 +174,25 @@ const RichTextExample = (editorProps) => {
             ) : null}
             <MarkButton
               format="background"
-              value={elementSettings}
+              value={confirmedColor}
               icon={
                 <>
-                  <MdOutlineFormatColorFill
-                    onClick={() => colorHandler(1)}
+                  <BiColorFill
                     color="#008DD7"
                     size="22"
-                    id="font-background"
+                    id="choose-background-color"
+                    onClick={() => colorConfirmation(elementSettings.background, 1)}
                   />
-                  <Tooltip anchorId="font-background" place="top">
-                    Font Background
+                  <div
+                    onClick={() => colorHandler(1)}
+                    className={classes.colorMark}
+                    style={{ background: elementSettings.background }}
+                    id="set-background-color" />
+                  <Tooltip anchorId="choose-background-color" place="top">
+                    Set Background Color
+                  </Tooltip>
+                  <Tooltip anchorId="set-background-color" place="top">
+                    Choose Background Color
                   </Tooltip>
                 </>
               }
@@ -174,7 +209,7 @@ const RichTextExample = (editorProps) => {
             ) : null}
             <MarkButton
               format="italic"
-              value={elementSettings}
+              value={confirmedColor}
               icon={
                 <>
                   <FaItalic color="#008DD7" size="20" id="font-italic" />
@@ -186,7 +221,7 @@ const RichTextExample = (editorProps) => {
             />
             <MarkButton
               format="bold"
-              value={elementSettings}
+              value={confirmedColor}
               icon={
                 <>
                   <ImBold color="#008DD7" size="20" id="font-bold" />
@@ -198,7 +233,7 @@ const RichTextExample = (editorProps) => {
             />
             <MarkButton
               format="underline"
-              value={elementSettings}
+              value={confirmedColor}
               icon={
                 <>
                   <FaUnderline color="#008DD7" size="20" id="font-underline" />
@@ -210,7 +245,7 @@ const RichTextExample = (editorProps) => {
             />
             <BlockButton
               format="heading-one"
-              value={elementSettings}
+              value={confirmedColor}
               icon={
                 <>
                   <FaHeading color="#008DD7" size="20" id="heading-one" />
@@ -222,7 +257,7 @@ const RichTextExample = (editorProps) => {
             />
             <BlockButton
               format="heading-two"
-              value={elementSettings}
+              value={confirmedColor}
               icon={
                 <>
                   <FaHeading
@@ -239,7 +274,7 @@ const RichTextExample = (editorProps) => {
             />
             <MarkButton
               format="small"
-              value={elementSettings}
+              value={confirmedColor}
               icon={
                 <>
                   <MdTextFields
@@ -312,7 +347,7 @@ const RichTextExample = (editorProps) => {
             />
             <MarkButton
               format="hyperlink"
-              value={elementSettings}
+              value={confirmedColor}
               url={hyperlink}
               icon={
                 <>
@@ -348,55 +383,77 @@ const RichTextExample = (editorProps) => {
           <>
             <MarkButton
               format="color"
-              value={elementSettings}
+              value={confirmedColor}
               icon={
                 <>
-                  <MdOutlineBorderColor
-                    onClick={() => colorHandler(2)}
+                  <ImTextColor
                     color="#008DD7"
                     size="22"
-                    id="font-color-list"
+                    id="set-font-color-list"
+                    onClick={() => colorConfirmation(elementSettings.color, 2)}
                   />
-                  <Tooltip anchorId="font-color-list" place="top">
-                    Font Color
+                  <div
+                    onClick={() => colorHandler(2)}
+                    className={classes.colorMark}
+                    style={{ background: elementSettings.color }}
+                    id="choose-font-color-list" />
+                  <Tooltip anchorId="set-font-color-list" place="top">
+                    Set Font Color
+                  </Tooltip>
+                  <Tooltip anchorId="choose-font-color-list" place="top">
+                    Choose Font Color
                   </Tooltip>
                 </>
               }
             />
             {colorScheme.color ? (
-              <SketchPicker
+              <PhotoshopPicker
                 className={classes.ColourPicker}
                 color={elementSettings.color}
                 onChangeComplete={(e) => colorChoice(e, 2)}
+                onAccept={() => colorHandler(2)}
+                onCancel={() => colorHandler(2)}
+                header="Font color"
               />
             ) : null}
             <MarkButton
               format="background"
-              value={elementSettings}
+              value={confirmedColor}
               icon={
                 <>
-                  <MdOutlineFormatColorFill
-                    onClick={() => colorHandler(2)}
+                  <BiColorFill
                     color="#008DD7"
                     size="22"
-                    id="font-background-list"
+                    id="set-background-list"
+                    onClick={() => colorConfirmation(elementSettings.background, 1)}
                   />
-                  <Tooltip anchorId="font-background-list" place="top">
-                    font-background
+                  <div
+                    onClick={() => colorHandler(1)}
+                    className={classes.colorMark}
+                    style={{ background: elementSettings.background }}
+                    id="choose-background-color-list" />
+                  <Tooltip anchorId="set-background-list" place="top">
+                    Set Background Color
+                  </Tooltip>
+                  <Tooltip anchorId="choose-background-color-list" place="top">
+                    Choose Background Color
                   </Tooltip>
                 </>
               }
             />
             {colorScheme.background ? (
-              <SketchPicker
+              <PhotoshopPicker
                 className={classes.ColourPicker}
                 color={elementSettings.background}
                 onChangeComplete={(e) => colorChoice(e, 1)}
+                onAccept={() => colorHandler(1)}
+                onCancel={() => colorHandler(1)}
+                header="Background color"
               />
             ) : null}
             <BlockButton
               format="bulleted-list"
-              value={elementSettings}
+              value={confirmedColor}
               icon={
                 <>
                   <FaListUl color="#008DD7" size="22" id="list-item-list" />
@@ -408,7 +465,7 @@ const RichTextExample = (editorProps) => {
             />
             <MarkButton
               format="italic"
-              value={elementSettings}
+              value={confirmedColor}
               icon={
                 <>
                   <FaItalic color="#008DD7" size="20" id="font-italic-list" />
@@ -420,7 +477,7 @@ const RichTextExample = (editorProps) => {
             />
             <MarkButton
               format="bold"
-              value={elementSettings}
+              value={confirmedColor}
               icon={
                 <>
                   <ImBold color="#008DD7" size="20" id="font-bold-list" />
@@ -432,7 +489,7 @@ const RichTextExample = (editorProps) => {
             />
             <MarkButton
               format="underline"
-              value={elementSettings}
+              value={confirmedColor}
               icon={
                 <>
                   <FaUnderline
@@ -448,7 +505,7 @@ const RichTextExample = (editorProps) => {
             />
             <BlockButton
               format="heading-one"
-              value={elementSettings}
+              value={confirmedColor}
               icon={
                 <>
                   <FaHeading color="#008DD7" size="20" id="heading-one-list" />
@@ -460,7 +517,7 @@ const RichTextExample = (editorProps) => {
             />
             <BlockButton
               format="heading-two"
-              value={elementSettings}
+              value={confirmedColor}
               icon={
                 <>
                   <FaHeading
@@ -477,7 +534,7 @@ const RichTextExample = (editorProps) => {
             />
             <MarkButton
               format="small"
-              value={elementSettings}
+              value={confirmedColor}
               icon={
                 <>
                   <MdTextFields
@@ -554,7 +611,7 @@ const RichTextExample = (editorProps) => {
             />
             <MarkButton
               format="hyperlink"
-              value={elementSettings}
+              value={confirmedColor}
               url={hyperlink}
               icon={
                 <>
@@ -590,7 +647,7 @@ const RichTextExample = (editorProps) => {
       </Toolbar>
       <Editable
         renderElement={(elProps) =>
-          renderElement(elProps, elementSettings, hyperlink)
+          renderElement(elProps, confirmedColor, hyperlink)
         }
         renderLeaf={renderLeaf}
         placeholder="Write or paste the desired text content in here..."
@@ -673,6 +730,7 @@ const toggleMark = (editor, format, color, background, url) => {
 
     if (isActive) {
       Editor.removeMark(editor, format)
+      Editor.addMark(editor, format, color)
     } else {
       Editor.addMark(editor, format, color)
     }
@@ -725,23 +783,11 @@ const isMarkActive = (editor, format) => {
   return marks ? marks[format] === true : false
 }
 
-const Element = ({ attributes, children, element, color, background, url }) => {
+const Element = ({ attributes, children, element, color, background }) => {
   const style = {
     textAlign: element.align,
   }
   switch (element.type) {
-    case "background":
-      return (
-        <span style={{ backgroundColor: background }} {...attributes}>
-          {children}
-        </span>
-      )
-    case "color":
-      return (
-        <span style={{ color: color }} {...attributes}>
-          {children}
-        </span>
-      )
     case "block-quote":
       return (
         <blockquote style={style} {...attributes}>
