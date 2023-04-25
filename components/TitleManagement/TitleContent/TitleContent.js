@@ -21,7 +21,7 @@ const TitleContent = (props) => {
         <h1>HTML title</h1>
         <div className={classes.EditorIcons}>
           <IconButton submit={() => {
-            props.confirmDefaultPadding(paddings);
+            props.confirmTitle(title);
             props.tackleModal();
           }} icon={<GiConfirmed
             color="#40CD9A"

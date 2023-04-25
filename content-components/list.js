@@ -55,9 +55,7 @@ const list = (
           }
           if (wholeParagraph != "") {
             contentArray.push(
-              `<li width="${componentSize - paddingLeft - paddingRight
-              }" style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; width: ${componentSize - paddingLeft - paddingRight
-              }px; text-align: ${paragraph.align ? paragraph.align : "left"
+              `<li style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${paragraph.align ? paragraph.align : "left"
               };">${wholeParagraph}</li>`
             )
           }
@@ -123,9 +121,7 @@ const list = (
     if (wholeParagraph != "") {
       if (type != "type 1") {
         contentArray.push(
-          `<li width="${componentSize - paddingLeft - paddingRight
-          }" style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; width: ${componentSize - paddingLeft - paddingRight
-          }px; text-align: ${paragraph.align ? paragraph.align : "left"
+          `<li style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${paragraph.align ? paragraph.align : "left"
           };">${wholeParagraph}</li>`
         )
       }

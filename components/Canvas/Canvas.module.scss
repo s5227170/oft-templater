@@ -1,33 +1,33 @@
 .CanvasWrapper {
-    width: 600px;
+  width: 600px;
+  height: auto;
+  min-height: 100px;
+  max-width: 600px;
+  background-color: rgb(204, 204, 204);
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-bottom: 100px;
+
+  body * {
+    box-sizing: initial;
+  }
+
+  img {
     height: auto;
-    min-height: 100px;
-    max-width: 600px;
-    background-color: rgb(204, 204, 204);
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    margin-bottom: 100px;
+    width: auto;
+  }
 
-    body * {
-        box-sizing: initial;
-    }
+//   li {
+//     margin-left: 0px !important;
+// }
 
-    img {
-        height: auto;
-        width: auto;
-    }
-
-    li {
-        margin-left: 10px !important;
-    }
-
-    body {
-        max-width: none;
-        min-height: auto;
-        background-color: unset;
-        display: unset;
-        padding-top: 0px;
-    }
-
+  body {
+    max-width: none;
+    min-height: auto;
+    background-color: unset;
+    display: unset;
+    padding-top: 0px;
+  }
+  
 }

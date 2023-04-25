@@ -1,6 +1,7 @@
 const downloadFile = async (data, filename, extension) => {
   const blob = await data.blob();
   const newBlob = new Blob([blob]);
+  console.log(filename)
 
   const blobUrl = window.URL.createObjectURL(newBlob);
 

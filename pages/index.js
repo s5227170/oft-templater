@@ -52,6 +52,8 @@ export default function Home() {
   const [loadTemplateShow, setLoadTemplateShow] = useState(false)
   const [messageHandlerShow, setmessagegeHandlerShow] = useState(false)
 
+  console.log(emailTitle)
+
   const tabConfig = tabs
 
   const tackleModal = (type) => {
@@ -101,14 +103,14 @@ export default function Home() {
       method: "POST",
       body: JSON.stringify({
         content: submitContent,
-        subject: "Content",
+        subject: emailTitle ? emailTitle : "HTML title",
       }),
     }).then(async (response) => {
       if (response) {
-        fetch("http://localhost:3000/api/getHtml", {
+        fetch(`http://localhost:3000/api/getHtml/${emailTitle ? emailTitle : "HTML title"}`, {
           method: "GET",
         }).then(async (data) => {
-          downloadFile(data, "Content", "zip")
+          downloadFile(data, emailTitle ? emailTitle : "HTML title", "zip")
         })
       }
     })
