@@ -31,12 +31,12 @@ const LoadTemplateContent = (props) => {
       <h1>Load a template</h1>
       <p>
         {error.length ? (
-          <ResultMessage message={{ message: error, error: true }} />
+          <ResultMessage message={{ message: error, error: true }} clearMessage={() =>{}}/>
         ) : null}
       </p>
       <p>
         {props.message.message.length && props.message.local ? (
-          <ResultMessage message={props.message} />
+          <ResultMessage message={props.message} clearMessage={() =>{}}/>
         ) : null}
       </p>
       <div className={classes.Templates}>

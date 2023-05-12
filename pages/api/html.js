@@ -20,11 +20,11 @@ export default async function handler(req, res) {
   ]
 
   //Reset content folder to clean previous build in order to build the new one(cleaning)
-  fs.readdir("./html/content", (err, files) => {
+  await fs.promises.readdir("./html/content", (err, files) => {
     if (err) throw err;
   
     for (const file of files) {
-      fs.unlink(path.join("./html/content", file), (err) => {
+      fs.unlink(path.join("./html/content/", file), (err) => {
         if (err) throw err;
       });
     }

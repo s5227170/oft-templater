@@ -52,8 +52,6 @@ export default function Home() {
   const [loadTemplateShow, setLoadTemplateShow] = useState(false)
   const [messageHandlerShow, setmessagegeHandlerShow] = useState(false)
 
-  console.log(emailTitle)
-
   const tabConfig = tabs
 
   const tackleModal = (type) => {
@@ -305,7 +303,7 @@ export default function Home() {
             tackleModal={() => setmessagegeHandlerShow(!messageHandlerShow)}
             modalShow={messageHandlerShow}
             message={messageContent}
-            clearmessage={() =>
+            clearMessage={() =>
               setmessageContent({
                 message: "",
                 success: false,

@@ -210,9 +210,10 @@ const ComponentContent = (props) => {
             resetComponent={() => {
               props.tackleModal(), setSubmit(false)
             }}
-            errorBridge={(content) =>
+            errorBridge={(content) => {
+              setSubmit(false)
               setmessageContent({ ...messageContent, ...content })
-            }
+            }}
             currentColours={props.currentColours}
             setColours={props.setColours}
           />
@@ -230,9 +231,10 @@ const ComponentContent = (props) => {
             resetComponent={() => {
               props.tackleModal(), setSubmit(false)
             }}
-            errorBridge={(content) =>
+            errorBridge={(content) => {
+              setSubmit(false)
               setmessageContent({ ...messageContent, ...content })
-            }
+            }}
             currentColours={props.currentColours}
             setColours={props.setColours}
           />

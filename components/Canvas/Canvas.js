@@ -12,6 +12,7 @@ import RowSettingsManager from "../RowSettingsManagement/RowSettingsManager/RowS
 import debounce from "../../util/debounce"
 import EditComponentManager from "../EditComponentManagement/EditComponentManager/EditComponentManager"
 import initComponent from "../../util/initComponent"
+import rearangeArray from "../../util/rearangeArray"
 
 const Canvas = (props) => {
   const rootRef = useRef(null)
@@ -36,268 +37,6 @@ const Canvas = (props) => {
     rowNumber: null,
   })
   const [editComponentShow, setEditComponentShow] = useState(false)
-
-  const setPageContents = (newPageContent) => {
-    setPageConfig((pageConfig) => ({
-      ...pageConfig,
-      content: newPageContent,
-    }))
-  }
-
-  const generateComponent = (type, position, columns) => {
-    const row = position.split("#")[0].substr(3)
-
-    const componentPosition = position
-      .split("#")[1]
-      .charAt(position.split("#")[1].length - 1)
-
-    let parameters = {
-      paddingLeft: 0,
-      paddingRight: 0,
-      paddingTop: 0,
-      paddingBottom: 0,
-    }
-    if (props.defaultComponentPaddings != parameters) {
-      parameters = { ...props.defaultComponentPaddings }
-    }
-
-    if (componentPosition == 1 && columns > 1) {
-      parameters = { ...props.defaultComponentPaddings, paddingRight: 0 }
-    }
-    if (componentPosition == 2 && columns == 2) {
-      parameters = { ...props.defaultComponentPaddings, paddingLeft: 0 }
-    }
-    if (componentPosition == 3 && columns > 2) {
-      parameters = { ...props.defaultComponentPaddings, paddingLeft: 0 }
-    }
-    if (componentPosition == 2 && columns > 2) {
-      parameters = {
-        ...props.defaultComponentPaddings,
-        paddingLeft: 0,
-        paddingRight: 0,
-      }
-    }
-
-    let component = {}
-    if (type == "Text") {
-      component = initComponent.text(parameters, componentPosition)
-    }
-    if (type == "List") {
-      component = initComponent.list(parameters, componentPosition)
-    }
-    if (type == "Image") {
-      component = initComponent.image(parameters, componentPosition)
-    }
-    if (type == "MultiImage") {
-      component = initComponent.multiImage(parameters, componentPosition)
-    }
-
-    const newPageContent = []
-    pageConfig.content.map((rowConfig) => {
-      if (rowConfig.position != row) {
-        newPageContent.push(rowConfig)
-      } else {
-        newPageContent.push({
-          ...rowConfig,
-          contentComponents: [...rowConfig.contentComponents, component],
-        })
-      }
-    })
-
-    setPageContents([...newPageContent])
-
-    // setPageConfig((pageConfig) => ({
-    //   ...pageConfig,
-    //   content: [...newPageContent],
-    // }))
-  }
-
-  const generateRow = (cols, colSizes) => {
-    const newRowConfig = initComponent.row(
-      cols,
-      colSizes,
-      pageConfig.content.length + 1
-    )
-    setPageContents([...pageConfig.content, newRowConfig])
-
-    // setPageConfig((pageConfig) => ({
-    //   ...pageConfig,
-    //   content: [...pageConfig.content, newRowConfig],
-    // }))
-  }
-
-  const confirmContent = (row, item, rowBackground, componentData) => {
-    const newPageContent = []
-
-    pageConfig.content.map((rowConfig) => {
-      if (rowConfig.position == row) {
-        const newRowComponentContent = []
-        let newPaddings = {
-          paddingLeft: 0,
-          paddingRight: 0,
-          paddingTop: 0,
-          paddingBottom: 0,
-        }
-        rowConfig.contentComponents.map((component) => {
-          if (component.position == item) {
-            let updatedComponent = {}
-            //Check what type the component is and add the content depending on that
-            if (component.type == "Text") {
-              updatedComponent = { ...componentData, type: component.type }
-            }
-            if (component.type == "List") {
-              updatedComponent = { ...componentData, type: component.type }
-            }
-            if (component.type == "Image") {
-              updatedComponent = { ...componentData, type: component.type }
-            }
-            if (component.type == "MultiImage") {
-              updatedComponent = { ...componentData, type: component.type }
-            }
-
-            if (rowConfig.cols == 1) {
-              newPaddings.paddingLeft = componentData.paddingLeft
-              newPaddings.paddingRight = componentData.paddingRight
-              newPaddings.paddingTop = componentData.paddingTop
-              newPaddings.paddingBottom = componentData.paddingBottom
-            }
-
-            //The line underneath adds the modified component to the row
-            newRowComponentContent.push(updatedComponent)
-          } else {
-            //Push all components to the updated row that are not to be touched
-            newRowComponentContent.push(component)
-          }
-          //Create the new updated row and add the updated components
-        })
-        const newRowConfig = {
-          ...rowConfig,
-          parameters: newPaddings,
-          background: rowBackground ? rowBackground : "#fff",
-          contentComponents: newRowComponentContent,
-        }
-
-        //Push the new updated row object to the array of rowConfigs
-        newPageContent.push(newRowConfig)
-      } else {
-        //Push all rowConfigs that are not to be touched to the the pageConfig content
-        newPageContent.push(rowConfig)
-      }
-    })
-
-    setPageContents(newPageContent)
-
-    // setPageConfig((pageConfig) => ({
-    //   ...pageConfig,
-    //   content: newPageContent,
-    // }))
-  }
-
-  const deleteContent = (row, item) => {
-    const newPageContent = []
-    pageConfig.content.map((rowConfig) => {
-      if (rowConfig.position != row) {
-        newPageContent.push(rowConfig)
-      } else {
-        const newContentComponents = []
-        for (let i = 0; i < rowConfig.contentComponents.length; i++) {
-          if (rowConfig.contentComponents[i].position != item) {
-            newContentComponents.push(rowConfig.contentComponents[i])
-          }
-        }
-        rowConfig.contentComponents = newContentComponents
-        newPageContent.push(rowConfig)
-      }
-    })
-    const newPageConfig = pageConfig
-    newPageConfig.content = newPageContent
-
-    setPageContents([...newPageContent])
-
-    // setPageConfig((pageConfig) => ({
-    //   ...pageConfig,
-    //   content: [...newPageContent],
-    // }))
-  }
-
-  const editComponent = (row, item, rowNumber) => {
-    setRowComponentStatus({
-      row: row,
-      item: item,
-      rowNumber: rowNumber,
-    })
-  }
-
-  const deleteRowHandler = (rowPosition) => {
-    const newPageContent = []
-    for (let i = 0; i < pageConfig.content.length; i++) {
-      if (pageConfig.content[i].position != rowPosition) {
-        newPageContent.push(pageConfig.content[i])
-      }
-    }
-    for (let i = 0; i < newPageContent.length; i++) {
-      if (
-        newPageContent[i].position > 1 &&
-        newPageContent[i].position > rowPosition
-      ) {
-        newPageContent[i].position = newPageContent[i].position - 1
-      }
-    }
-
-    setPageContents([...newPageContent])
-
-    // setPageConfig((pageConfig) => ({
-    //   ...pageConfig,
-    //   content: [...newPageContent],
-    // }))
-  }
-
-  const confirmRowChanges = (row, newPosition) => {
-    const oldRowPosition = row.position
-    const newPageContent = pageConfig.content
-    for (let i = 0; i < pageConfig.content.length; i++) {
-      if (newPageContent[i].position == newPosition.value) {
-        newPageContent[i].position = oldRowPosition
-      } else if (newPageContent[i].position == oldRowPosition) {
-        newPageContent[i].position = newPosition.value
-      }
-    }
-
-    setPageContents([...newPageContent])
-
-    // setPageConfig((pageConfig) => ({
-    //   ...pageConfig,
-    //   content: [...newPageContent],
-    // }))
-  }
-
-  const tackleEditModal = () => {
-    setEditComponentShow(!editComponentShow)
-  }
-
-  const debouncedHandleResize = debounce(function handleResize() {
-    if (reactifiedContent) {
-      const newRowSettings = []
-      for (let i = 1; i <= pageConfig.content.length; i++) {
-        const row = document.getElementById("position-" + i)
-        if (row) {
-          const rowRightCoordinates = row.getBoundingClientRect().right
-          const rowTopCoordinates = row.offsetTop
-          const rowHeight = row.offsetHeight
-          const settingsTriggerCoordinates = {
-            position: i,
-            coordinates: {
-              right: rowRightCoordinates,
-              top: rowTopCoordinates,
-            },
-            height: rowHeight,
-          }
-          newRowSettings.push(settingsTriggerCoordinates)
-        }
-      }
-      setRowSettings(newRowSettings)
-    }
-  }, 20)
 
   useEffect(() => {
     if (props.newCanvas) {
@@ -413,6 +152,235 @@ const Canvas = (props) => {
       props.resetLoadedTemplate(null)
     }
   }, [props.loadedTemplate])
+
+  const setPageContents = (newPageContent) => {
+    setPageConfig((pageConfig) => ({
+      ...pageConfig,
+      content: newPageContent,
+    }))
+  }
+
+  const generateComponent = (type, position, columns) => {
+    const row = position.split("#")[0].substr(3)
+
+    const componentPosition = position
+      .split("#")[1]
+      .charAt(position.split("#")[1].length - 1)
+
+    let parameters = {
+      paddingLeft: 0,
+      paddingRight: 0,
+      paddingTop: 0,
+      paddingBottom: 0,
+    }
+    if (props.defaultComponentPaddings != parameters) {
+      parameters = { ...props.defaultComponentPaddings }
+    }
+
+    if (componentPosition == 1 && columns > 1) {
+      parameters = { ...props.defaultComponentPaddings, paddingRight: 0 }
+    }
+    if (componentPosition == 2 && columns == 2) {
+      parameters = { ...props.defaultComponentPaddings, paddingLeft: 0 }
+    }
+    if (componentPosition == 3 && columns > 2) {
+      parameters = { ...props.defaultComponentPaddings, paddingLeft: 0 }
+    }
+    if (componentPosition == 2 && columns > 2) {
+      parameters = {
+        ...props.defaultComponentPaddings,
+        paddingLeft: 0,
+        paddingRight: 0,
+      }
+    }
+
+    let component = {}
+    if (type == "Text") {
+      component = initComponent.text(parameters, componentPosition)
+    }
+    if (type == "List") {
+      component = initComponent.list(parameters, componentPosition)
+    }
+    if (type == "Image") {
+      component = initComponent.image(parameters, componentPosition)
+    }
+    if (type == "MultiImage") {
+      component = initComponent.multiImage(parameters, componentPosition)
+    }
+
+    const newPageContent = []
+    pageConfig.content.map((rowConfig) => {
+      if (rowConfig.position != row) {
+        newPageContent.push(rowConfig)
+      } else {
+        newPageContent.push({
+          ...rowConfig,
+          contentComponents: [...rowConfig.contentComponents, component],
+        })
+      }
+    })
+
+    setPageContents([...newPageContent])
+  }
+
+  const generateRow = (cols, colSizes) => {
+    const newRowConfig = initComponent.row(
+      cols,
+      colSizes,
+      pageConfig.content.length + 1
+    )
+    setPageContents([...pageConfig.content, newRowConfig])
+  }
+
+  const confirmContent = (row, item, rowBackground, componentData) => {
+    const newPageContent = []
+
+    pageConfig.content.map((rowConfig) => {
+      if (rowConfig.position == row) {
+        const newRowComponentContent = []
+        let newPaddings = {
+          paddingLeft: 0,
+          paddingRight: 0,
+          paddingTop: 0,
+          paddingBottom: 0,
+        }
+        rowConfig.contentComponents.map((component) => {
+          if (component.position == item) {
+            let updatedComponent = {}
+            //Check what type the component is and add the content depending on that
+            if (component.type == "Text") {
+              updatedComponent = { ...componentData, type: component.type }
+            }
+            if (component.type == "List") {
+              updatedComponent = { ...componentData, type: component.type }
+            }
+            if (component.type == "Image") {
+              updatedComponent = { ...componentData, type: component.type }
+            }
+            if (component.type == "MultiImage") {
+              updatedComponent = { ...componentData, type: component.type }
+            }
+
+            if (rowConfig.cols == 1) {
+              newPaddings.paddingLeft = componentData.paddingLeft
+              newPaddings.paddingRight = componentData.paddingRight
+              newPaddings.paddingTop = componentData.paddingTop
+              newPaddings.paddingBottom = componentData.paddingBottom
+            }
+
+            //The line underneath adds the modified component to the row
+            newRowComponentContent.push(updatedComponent)
+          } else {
+            //Push all components to the updated row that are not to be touched
+            newRowComponentContent.push(component)
+          }
+          //Create the new updated row and add the updated components
+        })
+        const newRowConfig = {
+          ...rowConfig,
+          parameters: newPaddings,
+          background: rowBackground ? rowBackground : "#fff",
+          contentComponents: newRowComponentContent,
+        }
+
+        //Push the new updated row object to the array of rowConfigs
+        newPageContent.push(newRowConfig)
+      } else {
+        //Push all rowConfigs that are not to be touched to the the pageConfig content
+        newPageContent.push(rowConfig)
+      }
+    })
+
+    setPageContents(newPageContent)
+  }
+
+  const deleteContent = (row, item) => {
+    const newPageContent = []
+    pageConfig.content.map((rowConfig) => {
+      if (rowConfig.position != row) {
+        newPageContent.push(rowConfig)
+      } else {
+        const newContentComponents = []
+        for (let i = 0; i < rowConfig.contentComponents.length; i++) {
+          if (rowConfig.contentComponents[i].position != item) {
+            newContentComponents.push(rowConfig.contentComponents[i])
+          }
+        }
+        rowConfig.contentComponents = newContentComponents
+        newPageContent.push(rowConfig)
+      }
+    })
+    const newPageConfig = pageConfig
+    newPageConfig.content = newPageContent
+
+    setPageContents([...newPageContent])
+  }
+
+  const editComponent = (row, item, rowNumber) => {
+    setRowComponentStatus({
+      row: row,
+      item: item,
+      rowNumber: rowNumber,
+    })
+  }
+
+  const deleteRowHandler = (rowPosition) => {
+    const newPageContent = []
+    for (let i = 0; i < pageConfig.content.length; i++) {
+      if (pageConfig.content[i].position != rowPosition) {
+        newPageContent.push(pageConfig.content[i])
+      }
+    }
+    for (let i = 0; i < newPageContent.length; i++) {
+      if (
+        newPageContent[i].position > 1 &&
+        newPageContent[i].position > rowPosition
+      ) {
+        newPageContent[i].position = newPageContent[i].position - 1
+      }
+    }
+
+    setPageContents([...newPageContent])
+  }
+
+  const confirmRowChanges = (row, newPosition) => {
+    const oldRowPosition = row.position
+    const newPageContent = rearangeArray(
+      pageConfig.content,
+      oldRowPosition,
+      newPosition.value
+    )
+
+    setPageContents([...newPageContent])
+  }
+
+  const tackleEditModal = () => {
+    setEditComponentShow(!editComponentShow)
+  }
+
+  const debouncedHandleResize = debounce(function handleResize() {
+    if (reactifiedContent) {
+      const newRowSettings = []
+      for (let i = 1; i <= pageConfig.content.length; i++) {
+        const row = document.getElementById("position-" + i)
+        if (row) {
+          const rowRightCoordinates = row.getBoundingClientRect().right
+          const rowTopCoordinates = row.offsetTop
+          const rowHeight = row.offsetHeight
+          const settingsTriggerCoordinates = {
+            position: i,
+            coordinates: {
+              right: rowRightCoordinates,
+              top: rowTopCoordinates,
+            },
+            height: rowHeight,
+          }
+          newRowSettings.push(settingsTriggerCoordinates)
+        }
+      }
+      setRowSettings(newRowSettings)
+    }
+  },)
 
   return (
     <div className={classes.CanvasWrapper}>

@@ -12,7 +12,7 @@ const ResultHandler = (props) => {
         <button
           className={classes.Confirm}
           onClick={() => {
-            props.tackleModal(), props.clearMessage;
+            props.tackleModal(), props.clearMessage();
           }}
         >
           Ok

@@ -31,12 +31,12 @@ const SaveTemplateContent = (props) => {
       <label>It is a good practice to keep namings clean of white-space.</label>
       <p>
         {error.length ? (
-          <ResultMessage message={{ message: error, error: true }} />
+          <ResultMessage message={{ message: error, error: true }} clearMessage={() =>{}}/>
         ) : null}
       </p>
       <p>
         {props.message.message.length && props.message.local ? (
-          <ResultMessage message={props.message} />
+          <ResultMessage message={props.message} clearMessage={() =>{}}/>
         ) : null}
       </p>
       <CustomInput
