@@ -9,10 +9,10 @@ import CreateRowManager from "../CreateRowManagement/CreateRowManager/CreateRowM
 import convertPageConfig from "../../util/convert-page-config"
 import ComponentContentManager from "../ComponentContentManagement/ComponentContentManager/ComponentContentManager"
 import RowSettingsManager from "../RowSettingsManagement/RowSettingsManager/RowSettingsManager"
-import debounce from "../../util/debounce"
 import EditComponentManager from "../EditComponentManagement/EditComponentManager/EditComponentManager"
 import initComponent from "../../util/initComponent"
 import rearangeArray from "../../util/rearangeArray"
+import debounceResize from "../../util/debounceResize"
 
 const Canvas = (props) => {
   const rootRef = useRef(null)
@@ -125,13 +125,13 @@ const Canvas = (props) => {
 
   useEffect(() => {
     setTimeout(() => {
-      debouncedHandleResize()
+      debounceResize()
     })
 
-    window.addEventListener("resize", debouncedHandleResize)
+    window.addEventListener("resize", debounceResize)
 
     return (_) => {
-      window.removeEventListener("resize", debouncedHandleResize)
+      window.removeEventListener("resize", debounceResize)
     }
   }, [reactifiedContent, props.guideExpand, pageConfig])
 
@@ -316,7 +316,7 @@ const Canvas = (props) => {
     setPageContents([...newPageContent])
   }
 
-  const editComponent = (row, item, rowNumber) => {
+  const editContent = (row, item, rowNumber) => {
     setRowComponentStatus({
       row: row,
       item: item,
@@ -358,30 +358,6 @@ const Canvas = (props) => {
     setEditComponentShow(!editComponentShow)
   }
 
-  const debouncedHandleResize = debounce(function handleResize() {
-    if (reactifiedContent) {
-      const newRowSettings = []
-      for (let i = 1; i <= pageConfig.content.length; i++) {
-        const row = document.getElementById("position-" + i)
-        if (row) {
-          const rowRightCoordinates = row.getBoundingClientRect().right
-          const rowTopCoordinates = row.offsetTop
-          const rowHeight = row.offsetHeight
-          const settingsTriggerCoordinates = {
-            position: i,
-            coordinates: {
-              right: rowRightCoordinates,
-              top: rowTopCoordinates,
-            },
-            height: rowHeight,
-          }
-          newRowSettings.push(settingsTriggerCoordinates)
-        }
-      }
-      setRowSettings(newRowSettings)
-    }
-  },)
-
   return (
     <div className={classes.CanvasWrapper}>
       <div id="targetDiv" ref={rootRef}>
@@ -412,7 +388,7 @@ const Canvas = (props) => {
             deleteRowHandler={deleteRowHandler}
             positionOptions={rowPositionConfig}
             deleteComponent={deleteContent}
-            editComponent={editComponent}
+            editContent={editContent}
             tackleEditModal={tackleEditModal}
           />
         )
