@@ -26,7 +26,6 @@ const converter = (row, subComponents) => {
         resultArray[i] = `<span data-columns="${row.columns}"  id="componentManager" name="row${row.position}#item${i + 1}"></span>`;
       }
     }
-    console.log(row.contentComponents)
 
     htmlContent.push(
       oneColumn(

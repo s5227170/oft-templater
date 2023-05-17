@@ -21,7 +21,7 @@ const oneColumn = (
   //   contentAlignment = "bottom";
   // }
   return `
-        <table id="position-${position}" bgcolor="${
+        <table id="position-${position}" data-type="main-table" bgcolor="${
     background ? background : "#fff"
   }" width="600" border="0" cellspacing="0" cellpadding="0" style="
             border-spacing: 0;
@@ -68,29 +68,8 @@ const twoColumns = (
   componentOneAlignment,
   componentTwoAlignment
 ) => {
-  // let contentAlignment = [];
-  // console.log(contentComponentOne)
-  // console.log(contentComponentTwo)
-  // if (contentComponentOne.verticalAlign == "top") {
-  //   contentAlignment[0] = "top";
-  // }
-  // if (contentComponentOne.verticalAlign == "middle") {
-  //   contentAlignment[0] = "middle";
-  // }
-  // if (contentComponentOne.verticalAlign == "bottom") {
-  //   contentAlignment[0] = "bottom";
-  // }
-  // if (contentComponentTwo.verticalAlign == "top") {
-  //   contentAlignment[1] = "top";
-  // }
-  // if (contentComponentTwo.verticalAlign == "middle") {
-  //   contentAlignment[1] = "middle";
-  // }
-  // if (contentComponentTwo.verticalAlign == "bottom") {
-  //   contentAlignment[1] = "bottom";
-  // }
   return `
-            <table id="position-${position}" bgcolor="${
+            <table id="position-${position}" data-type="main-table" bgcolor="${
     background ? background : "#fff"
   }" width="600" border="0" cellspacing="0" cellpadding="0" style="
             border-spacing: 0;
@@ -156,36 +135,8 @@ const threeColumns = (
   componentTwoAlignment,
   componentThreeAlignment
 ) => {
-  // let contentAlignment = []
-  // if (contentComponentOne.verticalAlign == "top") {
-  //   contentAlignment[0] = "top"
-  // }
-  // if (contentComponentOne.verticalAlign == "middle") {
-  //   contentAlignment[0] = "middle"
-  // }
-  // if (contentComponentOne.verticalAlign == "bottom") {
-  //   contentAlignment[0] = "bottom"
-  // }
-  // if (contentComponentTwo.verticalAlign == "top") {
-  //   contentAlignment[1] = "top"
-  // }
-  // if (contentComponentTwo.verticalAlign == "middle") {
-  //   contentAlignment[1] = "middle"
-  // }
-  // if (contentComponentTwo.verticalAlign == "bottom") {
-  //   contentAlignment[1] = "bottom"
-  // }
-  // if (contentComponentTwo.verticalAlign == "top") {
-  //   contentAlignment[2] = "top"
-  // }
-  // if (contentComponentTwo.verticalAlign == "middle") {
-  //   contentAlignment[2] = "middle"
-  // }
-  // if (contentComponentTwo.verticalAlign == "bottom") {
-  //   contentAlignment[2] = "bottom"
-  // }
   return `
-    <table id="position-${position}" bgcolor="${
+    <table id="position-${position}" data-type="main-table" bgcolor="${
     background ? background : "#fff"
   }" width="600" border="0" cellspacing="0" cellpadding="0" style="
     border-spacing: 0;
@@ -259,45 +210,8 @@ const fourColumns = (
   componentThreeAlignment,
   componentFourAlignment
 ) => {
-  // let contentAlignment = []
-  // if (contentComponentOne.verticalAlign == "top") {
-  //   contentAlignment[0] = "top"
-  // }
-  // if (contentComponentOne.verticalAlign == "middle") {
-  //   contentAlignment[0] = "middle"
-  // }
-  // if (contentComponentOne.verticalAlign == "bottom") {
-  //   contentAlignment[0] = "bottom"
-  // }
-  // if (contentComponentTwo.verticalAlign == "top") {
-  //   contentAlignment[1] = "top"
-  // }
-  // if (contentComponentTwo.verticalAlign == "middle") {
-  //   contentAlignment[1] = "middle"
-  // }
-  // if (contentComponentTwo.verticalAlign == "bottom") {
-  //   contentAlignment[1] = "bottom"
-  // }
-  // if (contentComponentTwo.verticalAlign == "top") {
-  //   contentAlignment[2] = "top"
-  // }
-  // if (contentComponentTwo.verticalAlign == "middle") {
-  //   contentAlignment[2] = "middle"
-  // }
-  // if (contentComponentTwo.verticalAlign == "bottom") {
-  //   contentAlignment[2] = "bottom"
-  // }
-  // if (contentComponentTwo.verticalAlign == "top") {
-  //   contentAlignment[3] = "top"
-  // }
-  // if (contentComponentTwo.verticalAlign == "middle") {
-  //   contentAlignment[3] = "middle"
-  // }
-  // if (contentComponentTwo.verticalAlign == "bottom") {
-  //   contentAlignment[3] = "bottom"
-  // }
   return `
-    <table id="position-${position}" bgcolor="${background}" width="600" border="0" cellspacing="0" cellpadding="0" style="
+    <table id="position-${position}" data-type="main-table" bgcolor="${background}" width="600" border="0" cellspacing="0" cellpadding="0" style="
     border-spacing: 0;
     mso-table-lspace: 0pt;
     mso-table-rspace: 0pt;

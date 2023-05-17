@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState, useRef, useReducer } from "react"
 import parse from "html-react-parser"
 
 import classes from "./Canvas.module.scss"
@@ -13,23 +13,20 @@ import EditComponentManager from "../EditComponentManagement/EditComponentManage
 import initComponent from "../../util/initComponent"
 import rearangeArray from "../../util/rearangeArray"
 import debounceResize from "../../util/debounceResize"
+import rowActions from "../../store/actions/row"
+import componentActions from "../../store/actions/component"
+
+import contentReducer, {
+  initialState,
+} from "../../store/reducers/contentReducer"
 
 const Canvas = (props) => {
   const rootRef = useRef(null)
+  const [state, dispatch] = useReducer(contentReducer, initialState)
   const [rowSettings, setRowSettings] = useState([])
   const [reactifiedContent, setReactifiedContent] = useState()
   const [initialLoad, setInitialLoad] = useState(true)
   const [usedColours, setUsedColours] = useState([])
-  const [pageConfig, setPageConfig] = useState({
-    content: [],
-    title: "",
-    parameters: {
-      paddingLeft: 0,
-      paddingRight: 0,
-      paddingTop: 0,
-      paddingBottom: 0,
-    },
-  })
   const [rowPositionConfig, setRowPositionConfig] = useState([])
   const [rowComponentStatus, setRowComponentStatus] = useState({
     row: null,
@@ -38,9 +35,11 @@ const Canvas = (props) => {
   })
   const [editComponentShow, setEditComponentShow] = useState(false)
 
+  console.log(state)
+
   useEffect(() => {
     if (props.newCanvas) {
-      setPageConfig({
+      const pageConfigReset = {
         content: [],
         title: "",
         parameters: {
@@ -49,7 +48,9 @@ const Canvas = (props) => {
           paddingTop: 0,
           paddingBottom: 0,
         },
-      })
+      }
+
+      dispatch({ type: "SET_CONFIG", payload: pageConfigReset })
       localStorage.removeItem("pageConfig")
       props.resetCanvasSetting(false)
     }
@@ -57,23 +58,23 @@ const Canvas = (props) => {
 
   useEffect(() => {
     if (
-      pageConfig.content.length ||
-      pageConfig.title.length ||
-      pageConfig.parameters.paddingLeft != 0 ||
-      pageConfig.parameters.paddingRight != 0 ||
-      pageConfig.parameters.paddingTop != 0 ||
-      pageConfig.parameters.paddingBottom != 0
+      state.pageConfig.content.length ||
+      state.pageConfig.title.length ||
+      state.pageConfig.parameters.paddingLeft != 0 ||
+      state.pageConfig.parameters.paddingRight != 0 ||
+      state.pageConfig.parameters.paddingTop != 0 ||
+      state.pageConfig.parameters.paddingBottom != 0
     ) {
-      localStorage.setItem("pageConfig", JSON.stringify(pageConfig))
+      localStorage.setItem("pageConfig", JSON.stringify(state.pageConfig))
     }
 
-    const conversion = convertPageConfig(pageConfig)
+    const conversion = convertPageConfig(state.pageConfig)
     let fullStringContent = ""
     conversion.map((stringRow) => {
       fullStringContent += stringRow
     })
     props.setHTML(fullStringContent)
-    props.setStringifiedHTML(pageConfig)
+    props.setStringifiedHTML(state.pageConfig)
     const reactContent = parse(fullStringContent, {
       replace: ({ attribs, children }) => {
         if (!attribs) {
@@ -114,33 +115,40 @@ const Canvas = (props) => {
     })
     setReactifiedContent(reactContent)
     const newRowPositionConfig = []
-    for (let i = 0; i < pageConfig.content.length; i++) {
+    for (let i = 0; i < state.pageConfig.content.length; i++) {
       newRowPositionConfig.push({
-        title: "POSITION " + pageConfig.content[i].position,
-        value: pageConfig.content[i].position,
+        title: "POSITION " + state.pageConfig.content[i].position,
+        value: state.pageConfig.content[i].position,
       })
     }
     setRowPositionConfig(newRowPositionConfig)
-  }, [pageConfig, usedColours])
+  }, [state.pageConfig, usedColours])
 
   useEffect(() => {
-    setTimeout(() => {
-      debounceResize()
-    })
+    function RowSettingsCalculation() {
+      setTimeout(() => {
+        if (reactifiedContent) {
+          const newRowSettings = debounceResize(state.pageConfig.content.length)
+          setRowSettings(newRowSettings)
+        }
+      }, 20)
+    }
 
-    window.addEventListener("resize", debounceResize)
+    RowSettingsCalculation()
+
+    window.addEventListener("resize", RowSettingsCalculation)
 
     return (_) => {
-      window.removeEventListener("resize", debounceResize)
+      window.removeEventListener("resize", RowSettingsCalculation)
     }
-  }, [reactifiedContent, props.guideExpand, pageConfig])
+  }, [reactifiedContent, props.guideExpand, state.pageConfig])
 
   useEffect(() => {
     if (initialLoad == true) {
       let existingConfig = localStorage.getItem("pageConfig")
       if (existingConfig) {
         existingConfig = JSON.parse(existingConfig)
-        setPageConfig(existingConfig)
+        dispatch({ type: "SET_CONFIG", payload: existingConfig })
       }
       setInitialLoad(false)
     }
@@ -148,172 +156,42 @@ const Canvas = (props) => {
 
   useEffect(() => {
     if (props.loadedTemplate) {
-      setPageConfig(props.loadedTemplate)
+      dispatch({ type: "SET_CONFIG", payload: props.loadedTemplate })
       props.resetLoadedTemplate(null)
     }
   }, [props.loadedTemplate])
 
-  const setPageContents = (newPageContent) => {
-    setPageConfig((pageConfig) => ({
-      ...pageConfig,
-      content: newPageContent,
-    }))
-  }
-
   const generateComponent = (type, position, columns) => {
-    const row = position.split("#")[0].substr(3)
-
-    const componentPosition = position
-      .split("#")[1]
-      .charAt(position.split("#")[1].length - 1)
-
-    let parameters = {
-      paddingLeft: 0,
-      paddingRight: 0,
-      paddingTop: 0,
-      paddingBottom: 0,
-    }
-    if (props.defaultComponentPaddings != parameters) {
-      parameters = { ...props.defaultComponentPaddings }
-    }
-
-    if (componentPosition == 1 && columns > 1) {
-      parameters = { ...props.defaultComponentPaddings, paddingRight: 0 }
-    }
-    if (componentPosition == 2 && columns == 2) {
-      parameters = { ...props.defaultComponentPaddings, paddingLeft: 0 }
-    }
-    if (componentPosition == 3 && columns > 2) {
-      parameters = { ...props.defaultComponentPaddings, paddingLeft: 0 }
-    }
-    if (componentPosition == 2 && columns > 2) {
-      parameters = {
-        ...props.defaultComponentPaddings,
-        paddingLeft: 0,
-        paddingRight: 0,
-      }
-    }
-
-    let component = {}
-    if (type == "Text") {
-      component = initComponent.text(parameters, componentPosition)
-    }
-    if (type == "List") {
-      component = initComponent.list(parameters, componentPosition)
-    }
-    if (type == "Image") {
-      component = initComponent.image(parameters, componentPosition)
-    }
-    if (type == "MultiImage") {
-      component = initComponent.multiImage(parameters, componentPosition)
-    }
-
-    const newPageContent = []
-    pageConfig.content.map((rowConfig) => {
-      if (rowConfig.position != row) {
-        newPageContent.push(rowConfig)
-      } else {
-        newPageContent.push({
-          ...rowConfig,
-          contentComponents: [...rowConfig.contentComponents, component],
-        })
-      }
+    dispatch({
+      type: "CREATE_COMPONENT",
+      payload: componentActions.create(
+        state.pageConfig,
+        props.defaultComponentPaddings,
+        type,
+        position,
+        columns
+      ),
     })
-
-    setPageContents([...newPageContent])
-  }
-
-  const generateRow = (cols, colSizes) => {
-    const newRowConfig = initComponent.row(
-      cols,
-      colSizes,
-      pageConfig.content.length + 1
-    )
-    setPageContents([...pageConfig.content, newRowConfig])
   }
 
   const confirmContent = (row, item, rowBackground, componentData) => {
-    const newPageContent = []
-
-    pageConfig.content.map((rowConfig) => {
-      if (rowConfig.position == row) {
-        const newRowComponentContent = []
-        let newPaddings = {
-          paddingLeft: 0,
-          paddingRight: 0,
-          paddingTop: 0,
-          paddingBottom: 0,
-        }
-        rowConfig.contentComponents.map((component) => {
-          if (component.position == item) {
-            let updatedComponent = {}
-            //Check what type the component is and add the content depending on that
-            if (component.type == "Text") {
-              updatedComponent = { ...componentData, type: component.type }
-            }
-            if (component.type == "List") {
-              updatedComponent = { ...componentData, type: component.type }
-            }
-            if (component.type == "Image") {
-              updatedComponent = { ...componentData, type: component.type }
-            }
-            if (component.type == "MultiImage") {
-              updatedComponent = { ...componentData, type: component.type }
-            }
-
-            if (rowConfig.cols == 1) {
-              newPaddings.paddingLeft = componentData.paddingLeft
-              newPaddings.paddingRight = componentData.paddingRight
-              newPaddings.paddingTop = componentData.paddingTop
-              newPaddings.paddingBottom = componentData.paddingBottom
-            }
-
-            //The line underneath adds the modified component to the row
-            newRowComponentContent.push(updatedComponent)
-          } else {
-            //Push all components to the updated row that are not to be touched
-            newRowComponentContent.push(component)
-          }
-          //Create the new updated row and add the updated components
-        })
-        const newRowConfig = {
-          ...rowConfig,
-          parameters: newPaddings,
-          background: rowBackground ? rowBackground : "#fff",
-          contentComponents: newRowComponentContent,
-        }
-
-        //Push the new updated row object to the array of rowConfigs
-        newPageContent.push(newRowConfig)
-      } else {
-        //Push all rowConfigs that are not to be touched to the the pageConfig content
-        newPageContent.push(rowConfig)
-      }
+    dispatch({
+      type: "SET_COMPONENT",
+      payload: componentActions.set(
+        state.pageConfig,
+        row,
+        item,
+        rowBackground,
+        componentData
+      ),
     })
-
-    setPageContents(newPageContent)
   }
 
   const deleteContent = (row, item) => {
-    const newPageContent = []
-    pageConfig.content.map((rowConfig) => {
-      if (rowConfig.position != row) {
-        newPageContent.push(rowConfig)
-      } else {
-        const newContentComponents = []
-        for (let i = 0; i < rowConfig.contentComponents.length; i++) {
-          if (rowConfig.contentComponents[i].position != item) {
-            newContentComponents.push(rowConfig.contentComponents[i])
-          }
-        }
-        rowConfig.contentComponents = newContentComponents
-        newPageContent.push(rowConfig)
-      }
+    dispatch({
+      type: "DELETE_COMPONENT",
+      payload: componentActions.remove(state.pageConfig, rowPosition),
     })
-    const newPageConfig = pageConfig
-    newPageConfig.content = newPageContent
-
-    setPageContents([...newPageContent])
   }
 
   const editContent = (row, item, rowNumber) => {
@@ -324,34 +202,25 @@ const Canvas = (props) => {
     })
   }
 
-  const deleteRowHandler = (rowPosition) => {
-    const newPageContent = []
-    for (let i = 0; i < pageConfig.content.length; i++) {
-      if (pageConfig.content[i].position != rowPosition) {
-        newPageContent.push(pageConfig.content[i])
-      }
-    }
-    for (let i = 0; i < newPageContent.length; i++) {
-      if (
-        newPageContent[i].position > 1 &&
-        newPageContent[i].position > rowPosition
-      ) {
-        newPageContent[i].position = newPageContent[i].position - 1
-      }
-    }
+  const generateRow = (cols, colSizes) => {
+    dispatch({
+      type: "CREATE_ROW",
+      payload: rowActions.create(state.pageConfig, cols, colSizes),
+    })
+  }
 
-    setPageContents([...newPageContent])
+  const deleteRowHandler = (rowPosition) => {
+    dispatch({
+      type: "DELETE_ROW",
+      payload: rowActions.remove(state.pageConfig, rowPosition),
+    })
   }
 
   const confirmRowChanges = (row, newPosition) => {
-    const oldRowPosition = row.position
-    const newPageContent = rearangeArray(
-      pageConfig.content,
-      oldRowPosition,
-      newPosition.value
-    )
-
-    setPageContents([...newPageContent])
+    dispatch({
+      type: "UPDATE_ROW",
+      payload: rowActions.update(state.pageConfig, row, newPosition),
+    })
   }
 
   const tackleEditModal = () => {
@@ -379,11 +248,12 @@ const Canvas = (props) => {
         setColours={setUsedColours}
       />
       {rowSettings.map((row) => {
+        console.log(state.pageConfig)
         return (
           <RowSettingsManager
             key={"settingsButton" + row.position}
             rowSettings={row}
-            row={pageConfig.content[row.position - 1]}
+            row={state.pageConfig.content[row.position - 1]}
             confirmRowChanges={confirmRowChanges}
             deleteRowHandler={deleteRowHandler}
             positionOptions={rowPositionConfig}

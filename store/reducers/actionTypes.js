@@ -1,0 +1,7 @@
+export const CREATE_ROW = "CREATE_ROW";
+export const UPDATE_ROW = "UPDATE_ROW";
+export const DELETE_ROW = "DELETE_ROW";
+export const CREATE_COMPONENT = "CREATE_COMPONENT";
+export const SET_COMPONENT = "SET_COMPONENT";
+export const DELETE_COMPONENT ="DELETE_COMPONENT";
+export const SET_CONFIG = "SET_CONFIG";
