@@ -29,7 +29,9 @@ export const tabs = [
     title: "Components",
     text: (
       <>
-        <h3><strong>Components</strong></h3>
+        <h3>
+          <strong>Components</strong>
+        </h3>
         <p>
           There are three main types of components - Text, List, and Image. The
           Text and List components are almost identical, although, Text
@@ -44,7 +46,9 @@ export const tabs = [
           modal window resized width-wise for comfort.
         </p>
         <br></br>
-        <h3><strong>Text</strong></h3>
+        <h3>
+          <strong>Text</strong>
+        </h3>
         <p>
           Text components is straightforward. It has a text editor field which
           does require the user to click on an option, set the colour they want,
@@ -55,7 +59,9 @@ export const tabs = [
           may be troublesome, however, it will be fixed in a future update.
         </p>
         <br></br>
-        <h3><strong>List</strong></h3>
+        <h3>
+          <strong>List</strong>
+        </h3>
         <p>
           In a List component, all "new" lines will be created as a separate
           bullet point. This means that if an empty line is left empty, it will
@@ -65,7 +71,9 @@ export const tabs = [
           turned into li elements after compilation.
         </p>
         <br></br>
-        <h3><strong>Image</strong></h3>
+        <h3>
+          <strong>Image</strong>
+        </h3>
         <p>
           Image components utilise url's to load images. Fetched images can be
           seen on the screen on the bottom of the modal window. They can be
@@ -82,7 +90,44 @@ export const tabs = [
       </>
     ),
   },
-  { title: "Editing", text: `` },
-  { title: "Notes", text: `` },
-  { title: "About", text: `` },
-];
+  {
+    title: "Editing",
+    text: (
+      <p>
+        Clicking the settings button of a row and then clicking on a component
+        from the list will open a dropdown which will allow for deletion, or
+        editing of a component.
+      </p>
+    ),
+  },
+  {
+    title: "Notes",
+    text: (
+      <p>
+        In case of an error, reload the page. If the bug is not breaking, it
+        will load most, if not the whole email. If it is a more relevant bug,
+        storage deletion will be required.<br></br>
+        <br></br>
+        To delete local storage, right click anywhere inside the browser window
+        and click "inspect", then open the "application" panel from the dev
+        tools. If it cannot be seen, simply click the dropdown icon and it will
+        shot in the dropdown. Search for "storage", and then look for "local
+        storage" under it. When clicked, it will open a table with the various
+        local storage items. Right click on "pageConfig" and delete it. Reload
+        the page and restart work on the email.<br></br>
+        <br></br>
+        Please keep a record of all errors/bugs and report them to a developer.
+      </p>
+    ),
+  },
+  {
+    title: "About",
+    text: (
+      <p>
+        The software is meant to simplify the OFT creation process by
+        introducing a CMS-like solution which will replace the old way of
+        manually coding each email.
+      </p>
+    ),
+  },
+]

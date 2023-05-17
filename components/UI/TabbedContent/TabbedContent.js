@@ -18,7 +18,7 @@ const TabbedContent = (props) => {
                 currentTab == index ? classes["active"] : "",
               ].join(" ")}
               key={"tab-" + index}
-              onClick={(e) => tabHandler(e, index)}
+              onClick={(e) => {tabHandler(e, index); props.changeDetect(!props.changeDetectValue)}}
             >
               {content.title}
             </div>

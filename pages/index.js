@@ -44,6 +44,7 @@ export default function Home() {
     error: false,
     local: false,
   })
+  const [tabChange, setTabChange] = useState(false);
 
   const [titleModalShow, setTitleModalShow] = useState(false)
   const [defaultPaddingModalShow, setDefaultPaddingModalShow] = useState(false)
@@ -216,7 +217,7 @@ export default function Home() {
             }}
           />
           <h1>Guide</h1>
-          <TabbedContent contents={tabConfig} />
+          <TabbedContent contents={tabConfig} changeDetect={setTabChange} changeDetectValue={tabChange}/>
         </div>
         <div className={classes.Export}>
           <HigherManagementButton submitHandler={exportHtmlHandler}>
@@ -247,6 +248,7 @@ export default function Home() {
           newCanvas={resetCanvas}
           resetCanvasSetting={setResetCanvas}
           guideExpand={guideExpand}
+          tabChange={tabChange}
           loadedTemplate={loadedTemplate}
           resetLoadedTemplate={setLoadedTemplate}
         />

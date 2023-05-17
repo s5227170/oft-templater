@@ -1,4 +1,5 @@
 import initComponent from "../../util/initComponent"
+import rearangeArray from "../../util/rearangeArray"
 
 const create = (config, cols, colSizes) => {
   const newRowConfig = initComponent.row(

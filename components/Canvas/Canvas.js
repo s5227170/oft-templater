@@ -10,8 +10,6 @@ import convertPageConfig from "../../util/convert-page-config"
 import ComponentContentManager from "../ComponentContentManagement/ComponentContentManager/ComponentContentManager"
 import RowSettingsManager from "../RowSettingsManagement/RowSettingsManager/RowSettingsManager"
 import EditComponentManager from "../EditComponentManagement/EditComponentManager/EditComponentManager"
-import initComponent from "../../util/initComponent"
-import rearangeArray from "../../util/rearangeArray"
 import debounceResize from "../../util/debounceResize"
 import rowActions from "../../store/actions/row"
 import componentActions from "../../store/actions/component"
@@ -34,8 +32,6 @@ const Canvas = (props) => {
     rowNumber: null,
   })
   const [editComponentShow, setEditComponentShow] = useState(false)
-
-  console.log(state)
 
   useEffect(() => {
     if (props.newCanvas) {
@@ -141,7 +137,7 @@ const Canvas = (props) => {
     return (_) => {
       window.removeEventListener("resize", RowSettingsCalculation)
     }
-  }, [reactifiedContent, props.guideExpand, state.pageConfig])
+  }, [reactifiedContent, props.guideExpand, props.tabChange, state.pageConfig])
 
   useEffect(() => {
     if (initialLoad == true) {
@@ -248,12 +244,12 @@ const Canvas = (props) => {
         setColours={setUsedColours}
       />
       {rowSettings.map((row) => {
-        console.log(state.pageConfig)
+        const currentRow = state.pageConfig.content[row.position - 1]
         return (
           <RowSettingsManager
             key={"settingsButton" + row.position}
             rowSettings={row}
-            row={state.pageConfig.content[row.position - 1]}
+            row={currentRow}
             confirmRowChanges={confirmRowChanges}
             deleteRowHandler={deleteRowHandler}
             positionOptions={rowPositionConfig}
