@@ -71,14 +71,13 @@ const TextEditor = (props) => {
   }
 
   useEffect(() => {
-    console.log(inputData)
     if (props.submission) {
       let textContent = []
-      if (inputData.length && inputData[0].children[0].text.length != 0) {
+      if (inputData.length) {
         textContent = inputData
       } else if (props.currentContent) {
         textContent = props.currentContent
-      } else{
+      } else {
         return props.errorBridge({
           message: "You haven't made any changes.",
           error: true,
@@ -94,6 +93,7 @@ const TextEditor = (props) => {
       if (componentChoice.bottomAlign) {
         alignment = "bottom"
       }
+      console.log(textContent)
       const allData = {
         type: props.componentType,
         paddingLeft: paddings.paddingLeft,

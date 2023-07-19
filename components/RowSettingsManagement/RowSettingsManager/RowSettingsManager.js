@@ -30,7 +30,7 @@ const RowSettingsManager = (props) => {
             row={props.row}
             positionOptions={props.positionOptions}
             deleteComponent={props.deleteComponent}
-            editComponent={props.editComponent}
+            editComponent={props.editContent}
             tackleEditModal={props.tackleEditModal}
           />
         </Modal>

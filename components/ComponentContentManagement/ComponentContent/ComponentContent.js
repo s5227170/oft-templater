@@ -93,7 +93,6 @@ const ComponentContent = (props) => {
       tackleModal()
     }
   }, [messageContent.message])
-
   return (
     <div
       className={classes.ComponentContentWrapper}
@@ -228,6 +227,7 @@ const ComponentContent = (props) => {
             background={background}
             getPaddings={getPaddings}
             getContentSize={getContentSize}
+            // currentContent={}
             resetComponent={() => {
               props.tackleModal(), setSubmit(false)
             }}

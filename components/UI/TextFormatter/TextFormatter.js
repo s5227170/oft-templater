@@ -41,6 +41,13 @@ const HOTKEYS = {
   "mod+`": "code",
 }
 
+const initialValue = [
+  {
+    type: "paragraph",
+    children: [{ text: "" }],
+  },
+]
+
 const LIST_TYPES = ["numbered-list", "bulleted-list"]
 const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"]
 
@@ -63,7 +70,7 @@ const RichTextExample = (editorProps) => {
       })
       return <Element {...newProps} />
     },
-    [confirmedColor, hyperlink]
+    [confirmedColor, hyperlink, editorProps.currentContent]
   )
   const renderLeaf = useCallback((props) => <Leaf {...props} />, [])
   const editor = useMemo(() => withHistory(withReact(createEditor())), [])
@@ -133,7 +140,7 @@ const RichTextExample = (editorProps) => {
         editorProps.currentContent ? editorProps.currentContent : initialValue
       }
       //This line bellow could be used to generate text into oft format
-      onChange={(value) => {
+      onChange={(value) => {console.log(value)
         editorProps.extractData(value)
         const isAstChange = editor.operations.some(
           (op) => "set_selection" !== op.type
@@ -932,12 +939,5 @@ const MarkButton = ({ format, icon, value, url }) => {
     </Button>
   )
 }
-
-const initialValue = [
-  {
-    type: "paragraph",
-    children: [{ text: "" }],
-  },
-]
 
 export default RichTextExample

@@ -198,7 +198,7 @@ const CreateRowContent = (props) => {
       {rowConfig.double || rowConfig.triple || rowConfig.quadruple ? (
         <div className={classes.RowSizes}>
           <h2>Custom columns sizes</h2>
-          <p>Note: Minimum column width is 100 pixels</p>
+          <p>Note: Minimum column width is 60 pixels</p>
           <p>Note: Overall value should be less than 600 pixels</p>
           {rowConfig.double
             ? [1, 2].map((row, index) => {
@@ -276,7 +276,7 @@ const CreateRowContent = (props) => {
                     backgroundColor: rowColors[(index + 1).toString()],
                   }}
                 >
-                  {customColumnsSize["col" + (index + 1)] >= 100
+                  {customColumnsSize["col" + (index + 1)] >= 60
                     ? "Row " + (index + 1)
                     : null}
                 </div>
@@ -293,7 +293,7 @@ const CreateRowContent = (props) => {
                       backgroundColor: rowColors[(index + 1).toString()],
                     }}
                   >
-                    {customColumnsSize["col" + (index + 1)] >= 100
+                    {customColumnsSize["col" + (index + 1)] >= 60
                       ? "Row " + (index + 1)
                       : null}
                   </div>
@@ -310,7 +310,7 @@ const CreateRowContent = (props) => {
                         backgroundColor: rowColors[(index + 1).toString()],
                       }}
                     >
-                      {customColumnsSize["col" + (index + 1)] >= 100
+                      {customColumnsSize["col" + (index + 1)] >= 60
                         ? "Row " + (index + 1)
                         : null}
                     </div>
@@ -327,7 +327,7 @@ const CreateRowContent = (props) => {
                           backgroundColor: rowColors[(index + 1).toString()],
                         }}
                       >
-                        {customColumnsSize["col" + (index + 1)] >= 100
+                        {customColumnsSize["col" + (index + 1)] >= 60
                           ? "Row " + (index + 1)
                           : null}
                       </div>
@@ -372,11 +372,11 @@ const CreateRowContent = (props) => {
           }
           let overallValue = 0
           for (let i = 1; i <= Object.keys(customColumnsSize).length; i++) {
-            if (customColumnsSize["col" + i] < 70) {
+            if (customColumnsSize["col" + i] < 60) {
               setLoading(false)
               return setmessageContent({
                 ...messageContent,
-                message: "Minimum column width is 100 pixels",
+                message: "Minimum column width is 60 pixels",
                 error: true,
               })
             }

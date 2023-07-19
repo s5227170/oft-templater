@@ -171,6 +171,7 @@ const Canvas = (props) => {
   }
 
   const confirmContent = (row, item, rowBackground, componentData) => {
+    console.log(componentData)
     dispatch({
       type: "SET_COMPONENT",
       payload: componentActions.set(
@@ -186,7 +187,7 @@ const Canvas = (props) => {
   const deleteContent = (row, item) => {
     dispatch({
       type: "DELETE_COMPONENT",
-      payload: componentActions.remove(state.pageConfig, rowPosition),
+      payload: componentActions.remove(state.pageConfig, row, item),
     })
   }
 
