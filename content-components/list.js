@@ -15,17 +15,15 @@ const list = (
   let type = ""
   let elementType = ""
   const componentSize = columnSizes["col" + item]
-  // console.log(content)
   const contentDistribution = content.map((paragraph) => {
     let wholeParagraph = ""
-    if (paragraph.children) {
+    // if (paragraph.children) {
       for (let i = 0; i < paragraph.children.length; i++) {
         if (paragraph.children[i].children) {
           performChanges(paragraph.children)
           nestingManagement(paragraph.children)
-
           for (let j = 0; j < paragraph.children[i].children.length; j++) {
-            if (paragraph.children[i].type == "paragraph") {
+            if (paragraph.type == "paragraph") {
               elementType = "paragraph"
               for (let k = 0; k < paragraph.children[i].children.length; k++) {
                 type = "Type 1"
@@ -64,49 +62,44 @@ const list = (
               }
             } else {
               elementType = "list-item"
-              for (
-                let k = 0;
-                k < paragraph.children[i].children[j].children.length;
-                k++
-              ) {
                 type = "Type 1"
                 let textContent =
-                  paragraph.children[i].children[j].children[k].text
-                if (paragraph.children[i].children[j].children[k].hyperlink) {
+                  paragraph.children[i].children[j]
+                  console.log(paragraph.children[i].children[j])
+                if (paragraph.children[i].children[j].hyperlink) {
                   textContent = `<a style="text-decoration: none; color: ${
-                    paragraph.children[i].children[j].children[k].color
-                      ? paragraph.children[i].children[j].children[k].color
+                    paragraph.children[i].children[j].color
+                      ? paragraph.children[i].children[j].color
                       : "inherit"
                   };" href="${
-                    paragraph.children[i].children[j].children[k].hyperlink
+                    paragraph.children[i].children[j].hyperlink
                   }">${textContent}</a>`
                 }
-                if (paragraph.children[i].children[j].children[k].underline) {
+                if (paragraph.children[i].children[j].underline) {
                   textContent = `<u>${textContent}</u>`
                 }
-                if (paragraph.children[i].children[j].children[k].bold) {
+                if (paragraph.children[i].children[j].bold) {
                   textContent = `<strong>${textContent}</strong>`
                 }
-                if (paragraph.children[i].children[j].children[k].small) {
+                if (paragraph.children[i].children[j].small) {
                   textContent = `<span style="font-size: 11px; line-height: 14px;">${textContent}</span>`
                 }
                 if (
-                  paragraph.children[i].children[j].children[k].color &&
-                  paragraph.children[i].children[j].children[k].background
+                  paragraph.children[i].children[j].color &&
+                  paragraph.children[i].children[j].background
                 ) {
-                  wholeParagraph += `<span style="text-decoration: none; color: ${paragraph.children[i].children[j].children[k].color}; background-color: ${paragraph.children[i].children[j].children[k].background}";>${textContent}</span>`
+                  wholeParagraph += `<span style="text-decoration: none; color: ${paragraph.children[i].children[j].color}; background-color: ${paragraph.children[i].children[j].background}";>${textContent}</span>`
                 } else if (
-                  paragraph.children[i].children[j].children[k].color
+                  paragraph.children[i].children[j].color
                 ) {
-                  wholeParagraph += `<span style="text-decoration: none; color: ${paragraph.children[i].children[j].children[k].color}";>${textContent}</span>`
+                  wholeParagraph += `<span style="text-decoration: none; color: ${paragraph.children[i].children[j].color}";>${textContent}</span>`
                 } else if (
-                  paragraph.children[i].children[j].children[k].background
+                  paragraph.children[i].children[j].background
                 ) {
-                  wholeParagraph += `<span style="text-decoration: none; background-color: ${paragraph.children[i].children[j].children[k].background}";>${textContent}</span>`
+                  wholeParagraph += `<span style="text-decoration: none; background-color: ${paragraph.children[i].children[j].background}";>${textContent}</span>`
                 } else {
                   wholeParagraph += textContent
                 }
-              }
             }
             if (wholeParagraph != "") {
               if (elementType == "paragraph") {
@@ -127,7 +120,6 @@ const list = (
             wholeParagraph = ""
           }
         } else {
-          console.log("WUT")
           type = "Type 2"
           let textContent = paragraph.children[i].text
           textContent = textContent.replace("<", "&#60;")
@@ -158,36 +150,35 @@ const list = (
           }
         }
       }
-    } else {
-      console.log("WUT")
-      type = "Type 3"
-      wholeParagraph = wholeParagraph.replace("<", "&#60;")
-      let textContent = paragraph.text
-      textContent = textContent.replace("<", "&#60;")
-      if (paragraph.hyperlink) {
-        textContent = `<a style="text-decoration: none; color: ${
-          paragraph.children[i].color ? paragraph.children[i].color : "inherit"
-        };" href="${paragraph.hyperlink}">${textContent}</a>`
-      }
-      if (paragraph.underline) {
-        textContent = `<u>${textContent}</u>`
-      }
-      if (paragraph.bold) {
-        textContent = `<strong>${textContent}</strong>`
-      }
-      if (paragraph.small) {
-        textContent = `<span style="font-size: 11px; line-height: 14px; display: inline-block;">${textContent}</span>`
-      }
-      if (paragraph.color && paragraph.background) {
-        wholeParagraph += `<span style="color: ${paragraph.color}; background-color: ${paragraph.background}";>${textContent}</span>`
-      } else if (paragraph.color) {
-        wholeParagraph += `<span style="color: ${paragraph.color}">${textContent}</span>`
-      } else if (paragraph.background) {
-        wholeParagraph += `<span style="background-color: ${paragraph.background}">${textContent}</span>`
-      } else {
-        wholeParagraph += textContent
-      }
-    }
+    // } else {
+    //   type = "Type 3"
+    //   wholeParagraph = wholeParagraph.replace("<", "&#60;")
+    //   let textContent = paragraph.text
+    //   textContent = textContent.replace("<", "&#60;")
+    //   if (paragraph.hyperlink) {
+    //     textContent = `<a style="text-decoration: none; color: ${
+    //       paragraph.children[i].color ? paragraph.children[i].color : "inherit"
+    //     };" href="${paragraph.hyperlink}">${textContent}</a>`
+    //   }
+    //   if (paragraph.underline) {
+    //     textContent = `<u>${textContent}</u>`
+    //   }
+    //   if (paragraph.bold) {
+    //     textContent = `<strong>${textContent}</strong>`
+    //   }
+    //   if (paragraph.small) {
+    //     textContent = `<span style="font-size: 11px; line-height: 14px; display: inline-block;">${textContent}</span>`
+    //   }
+    //   if (paragraph.color && paragraph.background) {
+    //     wholeParagraph += `<span style="color: ${paragraph.color}; background-color: ${paragraph.background}";>${textContent}</span>`
+    //   } else if (paragraph.color) {
+    //     wholeParagraph += `<span style="color: ${paragraph.color}">${textContent}</span>`
+    //   } else if (paragraph.background) {
+    //     wholeParagraph += `<span style="background-color: ${paragraph.background}">${textContent}</span>`
+    //   } else {
+    //     wholeParagraph += textContent
+    //   }
+    // }
     if (wholeParagraph != "") {
       if (type != "type 1") {
         contentArray.push(

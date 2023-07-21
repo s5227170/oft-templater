@@ -140,7 +140,7 @@ const RichTextExample = (editorProps) => {
         editorProps.currentContent ? editorProps.currentContent : initialValue
       }
       //This line bellow could be used to generate text into oft format
-      onChange={(value) => {console.log(value)
+      onChange={(value) => {
         editorProps.extractData(value)
         const isAstChange = editor.operations.some(
           (op) => "set_selection" !== op.type
