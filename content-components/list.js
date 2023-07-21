@@ -22,15 +22,12 @@ const list = (
       for (let i = 0; i < paragraph.children.length; i++) {
         if (paragraph.children[i].children) {
           performChanges(paragraph.children)
+          nestingManagement(paragraph.children)
 
           for (let j = 0; j < paragraph.children[i].children.length; j++) {
             if (paragraph.children[i].type == "paragraph") {
               elementType = "paragraph"
-              for (
-                let k = 0;
-                k < paragraph.children[i].children.length;
-                k++
-              ) {
+              for (let k = 0; k < paragraph.children[i].children.length; k++) {
                 type = "Type 1"
                 let textContent = paragraph.children[i].children[k].text
 
@@ -57,13 +54,9 @@ const list = (
                   paragraph.children[i].children[k].background
                 ) {
                   wholeParagraph += `<span style="text-decoration: none; color: ${paragraph.children[i].children[k].color}; background-color: ${paragraph.children[i].children[k].background}";>${textContent}</span>`
-                } else if (
-                  paragraph.children[i].children[k].color
-                ) {
+                } else if (paragraph.children[i].children[k].color) {
                   wholeParagraph += `<span style="text-decoration: none; color: ${paragraph.children[i].children[k].color}";>${textContent}</span>`
-                } else if (
-                  paragraph.children[i].children[k].background
-                ) {
+                } else if (paragraph.children[i].children[k].background) {
                   wholeParagraph += `<span style="text-decoration: none; background-color: ${paragraph.children[i].children[k].background}";>${textContent}</span>`
                 } else {
                   wholeParagraph += textContent
@@ -115,8 +108,6 @@ const list = (
                 }
               }
             }
-            console.log(elementType)
-            console.log(wholeParagraph)
             if (wholeParagraph != "") {
               if (elementType == "paragraph") {
                 contentArray.push(
@@ -136,6 +127,7 @@ const list = (
             wholeParagraph = ""
           }
         } else {
+          console.log("WUT")
           type = "Type 2"
           let textContent = paragraph.children[i].text
           textContent = textContent.replace("<", "&#60;")
@@ -167,6 +159,7 @@ const list = (
         }
       }
     } else {
+      console.log("WUT")
       type = "Type 3"
       wholeParagraph = wholeParagraph.replace("<", "&#60;")
       let textContent = paragraph.text
@@ -195,7 +188,6 @@ const list = (
         wholeParagraph += textContent
       }
     }
-    console.log(type)
     if (wholeParagraph != "") {
       if (type != "type 1") {
         contentArray.push(
@@ -268,6 +260,32 @@ function performChanges(nestedArrays) {
     } else if (typeof item === "object" && item.hasOwnProperty("text")) {
       // Perform changes to the object containing "text" element
       item = item.text.replace("<", "&#60;")
+    }
+  }
+}
+
+function nestingManagement(nestedArrays) {
+  for (let i = 0; i < nestedArrays.length; i++) {
+    let item = null
+    if (nestedArrays[i].children) {
+      item = nestedArrays[i].children
+    } else {
+      item = nestedArrays[i]
+    }
+    if (Array.isArray(item)) {
+      if (item[0].children) {
+        if (item[0].children[0].text) {
+          for (let m = 0; m < item.length; m++) {}
+        }
+      } else if (
+        typeof item[0] === "object" &&
+        item[0].hasOwnProperty("text")
+      ) {
+        // Perform changes to the object containing "text" element
+        console.log(item[0])
+        item[0] = item[0].text.replace("<", "&#60;")
+      }
+      performChanges(item) // Recursively perform changes on nested arrays
     }
   }
 }
