@@ -112,7 +112,7 @@ const RichTextExample = (editorProps) => {
       let newColours = [...editorProps.currentColours];
       newColours = newColours.filter(item => item != chosenColour)
       newColours.push(chosenColour)
-      
+
       editorProps.setColours(newColours)
     }
     if (colorType == 1) {
@@ -132,6 +132,7 @@ const RichTextExample = (editorProps) => {
   const confirmLink = (link) => {
     setHyperlink(link)
   }
+  console.log(editorProps.currentContent)
 
   return (
     <Slate
@@ -141,6 +142,7 @@ const RichTextExample = (editorProps) => {
       }
       //This line bellow could be used to generate text into oft format
       onChange={(value) => {
+        console.log(value)
         editorProps.extractData(value)
         const isAstChange = editor.operations.some(
           (op) => "set_selection" !== op.type
