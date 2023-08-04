@@ -28,18 +28,6 @@ const text = (parameters, position) => {
   }
 }
 
-const list = (parameters, position) => {
-  return {
-    type: "List",
-    paddingLeft: parameters.paddingLeft,
-    paddingRight: parameters.paddingRight,
-    paddingTop: parameters.paddingTop,
-    paddingBottom: parameters.paddingBottom,
-    content: [],
-    position: position,
-    verticalAlign: "",
-  }
-}
 
 const image = (parameters, position) => {
   return {
@@ -70,4 +58,4 @@ const multiImage = (parameters, position) => {
   }
 }
 
-export default { row, text, list, image, multiImage }
+export default { row, text, image, multiImage }

@@ -120,8 +120,6 @@ const EditComponentContent = (props) => {
           <h1>
             {component.type == "Text"
               ? "Text component update"
-              : component.type == "List"
-              ? "List component update"
               : component.type == "Image"
               ? "Image component update"
               : component.type == "MultiImage"
@@ -227,32 +225,8 @@ const EditComponentContent = (props) => {
             currentColours={props.currentColours}
             setColours={props.setColours}
           />
-        ) : component.type == "List" ? (
-          <TextEditor
-            componentType={component.type}
-            confirmContent={props.confirmContent}
-            submission={submit}
-            positionData={position}
-            defaultPaddings={component}
-            columnSize={props.columnSize}
-            background={background}
-            getPaddings={getPaddings}
-            getContentSize={getContentSize}
-            rowNumber={props.rowNumber}
-            item={props.item}
-            edit={true}
-            row={props.row}
-            currentContent={component.content}
-            resetComponent={() => {
-              props.tackleModal(), setSubmit(false)
-            }}
-            errorBridge={(content) =>
-              setmessageContent({ ...messageContent, ...content })
-            }
-            currentColours={props.currentColours}
-            setColours={props.setColours}
-          />
-        ) : component.type == "Image" ? (
+        ) 
+        : component.type == "Image" ? (
           <ImageEditor
             componentType={component.type}
             confirmContent={props.confirmContent}

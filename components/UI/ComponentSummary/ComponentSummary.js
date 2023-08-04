@@ -25,7 +25,7 @@ const ComponentSummary = (props) => {
           style={!open ? {} : { transform: "rotate(180deg)" }}
         />
       </div>
-      {props.type == "Text" || props.type == "List" ? (
+      {props.type == "Text" ? (
         <table>
           <tbody>
             <tr>
@@ -37,14 +37,15 @@ const ComponentSummary = (props) => {
               <td>{props.type}</td>
               <td>{...props.paddings.join(", ")}</td>
               <td>
-                {props.content.map((paragraph, index) => {
-                  return (
-                    <div key={"paragraph-" + index}>
-                      {paragraph}
-                      <br></br>
-                    </div>
-                  )
-                })}
+                <div className={classes.desc}>
+                  {props.content.map((paragraph, index) => {
+                    if (paragraph == "" || paragraph == " ") {
+                      return <br key={"end-line-" + index}></br>
+                    }
+
+                    return paragraph
+                  })}
+                </div>
               </td>
             </tr>
           </tbody>

@@ -5,7 +5,6 @@ import {
   fourColumns,
 } from "../content-components/row"
 import text from "../content-components/text"
-import list from "../content-components/list"
 import image from "../content-components/image"
 import multiImage from "../content-components/multiImage"
 import converter from "./converter"
@@ -35,24 +34,6 @@ const convertPageConfig = (config) => {
           //Fill the component content and settings
           subComponents.push(
             text(
-              row.contentComponents[i].paddingLeft,
-              row.contentComponents[i].paddingRight,
-              row.contentComponents[i].paddingTop,
-              row.contentComponents[i].paddingBottom,
-              row.contentComponents[i].content,
-              row.position,
-              row.contentComponents[i].position,
-              row.columns,
-              row.contentComponents[i].verticalAlign,
-              row.columnSizes
-            )
-          )
-        }
-        if (row.contentComponents[i].type == "List") {
-          //Fill the component content and settings
-          subComponents.push(
-            list(
-              //Add the attributes just like for the text type
               row.contentComponents[i].paddingLeft,
               row.contentComponents[i].paddingRight,
               row.contentComponents[i].paddingTop,

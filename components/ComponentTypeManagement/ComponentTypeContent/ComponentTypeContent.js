@@ -13,14 +13,12 @@ import classes from "./ComponentTypeContent.module.scss"
 const ComponentTypeContent = (props) => {
   const [componentChoice, setComponentChoice] = useState({
     Text: false,
-    List: false,
     Image: false,
     MultiImage: false,
   })
   const [loading, setLoading] = useState(false)
 
   const textRef = useRef(null)
-  const listRef = useRef(null)
   const imageRef = useRef(null)
   const multiImageRef = useRef(null)
 
@@ -47,17 +45,13 @@ const ComponentTypeContent = (props) => {
         textRef.current.click()
       }
     }
+
     if (type == 2) {
-      if (listRef) {
-        listRef.current.click()
-      }
-    }
-    if (type == 3) {
       if (imageRef) {
         imageRef.current.click()
       }
     }
-    if (type == 4) {
+    if (type == 3) {
       if (multiImageRef) {
         multiImageRef.current.click()
       }
@@ -80,22 +74,11 @@ const ComponentTypeContent = (props) => {
             />
           }
         />
-        <ComponentType
-          title="Chose List"
-          icon={<BsListTask color="#CE4045" size="30" />}
-          onClick={() => typeClickHandler(2)}
-          confirm={
-            <RadioButton
-              click={() => buttonChoiceTrigger("List")}
-              active={componentChoice.List}
-              elementRef={listRef}
-            />
-          }
-        />
+
         <ComponentType
           title="Choose Image"
           icon={<BsImage color="#CE4045" size="30" />}
-          onClick={() => typeClickHandler(3)}
+          onClick={() => typeClickHandler(2)}
           confirm={
             <RadioButton
               click={() => buttonChoiceTrigger("Image")}
@@ -107,7 +90,7 @@ const ComponentTypeContent = (props) => {
         <ComponentType
           title="Choose Multi-Image"
           icon={<ImImages color="#CE4045" size="30" />}
-          onClick={() => typeClickHandler(4)}
+          onClick={() => typeClickHandler(3)}
           confirm={
             <RadioButton
               click={() => buttonChoiceTrigger("MultiImage")}

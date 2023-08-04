@@ -1,3 +1,5 @@
+import nestingManagement from "../util/nesting-management"
+
 const text = (
   paddingLeft,
   paddingRight,
@@ -12,89 +14,51 @@ const text = (
 ) => {
   const contentArray = []
   const componentSize = columnSizes["col" + item]
-  const contentDistribution = content.map((paragraph) => {
-    let wholeParagraph = ""
-    for (let i = 0; i < paragraph.children.length; i++) {
-      let textContent = paragraph.children[i].text
-      textContent = textContent.replace("<", "&#60;")
-      if (paragraph.children[i].underline) {
-        textContent = `<u>${textContent}</u>`
-      }
-      if (paragraph.children[i].hyperlink) {
-        textContent = `<a style="text-decoration: none; color: ${
-          paragraph.children[i].color ? paragraph.children[i].color : "inherit"
-        };" href="${paragraph.children[i].hyperlink}">${textContent}</a>`
-      }
-      if (paragraph.children[i].bold) {
-        textContent = `<strong>${textContent}</strong>`
-      }
-      if (paragraph.children[i].small) {
-        textContent = `<span style="font-size: 11px; line-height: 14px; display: inline-block;">${textContent}</span>`
-      }
-      if (paragraph.children[i].color && paragraph.children[i].background) {
-        wholeParagraph += `<span style="text-decoration: none; color: ${paragraph.children[i].color}; background-color: ${paragraph.children[i].background}";>${textContent}</span>`
-      } else if (paragraph.children[i].color) {
-        wholeParagraph += `<span style="text-decoration: none; color: ${paragraph.children[i].color}";>${textContent}</span>`
-      } else if (paragraph.children[i].background) {
-        wholeParagraph += `<span style="text-decoration: none; background-color: ${paragraph.children[i].background}";>${textContent}</span>`
-      } else {
-        wholeParagraph += textContent
-      }
-    }
-    if (!paragraph.children[0].text.length) {
-      contentArray.push(
-        `<p style="font-size: 8px; line-height: 8px; display: block; margin: 0px">&nbsp;</p>`
-      )
-    }
-    if (paragraph.type == "heading-two") {
-      contentArray.push(
-        `<h2 width="${
-          componentSize - paddingLeft - paddingRight
-        }" style="font-family: arial; font-size: 18px; margin: 0px; display: inline-block; line-height: 24px; width: ${
-          componentSize - paddingLeft - paddingRight
-        }px; text-align: ${
-          paragraph.align ? paragraph.align : "left"
-        };">${wholeParagraph}</h2>`
-      )
-    }
-    if (paragraph.type == "heading-one") {
-      contentArray.push(
-        `<h1 width="${
-          componentSize - paddingLeft - paddingRight
-        }" style="font-family: arial; font-size: 20px; margin: 0px; display: inline-block; line-height: 24px; width: ${
-          componentSize - paddingLeft - paddingRight
-        }px; text-align: ${
-          paragraph.align ? paragraph.align : "left"
-        };">${wholeParagraph}</h1>`
-      )
-    }
-    if (paragraph.type == "paragraph") {
-      contentArray.push(
-        `<p width="${
-          componentSize - paddingLeft - paddingRight
-        }" style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; display: inline-block; width: ${
-          componentSize - paddingLeft - paddingRight
-        }px; text-align: ${
-          paragraph.align ? paragraph.align : "left"
-        };">${wholeParagraph}</p>`
-      )
-    }
-  })
+  const unrefinedContent = nestingManagement(content, contentArray)
 
   let items = ""
-  if (contentArray.length) {
-    for (let i = 0; i < contentArray.length; i++) {
-      items += contentArray[i]
+  const listStart = `<ul style="margin-top: 0px; margin-bottom: 0px;">`
+  const listEnd = `</ul>`
+  if (unrefinedContent.length) {
+    for (let i = 0; i < unrefinedContent.length; i++) {
+      let item = ""
+      if (unrefinedContent[i].substr(0, 3) == "<li") {
+        if (unrefinedContent[i - 1]) {
+          if (unrefinedContent[i - 1].substr(0, 3) != "<li") {
+            item = `${listStart + unrefinedContent[i]}`
+            if (unrefinedContent[i + 1]) {
+              if (unrefinedContent[i + 1].substr(0, 3) != "<li") {
+                item += listEnd
+              }
+            }
+          } else {
+            item += unrefinedContent[i]
+            if (unrefinedContent[i + 1]) {
+              if (unrefinedContent[i + 1].substr(0, 3) != "<li") {
+                item += listEnd
+              }
+            }
+          }
+        }
+      }
+      if (item.length) {
+        console.log(item)
+        items += item
+      } else {
+        items += unrefinedContent[i]
+      }
     }
-  }
-
-  if (!contentArray.length) {
+  } else {
     items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"Text"}"  data-columns="${rowType}" data-padding-left="${paddingLeft}" data-padding-right="${paddingRight}" data-padding-top="${paddingTop}" data-padding-bottom="${paddingBottom}" data-column-sizes="${componentSize}"></span>`
   }
 
-  return `<table width=${componentSize} border="0" cellspacing="0" cellpadding="0" style="border-spacing: 0; width: ${componentSize}px; max-width: ${componentSize}px;mso-table-lspace: 0pt; mso-table-rspace: 0pt;" valign="${
-    align ? align : "top"
-  }">
+  return `<table width=${componentSize} border="0" cellspacing="0" cellpadding="0" style="
+  border-spacing: 0;
+  width: ${componentSize}px;
+  max-width: ${componentSize}px;
+  mso-table-lspace: 0pt;
+  mso-table-rspace: 0pt;
+" valign="${align ? align : ""}">
             <tbody>
                 <tr>
                     <td width="${paddingLeft}"></td>
@@ -105,8 +69,9 @@ const text = (
                     <td></td>
                     <td width="${
                       componentSize - paddingLeft - paddingRight
-                    }" valign="${align ? align : "top"}">
+                    }" valign="${align ? align : ""}">
                       ${items}
+                      <div style="display:none;">&nbsp;</div>
                     </td>
                     <td></td>
                 </tr>

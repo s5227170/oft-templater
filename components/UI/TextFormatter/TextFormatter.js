@@ -109,8 +109,8 @@ const RichTextExample = (editorProps) => {
 
   const confirmColourHandler = (colorType) => {
     if (chosenColour) {
-      let newColours = [...editorProps.currentColours];
-      newColours = newColours.filter(item => item != chosenColour)
+      let newColours = [...editorProps.currentColours]
+      newColours = newColours.filter((item) => item != chosenColour)
       newColours.push(chosenColour)
 
       editorProps.setColours(newColours)
@@ -132,7 +132,6 @@ const RichTextExample = (editorProps) => {
   const confirmLink = (link) => {
     setHyperlink(link)
   }
-  console.log(editorProps.currentContent)
 
   return (
     <Slate
@@ -154,255 +153,6 @@ const RichTextExample = (editorProps) => {
       }}
     >
       <Toolbar>
-        {editorProps.componentType == "Text" ? (
-          <>
-            <MarkButton
-              format="color"
-              value={confirmedColor}
-              icon={
-                <>
-                  <ImTextColor
-                    color="#008DD7"
-                    size="22"
-                    id="font-color"
-                    onClick={() => colorConfirmation(elementSettings.color, 2)}
-                  />
-                  <div
-                    onClick={() => colorHandlerTackle(2)}
-                    className={classes.colorMark}
-                    style={{ background: elementSettings.color }}
-                    id="set-font-color"
-                  />
-                  <Tooltip anchorId="font-color" place="top">
-                    Set Font Color
-                  </Tooltip>
-                  <Tooltip anchorId="set-font-color" place="top">
-                    Choose Font Color
-                  </Tooltip>
-                </>
-              }
-            />
-            {colorScheme.color ? (
-              <PhotoshopPicker
-                className={classes.ColourPicker}
-                color={elementSettings.color}
-                onChangeComplete={(e) => colorChoice(e, 2)}
-                onAccept={() => confirmColourHandler(2)}
-                onCancel={() => colorHandlerTackle(2)}
-                header="Font color"
-              />
-            ) : null}
-            <MarkButton
-              format="background"
-              value={confirmedColor}
-              icon={
-                <>
-                  <BiColorFill
-                    color="#008DD7"
-                    size="22"
-                    id="choose-background-color"
-                    onClick={() =>
-                      colorConfirmation(elementSettings.background, 1)
-                    }
-                  />
-                  <div
-                    onClick={() => colorHandlerTackle(1)}
-                    className={classes.colorMark}
-                    style={{ background: elementSettings.background }}
-                    id="set-background-color"
-                  />
-                  <Tooltip anchorId="choose-background-color" place="top">
-                    Set Background Color
-                  </Tooltip>
-                  <Tooltip anchorId="set-background-color" place="top">
-                    Choose Background Color
-                  </Tooltip>
-                </>
-              }
-            />
-            {colorScheme.background ? (
-              <PhotoshopPicker
-                className={classes.ColourPicker}
-                color={elementSettings.background}
-                onChangeComplete={(e) => colorChoice(e, 1)}
-                onAccept={() => confirmColourHandler(1)}
-                onCancel={() => colorHandlerTackle(1)}
-                header="Background color"
-              />
-            ) : null}
-            <MarkButton
-              format="italic"
-              value={confirmedColor}
-              icon={
-                <>
-                  <FaItalic color="#008DD7" size="20" id="font-italic" />
-                  <Tooltip anchorId="font-italic" place="top">
-                    Italic
-                  </Tooltip>
-                </>
-              }
-            />
-            <MarkButton
-              format="bold"
-              value={confirmedColor}
-              icon={
-                <>
-                  <ImBold color="#008DD7" size="20" id="font-bold" />
-                  <Tooltip anchorId="font-bold" place="top">
-                    Bold
-                  </Tooltip>
-                </>
-              }
-            />
-            <MarkButton
-              format="underline"
-              value={confirmedColor}
-              icon={
-                <>
-                  <FaUnderline color="#008DD7" size="20" id="font-underline" />
-                  <Tooltip anchorId="font-underline" place="top">
-                    Underline
-                  </Tooltip>
-                </>
-              }
-            />
-            <BlockButton
-              format="heading-one"
-              value={confirmedColor}
-              icon={
-                <>
-                  <FaHeading color="#008DD7" size="20" id="heading-one" />
-                  <Tooltip anchorId="heading-one" place="top">
-                    Heading One
-                  </Tooltip>
-                </>
-              }
-            />
-            <BlockButton
-              format="heading-two"
-              value={confirmedColor}
-              icon={
-                <>
-                  <FaHeading
-                    color="#008DD7"
-                    size="16"
-                    style={{ marginBottom: "-4px" }}
-                    id="heading-two"
-                  />
-                  <Tooltip anchorId="heading-two" place="top">
-                    Heading Two
-                  </Tooltip>
-                </>
-              }
-            />
-            <MarkButton
-              format="small"
-              value={confirmedColor}
-              icon={
-                <>
-                  <MdTextFields
-                    color="#008DD7"
-                    size="23"
-                    style={{ marginBottom: "-3px" }}
-                    id="font-small"
-                  />
-                  <Tooltip anchorId="font-small" place="top">
-                    Small Font Size
-                  </Tooltip>
-                </>
-              }
-            />
-            <BlockButton
-              format="left"
-              icon={
-                <>
-                  <GrTextAlignLeft color="#008DD7" size="22" id="align-left" />
-                  <Tooltip anchorId="align-left" place="top">
-                    Align Left
-                  </Tooltip>
-                </>
-              }
-            />
-            <BlockButton
-              format="center"
-              icon={
-                <>
-                  <GrTextAlignCenter
-                    color="#008DD7"
-                    size="22"
-                    id="align-center"
-                  />
-                  <Tooltip anchorId="align-center" place="top">
-                    Align Center
-                  </Tooltip>
-                </>
-              }
-            />
-            <BlockButton
-              format="right"
-              icon={
-                <>
-                  <GrTextAlignRight
-                    color="#008DD7"
-                    size="22"
-                    id="align-right"
-                  />
-                  <Tooltip anchorId="align-right" place="top">
-                    Align Right
-                  </Tooltip>
-                </>
-              }
-            />
-            <BlockButton
-              format="justify"
-              icon={
-                <>
-                  <GrTextAlignFull
-                    color="#008DD7"
-                    size="22"
-                    id="align-justify"
-                  />
-                  <Tooltip anchorId="align-justify" place="top">
-                    Align Justify
-                  </Tooltip>
-                </>
-              }
-            />
-            <MarkButton
-              format="hyperlink"
-              value={confirmedColor}
-              url={hyperlink}
-              icon={
-                <>
-                  <AiOutlineLink
-                    onClick={openHyperlinkSettings}
-                    color="#008DD7"
-                    size="22"
-                    id="add-hyperlink"
-                  />
-                  <Tooltip anchorId="add-hyperlink" place="top">
-                    Add Hyperlink
-                  </Tooltip>
-                </>
-              }
-            />
-            {hyperlinkModal ? (
-              <div className={classes.HyperlinkManager}>
-                <Modal
-                  tackleModal={openHyperlinkSettings}
-                  modalShow={hyperlinkModal}
-                >
-                  <HyperlinkContent
-                    tackleModal={openHyperlinkSettings}
-                    confirmLink={confirmLink}
-                    url={hyperlink}
-                    openHyperlinkSettings={openHyperlinkSettings}
-                  />
-                </Modal>
-              </div>
-            ) : null}
-          </>
-        ) : (
           <>
             <MarkButton
               format="color"
@@ -670,7 +420,6 @@ const RichTextExample = (editorProps) => {
               </div>
             ) : null}
           </>
-        )}
       </Toolbar>
       <Editable
         renderElement={(elProps) =>
@@ -690,13 +439,18 @@ const RichTextExample = (editorProps) => {
               const matches = innerHTML.match(
                 /(?:[0-9]{3})\b|(?:rgb)\([^\)]*\)/gi
               )
+              // const boldMatches = innerHTML.match(/<strong>(.*?)<\/strong>/g)
+             
               let color = "#000"
               let background = "#fff"
-              if (matches[0]) {
-                color = matches[0].toString()
-              }
-              if (matches[1]) {
-                background = matches[1]
+
+              if (Array.isArray(matches)) {
+                if (matches[0]) {
+                  color = matches[0].toString()
+                }
+                if (matches[1]) {
+                  background = matches[1]
+                }
               }
 
               toggleMark(editor, mark, color, background, hyperlink)
@@ -744,6 +498,7 @@ const toggleBlock = (editor, format) => {
 }
 
 const toggleMark = (editor, format, color, background, url) => {
+  console.log(format)
   if (format == "background") {
     const isActive = isMarkActive(editor, format)
 
