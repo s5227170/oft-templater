@@ -9,7 +9,7 @@ import IconButton from "../../UI/IconButton/IconButton";
 import classes from "./TitleContent.module.scss";
 
 const TitleContent = (props) => {
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(props.title ? props.title : "");
 
   const titleHandler = (e) => {
     setTitle(e.target.value);

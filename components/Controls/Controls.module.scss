@@ -1,0 +1,17 @@
+.ControlsWrapper {
+    width: 600px;
+    min-height: 600px;
+    background-color: #101418;
+    border-radius: 6px;
+    padding: 15px;
+
+    .Header {
+        color: #fff;
+
+        h1 {
+            margin-bottom: 10px;
+        }
+    }
+
+    .Content {}
+}

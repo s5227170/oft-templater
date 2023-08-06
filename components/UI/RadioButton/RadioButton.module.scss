@@ -1,12 +1,12 @@
 .UnselectedRadioButton {
   width: 26px;
   height: 26px;
-  background-color: #ce40a3;
+  background-color: #40CD9A;
   border-radius: 50px;
   position: relative;
 
   &:hover {
-    background-color: lighten(#ce40a3, 20);
+    background-color: lighten(#40CD9A, 20);
     cursor: pointer;
     transition: .2s;
   }
@@ -27,17 +27,17 @@
 .SelectedRadioButton {
   width: 26px;
   height: 26px;
-  background-color: #ce40a3;
+  background-color: #40CD9A;
   border-radius: 50px;
   position: relative;
 
   &:hover {
-    background-color: lighten(#ce40a3, 20);
+    background-color: lighten(#40CD9A, 20);
     cursor: pointer;
     transition: .2s;
 
     &::after {
-      background-color: lighten(#ce40a3, 20);
+      background-color: lighten(#40CD9A, 20);
     }
   }
 
@@ -62,7 +62,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 50px;
-    background-color: #ce40a3;
+    background-color: #40CD9A;
     width: 10px;
     height: 10px;
   }

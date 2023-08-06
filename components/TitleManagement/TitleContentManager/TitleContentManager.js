@@ -12,6 +12,7 @@ const TitleContentManager = (props) => {
           confirmTitle={props.confirmTitle}
           tackleModal={props.tackleModal}
           modalShow={props.modalShow}
+          title={props.title}
         />
       </Modal>
     </div>

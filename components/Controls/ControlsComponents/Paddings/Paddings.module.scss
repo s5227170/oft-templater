@@ -1,0 +1,18 @@
+.Padding {
+    width: 240px;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 2px solid #c5c5c5;
+
+    .Heading {
+        font-weight: bold;
+        color: #fff;
+        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2),
+            0px -5px 35px rgba(255, 255, 255, 0.3);
+    }
+
+    .PaddingInputs {
+        display: flex;
+        flex-direction: row;
+    }
+}
