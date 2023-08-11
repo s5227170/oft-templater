@@ -201,6 +201,11 @@ const Canvas = (props) => {
   }
 
   const editContent = (row, item, rowNumber) => {
+    props.takeComponent({
+      row: row,
+      item: item,
+      rowNumber: rowNumber,
+    })
     setRowComponentStatus({
       row: row,
       item: item,
@@ -239,7 +244,7 @@ const Canvas = (props) => {
         {reactifiedContent}
       </div>
       <CreateRowManager rowGeneration={generateRow} />
-      <EditComponentManager
+      {/* <EditComponentManager
         confirmContent={confirmContent}
         rowNumber={rowComponentStatus.rowNumber}
         item={rowComponentStatus.item}
@@ -252,7 +257,7 @@ const Canvas = (props) => {
         }}
         currentColours={usedColours}
         setColours={setUsedColours}
-      />
+      /> */}
       {rowSettings.map((row) => {
         const currentRow = state.pageConfig.content[row.position - 1]
         return (
@@ -264,8 +269,9 @@ const Canvas = (props) => {
             deleteRowHandler={deleteRowHandler}
             positionOptions={rowPositionConfig}
             deleteComponent={deleteContent}
-            editContent={editContent}
+            editComponent={editContent}
             tackleEditModal={tackleEditModal}
+            takeComponent={props.takeComponent}
           />
         )
       })}

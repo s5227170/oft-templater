@@ -42,7 +42,6 @@ const text = (
         }
       }
       if (item.length) {
-        console.log(item)
         items += item
       } else {
         items += unrefinedContent[i]

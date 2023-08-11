@@ -25,7 +25,6 @@ import Controls from "../components/Controls/Controls"
 export default function Home() {
   const [htmlContentString, setHtmlContentString] = useState(``)
   const [currentPageConfig, setCurrentPageConfig] = useState()
-  const [itemToChange, setItemToChange] = useState(null)
   const [resetCanvas, setResetCanvas] = useState(false)
   const [loadedTemplate, setLoadedTemplate] = useState(null)
   const [templateList, setTemplateList] = useState({
@@ -56,6 +55,8 @@ export default function Home() {
   const [messageHandlerShow, setmessagegeHandlerShow] = useState(false)
   const [componentToManage, setComponentToManage] = useState(null)
   const [managedComponent, setManagedComponent] = useState(null)
+
+  console.log(currentPageConfig)
 
   const tabConfig = tabs
 

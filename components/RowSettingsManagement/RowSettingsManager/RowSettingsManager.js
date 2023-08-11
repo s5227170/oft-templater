@@ -1,17 +1,17 @@
-import classes from "./RowSettingsManager.module.scss";
-import Modal from "../../Modal/Modal";
-import RowSettingsButton from "../RowSettingsButton/RowSettingsButton";
-import { useState } from "react";
-import RowSettingsContent from "../RowSettingsContent/RowSettingsContent";
+import classes from "./RowSettingsManager.module.scss"
+import Modal from "../../Modal/Modal"
+import RowSettingsButton from "../RowSettingsButton/RowSettingsButton"
+import { useState } from "react"
+import RowSettingsContent from "../RowSettingsContent/RowSettingsContent"
 
 const RowSettingsManager = (props) => {
-  const [modalShow, setModalShow] = useState(false);
+  const [modalShow, setModalShow] = useState(false)
 
   const tackleModal = () => {
     setTimeout(() => {
-      setModalShow(!modalShow);
-    }, 250);
-  };
+      setModalShow(!modalShow)
+    }, 250)
+  }
 
   return (
     <div className={classes.RowSettingsManager}>
@@ -30,13 +30,13 @@ const RowSettingsManager = (props) => {
             row={props.row}
             positionOptions={props.positionOptions}
             deleteComponent={props.deleteComponent}
-            editComponent={props.editContent}
+            editComponent={props.editComponent}
             tackleEditModal={props.tackleEditModal}
           />
         </Modal>
       </RowSettingsButton>
     </div>
-  );
-};
+  )
+}
 
-export default RowSettingsManager;
+export default RowSettingsManager
