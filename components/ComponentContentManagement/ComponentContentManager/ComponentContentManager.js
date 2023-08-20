@@ -49,10 +49,28 @@ const ComponentContentManager = (props) => {
     minWidth: props.componentType == "Image" ? 750 : "auto",
   }
 
+  const componentData = {
+    columnSize: props.columnSize,
+    defaultPaddings: props.defaultPaddings,
+    componentType: props.componentType,
+    elementPosition: props.elementPosition,
+    row: props.row,
+    currentColours: props.currentColours,
+    setColours: props.setColours
+  }
+
+  const manageComponent = () => {
+    //All data required for component edit should go in this function
+    //Modal should be removed, and then the whole process tested
+    //If this proves successful, persistent data can be utilised
+    //Some attributes may be unnecessary since they can be extracted from the outer component, an example is the default padding
+    props.takeComponent(componentData)
+  }
+
   return (
     <div className={classes.ComponentContentManager}>
       <ComponentContentButton
-        clickHandler={tackleModal}
+        clickHandler={manageComponent}
         type={props.componentType}
       >
         <Modal tackleModal={tackleModal} modalShow={modalShow} componentMode>

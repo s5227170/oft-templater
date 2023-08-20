@@ -12,18 +12,20 @@ import DefaultPaddingManager from "../components/DefaultPaddingManagement/Defaul
 import NewCanvasManager from "../components/NewCanvasManagement/NewCanvasManager/NewCanvasManager"
 
 import boilerplate from "../content-components/boilerplate"
-import downloadFile from "../util/downloadFile"
+import downloadFile from "../util/download-file"
 
 import classes from "../styles/global.module.scss"
 import TabbedContent from "../components/UI/TabbedContent/TabbedContent"
 import SaveTemplateManager from "../components/SaveTemplateManagement/SaveTemplateManager/SaveTemplateManager"
 import LoadTemplateManager from "../components/LoadTemplateManagement/LoadTemplateManager/LoadTemplateManager"
-import { tabs } from "../util/tabConfig"
+import { tabs } from "../util/tab-config"
 import ResultHandler from "../components/ResultHandler/ResultHandler"
+import Controls from "../components/Controls/Controls"
 
 export default function Home() {
   const [htmlContentString, setHtmlContentString] = useState(``)
   const [currentPageConfig, setCurrentPageConfig] = useState()
+  const [itemToChange, setItemToChange] = useState(null)
   const [resetCanvas, setResetCanvas] = useState(false)
   const [loadedTemplate, setLoadedTemplate] = useState(null)
   const [templateList, setTemplateList] = useState({
@@ -52,6 +54,8 @@ export default function Home() {
   const [saveTemplateShow, setSaveTemplateShow] = useState(false)
   const [loadTemplateShow, setLoadTemplateShow] = useState(false)
   const [messageHandlerShow, setmessagegeHandlerShow] = useState(false)
+  const [componentToManage, setComponentToManage] = useState(null)
+  const [managedComponent, setManagedComponent] = useState(null)
 
   const tabConfig = tabs
 
@@ -183,11 +187,28 @@ export default function Home() {
     })
   }
 
+  const resetComponentManagement = () => {
+    setManagedComponent(null)
+    setComponentToManage(null)
+  }
+
   useEffect(() => {
     if (messageContent.message) {
       setmessagegeHandlerShow(!messageHandlerShow)
     }
   }, [messageContent])
+
+  useEffect(() => {
+    if (emailTitle) {
+      const applyTitleToPageConfig = {
+        ...currentPageConfig,
+        title: emailTitle
+      }
+      setCurrentPageConfig(applyTitleToPageConfig)
+      console.log("test")
+    }
+  }, [emailTitle])
+
 
   return (
     <>
@@ -217,7 +238,7 @@ export default function Home() {
             }}
           />
           <h1>Guide</h1>
-          <TabbedContent contents={tabConfig} changeDetect={setTabChange} changeDetectValue={tabChange}/>
+          <TabbedContent contents={tabConfig} changeDetect={setTabChange} changeDetectValue={tabChange} />
         </div>
         <div className={classes.Export}>
           <HigherManagementButton submitHandler={exportHtmlHandler}>
@@ -241,21 +262,29 @@ export default function Home() {
           </HigherManagementButton>
         </div>
 
-        <Canvas
-          setHTML={setHtmlContentString}
-          setStringifiedHTML={setCurrentPageConfig}
-          defaultComponentPaddings={defaultComponentPadding}
-          newCanvas={resetCanvas}
-          resetCanvasSetting={setResetCanvas}
-          guideExpand={guideExpand}
-          tabChange={tabChange}
-          loadedTemplate={loadedTemplate}
-          resetLoadedTemplate={setLoadedTemplate}
-        />
+        <div className={classes.Workplace}>
+          <Controls config={currentPageConfig} extractChanges={setCurrentPageConfig} componentToManage={componentToManage} managedComponent={setManagedComponent} />
+          <Canvas
+            setHTML={setHtmlContentString}
+            defaultComponentPaddings={defaultComponentPadding}
+            newCanvas={resetCanvas}
+            resetCanvasSetting={setResetCanvas}
+            guideExpand={guideExpand}
+            tabChange={tabChange}
+            loadedTemplate={loadedTemplate}
+            resetLoadedTemplate={setLoadedTemplate}
+            extractPageConfig={setCurrentPageConfig}
+            configChanges={currentPageConfig}
+            takeComponent={setComponentToManage}
+            receiveComponent={managedComponent}
+            resetComponent={resetComponentManagement}
+          />
+        </div>
         <TitleContentManager
           tackleModal={() => tackleModal("Title")}
           modalShow={titleModalShow}
           confirmTitle={setEmailTitle}
+          title={emailTitle}
         />
         <DefaultPaddingManager
           tackleModal={() => tackleModal("DefaultPadding")}

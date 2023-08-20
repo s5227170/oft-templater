@@ -10,7 +10,7 @@ import convertPageConfig from "../../util/convert-page-config"
 import ComponentContentManager from "../ComponentContentManagement/ComponentContentManager/ComponentContentManager"
 import RowSettingsManager from "../RowSettingsManagement/RowSettingsManager/RowSettingsManager"
 import EditComponentManager from "../EditComponentManagement/EditComponentManager/EditComponentManager"
-import debounceResize from "../../util/debounceResize"
+import debounceResize from "../../util/debounce-resize"
 import rowActions from "../../store/actions/row"
 import componentActions from "../../store/actions/component"
 
@@ -70,7 +70,7 @@ const Canvas = (props) => {
       fullStringContent += stringRow
     })
     props.setHTML(fullStringContent)
-    props.setStringifiedHTML(state.pageConfig)
+    props.extractPageConfig(state.pageConfig)
     const reactContent = parse(fullStringContent, {
       replace: ({ attribs, children }) => {
         if (!attribs) {
@@ -104,6 +104,7 @@ const Canvas = (props) => {
               columnSize={attribs["data-column-sizes"]}
               currentColours={usedColours}
               setColours={setUsedColours}
+              takeComponent={props.takeComponent}
             />
           )
         }
@@ -145,10 +146,19 @@ const Canvas = (props) => {
       if (existingConfig) {
         existingConfig = JSON.parse(existingConfig)
         dispatch({ type: "SET_CONFIG", payload: existingConfig })
+        props.extractPageConfig(existingConfig)
       }
       setInitialLoad(false)
     }
   }, [])
+
+
+  useEffect(() => {
+    if (props.configChanges && state.pageConfig != props.configChanges) {
+      console.log(props.configChanges)
+      dispatch({ type: "SET_CONFIG", payload: props.configChanges })
+    }
+  }, [props.configChanges])
 
   useEffect(() => {
     if (props.loadedTemplate) {

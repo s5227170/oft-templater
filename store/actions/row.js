@@ -1,5 +1,5 @@
-import initComponent from "../../util/initComponent"
-import rearangeArray from "../../util/rearangeArray"
+import initComponent from "../../util/init-component"
+import rearangeArray from "../../util/rearange-array"
 
 const create = (config, cols, colSizes) => {
   const newRowConfig = initComponent.row(
@@ -8,7 +8,7 @@ const create = (config, cols, colSizes) => {
     config.content.length + 1
   )
 
-  return {...config, content: [...config.content, newRowConfig]}
+  return { ...config, content: [...config.content, newRowConfig] }
 }
 
 const update = (config, row, newPosition) => {
@@ -19,7 +19,7 @@ const update = (config, row, newPosition) => {
     newPosition.value
   )
 
-  return {...config, content: [...newPageContent]}
+  return { ...config, content: [...newPageContent] }
 }
 
 const remove = (config, rowPosition) => {
@@ -38,7 +38,7 @@ const remove = (config, rowPosition) => {
     }
   }
 
-  return {...config, content: [...newPageContent]}
+  return { ...config, content: [...newPageContent] }
 }
 
 export default { create, update, remove }

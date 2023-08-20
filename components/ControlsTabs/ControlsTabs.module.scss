@@ -1,0 +1,33 @@
+.ControlsTabsWrapper {
+    display: flex;
+    flex-direction: column;
+
+    .Tabs {
+        list-style-type: none;
+        display: flex;
+        border-bottom: 2px solid #fff;
+        width: 100%;
+        margin: 10px 0px;
+
+        .controlTab {
+            padding: 0px 10px;
+            color: #fff;
+            cursor: pointer;
+            margin-bottom: -2px;
+
+            &:hover {
+                color: #40CD9A;
+                border-bottom: 2px solid #40CD9A;
+                transition-property: color;
+                transition: .1s;
+            }
+        }
+
+        .active {
+            color: #40CD9A;
+            border-bottom: 2px solid #40CD9A;
+        }
+    }
+
+    .TabContent {}
+}

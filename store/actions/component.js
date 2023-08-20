@@ -1,4 +1,4 @@
-import initComponent from "../../util/initComponent"
+import initComponent from "../../util/init-component"
 
 const create = (config, defaultPaddings, type, position, columns) => {
   const row = position.split("#")[0].substr(3)
