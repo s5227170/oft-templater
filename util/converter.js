@@ -32,10 +32,12 @@ const converter = (row, subComponents) => {
         row.columnSizes,
         row.position,
         row.background,
-        row.parameters.paddingLeft,
-        row.parameters.paddingRight,
-        row.parameters.paddingTop,
-        row.parameters.paddingBottom,
+        {
+          paddingLeft: row.paddings.paddingLeft,
+          paddingRight: row.paddings.paddingRight,
+          paddingTop: row.paddings.paddingTop,
+          paddingBottom: row.paddings.paddingBottom
+        },
         resultArray[0],
         row.contentComponents[0] ? row.contentComponents[0].verticalAlign : "top"
       )
@@ -63,10 +65,12 @@ const converter = (row, subComponents) => {
         row.columnSizes,
         row.position,
         row.background,
-        row.parameters.paddingLeft,
-        row.parameters.paddingRight,
-        row.parameters.paddingTop,
-        row.parameters.paddingBottom,
+        {
+          paddingLeft: row.paddings.paddingLeft,
+          paddingRight: row.paddings.paddingRight,
+          paddingTop: row.paddings.paddingTop,
+          paddingBottom: row.paddings.paddingBottom
+        },
         resultArray[0],
         resultArray[1],
         row.contentComponents[0] ? row.contentComponents[0].verticalAlign : "top",
@@ -96,10 +100,12 @@ const converter = (row, subComponents) => {
         row.columnSizes,
         row.position,
         row.background,
-        row.parameters.paddingLeft,
-        row.parameters.paddingRight,
-        row.parameters.paddingTop,
-        row.parameters.paddingBottom,
+        {
+          paddingLeft: row.paddings.paddingLeft,
+          paddingRight: row.paddings.paddingRight,
+          paddingTop: row.paddings.paddingTop,
+          paddingBottom: row.paddings.paddingBottom
+        },
         resultArray[0],
         resultArray[1],
         resultArray[2],
@@ -132,10 +138,12 @@ const converter = (row, subComponents) => {
         row.columnSizes,
         row.position,
         row.background,
-        row.parameters.paddingLeft,
-        row.parameters.paddingRight,
-        row.parameters.paddingTop,
-        row.parameters.paddingBottom,
+        {
+          paddingLeft: row.paddings.paddingLeft,
+          paddingRight: row.paddings.paddingRight,
+          paddingTop: row.paddings.paddingTop,
+          paddingBottom: row.paddings.paddingBottom
+        },
         resultArray[0],
         resultArray[1],
         resultArray[2],

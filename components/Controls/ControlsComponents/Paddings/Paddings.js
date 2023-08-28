@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineBorderBottom, AiOutlineBorderLeft, AiOutlineBorderRight, AiOutlineBorderTop } from "react-icons/ai";
 import PaddingElement from "../../../UI/PaddingElement/PaddingElement";
 import classes from "./Paddings.module.scss";
@@ -11,13 +11,23 @@ const Paddings = (props) => {
         paddingBottom: 0,
     })
 
+    useEffect(() => {
+
+        if (props.paddings) {
+            if (props.paddings != paddings) {
+                setPaddings(props.paddings)
+            }
+        }
+    }, [props.paddings])
+
     const paddingHandler = (e, el) => {
         if (e.target.value.length > 3) {
-            e.target.value = e.target.value.slice(0, 3)
+            e.target.value = +e.target.value.slice(0, 3)
         }
-        const newPaddings = { ...paddings, [el]: e.target.value }
+        const newPaddings = { ...paddings, [el]: +e.target.value }
 
         setPaddings(newPaddings)
+        props.extractPaddings(newPaddings)
     }
 
     return (

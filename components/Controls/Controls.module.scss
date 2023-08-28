@@ -7,9 +7,29 @@
 
     .Header {
         color: #fff;
+        display: flex;
+        align-items: center;
+        padding-bottom: 10px;
+        justify-content: space-between;
 
-        h1 {
-            margin-bottom: 10px;
+        h1 {}
+
+        button {
+            width: fit-content;
+            background-color: #fff;
+            padding: 5px 20px;
+            border-radius: 4px;
+            color: #101418;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            column-gap: 10px;
+
+            &:hover {
+                background-color: #cccccc;
+                transition: .2s;
+            }
         }
     }
 

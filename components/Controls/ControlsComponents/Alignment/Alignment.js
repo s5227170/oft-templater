@@ -1,45 +1,87 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AlignType from "../../../UI/AlignType/AlignType";
 import RadioButton from "../../../UI/RadioButton/RadioButton";
 
-import classes from "./Alignment.module.scss"
+import classes from "./alignment.module.scss"
 
 
-const Alignment = (props) => {
-    const [componentChoice, setComponentChoice] = useState({
-        topAlign: true,
-        middleAlign: false,
-        bottomAlign: false,
+const alignmentOption = (props) => {
+    const [alignmentOption, setAlignmentOption] = useState({
+        top: true,
+        middle: false,
+        bottom: false,
     })
+    const [alignment, setAlignment] = useState("top")
+    const [initialChecked, setInitialChecked] = useState(false)
 
-    const topAlignRef = useRef(null)
-    const middleAlignRef = useRef(null)
-    const bottomAlignRef = useRef(null)
+    const topRef = useRef(null)
+    const middleRef = useRef(null)
+    const bottomRef = useRef(null)
+
+    useEffect(() => {
+        if (props.alignment.length && !initialChecked) {
+            if (props.alignment != alignment) {
+                manageChoice(props.alignment)
+                setInitialChecked(true)
+            }
+        }
+    }, [props.alignment])
 
     const buttonChoiceTrigger = (name) => {
-        const newComponentChoice = Object.assign({}, componentChoice)
-        for (let el in newComponentChoice) {
-            newComponentChoice[el] = false
-        }
-        newComponentChoice[name] = true
-        setComponentChoice(newComponentChoice)
+        manageChoice(name)
     }
 
     const typeClickHandler = (type) => {
-        if (type == 1) {
-            if (topAlignRef) {
-                topAlignRef.current.click()
-            }
+        switch (type) {
+            case 1:
+                if (topRef) {
+                    topRef.current.click()
+                }
+                break
+            case 2:
+                if (middleRef) {
+                    middleRef.current.click()
+                }
+                break
+            case 3:
+                if (bottomRef) {
+                    bottomRef.current.click()
+                }
+                break
+            default: return;
         }
-        if (type == 2) {
-            if (middleAlignRef) {
-                middleAlignRef.current.click()
-            }
-        }
-        if (type == 3) {
-            if (bottomAlignRef) {
-                bottomAlignRef.current.click()
-            }
+    }
+
+    const manageChoice = (choice) => {
+        switch (choice) {
+            case "top":
+                setAlignmentOption({
+                    top: true,
+                    middle: false,
+                    bottom: false
+                })
+                setAlignment("top")
+                props.extractAlignment("top")
+                break
+            case "middle":
+                setAlignmentOption({
+                    top: false,
+                    middle: true,
+                    bottom: false
+                })
+                setAlignment("middle")
+                props.extractAlignment("middle")
+                break
+            case "bottom":
+                setAlignmentOption({
+                    top: false,
+                    middle: false,
+                    bottom: true
+                })
+                setAlignment("bottom")
+                props.extractAlignment("bottom")
+                break
+            default: return;
         }
     }
 
@@ -52,9 +94,9 @@ const Alignment = (props) => {
                     onClick={() => typeClickHandler(1)}
                     confirm={
                         <RadioButton
-                            click={() => buttonChoiceTrigger("topAlign")}
-                            active={componentChoice.topAlign}
-                            elementRef={topAlignRef}
+                            click={() => buttonChoiceTrigger("top")}
+                            active={alignmentOption.top}
+                            elementRef={topRef}
                         />
                     }
                 />
@@ -63,9 +105,9 @@ const Alignment = (props) => {
                     onClick={() => typeClickHandler(2)}
                     confirm={
                         <RadioButton
-                            click={() => buttonChoiceTrigger("middleAlign")}
-                            active={componentChoice.middleAlign}
-                            elementRef={middleAlignRef}
+                            click={() => buttonChoiceTrigger("middle")}
+                            active={alignmentOption.middle}
+                            elementRef={middleRef}
                         />
                     }
                 />
@@ -74,9 +116,9 @@ const Alignment = (props) => {
                     onClick={() => typeClickHandler(3)}
                     confirm={
                         <RadioButton
-                            click={() => buttonChoiceTrigger("bottomAlign")}
-                            active={componentChoice.bottomAlign}
-                            elementRef={bottomAlignRef}
+                            click={() => buttonChoiceTrigger("bottom")}
+                            active={alignmentOption.bottom}
+                            elementRef={bottomRef}
                         />
                     }
                 />
@@ -85,4 +127,4 @@ const Alignment = (props) => {
     )
 }
 
-export default Alignment
+export default alignmentOption

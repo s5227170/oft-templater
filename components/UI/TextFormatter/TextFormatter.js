@@ -70,7 +70,7 @@ const RichTextExample = (editorProps) => {
       })
       return <Element {...newProps} />
     },
-    [confirmedColor, hyperlink, editorProps.currentContent]
+    [confirmedColor, hyperlink, editorProps.content]
   )
   const renderLeaf = useCallback((props) => <Leaf {...props} />, [])
   const editor = useMemo(() => withHistory(withReact(createEditor())), [])
@@ -109,11 +109,11 @@ const RichTextExample = (editorProps) => {
 
   const confirmColourHandler = (colorType) => {
     if (chosenColour) {
-      let newColours = [...editorProps.currentColours]
-      newColours = newColours.filter((item) => item != chosenColour)
-      newColours.push(chosenColour)
+      // let newColours = [...editorProps.currentColours]
+      // newColours = newColours.filter((item) => item != chosenColour)
+      // newColours.push(chosenColour)
 
-      editorProps.setColours(newColours)
+      // editorProps.setColours(newColours)
     }
     if (colorType == 1) {
       setColorScheme({ ...colorScheme, background: !colorScheme.background })
@@ -137,12 +137,12 @@ const RichTextExample = (editorProps) => {
     <Slate
       editor={editor}
       value={
-        editorProps.currentContent ? editorProps.currentContent : initialValue
+        editorProps.content ? editorProps.content : initialValue
       }
       //This line bellow could be used to generate text into oft format
       onChange={(value) => {
         console.log(value)
-        editorProps.extractData(value)
+        editorProps.extractContent(value)
         const isAstChange = editor.operations.some(
           (op) => "set_selection" !== op.type
         )
@@ -153,273 +153,273 @@ const RichTextExample = (editorProps) => {
       }}
     >
       <Toolbar>
-          <>
-            <MarkButton
-              format="color"
-              value={confirmedColor}
-              icon={
-                <>
-                  <ImTextColor
-                    color="#008DD7"
-                    size="22"
-                    id="set-font-color-list"
-                    onClick={() => colorConfirmation(elementSettings.color, 2)}
-                  />
-                  <div
-                    onClick={() => colorHandlerTackle(2)}
-                    className={classes.colorMark}
-                    style={{ background: elementSettings.color }}
-                    id="choose-font-color-list"
-                  />
-                  <Tooltip anchorId="set-font-color-list" place="top">
-                    Set Font Color
-                  </Tooltip>
-                  <Tooltip anchorId="choose-font-color-list" place="top">
-                    Choose Font Color
-                  </Tooltip>
-                </>
-              }
+        <>
+          <MarkButton
+            format="color"
+            value={confirmedColor}
+            icon={
+              <>
+                <ImTextColor
+                  color="#008DD7"
+                  size="22"
+                  id="set-font-color-list"
+                  onClick={() => colorConfirmation(elementSettings.color, 2)}
+                />
+                <div
+                  onClick={() => colorHandlerTackle(2)}
+                  className={classes.colorMark}
+                  style={{ background: elementSettings.color }}
+                  id="choose-font-color-list"
+                />
+                <Tooltip anchorId="set-font-color-list" place="top">
+                  Set Font Color
+                </Tooltip>
+                <Tooltip anchorId="choose-font-color-list" place="top">
+                  Choose Font Color
+                </Tooltip>
+              </>
+            }
+          />
+          {colorScheme.color ? (
+            <PhotoshopPicker
+              className={classes.ColourPicker}
+              color={elementSettings.color}
+              onChangeComplete={(e) => colorChoice(e, 2)}
+              onAccept={() => confirmColourHandler(2)}
+              onCancel={() => colorHandlerTackle(2)}
+              header="Font color"
             />
-            {colorScheme.color ? (
-              <PhotoshopPicker
-                className={classes.ColourPicker}
-                color={elementSettings.color}
-                onChangeComplete={(e) => colorChoice(e, 2)}
-                onAccept={() => confirmColourHandler(2)}
-                onCancel={() => colorHandlerTackle(2)}
-                header="Font color"
-              />
-            ) : null}
-            <MarkButton
-              format="background"
-              value={confirmedColor}
-              icon={
-                <>
-                  <BiColorFill
-                    color="#008DD7"
-                    size="22"
-                    id="set-background-list"
-                    onClick={() =>
-                      colorConfirmation(elementSettings.background, 1)
-                    }
-                  />
-                  <div
-                    onClick={() => colorHandlerTackle(1)}
-                    className={classes.colorMark}
-                    style={{ background: elementSettings.background }}
-                    id="choose-background-color-list"
-                  />
-                  <Tooltip anchorId="set-background-list" place="top">
-                    Set Background Color
-                  </Tooltip>
-                  <Tooltip anchorId="choose-background-color-list" place="top">
-                    Choose Background Color
-                  </Tooltip>
-                </>
-              }
+          ) : null}
+          <MarkButton
+            format="background"
+            value={confirmedColor}
+            icon={
+              <>
+                <BiColorFill
+                  color="#008DD7"
+                  size="22"
+                  id="set-background-list"
+                  onClick={() =>
+                    colorConfirmation(elementSettings.background, 1)
+                  }
+                />
+                <div
+                  onClick={() => colorHandlerTackle(1)}
+                  className={classes.colorMark}
+                  style={{ background: elementSettings.background }}
+                  id="choose-background-color-list"
+                />
+                <Tooltip anchorId="set-background-list" place="top">
+                  Set Background Color
+                </Tooltip>
+                <Tooltip anchorId="choose-background-color-list" place="top">
+                  Choose Background Color
+                </Tooltip>
+              </>
+            }
+          />
+          {colorScheme.background ? (
+            <PhotoshopPicker
+              className={classes.ColourPicker}
+              color={elementSettings.background}
+              onChangeComplete={(e) => colorChoice(e, 1)}
+              onAccept={() => confirmColourHandler(1)}
+              onCancel={() => colorHandlerTackle(1)}
+              header="Background color"
             />
-            {colorScheme.background ? (
-              <PhotoshopPicker
-                className={classes.ColourPicker}
-                color={elementSettings.background}
-                onChangeComplete={(e) => colorChoice(e, 1)}
-                onAccept={() => confirmColourHandler(1)}
-                onCancel={() => colorHandlerTackle(1)}
-                header="Background color"
-              />
-            ) : null}
-            <BlockButton
-              format="bulleted-list"
-              value={confirmedColor}
-              icon={
-                <>
-                  <FaListUl color="#008DD7" size="22" id="list-item-list" />
-                  <Tooltip anchorId="list-item-list" place="top">
-                    Turn Into a List
-                  </Tooltip>
-                </>
-              }
-            />
-            <MarkButton
-              format="italic"
-              value={confirmedColor}
-              icon={
-                <>
-                  <FaItalic color="#008DD7" size="20" id="font-italic-list" />
-                  <Tooltip anchorId="font-italic-list" place="top">
-                    Italic
-                  </Tooltip>
-                </>
-              }
-            />
-            <MarkButton
-              format="bold"
-              value={confirmedColor}
-              icon={
-                <>
-                  <ImBold color="#008DD7" size="20" id="font-bold-list" />
-                  <Tooltip anchorId="font-bold-list" place="top">
-                    Bold
-                  </Tooltip>
-                </>
-              }
-            />
-            <MarkButton
-              format="underline"
-              value={confirmedColor}
-              icon={
-                <>
-                  <FaUnderline
-                    color="#008DD7"
-                    size="20"
-                    id="font-underline-list"
-                  />
-                  <Tooltip anchorId="font-underline-list" place="top">
-                    Underline
-                  </Tooltip>
-                </>
-              }
-            />
-            <BlockButton
-              format="heading-one"
-              value={confirmedColor}
-              icon={
-                <>
-                  <FaHeading color="#008DD7" size="20" id="heading-one-list" />
-                  <Tooltip anchorId="heading-one-list" place="top">
-                    Heading One
-                  </Tooltip>
-                </>
-              }
-            />
-            <BlockButton
-              format="heading-two"
-              value={confirmedColor}
-              icon={
-                <>
-                  <FaHeading
-                    color="#008DD7"
-                    size="16"
-                    style={{ marginBottom: "-4px" }}
-                    id="heading-two-list"
-                  />
-                  <Tooltip anchorId="heading-two-list" place="top">
-                    Heading Two
-                  </Tooltip>
-                </>
-              }
-            />
-            <MarkButton
-              format="small"
-              value={confirmedColor}
-              icon={
-                <>
-                  <MdTextFields
-                    color="#008DD7"
-                    size="23"
-                    style={{ marginBottom: "-3px" }}
-                    id="font-small-list"
-                  />
-                  <Tooltip anchorId="font-small-list" place="top">
-                    Small Font Size
-                  </Tooltip>
-                </>
-              }
-            />
-            <BlockButton
-              format="left"
-              icon={
-                <>
-                  <GrTextAlignLeft
-                    color="#008DD7"
-                    size="22"
-                    id="align-left-list"
-                  />
-                  <Tooltip anchorId="align-left-list" place="top">
-                    Align Left
-                  </Tooltip>
-                </>
-              }
-            />
-            <BlockButton
-              format="center"
-              icon={
-                <>
-                  <GrTextAlignCenter
-                    color="#008DD7"
-                    size="22"
-                    id="align-center-list"
-                  />
-                  <Tooltip anchorId="align-center-list" place="top">
-                    Align Center
-                  </Tooltip>
-                </>
-              }
-            />
-            <BlockButton
-              format="right"
-              icon={
-                <>
-                  <GrTextAlignRight
-                    color="#008DD7"
-                    size="22"
-                    id="align-right-list"
-                  />
-                  <Tooltip anchorId="align-right-list" place="top">
-                    Align Right
-                  </Tooltip>
-                </>
-              }
-            />
-            <BlockButton
-              format="justify"
-              icon={
-                <>
-                  <GrTextAlignFull
-                    color="#008DD7"
-                    size="22"
-                    id="align-justify-list"
-                  />
-                  <Tooltip anchorId="align-justify-list" place="top">
-                    Align Justify
-                  </Tooltip>
-                </>
-              }
-            />
-            <MarkButton
-              format="hyperlink"
-              value={confirmedColor}
-              url={hyperlink}
-              icon={
-                <>
-                  <AiOutlineLink
-                    onClick={openHyperlinkSettings}
-                    color="#008DD7"
-                    size="22"
-                    id="add-hyperlink-list"
-                  />
-                  <Tooltip anchorId="add-hyperlink-list" place="top">
-                    Add Hyperlink
-                  </Tooltip>
-                </>
-              }
-            />
-            {hyperlinkModal ? (
-              <div className={classes.HyperlinkManager}>
-                <Modal
+          ) : null}
+          <BlockButton
+            format="bulleted-list"
+            value={confirmedColor}
+            icon={
+              <>
+                <FaListUl color="#008DD7" size="22" id="list-item-list" />
+                <Tooltip anchorId="list-item-list" place="top">
+                  Turn Into a List
+                </Tooltip>
+              </>
+            }
+          />
+          <MarkButton
+            format="italic"
+            value={confirmedColor}
+            icon={
+              <>
+                <FaItalic color="#008DD7" size="20" id="font-italic-list" />
+                <Tooltip anchorId="font-italic-list" place="top">
+                  Italic
+                </Tooltip>
+              </>
+            }
+          />
+          <MarkButton
+            format="bold"
+            value={confirmedColor}
+            icon={
+              <>
+                <ImBold color="#008DD7" size="20" id="font-bold-list" />
+                <Tooltip anchorId="font-bold-list" place="top">
+                  Bold
+                </Tooltip>
+              </>
+            }
+          />
+          <MarkButton
+            format="underline"
+            value={confirmedColor}
+            icon={
+              <>
+                <FaUnderline
+                  color="#008DD7"
+                  size="20"
+                  id="font-underline-list"
+                />
+                <Tooltip anchorId="font-underline-list" place="top">
+                  Underline
+                </Tooltip>
+              </>
+            }
+          />
+          <BlockButton
+            format="heading-one"
+            value={confirmedColor}
+            icon={
+              <>
+                <FaHeading color="#008DD7" size="20" id="heading-one-list" />
+                <Tooltip anchorId="heading-one-list" place="top">
+                  Heading One
+                </Tooltip>
+              </>
+            }
+          />
+          <BlockButton
+            format="heading-two"
+            value={confirmedColor}
+            icon={
+              <>
+                <FaHeading
+                  color="#008DD7"
+                  size="16"
+                  style={{ marginBottom: "-4px" }}
+                  id="heading-two-list"
+                />
+                <Tooltip anchorId="heading-two-list" place="top">
+                  Heading Two
+                </Tooltip>
+              </>
+            }
+          />
+          <MarkButton
+            format="small"
+            value={confirmedColor}
+            icon={
+              <>
+                <MdTextFields
+                  color="#008DD7"
+                  size="23"
+                  style={{ marginBottom: "-3px" }}
+                  id="font-small-list"
+                />
+                <Tooltip anchorId="font-small-list" place="top">
+                  Small Font Size
+                </Tooltip>
+              </>
+            }
+          />
+          <BlockButton
+            format="left"
+            icon={
+              <>
+                <GrTextAlignLeft
+                  color="#008DD7"
+                  size="22"
+                  id="align-left-list"
+                />
+                <Tooltip anchorId="align-left-list" place="top">
+                  Align Left
+                </Tooltip>
+              </>
+            }
+          />
+          <BlockButton
+            format="center"
+            icon={
+              <>
+                <GrTextAlignCenter
+                  color="#008DD7"
+                  size="22"
+                  id="align-center-list"
+                />
+                <Tooltip anchorId="align-center-list" place="top">
+                  Align Center
+                </Tooltip>
+              </>
+            }
+          />
+          <BlockButton
+            format="right"
+            icon={
+              <>
+                <GrTextAlignRight
+                  color="#008DD7"
+                  size="22"
+                  id="align-right-list"
+                />
+                <Tooltip anchorId="align-right-list" place="top">
+                  Align Right
+                </Tooltip>
+              </>
+            }
+          />
+          <BlockButton
+            format="justify"
+            icon={
+              <>
+                <GrTextAlignFull
+                  color="#008DD7"
+                  size="22"
+                  id="align-justify-list"
+                />
+                <Tooltip anchorId="align-justify-list" place="top">
+                  Align Justify
+                </Tooltip>
+              </>
+            }
+          />
+          <MarkButton
+            format="hyperlink"
+            value={confirmedColor}
+            url={hyperlink}
+            icon={
+              <>
+                <AiOutlineLink
+                  onClick={openHyperlinkSettings}
+                  color="#008DD7"
+                  size="22"
+                  id="add-hyperlink-list"
+                />
+                <Tooltip anchorId="add-hyperlink-list" place="top">
+                  Add Hyperlink
+                </Tooltip>
+              </>
+            }
+          />
+          {hyperlinkModal ? (
+            <div className={classes.HyperlinkManager}>
+              <Modal
+                tackleModal={openHyperlinkSettings}
+                modalShow={hyperlinkModal}
+              >
+                <HyperlinkContent
                   tackleModal={openHyperlinkSettings}
-                  modalShow={hyperlinkModal}
-                >
-                  <HyperlinkContent
-                    tackleModal={openHyperlinkSettings}
-                    confirmLink={confirmLink}
-                    url={hyperlink}
-                    openHyperlinkSettings={openHyperlinkSettings}
-                  />
-                </Modal>
-              </div>
-            ) : null}
-          </>
+                  confirmLink={confirmLink}
+                  url={hyperlink}
+                  openHyperlinkSettings={openHyperlinkSettings}
+                />
+              </Modal>
+            </div>
+          ) : null}
+        </>
       </Toolbar>
       <Editable
         renderElement={(elProps) =>
@@ -440,7 +440,7 @@ const RichTextExample = (editorProps) => {
                 /(?:[0-9]{3})\b|(?:rgb)\([^\)]*\)/gi
               )
               // const boldMatches = innerHTML.match(/<strong>(.*?)<\/strong>/g)
-             
+
               let color = "#000"
               let background = "#fff"
 

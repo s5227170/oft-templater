@@ -155,7 +155,6 @@ const Canvas = (props) => {
 
   useEffect(() => {
     if (props.configChanges && state.pageConfig != props.configChanges) {
-      console.log(props.configChanges)
       dispatch({ type: "SET_CONFIG", payload: props.configChanges })
     }
   }, [props.configChanges])
@@ -181,7 +180,6 @@ const Canvas = (props) => {
   }
 
   const confirmContent = (row, item, rowBackground, componentData) => {
-    console.log(componentData)
     dispatch({
       type: "SET_COMPONENT",
       payload: componentActions.set(

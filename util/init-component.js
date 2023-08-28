@@ -5,7 +5,7 @@ const row = (cols, colSizes, position) => {
     columnSizes: colSizes,
     background: "#fff",
     position: position,
-    parameters: {
+    paddings: {
       paddingLeft: 0,
       paddingRight: 0,
       paddingTop: 0,
@@ -15,42 +15,51 @@ const row = (cols, colSizes, position) => {
   }
 }
 
-const text = (parameters, position) => {
+const text = (paddings, position) => {
   return {
     type: "Text",
-    paddingLeft: parameters.paddingLeft,
-    paddingRight: parameters.paddingRight,
-    paddingTop: parameters.paddingTop,
-    paddingBottom: parameters.paddingBottom,
+    paddings: {
+      paddingLeft: paddings.paddingLeft,
+      paddingRight: paddings.paddingRight,
+      paddingTop: paddings.paddingTop,
+      paddingBottom: paddings.paddingBottom,
+    },
     content: [],
     position: position,
-    verticalAlign: "",
+    verticalAlign: "top",
+    created: false
   }
 }
 
 
-const image = (parameters, position) => {
+const image = (paddings, position) => {
   return {
     type: "Image",
-    paddingLeft: parameters.paddingLeft,
-    paddingRight: parameters.paddingRight,
-    paddingTop: parameters.paddingTop,
-    paddingBottom: parameters.paddingBottom,
+    paddings: {
+      paddingLeft: paddings.paddingLeft,
+      paddingRight: paddings.paddingRight,
+      paddingTop: paddings.paddingTop,
+      paddingBottom: paddings.paddingBottom,
+    },
     url: [],
     imgWidth: 0,
     imgHeight: 0,
     position: position,
     hyperlink: "",
+    verticalAlign: "top",
+    created: false
   }
 }
 
-const multiImage = (parameters, position) => {
+const multiImage = (paddings, position) => {
   return {
     type: "MultiImage",
-    paddingLeft: parameters.paddingLeft,
-    paddingRight: parameters.paddingRight,
-    paddingTop: parameters.paddingTop,
-    paddingBottom: parameters.paddingBottom,
+    paddings: {
+      paddingLeft: paddings.paddingLeft,
+      paddingRight: paddings.paddingRight,
+      paddingTop: paddings.paddingTop,
+      paddingBottom: paddings.paddingBottom,
+    },
     url: [],
     imgWidth: 0,
     imgHeight: 0,

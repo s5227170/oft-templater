@@ -34,16 +34,19 @@ const convertPageConfig = (config) => {
           //Fill the component content and settings
           subComponents.push(
             text(
-              row.contentComponents[i].paddingLeft,
-              row.contentComponents[i].paddingRight,
-              row.contentComponents[i].paddingTop,
-              row.contentComponents[i].paddingBottom,
+              {
+                paddingLeft: row.contentComponents[i].paddings.paddingLeft,
+                paddingRight: row.contentComponents[i].paddings.paddingRight,
+                paddingTop: row.contentComponents[i].paddings.paddingTop,
+                paddingBottom: row.contentComponents[i].paddings.paddingBottom
+              },
               row.contentComponents[i].content,
               row.position,
               row.contentComponents[i].position,
               row.columns,
               row.contentComponents[i].verticalAlign,
               row.columnSizes
+              
             )
           )
         }
@@ -52,10 +55,12 @@ const convertPageConfig = (config) => {
           subComponents.push(
             image(
               //Add the attributes just like for the text type
-              row.contentComponents[i].paddingLeft,
-              row.contentComponents[i].paddingRight,
-              row.contentComponents[i].paddingTop,
-              row.contentComponents[i].paddingBottom,
+              {
+                paddingLeft: row.contentComponents[i].paddings.paddingLeft,
+                paddingRight: row.contentComponents[i].paddings.paddingRight,
+                paddingTop: row.contentComponents[i].paddings.paddingTop,
+                paddingBottom: row.contentComponents[i].paddings.paddingBottom
+              },
               row.contentComponents[i].url,
               row.contentComponents[i].imgWidth,
               row.contentComponents[i].imgHeight,
@@ -63,7 +68,8 @@ const convertPageConfig = (config) => {
               row.contentComponents[i].position,
               row.columns,
               row.columnSizes,
-              row.contentComponents[i].hyperlink
+              row.contentComponents[i].hyperlink,
+              row.contentComponents[i].verticalAlign,
             )
           )
         }
@@ -72,10 +78,12 @@ const convertPageConfig = (config) => {
           subComponents.push(
             multiImage(
               //Add the attributes just like for the text type
-              row.contentComponents[i].paddingLeft,
-              row.contentComponents[i].paddingRight,
-              row.contentComponents[i].paddingTop,
-              row.contentComponents[i].paddingBottom,
+              {
+                paddingLeft: row.contentComponents[i].paddings.paddingLeft,
+                paddingRight: row.contentComponents[i].paddings.paddingRight,
+                paddingTop: row.contentComponents[i].paddings.paddingTop,
+                paddingBottom: row.contentComponents[i].paddings.paddingBottom
+              },
               row.contentComponents[i].url,
               row.contentComponents[i].imgWidth,
               row.contentComponents[i].imgHeight,

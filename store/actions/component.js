@@ -7,27 +7,27 @@ const create = (config, defaultPaddings, type, position, columns) => {
     .split("#")[1]
     .charAt(position.split("#")[1].length - 1)
 
-  let parameters = {
+  let paddings = {
     paddingLeft: 0,
     paddingRight: 0,
     paddingTop: 0,
     paddingBottom: 0,
   }
-  if (defaultPaddings != parameters) {
-    parameters = { ...defaultPaddings }
+  if (defaultPaddings != paddings) {
+    paddings = { ...defaultPaddings }
   }
 
   if (componentPosition == 1 && columns > 1) {
-    parameters = { ...defaultPaddings, paddingRight: 0 }
+    paddings = { ...defaultPaddings, paddingRight: 0 }
   }
   if (componentPosition == 2 && columns == 2) {
-    parameters = { ...defaultPaddings, paddingLeft: 0 }
+    paddings = { ...defaultPaddings, paddingLeft: 0 }
   }
   if (componentPosition == 3 && columns > 2) {
-    parameters = { ...defaultPaddings, paddingLeft: 0 }
+    parapaddingsmpaddingseters = { ...defaultPaddings, paddingLeft: 0 }
   }
   if (componentPosition == 2 && columns > 2) {
-    parameters = {
+    paddings = {
       ...defaultPaddings,
       paddingLeft: 0,
       paddingRight: 0,
@@ -36,16 +36,16 @@ const create = (config, defaultPaddings, type, position, columns) => {
 
   let component = {}
   if (type == "Text") {
-    component = initComponent.text(parameters, componentPosition)
+    component = initComponent.text(paddings, componentPosition)
   }
   if (type == "List") {
-    component = initComponent.list(parameters, componentPosition)
+    component = initComponent.list(paddings, componentPosition)
   }
   if (type == "Image") {
-    component = initComponent.image(parameters, componentPosition)
+    component = initComponent.image(paddings, componentPosition)
   }
   if (type == "MultiImage") {
-    component = initComponent.multiImage(parameters, componentPosition)
+    component = initComponent.multiImage(paddings, componentPosition)
   }
 
   const newPageContent = []
@@ -109,7 +109,7 @@ const set = (config, row, item, rowBackground, componentData) => {
       })
       const newRowConfig = {
         ...rowConfig,
-        parameters: newPaddings,
+        paddings: newPaddings,
         background: rowBackground ? rowBackground : "#fff",
         contentComponents: newRowComponentContent,
       }

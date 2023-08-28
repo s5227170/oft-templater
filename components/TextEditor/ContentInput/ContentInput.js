@@ -7,21 +7,22 @@ const ContentInput = (props) => {
   return (
     <>
       <div className={classes.InputWrapper}>
-        <h1 className={classes.Heading}>Text editor</h1>
-        <div className={classes.UsedColours}>
+        {/* <div className={classes.UsedColours}>
           {props.currentColours.map((colour, index) => {
-            return <ColourItem key={colour+"-"+index} itemId={"colour-" + index} colour={colour} />
+            return <ColourItem key={colour + "-" + index} itemId={"colour-" + index} colour={colour} />
           })}
-        </div>
+        </div> */}
         <div className={classes.TextPreviewArea}>
           <RichTextExample
-            currentColours={props.currentColours}
-            setColours={props.setColours}
-            extractData={props.extractData}
-            index={props.textId}
-            componentType={props.componentType}
-            positionData={props.positionData}
-            currentContent={props.currentContent ? props.currentContent : null}
+            // currentColours={props.currentColours}
+            // setColours={props.setColours}
+            // extractData={props.extractData}
+            // index={props.textId}
+            // componentType={props.componentType}
+            // positionData={props.positionData}
+            // currentContent={props.currentContent ? props.currentContent : null}
+            content={props.content}
+            extractContent={props.extractContent}
           />
         </div>
       </div>

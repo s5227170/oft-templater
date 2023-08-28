@@ -32,6 +32,22 @@ const ComponentContent = (props) => {
     local: false,
   })
 
+  useEffect(() => {
+    const row = props.elementPosition.split("#")[0].substr(3)
+
+    const item = props.elementPosition
+      .split("#")[1]
+      .charAt(props.elementPosition.split("#")[1].length - 1)
+
+    setPosition({ row: row, item: item })
+  }, [props.elementPosition])
+
+  useEffect(() => {
+    if (messageContent.message.length) {
+      tackleModal()
+    }
+  }, [messageContent.message])
+
   const tackleModal = () => {
     setTimeout(() => {
       setModalShow(!modalShow)
@@ -78,21 +94,6 @@ const ComponentContent = (props) => {
     setRemainingWidth(remainingWidth)
   }
 
-  useEffect(() => {
-    const row = props.elementPosition.split("#")[0].substr(3)
-
-    const item = props.elementPosition
-      .split("#")[1]
-      .charAt(props.elementPosition.split("#")[1].length - 1)
-
-    setPosition({ row: row, item: item })
-  }, [props.elementPosition])
-
-  useEffect(() => {
-    if (messageContent.message.length) {
-      tackleModal()
-    }
-  }, [messageContent.message])
   return (
     <div
       className={classes.ComponentContentWrapper}
@@ -122,10 +123,10 @@ const ComponentContent = (props) => {
             {props.componentType == "Text"
               ? "Text component"
               : props.componentType == "Image"
-              ? "Image component"
-              : props.componentType == "MultiImage"
-              ? "Multi image component"
-              : ""}
+                ? "Image component"
+                : props.componentType == "MultiImage"
+                  ? "Multi image component"
+                  : ""}
           </h1>
           <div className={classes.EditorIcons}>
             <IconButton
@@ -214,46 +215,46 @@ const ComponentContent = (props) => {
             currentColours={props.currentColours}
             setColours={props.setColours}
           />
-        ) 
-        : props.componentType == "Image" ? (
-          <ImageEditor
-            componentType={props.componentType}
-            confirmContent={props.confirmContent}
-            submission={submit}
-            positionData={position}
-            row={props.row}
-            defaultPaddings={props.defaultPaddings}
-            columnSize={props.columnSize}
-            background={background}
-            getPaddings={getPaddings}
-            getContentSize={getContentSize}
-            resetComponent={() => {
-              props.tackleModal(), setSubmit(false)
-            }}
-            errorBridge={(content) =>
-              setmessageContent({ ...messageContent, ...content })
-            }
-          />
-        ) : (
-          <MultiImageEditor
-            componentType={props.componentType}
-            confirmContent={props.confirmContent}
-            submission={submit}
-            positionData={position}
-            row={props.row}
-            defaultPaddings={props.defaultPaddings}
-            columnSize={props.columnSize}
-            background={background}
-            getPaddings={getPaddings}
-            getContentSize={getContentSize}
-            resetComponent={() => {
-              props.tackleModal(), setSubmit(false)
-            }}
-            errorBridge={(content) =>
-              setmessageContent({ ...messageContent, ...content })
-            }
-          />
-        )}
+        )
+          : props.componentType == "Image" ? (
+            <ImageEditor
+              componentType={props.componentType}
+              confirmContent={props.confirmContent}
+              submission={submit}
+              positionData={position}
+              row={props.row}
+              defaultPaddings={props.defaultPaddings}
+              columnSize={props.columnSize}
+              background={background}
+              getPaddings={getPaddings}
+              getContentSize={getContentSize}
+              resetComponent={() => {
+                props.tackleModal(), setSubmit(false)
+              }}
+              errorBridge={(content) =>
+                setmessageContent({ ...messageContent, ...content })
+              }
+            />
+          ) : (
+            <MultiImageEditor
+              componentType={props.componentType}
+              confirmContent={props.confirmContent}
+              submission={submit}
+              positionData={position}
+              row={props.row}
+              defaultPaddings={props.defaultPaddings}
+              columnSize={props.columnSize}
+              background={background}
+              getPaddings={getPaddings}
+              getContentSize={getContentSize}
+              resetComponent={() => {
+                props.tackleModal(), setSubmit(false)
+              }}
+              errorBridge={(content) =>
+                setmessageContent({ ...messageContent, ...content })
+              }
+            />
+          )}
       </div>
     </div>
   )

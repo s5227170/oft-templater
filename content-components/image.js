@@ -1,8 +1,5 @@
 const image = (
-  paddingLeft,
-  paddingRight,
-  paddingTop,
-  paddingBottom,
+  paddings,
   url,
   imgWIdth,
   imgHeight,
@@ -10,7 +7,8 @@ const image = (
   item,
   rowType,
   columnSizes,
-  hyperlink
+  hyperlink,
+  align,
 ) => {
   let height = "";
   let width = "";
@@ -38,36 +36,27 @@ const image = (
   }
 
   if (!contentDistribution.length) {
-    // let paddings = {
-    //   paddingValues: [
-    //     paddingLeft: paddingLeft,
-    //     paddingRight: paddingRight,
-    //     paddingTop: paddingTop,
-    //     paddingBottom: paddingBottom,
-    //   ],
-    // };
-    items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"Image"}" data-columns="${rowType}" data-padding-left="${paddingLeft}" data-padding-right="${paddingRight}" data-padding-top="${paddingTop}" data-padding-bottom="${paddingBottom}" data-column-sizes="${componentSize}"></span>`;
+    items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"Image"}" data-columns="${rowType}" data-padding-left="${paddings.paddingLeft}" data-padding-right="${paddings.paddingRight}" data-padding-top="${paddings.paddingTop}" data-padding-bottom="${paddings.paddingBottom}" data-column-sizes="${componentSize}"></span>`;
   }
 
-  // if (rowType == 1) {
-  return `<table width=${componentSize} border="0" cellspacing="0" cellpadding="0" style="border-spacing: 0; width: ${componentSize}px; max-width: ${componentSize}px;mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+  return `<table width=${componentSize} border="0" cellspacing="0" cellpadding="0" style="border-spacing: 0; width: ${componentSize}px; max-width: ${componentSize}px;mso-table-lspace: 0pt; mso-table-rspace: 0pt;" valign="${align ? align : ""}">
             <tbody>
                 <tr>
-                    <td width="${paddingLeft}"></td>
-                    <td height="${paddingTop}" width="1"></td>
-                    <td width="${paddingRight}"></td>
+                    <td width="${paddings.paddingLeft}"></td>
+                    <td height="${paddings.paddingTop}" width="1"></td>
+                    <td width="${paddings.paddingRight}"></td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td width="${componentSize - paddingLeft - paddingRight}">
+                    <td width="${componentSize - paddings.paddingLeft - paddings.paddingRight}" valign="${align ? align : ""}">
                       ${items}
                     </td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td width="${paddingLeft}"></td>
-                    <td height="${paddingBottom}" width="1"></td>
-                    <td width="${paddingRight}"></td>
+                    <td width="${paddings.paddingLeft}"></td>
+                    <td height="${paddings.paddingBottom}" width="1"></td>
+                    <td width="${paddings.paddingRight}"></td>
                 </tr>
             </tbody>
           </table>`;

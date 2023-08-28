@@ -1,10 +1,7 @@
 import nestingManagement from "../util/nesting-management"
 
 const text = (
-  paddingLeft,
-  paddingRight,
-  paddingTop,
-  paddingBottom,
+  paddings,
   content,
   rowPosition,
   item,
@@ -49,7 +46,7 @@ const text = (
       }
     }
   } else {
-    items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"Text"}"  data-columns="${rowType}" data-padding-left="${paddingLeft}" data-padding-right="${paddingRight}" data-padding-top="${paddingTop}" data-padding-bottom="${paddingBottom}" data-column-sizes="${componentSize}"></span>`
+    items += `<span id="componentContentManager" name="row${rowPosition}#item${item}" role="${"Text"}"  data-columns="${rowType}" data-padding-left="${paddings.paddingLeft}" data-padding-right="${paddings.paddingRight}" data-padding-top="${paddings.paddingTop}" data-padding-bottom="${paddings.paddingBottom}" data-column-sizes="${componentSize}"></span>`
   }
 
   return `<table width=${componentSize} border="0" cellspacing="0" cellpadding="0" style="
@@ -61,24 +58,23 @@ const text = (
 " valign="${align ? align : ""}">
             <tbody>
                 <tr>
-                    <td width="${paddingLeft}"></td>
-                    <td height="${paddingTop}" width="1"></td>
-                    <td width="${paddingRight}"></td>
+                    <td width="${paddings.paddingLeft}"></td>
+                    <td height="${paddings.paddingTop}" width="1"></td>
+                    <td width="${paddings.paddingRight}"></td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td width="${
-                      componentSize - paddingLeft - paddingRight
-                    }" valign="${align ? align : ""}">
+                    <td width="${componentSize - paddings.paddingLeft - paddings.paddingRight
+    }" valign="${align ? align : ""}">
                       ${items}
                       <div style="display:none;">&nbsp;</div>
                     </td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td width="${paddingLeft}"></td>
-                    <td height="${paddingBottom}" width="1"></td>
-                    <td width="${paddingRight}"></td>
+                    <td width="${paddings.paddingLeft}"></td>
+                    <td height="${paddings.paddingBottom}" width="1"></td>
+                    <td width="${paddings.paddingRight}"></td>
                 </tr>
             </tbody>
           </table>`

@@ -1,8 +1,6 @@
-import { useEffect, useRef, useState } from "react";
 import classes from "./RadioButton.module.scss";
 
 const RadioButton = (props) => {
-
   return (
     <div
       className={

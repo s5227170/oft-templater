@@ -6,7 +6,7 @@ import {
   SET_COMPONENT,
   SET_CONFIG,
   UPDATE_ROW,
-} from "./actionTypes"
+} from "../actionTypes"
 
 export const initialState = {
   pageConfig: {
