@@ -23,46 +23,14 @@ const Content = (props) => {
         <div className={classes.Content}>
             {props.type == "Text" ? (
                 <TextEditor
-                    // componentType={props.componentType}
                     extractContent={props.extractContent}
-                    currentContent={props.content}
-                // confirmContent={props.confirmContent}
-                // submission={submit}
-                // positionData={position}
-                // defaultPaddings={props.defaultPaddings}
-                // columnSize={props.columnSize}
-                // background={background}
-                // getPaddings={getPaddings}
-                // getContentSize={getContentSize}
-                // resetComponent={() => {
-                //     setSubmit(false)
-                // }}
-                // errorBridge={(content) => {
-                //     setSubmit(false)
-                //     setmessageContent({ ...messageContent, ...content })
-                // }}
-                // currentColours={props.currentColours}
-                // setColours={props.setColours}
+                    content={props.content}
                 />
             )
                 : props.type == "Image" ? (
                     <ImageEditor
                         componentType={props.componentType}
                         confirmContent={props.confirmContent}
-                        submission={submit}
-                        positionData={position}
-                        row={props.row}
-                        defaultPaddings={props.defaultPaddings}
-                        columnSize={props.columnSize}
-                        background={background}
-                        getPaddings={getPaddings}
-                        getContentSize={getContentSize}
-                        resetComponent={() => {
-                            setSubmit(false)
-                        }}
-                        errorBridge={(content) =>
-                            setmessageContent({ ...messageContent, ...content })
-                        }
                     />
                 ) : (
                     null

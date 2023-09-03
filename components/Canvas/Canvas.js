@@ -152,7 +152,6 @@ const Canvas = (props) => {
     }
   }, [])
 
-
   useEffect(() => {
     if (props.configChanges && state.pageConfig != props.configChanges) {
       dispatch({ type: "SET_CONFIG", payload: props.configChanges })

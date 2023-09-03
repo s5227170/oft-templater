@@ -137,7 +137,7 @@ const RichTextExample = (editorProps) => {
     <Slate
       editor={editor}
       value={
-        editorProps.content ? editorProps.content : initialValue
+        editorProps.content.content.length ? editorProps.content.content : initialValue
       }
       //This line bellow could be used to generate text into oft format
       onChange={(value) => {

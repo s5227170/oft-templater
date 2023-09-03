@@ -9,26 +9,65 @@ import { BsCheckLg } from "react-icons/bs"
 
 const Controls = (props) => {
     const [refinedComponentToManage, setRefinedComponentToManage] = useState(null)
+    const [localConfig, setLocalConfig] = useState(null)
 
     useEffect(() => {
         if (props.componentToManage) {
-            const rowToFind = props.componentToManage.elementPosition.split("#")[0].substr(3)
+            if (props.config) {
+                setLocalConfig(props.config)
+            }
 
-            const itemToFind = props.componentToManage.elementPosition
-                .split("#")[1]
-                .charAt(props.componentToManage.elementPosition.split("#")[1].length - 1)
+            const positioning = findPosition(props.componentToManage)
 
             let foundComponent
             props.config.content.map((row, index) => {
-                if (row.position == rowToFind) {
-                    foundComponent = row.contentComponents.find((item) => item.position == itemToFind)
+                if (row.position == positioning.rowToFind) {
+                    foundComponent = row.contentComponents.find((item) => item.position == positioning.itemToFind)
                     setRefinedComponentToManage(foundComponent)
                 }
             })
         }
     }, [props.componentToManage, props.config])
 
+    useEffect(() => {
+        if (props.componentToManage) {
+            const positioning = findPosition(props.componentToManage)
+
+            let foundComponent
+            localConfig.content.map((row, index) => {
+                if (row.position == positioning.rowToFind) {
+                    foundComponent = row.contentComponents.find((item) => item.position == positioning.itemToFind)
+                    if (foundComponent != refinedComponentToManage) {
+                        const foundComponentIndex = props.config.content[index].contentComponents.map((item, index) => {
+                            if (item.position == positioning.itemToFind) {
+                                return index;
+                            }
+                        })
+                        const updatedConfig = localConfig
+                        updatedConfig.content[index].contentComponents[foundComponentIndex] = refinedComponentToManage
+                        setLocalConfig(updatedConfig)
+                    }
+                }
+            })
+        }
+    }, [refinedComponentToManage])
+
+
     const modeContent = (foundComponent) => {
+        console.log(foundComponent)
+        // if (foundComponent.type == "Image") {
+        //     return {
+        //         hyperlink: refinedComponentToManage.hyperlink,
+        //         imgHeight: refinedComponentToManage.imgHeight,
+        //         imgWidth: refinedComponentToManage.imgWidth,
+        //         url: refinedComponentToManage.url
+        //     }
+        // }
+        // if (foundComponent.type == "Text") {
+        //     return {
+        //         content: refinedComponentToManage.content
+        //     }
+        // }
         switch (foundComponent.type) {
             case "Image":
                 return {
@@ -37,10 +76,12 @@ const Controls = (props) => {
                     imgWidth: refinedComponentToManage.imgWidth,
                     url: refinedComponentToManage.url
                 }
+            // break;
             case "Text":
                 return {
                     content: refinedComponentToManage.content
                 }
+            // break;
             default:
                 return
         }
@@ -48,10 +89,10 @@ const Controls = (props) => {
 
     const clickHandler = () => {
         const newConfig = {
-            ...props.config,
-            title: "test"
+            ...localConfig,
         }
         props.extractChanges(newConfig)
+
     }
 
     const extractPaddings = (paddings) => {
@@ -75,6 +116,16 @@ const Controls = (props) => {
         }))
     }
 
+    const findPosition = (component) => {
+        const rowToFind = component.elementPosition.split("#")[0].substr(3)
+
+        const itemToFind = component.elementPosition
+            .split("#")[1]
+            .charAt(component.elementPosition.split("#")[1].length - 1)
+
+        return { rowToFind, itemToFind }
+    }
+
     const tabs = [
         {
             name: "Content",
@@ -89,8 +140,6 @@ const Controls = (props) => {
             content: refinedComponentToManage ? <Alignment alignment={refinedComponentToManage.verticalAlign} extractAlignment={extractAlignment} /> : <></>
         }
     ]
-
-    console.log(refinedComponentToManage)
 
     return (
         <div className={classes.ControlsWrapper}>
