@@ -5,7 +5,7 @@ import RadioButton from "../../../UI/RadioButton/RadioButton";
 import classes from "./alignment.module.scss"
 
 
-const alignmentOption = (props) => {
+const Alignment = (props) => {
     const [alignmentOption, setAlignmentOption] = useState({
         top: true,
         middle: false,
@@ -127,4 +127,4 @@ const alignmentOption = (props) => {
     )
 }
 
-export default alignmentOption
+export default Alignment

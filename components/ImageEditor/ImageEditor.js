@@ -1,42 +1,21 @@
 import { useRef, useState, useEffect } from "react"
-import PaddingElement from "../UI/PaddingElement/PaddingElement"
 import classes from "./ImageEditor.module.scss"
 
-import {
-  AiOutlineBorderLeft,
-  AiOutlineBorderRight,
-  AiOutlineBorderTop,
-  AiOutlineBorderBottom,
-} from "react-icons/ai"
 import CustomInput from "../UI/CustomInput/CustomInput"
+import WidthManager from "../UI/WidthManager/WidthManager"
 
 const ImageEditor = (props) => {
-  const [url, setUrl] = useState(props.edit? props.component.url  : "")
-  const [hyperlink, setHyperlink] = useState("")
   const [sizesAllwoed, setSizesAllowed] = useState({
     width: true,
     height: false,
   })
-  const [paddings, setPaddings] = useState({
-    paddingLeft: 0,
-    paddingRight: 0,
-    paddingTop: 0,
-    paddingBottom: 0,
-  })
+  const [remainingWidth, setRemainingWidth] = useState(0)
+
   const [imageSize, setImageSize] = useState({
-    width: props.edit ? props.imgWidth : props.columnSize,
+    width: props.content.content.imgWidth,
     height: 0,
   })
   const imgHolderRef = useRef()
-
-  const paddingHandler = (e, el) => {
-    if (e.target.value.length > 3) {
-      e.target.value = e.target.value.slice(0, 3)
-    }
-    const newPaddings = { ...paddings, [el]: e.target.value }
-
-    setPaddings(newPaddings)
-  }
 
   const preventMinus = (e) => {
     if (e.code === "Minus") {
@@ -71,12 +50,27 @@ const ImageEditor = (props) => {
     }
   }
 
+  const widthErrorHandler = (remainingWidth) => {
+    setRemainingWidth(remainingWidth)
+  }
+
   const urlHandler = (e) => {
-    setUrl(e.target.value)
+    // setUrl(e.target.value)
+    console.log(e.target.value)
+    props.extractContent(
+      { ...props.content.content, url: [e.target.value] },
+      "Image",
+      remainingWidth
+    )
   }
 
   const hyperlinkHandler = (e) => {
-    setHyperlink(e.target.value)
+    // setHyperlink(e.target.value)
+    props.extractContent(
+      { ...props.content.content, hyperlink: e.target.value },
+      "Image",
+      remainingWidth
+    )
   }
 
   const settingHandler = (setting) => {
@@ -99,64 +93,12 @@ const ImageEditor = (props) => {
   }
 
   useEffect(() => {
-    //Use props.row to check how many columns there are and set size according to that
-    const actualImgSize = { width: "", height: "" }
-    if (sizesAllwoed.width && !sizesAllwoed.height) {
-      actualImgSize.width = imageSize.width
-    }
-    if (!sizesAllwoed.width && sizesAllwoed.height) {
-      actualImgSize.height = imageSize.height
-    }
-    if (sizesAllwoed.width && sizesAllwoed.height) {
-      actualImgSize.height = imageSize.height
-      actualImgSize.width = imageSize.width
-    }
-
-    if (actualImgSize.width > props.columnSize || actualImgSize.width == "") {
-      actualImgSize.width = props.columnSize
-    }
-
-    if (props.submission) {
-      const allData = {
-        type: props.componentType,
-        paddingLeft: paddings.paddingLeft,
-        paddingRight: paddings.paddingRight,
-        paddingTop: paddings.paddingTop,
-        paddingBottom: paddings.paddingBottom,
-        url: [url],
-        imgWidth: actualImgSize.width,
-        imgHeight: actualImgSize.height,
-        position: props.positionData.item,
-        hyperlink: hyperlink,
-      }
-
-      props.confirmContent(
-        props.positionData.row,
-        props.positionData.item,
-        props.background,
-        allData
-      )
-      props.resetComponent()
-    }
-  }, [props.submission])
-
-  useEffect(() => {
-    if (
-      props.defaultPaddings.paddingLeft > 0 ||
-      props.defaultPaddings.paddingRight > 0 ||
-      props.defaultPaddings.paddingTop > 0 ||
-      props.defaultPaddings.paddingBottom > 0
-    ) {
-      setPaddings(props.defaultPaddings)
-    }
-  }, [props.defaultPaddings])
-
-  useEffect(() => {
-    props.getPaddings(paddings)
-  }, [paddings])
-
-  useEffect(() => {
-    props.getContentSize(imageSize.width)
+    // props.getContentSize(imageSize.width)
+    props.extractContent(
+      { ...props.content.content, imgWidth: imageSize.width },
+      "Image",
+      remainingWidth
+    )
   }, [imageSize.width])
 
   useEffect(() => {
@@ -168,35 +110,18 @@ const ImageEditor = (props) => {
   return (
     <div className={classes.ImageEditor}>
       <div className={classes.Editor}>
-        <div className={classes.Padding}>
-          <h2 className={classes.Heading}>Component padding:</h2>
-          <div className={classes.PaddingInputs}>
-            <PaddingElement
-              change={(e) => paddingHandler(e, "paddingLeft")}
-              value={paddings.paddingLeft}
-            >
-              <AiOutlineBorderLeft color="#000" size="40" />
-            </PaddingElement>
-            <PaddingElement
-              change={(e) => paddingHandler(e, "paddingRight")}
-              value={paddings.paddingRight}
-            >
-              <AiOutlineBorderRight color="#000" size="40" />
-            </PaddingElement>
-            <PaddingElement
-              change={(e) => paddingHandler(e, "paddingTop")}
-              value={paddings.paddingTop}
-            >
-              <AiOutlineBorderTop color="#000" size="40" />
-            </PaddingElement>
-            <PaddingElement
-              change={(e) => paddingHandler(e, "paddingBottom")}
-              value={paddings.paddingBottom}
-            >
-              <AiOutlineBorderBottom color="#000" size="40" />
-            </PaddingElement>
-          </div>
-        </div>
+        <h2>Remaining space to fill</h2>
+        <WidthManager
+          constraintWidth={widthErrorHandler}
+          rowSize={props.content.size}
+          paddingLeft={
+            props.content.paddings ? props.content.paddings.paddingLeft : 0
+          }
+          paddingRight={
+            props.content.paddings ? props.content.paddings.paddingRight : 0
+          }
+          componentSize={imageSize.width}
+        />
         <div className={classes.ImageContent}>
           <CustomInput
             type="text"
@@ -217,14 +142,14 @@ const ImageEditor = (props) => {
               style={{ width: "50px" }}
               type="number"
               min={0}
-              max={props.columnSize}
+              max={props.content.content.size}
               maxLength={3}
               onChange={(e) => imageSizeRestricter(e, 1)}
               disabled={!sizesAllwoed.width}
               value={+imageSize.width}
             />
             <label>px</label>
-            <button onClick={() => settingHandler(1)}>Disable setting</button>
+            <button onClick={() => settingHandler(1)}>{sizesAllwoed.width ?  "Disable setting" : "Enable setting"}</button>
           </div>
           <div className={classes.InputWithLabel}>
             <label>Image height: </label>
@@ -233,18 +158,22 @@ const ImageEditor = (props) => {
               style={{ width: "50px" }}
               type="number"
               min={0}
-              max={props.columnSize}
+              max={props.content.content.size}
               maxLength={3}
               onChange={(e) => imageSizeRestricter(e, 2)}
               disabled={!sizesAllwoed.height}
               value={+imageSize.height}
             />
             <label>px</label>
-            <button onClick={() => settingHandler(2)}>Disable setting</button>
+            <button onClick={() => settingHandler(2)}>{sizesAllwoed.height ?  "Disable setting" : "Enable setting"}</button>
           </div>
           <div className={classes.ImagePreview}>
             <div ref={imgHolderRef}>
-              {url ? <img src={url} /> : <h1>No image uploaded</h1>}
+              {props.content.content.url.length ? (
+                <img src={props.content.content.url[0]} />
+              ) : (
+                <h1>No image uploaded</h1>
+              )}
             </div>
           </div>
         </div>

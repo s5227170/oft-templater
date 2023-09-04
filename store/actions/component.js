@@ -24,7 +24,7 @@ const create = (config, defaultPaddings, type, position, columns) => {
     paddings = { ...defaultPaddings, paddingLeft: 0 }
   }
   if (componentPosition == 3 && columns > 2) {
-    parapaddingsmpaddingseters = { ...defaultPaddings, paddingLeft: 0 }
+    paddings = { ...defaultPaddings, paddingLeft: 0 }
   }
   if (componentPosition == 2 && columns > 2) {
     paddings = {
