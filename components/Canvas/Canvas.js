@@ -95,15 +95,15 @@ const Canvas = (props) => {
           }
           return (
             <ComponentContentManager
-              confirmContent={confirmContent}
+              // confirmContent={confirmContent}
+              // deleteFunction={deleteContent}
+              // row={attribs["data-columns"]}
+              // defaultPaddings={paddings}
+              // columnSize={attribs["data-column-sizes"]}
+              // currentColours={usedColours}
+              // setColours={setUsedColours}
               elementPosition={attribs.name}
               componentType={attribs.role}
-              deleteFunction={deleteContent}
-              row={attribs["data-columns"]}
-              defaultPaddings={paddings}
-              columnSize={attribs["data-column-sizes"]}
-              currentColours={usedColours}
-              setColours={setUsedColours}
               takeComponent={props.takeComponent}
             />
           )
@@ -262,8 +262,9 @@ const Canvas = (props) => {
             deleteRowHandler={deleteRowHandler}
             positionOptions={rowPositionConfig}
             deleteComponent={deleteContent}
-            editContent={editContent}
-            tackleEditModal={tackleEditModal}
+            // editContent={editContent}
+            // tackleEditModal={tackleEditModal}
+            takeComponent={props.takeComponent}
           />
         )
       })}

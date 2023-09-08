@@ -5,6 +5,7 @@ import { FaAngleDown } from "react-icons/fa"
 
 const ComponentSummary = (props) => {
   const [open, setOpen] = useState(false)
+
   return (
     <div
       className={
@@ -101,9 +102,9 @@ const ComponentSummary = (props) => {
       <div className={classes.ComponentOptions}>
         <button
           onClick={() => {
-            props.tackleEditModal()
-            props.editComponent(props.row, props.position, props.row.position)
-            props.tackleModal()
+            // props.tackleEditModal()
+            props.editComponent(props.position)
+            // props.tackleModal()
           }}
           className={classes.EditComponent}
         >
@@ -111,8 +112,8 @@ const ComponentSummary = (props) => {
         </button>
         <button
           onClick={() => {
-            props.deleteComponent(props.row.position, props.position)
-            props.tackleModal()
+            // props.deleteComponent(props.row.position, props.position)
+            // props.tackleModal()
           }}
           className={classes.DeleteComponent}
         >

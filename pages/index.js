@@ -209,6 +209,8 @@ export default function Home() {
     }
   }, [emailTitle])
 
+  console.log(currentPageConfig)
+
   return (
     <>
       <Head>

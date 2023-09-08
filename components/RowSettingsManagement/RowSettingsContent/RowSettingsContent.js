@@ -73,9 +73,10 @@ const RowSettingsContent = (props) => {
           <RowSettingsEditor
             row={props.row}
             deleteComponent={props.deleteComponent}
-            tackleModal={props.tackleModal}
-            editComponent={props.editComponent}
-            tackleEditModal={props.tackleEditModal}
+            // tackleModal={props.tackleModal}
+            // editComponent={props.editComponent}
+            // tackleEditModal={props.tackleEditModal}
+            takeComponent={props.takeComponent}
           />
         ) : (
           <h3>Row has no components yet</h3>

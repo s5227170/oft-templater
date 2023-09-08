@@ -39,24 +39,33 @@ const Controls = (props) => {
       const positioning = findPosition(props.componentToManage)
 
       let foundComponent
-      localConfig.content.map((row, index) => {
+      localConfig.content.map((row, rowIndex) => {
         if (row.position == positioning.rowToFind) {
           foundComponent = row.contentComponents.find(
             (item) => item.position == positioning.itemToFind
           )
           if (foundComponent != refinedComponentToManage) {
-            const foundComponentIndex = props.config.content[
-              index
-            ].contentComponents.map((item, index) => {
-              if (item.position == positioning.itemToFind) {
-                return index
+            let foundComponentIndex
+            props.config.content[rowIndex].contentComponents.map(
+              (item, index) => {
+                if (item.position == positioning.itemToFind) {
+                  foundComponentIndex = index
+                }
               }
-            })
-            const updatedConfig = localConfig
-            updatedConfig.content[index].contentComponents[
+            )
+            const updatedConfig = {...localConfig}
+            // setLocalConfig({...localConfig, localConfig.content[rowIndex].contentComponents[foundComponentIndex]: refinedComponentToManage})
+            
+            
+            //Currently, the update works, but that isn't properly implemented. The state isn't updated through setLocalConfig, but through the line bellow.
+
+
+            updatedConfig.content[rowIndex].contentComponents[
               foundComponentIndex
             ] = refinedComponentToManage
-            setLocalConfig(updatedConfig)
+
+            console.log(updatedConfig)
+            // setLocalConfig(updatedConfig)
           }
         }
       })
@@ -104,19 +113,19 @@ const Controls = (props) => {
   const clickHandler = () => {
     if (remainingWidth > 0) {
       return alert("There is still available width that requires to be set")
-      setmessageContent({
-        ...messageContent,
-        message: "There is still available width that requires to be set",
-        error: true,
-      })
+      // setmessageContent({
+      //   ...messageContent,
+      //   message: "There is still available width that requires to be set",
+      //   error: true,
+      // })
     }
     if (remainingWidth < 0) {
       return alert("Set sizes exceed the size of the component")
-      setmessageContent({
-        ...messageContent,
-        message: "Set sizes exceed the size of the component",
-        error: true,
-      })
+      // setmessageContent({
+      //   ...messageContent,
+      //   message: "Set sizes exceed the size of the component",
+      //   error: true,
+      // })
     }
     const newConfig = {
       ...localConfig,
@@ -163,12 +172,12 @@ const Controls = (props) => {
     }
   }
 
-  const findPosition = (component) => {
-    const rowToFind = component.elementPosition.split("#")[0].substr(3)
+  const findPosition = (elementPosition) => {
+    const rowToFind = elementPosition.split("#")[0].substr(3)
 
-    const itemToFind = component.elementPosition
+    const itemToFind = elementPosition
       .split("#")[1]
-      .charAt(component.elementPosition.split("#")[1].length - 1)
+      .charAt(elementPosition.split("#")[1].length - 1)
 
     return { rowToFind, itemToFind }
   }
