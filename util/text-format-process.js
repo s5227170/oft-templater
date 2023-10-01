@@ -1,4 +1,5 @@
 const formatText = (text) => {
+  // console.log(text)
   let textContent = text.text
   let wholeParagraph = ""
   textContent.replace("<", "&#60;")
@@ -7,9 +8,8 @@ const formatText = (text) => {
   }
 
   if (text.hyperlink) {
-    textContent = `<a style="text-decoration: none; color: ${
-      text.color ? text.color : "inherit"
-    };" href="${text.hyperlink}">${textContent}</a>`
+    textContent = `<a style="text-decoration: none; color: ${text.color ? text.color : "inherit"
+      };" href="${text.hyperlink}">${textContent}</a>`
   }
   if (text.underline) {
     textContent = `<u>${textContent}</u>`

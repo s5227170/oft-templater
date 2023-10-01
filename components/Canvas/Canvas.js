@@ -262,8 +262,6 @@ const Canvas = (props) => {
             deleteRowHandler={deleteRowHandler}
             positionOptions={rowPositionConfig}
             deleteComponent={deleteContent}
-            // editContent={editContent}
-            // tackleEditModal={tackleEditModal}
             takeComponent={props.takeComponent}
           />
         )

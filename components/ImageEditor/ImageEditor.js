@@ -9,7 +9,7 @@ const ImageEditor = (props) => {
     width: true,
     height: false,
   })
-  const [remainingWidth, setRemainingWidth] = useState(0)
+  const [remainingWidth, setRemainingWidth] = useState(props.content.content.size)
 
   const [imageSize, setImageSize] = useState({
     width: props.content.content.imgWidth,
@@ -55,8 +55,6 @@ const ImageEditor = (props) => {
   }
 
   const urlHandler = (e) => {
-    // setUrl(e.target.value)
-    console.log(e.target.value)
     props.extractContent(
       { ...props.content.content, url: [e.target.value] },
       "Image",
@@ -65,7 +63,6 @@ const ImageEditor = (props) => {
   }
 
   const hyperlinkHandler = (e) => {
-    // setHyperlink(e.target.value)
     props.extractContent(
       { ...props.content.content, hyperlink: e.target.value },
       "Image",
@@ -99,7 +96,7 @@ const ImageEditor = (props) => {
       "Image",
       remainingWidth
     )
-  }, [imageSize.width])
+  }, [imageSize.width, remainingWidth])
 
   useEffect(() => {
     if (imgHolderRef.current) {
@@ -128,12 +125,14 @@ const ImageEditor = (props) => {
             style={{ width: "400px" }}
             placeholder="Place your img url here"
             onChange={urlHandler}
+            value={props.content.content.url[0]}
           />
           <CustomInput
             type="text"
             style={{ width: "400px" }}
             placeholder="Add a hyperlink to the image here..."
             onChange={hyperlinkHandler}
+            value={props.content.content.hyperlink}
           />
           <div className={classes.InputWithLabel}>
             <label>Image width:</label>
@@ -149,7 +148,7 @@ const ImageEditor = (props) => {
               value={+imageSize.width}
             />
             <label>px</label>
-            <button onClick={() => settingHandler(1)}>{sizesAllwoed.width ?  "Disable setting" : "Enable setting"}</button>
+            <button onClick={() => settingHandler(1)}>{sizesAllwoed.width ? "Disable setting" : "Enable setting"}</button>
           </div>
           <div className={classes.InputWithLabel}>
             <label>Image height: </label>
@@ -165,7 +164,7 @@ const ImageEditor = (props) => {
               value={+imageSize.height}
             />
             <label>px</label>
-            <button onClick={() => settingHandler(2)}>{sizesAllwoed.height ?  "Disable setting" : "Enable setting"}</button>
+            <button onClick={() => settingHandler(2)}>{sizesAllwoed.height ? "Disable setting" : "Enable setting"}</button>
           </div>
           <div className={classes.ImagePreview}>
             <div ref={imgHolderRef}>

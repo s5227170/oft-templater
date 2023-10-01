@@ -65,6 +65,7 @@ const ComponentContentManager = (props) => {
     //Modal should be removed, and then the whole process tested
     //If this proves successful, persistent data can be utilised
     //Some attributes may be unnecessary since they can be extracted from the outer component, an example is the default padding
+    console.log(props.elementPosition)
     props.takeComponent(props.elementPosition)
   }
 

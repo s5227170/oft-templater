@@ -14,7 +14,7 @@ const ComponentSummary = (props) => {
       style={
         open
           ? { minHeight: "160px", height: "fit-content", transition: "0.2s" }
-          : { height: "50px", transition: "0.2s" }
+          : { height: "40px", transition: "0.2s" }
       }
       onClick={() => setOpen(!open)}
     >
@@ -102,9 +102,7 @@ const ComponentSummary = (props) => {
       <div className={classes.ComponentOptions}>
         <button
           onClick={() => {
-            // props.tackleEditModal()
             props.editComponent(props.position)
-            // props.tackleModal()
           }}
           className={classes.EditComponent}
         >

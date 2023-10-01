@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useEffect, useState } from "react"
+import { useEffect, useId, useState } from "react"
 import Head from "next/head"
 
 import { MdArrowDropDownCircle } from "react-icons/md"
@@ -56,6 +56,8 @@ export default function Home() {
   const [messageHandlerShow, setmessagegeHandlerShow] = useState(false)
   const [componentToManage, setComponentToManage] = useState(null)
   const [managedComponent, setManagedComponent] = useState(null)
+  const [resetId, setResetId] = useState(null)
+  const newId = useId()
 
   const tabConfig = tabs
 
@@ -188,9 +190,17 @@ export default function Home() {
   }
 
   const resetComponentManagement = () => {
+    setResetId(null)
     setManagedComponent(null)
     setComponentToManage(null)
   }
+
+  useEffect(() => {
+    if (componentToManage == null) {
+      setResetId(newId)
+    }
+  }, [componentToManage])
+
 
   useEffect(() => {
     if (messageContent.message) {
@@ -208,8 +218,7 @@ export default function Home() {
       console.log("test")
     }
   }, [emailTitle])
-
-  console.log(currentPageConfig)
+  console.log(componentToManage)
 
   return (
     <>
@@ -264,7 +273,7 @@ export default function Home() {
         </div>
 
         <div className={classes.Workplace}>
-          <Controls config={currentPageConfig} extractChanges={setCurrentPageConfig} componentToManage={componentToManage} managedComponent={setManagedComponent} />
+          <Controls key={resetId} config={currentPageConfig} extractChanges={setCurrentPageConfig} componentToManage={componentToManage} managedComponent={setManagedComponent} resetComponent={resetComponentManagement} />
           <Canvas
             setHTML={setHtmlContentString}
             defaultComponentPaddings={defaultComponentPadding}

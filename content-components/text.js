@@ -9,6 +9,7 @@ const text = (
   align,
   columnSizes
 ) => {
+  // console.log(align)
   const contentArray = []
   const componentSize = columnSizes["col" + item]
   const unrefinedContent = nestingManagement(content, contentArray)
@@ -39,7 +40,6 @@ const text = (
         }
       }
       if (item.length) {
-        console.log(item)
         items += item
       } else {
         items += unrefinedContent[i]

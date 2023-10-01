@@ -39,18 +39,17 @@ function nestingManagement(nestedArrays, items) {
           }
         }
       }
+      alignment = item.align
       switch (elementType) {
         case "list-item":
           items.push(
-            `<li style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${
-              alignment ? alignment : "left"
+            `<li style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${alignment ? alignment : "left"
             };">${sentence}</li>`
           )
           break
         case "paragraph":
           items.push(
-            `<p style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${
-              alignment ? alignment : "left"
+            `<p style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${alignment ? alignment : "left"
             };">${sentence}</p>`
           )
           break
@@ -60,6 +59,7 @@ function nestingManagement(nestedArrays, items) {
     }
   } else {
     if (Array.isArray(item)) {
+
       for (let m = 0; m < item.length; m++) {
         let alignment = ""
         let sentence = ""
@@ -71,15 +71,13 @@ function nestingManagement(nestedArrays, items) {
             switch (elementType) {
               case "list-item":
                 items.push(
-                  `<li style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${
-                    alignment ? alignment : "left"
+                  `<li style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${alignment ? alignment : "left"
                   };">${sentence}</li>`
                 )
                 break
               case "paragraph":
                 items.push(
-                  `<p style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${
-                    alignment ? alignment : "left"
+                  `<p style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${alignment ? alignment : "left"
                   };">${sentence}</p>`
                 )
                 break
@@ -94,18 +92,18 @@ function nestingManagement(nestedArrays, items) {
             }
           }
         }
+        //Set the text alignment here
+        alignment = item[m].align
         switch (elementType) {
           case "list-item":
             items.push(
-              `<li style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${
-                alignment ? alignment : "left"
+              `<li style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${alignment ? alignment : "left"
               };">${sentence}</li>`
             )
             break
           case "paragraph":
             items.push(
-              `<p style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${
-                alignment ? alignment : "left"
+              `<p style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${alignment ? alignment : "left"
               };">${sentence}</p>`
             )
             break
@@ -117,15 +115,13 @@ function nestingManagement(nestedArrays, items) {
         switch (elementType) {
           case "list-item":
             items.push(
-              `<li style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${
-                item.align ? item.align : "left"
+              `<li style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${item.align ? item.align : "left"
               };">${formatText(item)}</li>`
             )
             break
           case "paragraph":
             items.push(
-              `<p style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${
-                item.align ? item.align : "left"
+              `<p style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${item.align ? item.align : "left"
               };">${formatText(item)}</p>`
             )
             break
@@ -136,15 +132,13 @@ function nestingManagement(nestedArrays, items) {
         switch (elementType) {
           case "list-type":
             items.push(
-              `<li style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${
-                item.align ? item.align : "left"
+              `<li style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${item.align ? item.align : "left"
               };">${formatText(item)}</li>`
             )
             break
           case "paragraph":
             items.push(
-              `<p style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${
-                item.align ? item.align : "left"
+              `<p style="font-family: arial; margin: 0px; font-size: 14px; line-height:22px; text-align: ${item.align ? item.align : "left"
               };">${formatText(item)}</p>`
             )
             break

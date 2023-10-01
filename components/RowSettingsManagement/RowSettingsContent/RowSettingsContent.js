@@ -72,10 +72,10 @@ const RowSettingsContent = (props) => {
         {props.row ? (
           <RowSettingsEditor
             row={props.row}
+            position={props.position}
             deleteComponent={props.deleteComponent}
-            // tackleModal={props.tackleModal}
-            // editComponent={props.editComponent}
-            // tackleEditModal={props.tackleEditModal}
+            tackleModal={props.tackleModal}
+            editComponent={props.editComponent}
             takeComponent={props.takeComponent}
           />
         ) : (
